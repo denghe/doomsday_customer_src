@@ -101,6 +101,11 @@ struct ResTpFrames {
 	xx::Ref<xx::Frame> font_outline_97;
 	xx::Ref<xx::Frame> font_outline_98;
 	xx::Ref<xx::Frame> font_outline_99;
+	xx::Ref<xx::Frame> ground_cell;
+	xx::Ref<xx::Frame> monster_chips;
+	xx::Ref<xx::Frame> monster_cola;
+	xx::Ref<xx::Frame> monster_hamburger;
+	xx::Ref<xx::Frame> monster_instantnoodles;
 	xx::Ref<xx::Frame> player1;
 	xx::Ref<xx::Frame> player2;
 

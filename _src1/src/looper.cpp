@@ -3,6 +3,7 @@
 #include "game_main_menu.hpp"
 #include "game_stage1.hpp"
 #include "game_player.hpp"
+#include "game_ground.hpp"
 // more include here ...
 
 Looper gLooper;

@@ -111,6 +111,11 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 		this->font_outline_124 = map["font_outline_124"sv];
 		this->font_outline_125 = map["font_outline_125"sv];
 		this->font_outline_126 = map["font_outline_126"sv];
+		this->ground_cell = map["ground_cell"sv];
+		this->monster_chips = map["monster_chips"sv];
+		this->monster_cola = map["monster_cola"sv];
+		this->monster_hamburger = map["monster_hamburger"sv];
+		this->monster_instantnoodles = map["monster_instantnoodles"sv];
 		this->player1 = map["player1"sv];
 		this->player2 = map["player2"sv];
 	}

@@ -6,6 +6,7 @@ namespace Game {
 		xx::Camera camera;
 		xx::Shared<xx::Node> ui;
 		xx::Shared<Player> player;
+		xx::Shared<Ground> ground;
 
 		void Init() override;
 		void Update() override;

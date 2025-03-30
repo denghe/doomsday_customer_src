@@ -9,18 +9,21 @@ namespace Game {
 			gLooper.DelaySwitchTo<Game::MainMenu>();
 		});
 
-		camera.SetMaxFrameSize(Cfg::itemBaseSize);
+		camera.SetMaxFrameSize(Cfg::unitSize);
 		camera.SetScale(Cfg::globalScale);
 		//camera.SetOriginal(mapSize_2f);
 
+		ground.Emplace()->Init(this, { 100, 100 });
 		player.Emplace()->Init(this);
 	}
 
 	inline void Stage1::Update() {
 		player->Update();
+		camera.SetOriginal(player->pos);
 	}
 
 	inline void Stage1::Draw() {
+		ground->Draw();
 		player->Draw();
 		gLooper.DrawNode(ui);
 		// draw tips
