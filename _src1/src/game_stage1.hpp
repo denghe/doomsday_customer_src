@@ -11,10 +11,13 @@ namespace Game {
 
 		camera.SetMaxFrameSize(Cfg::unitSize);
 		camera.SetScale(Cfg::globalScale);
-		//camera.SetOriginal(mapSize_2f);
 
 		ground.Emplace()->Init(this, { 100, 100 });
+
 		player.Emplace()->Init(this);
+		player->pos = ground->cCellSize * ground->gridSize * 0.5f;
+
+		camera.SetOriginal(player->pos);
 	}
 
 	inline void Stage1::Update() {

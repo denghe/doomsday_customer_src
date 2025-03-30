@@ -5,35 +5,40 @@ namespace Game {
 	inline void Ground::Init(Stage1* owner_, XYi gridSize_) {
 		owner = owner_;
 		gridSize = gridSize_;
+		colors = std::make_unique_for_overwrite<uint8_t[]>(gridSize_.x * gridSize_.y);
+		rnd.SetSeed(12345678901234567890L);
+		for (int32_t rowIdx = 0; rowIdx < gridSize_.x; ++rowIdx) {
+			for (int32_t colIdx = 0; colIdx < gridSize_.y; ++colIdx) {
+				auto idx = gridSize_.x * rowIdx + colIdx;
+				colors[idx] = 255 - 63 + ((uint8_t)rnd.Get() & 63);
+			}
+		}
 	}
 
 	inline void Ground::Draw() {
 		auto& camera = owner->camera;
-		auto wndSize = gLooper.windowSize;
 
-		int32_t rowFrom{}, rowTo{}, colFrom{}, colTo{};
+		XY halfSize{ gLooper.windowSize.x * camera.zoom * 0.5f, gLooper.windowSize.y * camera.zoom * 0.5f };
+		auto leftTopPos = camera.original - halfSize;
+		auto rightBottomPos = camera.original + halfSize;
 
-		int32_t halfNumRows = int32_t(wndSize.y / camera.scale) / cCellSize.y / 2;
-		int32_t posRowIndex = (int32_t)camera.original.y / cCellSize.y;
-		rowFrom = posRowIndex - halfNumRows - 1;
-		rowTo = posRowIndex + halfNumRows + 3;
+		auto rowFrom = int32_t(leftTopPos.y / cCellSize.y);
 		if (rowFrom < 0) {
 			rowFrom = 0;
 		}
+		auto rowTo = int32_t(rightBottomPos.y / cCellSize.y) + 1;
 		if (rowTo > gridSize.y) {
 			rowTo = gridSize.y;
 		}
-
-		int32_t halfNumCols = int32_t(wndSize.x / camera.scale) / cCellSize.x / 2;
-		int32_t posColIndex = (int32_t)camera.original.x / cCellSize.x;
-		colFrom = posColIndex - halfNumCols - 1;
-		colTo = posColIndex + halfNumCols + 3;
+		auto colFrom = int32_t(leftTopPos.x / cCellSize.x);
 		if (colFrom < 0) {
 			colFrom = 0;
 		}
+		auto colTo = int32_t(rightBottomPos.x / cCellSize.x) + 1;
 		if (colTo > gridSize.x) {
 			colTo = gridSize.x;
-		}
+	}
+		if (rowTo == rowFrom || colTo == colFrom) return;
 
 		auto numRows = rowTo - rowFrom;
 		auto numCols = colTo - colFrom;
@@ -46,12 +51,12 @@ namespace Game {
 			for (int32_t colIdx = colFrom; colIdx < colTo; ++colIdx) {
 				auto& q = buf[numCols * (rowIdx - rowFrom) + (colIdx - colFrom)];
 				xx::XY pos{ colIdx * cCellSize.x, rowIdx * cCellSize.y };
-				q.pos = owner->camera.ToGLPos(pos);
+				q.pos = camera.ToGLPos(pos);
 				q.anchor = { 0, 1 };
-				q.scale = scale * Cfg::globalScale * owner->camera.scale;
+				q.scale = scale * Cfg::globalScale * camera.scale;
 				q.radians = 0;
 				q.colorplus = 1;
-				q.color = xx::RGBA8_White;
+				q.color = { 255, 255, 255, colors[gridSize.x * rowIdx + colIdx]};
 				q.texRect.data = frame.textureRect.data;
 			}
 		}
