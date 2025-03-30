@@ -9,8 +9,8 @@ namespace Game {
 				gLooper.DelaySwitchTo<Game::Stage1>();
 		});
 
-		camera.SetMaxFrameSize(Cfg::ItemBaseSize);
-		camera.SetScale(Cfg::Scale);
+		camera.SetMaxFrameSize(Cfg::itemBaseSize);
+		camera.SetScale(Cfg::globalScale);
 		//camera.SetOriginal(mapSize_2f);
 	}
 

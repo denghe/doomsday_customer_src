@@ -3,21 +3,23 @@
 namespace Game {
 
 	void Player::Anim_Idle() {
-		static constexpr float sRange{ 0.3f };
-		static constexpr float sTimeSpan{ 0.5f };
-		static constexpr float sInc{ sRange / (Cfg::fps * sTimeSpan) };
-		static constexpr float sEnd{ 1.f - sRange };
-		XX_BEGIN(lineNumber);
-		for (sy = 1.f; sy >= sEnd; sy -= sInc) {
-			sx = 2.f - sy;
-			XX_YIELD(lineNumber);
+		static constexpr float cTotal{ 2.f };
+		static constexpr float cRange{ 0.07f };
+		static constexpr float cTimeSpan{ 0.3f };
+		static constexpr float cInc{ cRange / (Cfg::fps * cTimeSpan) };
+		static constexpr float cEnd{ 1.f - cRange };
+
+		XX_BEGIN(lineNumber_Anim_Idle);
+		for (scale.y = 1.f; scale.y >= cEnd; scale.y -= cInc) {
+			scale.x = cTotal - scale.y;
+			XX_YIELD(lineNumber_Anim_Idle);
 		}
-		for (; sy <= 1.f; sy += sInc) {
-			sx = 2.f - sy;
-			XX_YIELD(lineNumber);
+		for (; scale.y <= 1.f; scale.y += cInc) {
+			scale.x = cTotal - scale.y;
+			XX_YIELD(lineNumber_Anim_Idle);
 		}
-		XX_YIELD_TO_BEGIN(lineNumber);
-		XX_END(lineNumber);
+		XX_YIELD_TO_BEGIN(lineNumber_Anim_Idle);
+		XX_END(lineNumber_Anim_Idle);
 	}
 
 	inline void Player::Init(Stage1* owner_) {
@@ -26,6 +28,9 @@ namespace Game {
 	}
 
 	inline void Player::Update() {
+		if (auto inc = gLooper.GetKeyboardMoveInc(); inc.has_value()) {
+			pos += inc->second * (cMoveSpeed / Cfg::fps);
+		}
 		Anim_Idle();
 	}
 
@@ -33,8 +38,8 @@ namespace Game {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
 			.Draw(frame->tex->GetValue(), 1);
 		q->pos = owner->camera.ToGLPos(pos);
-		q->anchor = { 0.5f, 0.5f };
-		q->scale = XY{ sx, sy } * Cfg::Scale * owner->camera.scale;
+		q->anchor = { 0.5f, 0.f };
+		q->scale = scale * Cfg::globalScale * owner->camera.scale;
 		q->radians = 0;
 		q->colorplus = 1;
 		q->color = xx::RGBA8_White;

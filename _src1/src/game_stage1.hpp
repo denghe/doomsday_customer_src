@@ -9,8 +9,8 @@ namespace Game {
 			gLooper.DelaySwitchTo<Game::MainMenu>();
 		});
 
-		camera.SetMaxFrameSize(Cfg::ItemBaseSize);
-		camera.SetScale(Cfg::Scale);
+		camera.SetMaxFrameSize(Cfg::itemBaseSize);
+		camera.SetScale(Cfg::globalScale);
 		//camera.SetOriginal(mapSize_2f);
 
 		player.Emplace()->Init(this);
@@ -23,5 +23,8 @@ namespace Game {
 	inline void Stage1::Draw() {
 		player->Draw();
 		gLooper.DrawNode(ui);
+		// draw tips
+		gLooper.ctcDefault.Draw({ 0, gLooper.windowSize_2.y - 5 }, "move: ASDW", xx::RGBA8_Green, { 0.5f, 1 });
+		//gLooper.ctcDefault.Draw({ 0, gLooper.windowSize_2.y - 35 }, xx::ToString("monsters.Count() == ", monsters.Count()), xx::RGBA8_Green, { 0.5f, 1 });
 	}
 }

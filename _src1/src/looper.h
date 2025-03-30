@@ -5,8 +5,8 @@
 // design size: 4k
 // 1k for windows mode & easy test
 struct Cfg : xx::GDesign<1920, 1080, 120> {
-	static constexpr float ItemBaseSize{ 128.f };
-	static constexpr float Scale{ 0.5f };
+	static constexpr float itemBaseSize{ 128.f };
+	static constexpr float globalScale{ 1.f };
 };
 
 #include "game_main_menu.h"
