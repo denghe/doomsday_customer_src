@@ -4,6 +4,7 @@
 #include "game_stage1.hpp"
 #include "game_player.hpp"
 #include "game_ground.hpp"
+#include "game_bullet.hpp"
 // more include here ...
 
 Looper gLooper;

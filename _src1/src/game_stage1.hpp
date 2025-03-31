@@ -35,7 +35,10 @@ namespace Game {
 
 	inline void Stage1::Draw() {
 		ground->Draw();
+
+		// todo: draw order by y
 		player->Draw();
+
 		gLooper.DrawNode(ui);
 
 		// draw tips

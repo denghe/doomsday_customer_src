@@ -2,9 +2,7 @@
 
 namespace Game {
 
-	struct Stage1 : xx::SceneBase {
-		xx::Camera camera;
-		xx::Shared<xx::Node> ui;
+	struct Stage1 : StageBase {
 		xx::Shared<Player> player;
 		xx::Shared<Ground> ground;
 

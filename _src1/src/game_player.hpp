@@ -22,9 +22,8 @@ namespace Game {
 		XX_END(lineNumber_Anim_Idle);
 	}
 
-	inline void Player::Init(Stage1* owner_) {
-		owner = owner_;
-		frame = gLooper.res.player1;
+	inline void Player::Init(StageBase* owner_) {
+		ownerStage = owner_;
 	}
 
 	inline void Player::Update() {
@@ -36,13 +35,13 @@ namespace Game {
 
 	inline void Player::Draw() {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
-			.Draw(frame->tex->GetValue(), 1);
-		q->pos = owner->camera.ToGLPos(pos);
+			.Draw(gLooper.res.player1->tex->GetValue(), 1);
+		q->pos = ownerStage->camera.ToGLPos(pos);
 		q->anchor = ResTpFrames::_anchor_player1_;
-		q->scale = scale * Cfg::globalScale * owner->camera.scale;
+		q->scale = scale * Cfg::globalScale * ownerStage->camera.scale;
 		q->radians = 0;
 		q->colorplus = 1;
 		q->color = xx::RGBA8_White;
-		q->texRect.data = frame->textureRect.data;
+		q->texRect.data = gLooper.res.player1->textureRect.data;
 	}
 }

@@ -9,10 +9,12 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 	static constexpr float globalScale{ 1.f };
 };
 
+#include "game_base.h"
 #include "game_main_menu.h"
 #include "game_ground.h"
 #include "game_player.h"
 #include "game_stage1.h"
+#include "game_bullet.h"
 // more include here ...
 
 struct Looper : xx::Engine<Looper>, Cfg {
