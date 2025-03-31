@@ -7,10 +7,16 @@ namespace Game {
 		gridSize = gridSize_;
 		colors = std::make_unique_for_overwrite<uint8_t[]>(gridSize_.x * gridSize_.y);
 		rnd.SetSeed(12345678901234567890L);
+		assert((gridSize_.x & 0b11) == 0);
 		for (int32_t rowIdx = 0; rowIdx < gridSize_.x; ++rowIdx) {
-			for (int32_t colIdx = 0; colIdx < gridSize_.y; ++colIdx) {
-				auto idx = gridSize_.x * rowIdx + colIdx;
-				colors[idx] = 255 - 63 + ((uint8_t)rnd.Get() & 63);
+			for (int32_t colIdx = 0; colIdx < gridSize_.y; colIdx += 4) {
+				auto idxBase = gridSize_.x * rowIdx;
+				auto r = rnd.Get();
+				auto p = (uint8_t*)&r;
+				colors[idxBase + colIdx + 0] = 255 - 63 + (p[0] & 63);
+				colors[idxBase + colIdx + 1] = 255 - 63 + (p[1] & 63);
+				colors[idxBase + colIdx + 2] = 255 - 63 + (p[2] & 63);
+				colors[idxBase + colIdx + 3] = 255 - 63 + (p[3] & 63);
 			}
 		}
 	}
