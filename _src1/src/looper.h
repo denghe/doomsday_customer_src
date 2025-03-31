@@ -13,6 +13,7 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 #include "game_ground.h"
 #include "game_player.h"
 #include "game_stage1.h"
+#include "game_entity.h"
 // more include here ...
 
 struct Looper : xx::Engine<Looper>, Cfg {
