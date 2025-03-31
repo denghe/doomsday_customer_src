@@ -37,6 +37,8 @@ int32_t main() {
 xx::Task<> Looper::MainTask() {
 	co_await res.AsyncLoad("res/");
 
+	rdd.Init(50, 128);
+
 	btnCfg.frame = res.button;
 	btnCfg.texScale = { 0.99, 0.99 };
 	btnCfg.center = { 2, 3, 2, 2 };

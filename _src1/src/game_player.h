@@ -11,7 +11,7 @@ namespace Game {
 		xx::Listi32<xx::Shared<PlayerSkill>> skills;
 
 		int32_t idle_lineNumber{};
-		void Idle();	// coroutine
+		void Idle();		// coroutine
 
 		void Init(StageBase* ownerStage_);
 		void Update();

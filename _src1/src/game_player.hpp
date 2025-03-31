@@ -3,19 +3,13 @@
 namespace Game {
 
 	void Player::Idle() {
-		static constexpr float cTotal{ 2.f };
-		static constexpr float cRange{ 0.07f };
-		static constexpr float cTimeSpan{ 0.3f };
-		static constexpr float cInc{ cRange / (Cfg::fps * cTimeSpan) };
-		static constexpr float cEnd{ 1.f - cRange };
-
 		XX_BEGIN(idle_lineNumber);
-		for (scale.y = 1.f; scale.y >= cEnd; scale.y -= cInc) {
-			scale.x = cTotal - scale.y;
+		for (scale.y = 1.f; scale.y >= IdleCfg::cEnd; scale.y -= IdleCfg::cInc) {
+			scale.x = IdleCfg::cTotal - scale.y;
 			XX_YIELD(idle_lineNumber);
 		}
-		for (; scale.y <= 1.f; scale.y += cInc) {
-			scale.x = cTotal - scale.y;
+		for (; scale.y <= 1.f; scale.y += IdleCfg::cInc) {
+			scale.x = IdleCfg::cTotal - scale.y;
 			XX_YIELD(idle_lineNumber);
 		}
 		XX_YIELD_TO_BEGIN(idle_lineNumber);
@@ -32,6 +26,9 @@ namespace Game {
 		damage = 1;
 		criticalRate = 0.1f;
 		criticalDamageRatio = 2;
+
+		// add init skill for test
+		skills.Emplace().Emplace<PlayerSkill_1>()->Init(this);
 	}
 
 	inline void Player::Update() {
@@ -61,7 +58,7 @@ namespace Game {
 			.Draw(gLooper.res.player1->tex->GetValue(), 2);
 		// body
 		q[1].pos = ownerStage->camera.ToGLPos(pos);
-		q[1].anchor = { ResTpFrames::_anchor_player1_.x, 0 };
+		q[1].anchor = ResTpFrames::_anchor_player1_;
 		q[1].scale = scale * Cfg::globalScale * ownerStage->camera.scale;
 		q[1].radians = 0;
 		q[1].colorplus = 1;
@@ -70,7 +67,7 @@ namespace Game {
 		// shadow
 		q[0].scale = { q[1].scale.x, q[1].scale.y * 0.2f };
 		q[0].pos = { q[1].pos.x, q[1].pos.y - q[0].scale.y * ResTpFrames::_size_player1_.y * 0.5f };
-		q[0].anchor = q[1].anchor;
+		q[0].anchor = { ResTpFrames::_anchor_player1_.x, 0.3 };
 		q[0].radians = q[1].radians;
 		q[0].colorplus = q[1].colorplus;
 		q[0].color = { 0,0,0,127 };

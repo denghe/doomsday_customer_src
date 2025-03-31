@@ -1,27 +1,36 @@
 ﻿#pragma once
+#include "xx_space_.h"
 
 namespace Game {
 
 	// space index with size limited items
-	// requires T:: (XYi / XY) pos size  (int32_t) indexAtItems indexAtCells
-	// requires T:: ( T* )prev next	      ( if enableDoubleLink == true )
+	// requires:
+	/*
+		XY pos{};
+		float radius{};
+		int32_t indexAtItems{ -1 }, indexAtCells{ -1 };
+		T *prev{}, *next{};		// if enableDoubleLink == true
+	*/
 	template<typename T, bool enableDoubleLink = true>
 	struct Space {
-		XYi cellSize{}, gridSize{};					// gridSize = cellSize * numCR
-		XY _1_cellSize{};							// 1 / cellSize
+		XYi gridSize{};								// gridSize = cellSize * numCR
+		int32_t cellSize{};
+		float _1_cellSize{};						// 1 / cellSize
 		int32_t numRows{}, numCols{};
 		xx::Listi32<xx::Shared<T>> items;
 		int32_t cellsLen{};
 		std::unique_ptr<T*[]> cells;
+		xx::SpaceGridRingDiffuseData const* rdd{};	// ref to requires data
 
-		void Init(int32_t numRows_, int32_t numCols_, XYi const& cellSize_, int32_t cap = 10000) {
+		void Init(xx::SpaceGridRingDiffuseData const* rdd_, int32_t numRows_, int32_t numCols_, int32_t cellSize_, int32_t cap = 10000) {
 			assert(!cells);
-			assert(numCols_ > 0 && numRows_ > 0 && cellSize_.x > 0 && cellSize_.y > 0);
+			assert(numCols_ > 0 && numRows_ > 0 && cellSize_ > 0);
+			rdd = rdd_;
 			numRows = numRows_;
 			numCols = numCols_;
 			cellSize = cellSize_;
-			gridSize = { cellSize_.x * numCols_, cellSize_.y * numRows_ };
-			_1_cellSize = 1 / cellSize.As<float>();
+			gridSize = { cellSize_ * numCols_, cellSize_ * numRows_ };
+			_1_cellSize = 1.f / cellSize;
 
 			cellsLen = numRows * numCols;
 			cells = std::make_unique_for_overwrite<T*[]>(cellsLen);
@@ -181,6 +190,61 @@ namespace Game {
 		}
 
 		// todo: more search funcs
+
+		// ring diffuse search   nearest edge   best one and return
+		template<bool enableExcept = false>
+		T* FindNearestByRange(float x, float y, float maxDistance, T* except = {}) {
+			int32_t cIdxBase = (int32_t)(x * _1_cellSize);
+			if (cIdxBase < 0 || cIdxBase >= numCols) return nullptr;
+			int32_t rIdxBase = (int32_t)(y * _1_cellSize);
+			if (rIdxBase < 0 || rIdxBase >= numRows) return nullptr;
+			auto searchRange = maxDistance + cellSize;
+
+			T* rtv{};
+			float maxV{};
+
+			auto& lens = rdd->lens;
+			auto& idxs = rdd->idxs;
+			for (int32_t i = 1, e = lens.len; i < e; i++) {
+				auto offsets = lens[i - 1].count;
+				auto siz = lens[i].count - lens[i - 1].count;
+				for (int32_t j = 0; j < siz; ++j) {
+					auto& tmp = idxs[offsets + j];
+					auto cIdx = cIdxBase + tmp.x;
+					if (cIdx < 0 || cIdx >= numCols) continue;
+					auto rIdx = rIdxBase + tmp.y;
+					if (rIdx < 0 || rIdx >= numRows) continue;
+					auto cidx = rIdx * numCols + cIdx;
+
+					auto c = cells[cidx];
+					while (c) {
+						auto nex = c->next;
+						if constexpr (enableExcept) {
+							if (c == except) {
+								c = nex;
+								continue;
+							}
+						}
+
+						auto vx = c->pos.x - x;
+						auto vy = c->pos.y - y;
+						auto dd = vx * vx + vy * vy;
+						auto r = maxDistance + c->radius;
+						auto v = r * r - dd;
+						if (v > maxV) {
+							rtv = c;
+							maxV = v;
+						}
+
+						c = nex;
+					}
+				}
+				if (lens[i].radius > searchRange) break;
+			}
+
+			return rtv;
+		}
+
 	};
 
 }

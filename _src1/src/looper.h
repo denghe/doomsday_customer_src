@@ -5,17 +5,18 @@
 // design size: 4k
 // 1k for windows mode & easy test
 struct Cfg : xx::GDesign<1920, 1080, 120> {
-	static constexpr float unitSize{ 128.f };
 	static constexpr float globalScale{ 1.f };
+	static constexpr float unitSize{ 128.f };
+	static constexpr XYi gridSize{ 5000, 5000 };	// default value
 };
 
 #include "game_space.h"
 #include "game_base.h"
 #include "game_main_menu.h"
 #include "game_ground.h"
-#include "game_player_bullet.h"
 #include "game_player_skill_cfg.h"
 #include "game_player_skill.h"
+#include "game_player_bullet.h"
 #include "game_player.h"
 #include "game_monster.h"
 #include "game_monster_generator.h"
@@ -27,6 +28,8 @@ struct Looper : xx::Engine<Looper>, Cfg {
 
 	ResTpFrames res;
 	xx::Scale9SpriteConfig btnCfg;
+	xx::SpaceGridRingDiffuseData rdd;
+	xx::Listi32<std::pair<float, Game::Drawable*>> yDraws;
 };
 
 extern Looper gLooper;
