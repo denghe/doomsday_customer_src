@@ -38,7 +38,7 @@ namespace Game {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
 			.Draw(frame->tex->GetValue(), 1);
 		q->pos = owner->camera.ToGLPos(pos);
-		q->anchor = { 0.5f, 0.f };
+		q->anchor = ResTpFrames::_anchor_player1_;
 		q->scale = scale * Cfg::globalScale * owner->camera.scale;
 		q->radians = 0;
 		q->colorplus = 1;

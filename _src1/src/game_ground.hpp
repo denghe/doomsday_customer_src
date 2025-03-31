@@ -28,19 +28,19 @@ namespace Game {
 		auto leftTopPos = camera.original - halfSize;
 		auto rightBottomPos = camera.original + halfSize;
 
-		auto rowFrom = int32_t(leftTopPos.y / cCellSize.y);
+		auto rowFrom = int32_t(leftTopPos.y / ResTpFrames::_size_ground_cell_.y);
 		if (rowFrom < 0) {
 			rowFrom = 0;
 		}
-		auto rowTo = int32_t(rightBottomPos.y / cCellSize.y) + 1;
+		auto rowTo = int32_t(rightBottomPos.y / ResTpFrames::_size_ground_cell_.y) + 1;
 		if (rowTo > gridSize.y) {
 			rowTo = gridSize.y;
 		}
-		auto colFrom = int32_t(leftTopPos.x / cCellSize.x);
+		auto colFrom = int32_t(leftTopPos.x / ResTpFrames::_size_ground_cell_.x);
 		if (colFrom < 0) {
 			colFrom = 0;
 		}
-		auto colTo = int32_t(rightBottomPos.x / cCellSize.x) + 1;
+		auto colTo = int32_t(rightBottomPos.x / ResTpFrames::_size_ground_cell_.x) + 1;
 		if (colTo > gridSize.x) {
 			colTo = gridSize.x;
 	}
@@ -56,7 +56,7 @@ namespace Game {
 		for (int32_t rowIdx = rowFrom; rowIdx < rowTo; ++rowIdx) {
 			for (int32_t colIdx = colFrom; colIdx < colTo; ++colIdx) {
 				auto& q = buf[numCols * (rowIdx - rowFrom) + (colIdx - colFrom)];
-				xx::XY pos{ colIdx * cCellSize.x, rowIdx * cCellSize.y };
+				xx::XY pos{ colIdx * ResTpFrames::_size_ground_cell_.x, rowIdx * ResTpFrames::_size_ground_cell_.y };
 				q.pos = camera.ToGLPos(pos);
 				q.anchor = { 0, 1 };
 				q.scale = scale * Cfg::globalScale * camera.scale;

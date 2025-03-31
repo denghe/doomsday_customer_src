@@ -1,4 +1,3 @@
-#pragma once
 #include "pch.h"
 #include "res_tp_frames.h"
 
@@ -15,6 +14,9 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 		xx_assert(tp);
 		auto map = tp->GetMapSV();
 
+		this->bullet_cash = map["bullet_cash"sv];
+		this->bullet_coin5 = map["bullet_coin5"sv];
+		this->bullet_coin10 = map["bullet_coin10"sv];
 		this->button = map["button"sv];
 		this->font_outline_32 = map["font_outline_32"sv];
 		this->font_outline_33 = map["font_outline_33"sv];
@@ -117,38 +119,10 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 		this->monster_hamburger = map["monster_hamburger"sv];
 		this->monster_instantnoodles = map["monster_instantnoodles"sv];
 		this->player1 = map["player1"sv];
-		this->player2 = map["player2"sv];
 	}
 
 	// fill groups
 
-	font_outline_.Add(font_outline_100);
-	font_outline_.Add(font_outline_101);
-	font_outline_.Add(font_outline_102);
-	font_outline_.Add(font_outline_103);
-	font_outline_.Add(font_outline_104);
-	font_outline_.Add(font_outline_105);
-	font_outline_.Add(font_outline_106);
-	font_outline_.Add(font_outline_107);
-	font_outline_.Add(font_outline_108);
-	font_outline_.Add(font_outline_109);
-	font_outline_.Add(font_outline_110);
-	font_outline_.Add(font_outline_111);
-	font_outline_.Add(font_outline_112);
-	font_outline_.Add(font_outline_113);
-	font_outline_.Add(font_outline_114);
-	font_outline_.Add(font_outline_115);
-	font_outline_.Add(font_outline_116);
-	font_outline_.Add(font_outline_117);
-	font_outline_.Add(font_outline_118);
-	font_outline_.Add(font_outline_119);
-	font_outline_.Add(font_outline_120);
-	font_outline_.Add(font_outline_121);
-	font_outline_.Add(font_outline_122);
-	font_outline_.Add(font_outline_123);
-	font_outline_.Add(font_outline_124);
-	font_outline_.Add(font_outline_125);
-	font_outline_.Add(font_outline_126);
 	font_outline_.Add(font_outline_32);
 	font_outline_.Add(font_outline_33);
 	font_outline_.Add(font_outline_34);
@@ -217,5 +191,32 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 	font_outline_.Add(font_outline_97);
 	font_outline_.Add(font_outline_98);
 	font_outline_.Add(font_outline_99);
+	font_outline_.Add(font_outline_100);
+	font_outline_.Add(font_outline_101);
+	font_outline_.Add(font_outline_102);
+	font_outline_.Add(font_outline_103);
+	font_outline_.Add(font_outline_104);
+	font_outline_.Add(font_outline_105);
+	font_outline_.Add(font_outline_106);
+	font_outline_.Add(font_outline_107);
+	font_outline_.Add(font_outline_108);
+	font_outline_.Add(font_outline_109);
+	font_outline_.Add(font_outline_110);
+	font_outline_.Add(font_outline_111);
+	font_outline_.Add(font_outline_112);
+	font_outline_.Add(font_outline_113);
+	font_outline_.Add(font_outline_114);
+	font_outline_.Add(font_outline_115);
+	font_outline_.Add(font_outline_116);
+	font_outline_.Add(font_outline_117);
+	font_outline_.Add(font_outline_118);
+	font_outline_.Add(font_outline_119);
+	font_outline_.Add(font_outline_120);
+	font_outline_.Add(font_outline_121);
+	font_outline_.Add(font_outline_122);
+	font_outline_.Add(font_outline_123);
+	font_outline_.Add(font_outline_124);
+	font_outline_.Add(font_outline_125);
+	font_outline_.Add(font_outline_126);
 	co_return;
 }

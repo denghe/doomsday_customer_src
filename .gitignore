@@ -3,3 +3,4 @@ build
 cmake-build-*
 .vs
 build2
+*.exe

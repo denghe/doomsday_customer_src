@@ -15,7 +15,7 @@ namespace Game {
 		ground.Emplace()->Init(this, { 10000, 10000 });
 
 		player.Emplace()->Init(this);
-		player->pos = ground->cCellSize * ground->gridSize * 0.5f;
+		player->pos = ResTpFrames::_size_ground_cell_ * ground->gridSize * 0.5f;
 
 		camera.SetOriginal(player->pos);
 	}
