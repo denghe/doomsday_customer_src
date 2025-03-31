@@ -10,8 +10,8 @@ namespace Game {
 		float criticalDamageRatio{};
 		xx::Listi32<xx::Shared<PlayerSkill>> skills;
 
-		int32_t anim_Idle_lineNumber{};
-		void Anim_Idle();	// coroutine
+		int32_t idle_lineNumber{};
+		void Idle();	// coroutine
 
 		void Init(StageBase* ownerStage_);
 		void Update();

@@ -10,7 +10,7 @@ namespace Game {
 		xx::Rnd rnd;
 		std::unique_ptr<uint8_t[]> colors;
 
-		void Init(Stage1* owner_, XYi gridSize_);
+		void Init(Stage1* owner_, XY mapSize);
 		void Draw();
 	};
 

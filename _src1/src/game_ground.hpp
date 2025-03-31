@@ -2,15 +2,17 @@
 
 namespace Game {
 
-	inline void Ground::Init(Stage1* owner_, XYi gridSize_) {
+	inline void Ground::Init(Stage1* owner_, XY mapSize) {
 		owner = owner_;
-		gridSize = gridSize_;
-		colors = std::make_unique_for_overwrite<uint8_t[]>(gridSize_.x * gridSize_.y);
+		gridSize = mapSize / ResTpFrames::_size_ground_cell_;
+		if (gridSize.x & 0b11) {
+			gridSize.x = (gridSize.x + 4) & ~0b11;
+		}
+		colors = std::make_unique_for_overwrite<uint8_t[]>(gridSize.x * gridSize.y);
 		rnd.SetSeed(12345678901234567890L);
-		assert((gridSize_.x & 0b11) == 0);
-		for (int32_t rowIdx = 0; rowIdx < gridSize_.x; ++rowIdx) {
-			for (int32_t colIdx = 0; colIdx < gridSize_.y; colIdx += 4) {
-				auto idxBase = gridSize_.x * rowIdx;
+		for (int32_t rowIdx = 0; rowIdx < gridSize.x; ++rowIdx) {
+			for (int32_t colIdx = 0; colIdx < gridSize.y; colIdx += 4) {
+				auto idxBase = gridSize.x * rowIdx;
 				auto r = rnd.Get();
 				auto p = (uint8_t*)&r;
 				colors[idxBase + colIdx + 0] = 255 - 63 + (p[0] & 63);

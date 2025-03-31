@@ -9,15 +9,16 @@ namespace Game {
 			gLooper.DelaySwitchTo<Game::MainMenu>();
 		});
 
+		cellSize = { Cfg::unitSize, Cfg::unitSize };
+		gridSize = { 5000, 5000 };
+		mapSize = cellSize * gridSize;
+
 		camera.SetMaxFrameSize(Cfg::unitSize);
 		camera.SetScale(Cfg::globalScale);
+		camera.SetOriginal(mapSize * 0.5f);
 
-		ground.Emplace()->Init(this, { 10000, 10000 });
-
+		ground.Emplace()->Init(this, mapSize);
 		player.Emplace()->Init(this);
-		player->pos = ResTpFrames::_size_ground_cell_ * ground->gridSize * 0.5f;
-
-		camera.SetOriginal(player->pos);
 	}
 
 	inline void Stage1::Update() {
