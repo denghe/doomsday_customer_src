@@ -1,10 +1,16 @@
 ﻿#include "pch.h"
 #include "looper.h"
+#include "game_base.hpp"
 #include "game_main_menu.hpp"
-#include "game_stage1.hpp"
-#include "game_player.hpp"
 #include "game_ground.hpp"
-#include "game_bullet.hpp"
+#include "game_player.hpp"
+#include "game_player_bullet.hpp"
+#include "game_player_skill_cfg.hpp"
+#include "game_player_skill.hpp"
+#include "game_monster.hpp"
+#include "game_monster_generator.hpp"
+#include "game_stage1.hpp"
+
 // more include here ...
 
 Looper gLooper;

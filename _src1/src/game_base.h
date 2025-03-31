@@ -5,6 +5,8 @@ namespace Game {
 	struct StageBase : xx::SceneBase {
 		xx::Camera camera;
 		xx::Shared<xx::Node> ui;
+
+		virtual XY GetPlayerBornPos();
 	};
 
 	struct Drawable {

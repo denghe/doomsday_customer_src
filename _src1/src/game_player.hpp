@@ -9,26 +9,33 @@ namespace Game {
 		static constexpr float cInc{ cRange / (Cfg::fps * cTimeSpan) };
 		static constexpr float cEnd{ 1.f - cRange };
 
-		XX_BEGIN(lineNumber_Anim_Idle);
+		XX_BEGIN(anim_Idle_lineNumber);
 		for (scale.y = 1.f; scale.y >= cEnd; scale.y -= cInc) {
 			scale.x = cTotal - scale.y;
-			XX_YIELD(lineNumber_Anim_Idle);
+			XX_YIELD(anim_Idle_lineNumber);
 		}
 		for (; scale.y <= 1.f; scale.y += cInc) {
 			scale.x = cTotal - scale.y;
-			XX_YIELD(lineNumber_Anim_Idle);
+			XX_YIELD(anim_Idle_lineNumber);
 		}
-		XX_YIELD_TO_BEGIN(lineNumber_Anim_Idle);
-		XX_END(lineNumber_Anim_Idle);
+		XX_YIELD_TO_BEGIN(anim_Idle_lineNumber);
+		XX_END(anim_Idle_lineNumber);
 	}
 
-	inline void Player::Init(StageBase* owner_) {
-		ownerStage = owner_;
+	inline void Player::Init(StageBase* ownerStage_) {
+		ownerStage = ownerStage_;
+		pos = ownerStage_->GetPlayerBornPos();
+		scale = { 1,1 };
+		moveSpeed = 300.f / Cfg::fps;
+		radius = ResTpFrames::_size_player1_.x * 0.5f;
+		damage = 1;
+		criticalRate = 0.1f;
+		criticalDamageRatio = 2;
 	}
 
 	inline void Player::Update() {
 		if (auto inc = gLooper.GetKeyboardMoveInc(); inc.has_value()) {
-			pos += inc->second * (cMoveSpeed / Cfg::fps);
+			pos += inc->second * moveSpeed;
 		}
 		Anim_Idle();
 	}
