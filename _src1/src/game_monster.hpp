@@ -37,8 +37,15 @@ namespace Game {
 				tarOffset = stage->GetRndPosDoughnut(tarOffsetRadius, 0.1f);
 			}
 			// calc & move
+#if 0
 			auto r = std::atan2f(d.y, d.x);
 			pos += XY{ std::cosf(r) * moveSpeed, std::sinf(r) * moveSpeed };
+#else
+			// faster than atan2 + sin cos  1/4
+			auto mag = std::sqrt(dd);
+			auto norm = d / mag;
+			pos += norm * moveSpeed;
+#endif
 			stage->ForceLimit(pos);
 			stage->monsters.Update(this);	// sync space index
 		}

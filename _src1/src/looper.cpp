@@ -30,7 +30,7 @@ int32_t main() {
 	gLooper.showFps = true;
 	gLooper.title = "doomsday_customer_src1";
 	gLooper.Init();
-	gLooper.Run<0>();
+	gLooper.Run<3>();
 }
 #endif
 
