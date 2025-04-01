@@ -245,6 +245,206 @@ namespace Game {
 			return rtv;
 		}
 
+		// foreach target cell + round 8 = 9 cells find first cross and return ( tested )
+		template<bool enableExcept = false>
+		T* FindFirstCrossBy9(float x, float y, float radius, T* except = {}) {
+			int cIdx = (int)(x * _1_cellSize);
+			if (cIdx < 0 || cIdx >= numCols) return nullptr;
+			int rIdx = (int)(y * _1_cellSize);
+			if (rIdx < 0 || rIdx >= numRows) return nullptr;
+
+			// 5
+			int idx = rIdx * numCols + cIdx;
+			auto c = cells[idx];
+			while (c) {
+				auto nex = c->next;
+
+				if constexpr (enableExcept) {
+					if (c == except) {
+						c = nex;
+						continue;
+					}
+				}
+				auto vx = c->pos.x - x;
+				auto vy = c->pos.y - y;
+				auto r = c->radius + radius;
+				if (vx * vx + vy * vy < r * r) return c;
+
+				c = nex;
+			}
+
+			// 6
+			++cIdx;
+			if (cIdx >= numCols) return nullptr;
+			++idx;
+			c = cells[idx];
+			while (c) {
+				auto nex = c->next;
+
+				if constexpr (enableExcept) {
+					if (c == except) {
+						c = nex;
+						continue;
+					}
+				}
+				auto vx = c->pos.x - x;
+				auto vy = c->pos.y - y;
+				auto r = c->radius + radius;
+				if (vx * vx + vy * vy < r * r) return c;
+
+				c = nex;
+			}
+
+			// 3
+			++rIdx;
+			if (rIdx >= numRows) return nullptr;
+			idx += numCols;
+			c = cells[idx];
+			while (c) {
+				auto nex = c->next;
+
+				if constexpr (enableExcept) {
+					if (c == except) {
+						c = nex;
+						continue;
+					}
+				}
+				auto vx = c->pos.x - x;
+				auto vy = c->pos.y - y;
+				auto r = c->radius + radius;
+				if (vx * vx + vy * vy < r * r) return c;
+
+				c = nex;
+			}
+
+			// 2
+			--idx;
+			c = cells[idx];
+			while (c) {
+				auto nex = c->next;
+
+				if constexpr (enableExcept) {
+					if (c == except) {
+						c = nex;
+						continue;
+					}
+				}
+				auto vx = c->pos.x - x;
+				auto vy = c->pos.y - y;
+				auto r = c->radius + radius;
+				if (vx * vx + vy * vy < r * r) return c;
+
+				c = nex;
+			}
+
+			// 1
+			cIdx -= 2;
+			if (cIdx < 0) return nullptr;
+			--idx;
+			c = cells[idx];
+			while (c) {
+				auto nex = c->next;
+
+				if constexpr (enableExcept) {
+					if (c == except) {
+						c = nex;
+						continue;
+					}
+				}
+				auto vx = c->pos.x - x;
+				auto vy = c->pos.y - y;
+				auto r = c->radius + radius;
+				if (vx * vx + vy * vy < r * r) return c;
+
+				c = nex;
+			}
+
+			// 4
+			idx -= numCols;
+			c = cells[idx];
+			while (c) {
+				auto nex = c->next;
+
+				if constexpr (enableExcept) {
+					if (c == except) {
+						c = nex;
+						continue;
+					}
+				}
+				auto vx = c->pos.x - x;
+				auto vy = c->pos.y - y;
+				auto r = c->radius + radius;
+				if (vx * vx + vy * vy < r * r) return c;
+
+				c = nex;
+			}
+
+			// 7
+			rIdx -= 2;
+			if (rIdx < 0) return nullptr;
+			idx -= numCols;
+			c = cells[idx];
+			while (c) {
+				auto nex = c->next;
+
+				if constexpr (enableExcept) {
+					if (c == except) {
+						c = nex;
+						continue;
+					}
+				}
+				auto vx = c->pos.x - x;
+				auto vy = c->pos.y - y;
+				auto r = c->radius + radius;
+				if (vx * vx + vy * vy < r * r) return c;
+
+				c = nex;
+			}
+
+			// 8
+			++idx;
+			c = cells[idx];
+			while (c) {
+				auto nex = c->next;
+
+				if constexpr (enableExcept) {
+					if (c == except) {
+						c = nex;
+						continue;
+					}
+				}
+				auto vx = c->pos.x - x;
+				auto vy = c->pos.y - y;
+				auto r = c->radius + radius;
+				if (vx * vx + vy * vy < r * r) return c;
+
+				c = nex;
+			}
+
+			// 9
+			++idx;
+			c = cells[idx];
+			while (c) {
+				auto nex = c->next;
+
+				if constexpr (enableExcept) {
+					if (c == except) {
+						c = nex;
+						continue;
+					}
+				}
+				auto vx = c->pos.x - x;
+				auto vy = c->pos.y - y;
+				auto r = c->radius + radius;
+				if (vx * vx + vy * vy < r * r) return c;
+
+				c = nex;
+			}
+
+			return nullptr;
+		}
+
+
 	};
 
 }

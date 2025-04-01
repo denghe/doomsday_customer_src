@@ -19,15 +19,15 @@ namespace Game {
 		ground.Emplace()->Init(this, mapSize);
 		monsters.Init(&gLooper.rdd, gridSize.y, gridSize.x, (int32_t)Cfg::unitSize);
 
-		auto& c = skillCfgs.Emplace().Emplace<SkillCfg_1>();
-		c->aimRange = Cfg::unitSize * 10;
-		c->radius = ResTpFrames::_size_bullet_coin5_.x * 0.5f;
-		c->damage = 5;
-		c->moveSpeed = 600.f / Cfg::fps;
-		c->shootSpeed = 1.f / Cfg::fps;
-		c->life = 3 * (int32_t)Cfg::fps;
-		c->pierceCount = 0;
-		c->pierceDelay = 0;
+		auto& sc = skillCfgs.Emplace().Emplace<SkillCfg_1>();
+		sc->aimRange = Cfg::unitSize * 10;
+		sc->radius = ResTpFrames::_size_bullet_coin5_.x * 0.5f;
+		sc->damage = 5;
+		sc->moveSpeed = 600.f / Cfg::fps;
+		sc->shootSpeed = 1000.f / Cfg::fps;
+		sc->life = 3 * (int32_t)Cfg::fps;
+		sc->pierceCount = 0;
+		sc->pierceDelay = 0;
 
 		monsterGenerators.Emplace().Emplace<MonsterGenerator_1>()
 			->Init(this, 0, int32_t(Cfg::fps) * 60 * 10, 1);

@@ -60,6 +60,7 @@ namespace Game {
 
 		virtual XY GetPlayerBornPos();
 		void ForceLimit(XY& pos);
+		bool IsOutOfMap(XY const& pos);
 	};
 
 	// animation: idle 's config( global usage )
@@ -123,7 +124,7 @@ namespace Game {
 
 	// bullet's base
 	struct Bullet : Drawable {
-		xx::Weak<Creature> ownere;	// owner's life maybe <= this
+		xx::Weak<Creature> owner;	// owner's life maybe <= this
 		SkillCfg* cfg;				// skill cfg's life > this( copy from maker )
 
 		virtual int32_t Update() { return 0; }

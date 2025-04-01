@@ -15,6 +15,10 @@ namespace Game {
 			pos.y = mapSize.y - 1;
 	}
 
+	inline bool Stage::IsOutOfMap(XY const& pos) {
+		return pos.x < 0 || pos.y < 0 || pos.x >= mapSize.x || pos.y >= mapSize.y;
+	}
+
 	inline void Creature::Idle() {
 		XX_BEGIN(idle_lineNumber);
 		for (scale.y = 1.f; scale.y >= IdleCfg::cEnd; scale.y -= IdleCfg::cInc) {

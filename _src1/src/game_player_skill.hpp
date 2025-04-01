@@ -13,22 +13,21 @@ namespace Game {
             shootCountPool -= count;
             auto speedStep = cfg->moveSpeed / count;
             auto stage = player->stage;
-            auto pos = player->pos;
+            auto pp = player->pos;
             for (int i = 0; i < count; ++i) {
                 // shoot nearest one
-                auto p = player->pos;
-                auto o = stage->monsters.FindNearestByRange(pos.x, pos.y, cfg->aimRange);
+                auto o = stage->monsters.FindNearestByRange(pp.x, pp.y, cfg->aimRange);
                 if (o) {
-                    auto dy = o->pos.y - pos.y;
-                    auto dx = o->pos.x - pos.x;
+                    auto dy = o->pos.y - pp.y;
+                    auto dx = o->pos.x - pp.x;
                     auto r = std::atan2f(dy, dx);
                     auto cos = std::cosf(r);
                     auto sin = std::sinf(r);
                     auto d = ResTpFrames::_size_player1_.x - speedStep * i;
-                    auto tarX = pos.x + cos * d;
-                    auto tarY = pos.y + sin * d;
-                    //new PlayerBullet(this).Init(tarX, tarY, r, cos, sin);
-                    stage->playerBullets.Emplace().Emplace<PlayerBullet_1>()->Init(this);   // todo: args
+                    auto tarX = pp.x + cos * d;
+                    auto tarY = pp.y + sin * d;
+                    stage->playerBullets.Emplace().Emplace<PlayerBullet_1>()->Init(this
+                        , pp + XY{ cos * d, sin * d }, 0, 1, cos, sin);
                 }
             }
         }

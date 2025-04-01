@@ -3,8 +3,10 @@
 namespace Game {
 
 	struct PlayerBullet_1 : Bullet {
-		// todo: more args
-		void Init(Skill* ps);
+		XY inc{};							// move increase pixel per frame
+		int32_t lifeEndTime{};				// max life point
+
+		void Init(Skill* skill, XY const& pos_, float radians_, float scale_, float cos, float sin);
 		int32_t Update() override;
 		void Draw() override;
 	};

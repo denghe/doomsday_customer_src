@@ -2,17 +2,26 @@
 
 namespace Game {
 
-	void PlayerBullet_1::Init(Skill* ps) {
-		stage = ps->player->stage;
-		pos = ps->player->pos;
-		scale = 1;
-		radians = 0;// -M_PI_2;
-		// todo
+	void PlayerBullet_1::Init(Skill* skill, XY const& pos_, float radians_, float scale_, float cos, float sin) {
+		stage = skill->player->stage;
+		cfg = skill->cfg;
+
+		pos = pos_;
+		scale = scale_;
+		radians = radians_;
+
+		lifeEndTime = stage->time + cfg->life;
+		inc = { cos * cfg->moveSpeed, sin * cfg->moveSpeed };
 	}
 
 	int32_t PlayerBullet_1::Update() {
-		// todo
-		return 0;
+		pos += inc;
+		if (stage->IsOutOfMap(pos)) return -1;
+		if (auto m = stage->monsters.FindFirstCrossBy9(pos.x, pos.y, cfg->radius)) {
+			// todo: m->Hurt(this) ...
+			return 1;
+		}
+        return lifeEndTime < stage->time;
 	}
 
 	void PlayerBullet_1::Draw() {
