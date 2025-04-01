@@ -3,13 +3,13 @@
 namespace Game {
 
     void MonsterGenerator_1::Update() {
-        auto& p = ownerStage->player->pos;
-        auto& rnd = ownerStage->rnd;
+        auto& p = stage->player->pos;
+        auto& rnd = stage->rnd;
         static constexpr auto ds_2 = Cfg::designSize / 2;
         for (countPool += countIncPerFrame; countPool >= 1; --countPool) {
-            if (ownerStage->monsters.items.len < Cfg::numMaxMonsters) {
+            if (stage->monsters.items.len < Cfg::numMaxMonsters) {
                 XY pos{};
-                switch (ownerStage->rnd.Next<int32_t>(0, 4)) {
+                switch (stage->rnd.Next<int32_t>(0, 4)) {
                 case 0:
                     pos = { p.x - ds_2.x - Cfg::unitSize
                         , p.y + rnd.Next<float>(-ds_2.y - Cfg::unitSize, ds_2.y + Cfg::unitSize) };
@@ -28,8 +28,8 @@ namespace Game {
                     break;
                 }
                 auto m = xx::MakeShared<Monster_1>();
-                m->Init(ownerStage, pos);
-                ownerStage->monsters.Add(std::move(m));
+                m->Init(stage, pos);
+                stage->monsters.Add(std::move(m));
             }
         }
     }

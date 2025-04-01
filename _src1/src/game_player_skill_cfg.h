@@ -2,9 +2,8 @@
 
 namespace Game {
 
-	struct PlayerSkillCfg_1 : SkillCfg {
-		// ...
-        float knockbackForce{};
+	struct SkillCfg_1 : SkillCfg {
+		// todo
 	};
 
 }

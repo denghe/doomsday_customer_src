@@ -2,9 +2,9 @@
 
 namespace Game {
 
-	inline void Player_1::Init(Stage* ownerStage_) {
-		ownerStage = ownerStage_;
-		pos = ownerStage_->GetPlayerBornPos();
+	inline void Player_1::Init(Stage* stage_) {
+		stage = stage_;
+		pos = stage_->GetPlayerBornPos();
 		scale = { 1,1 };
 		moveSpeed = 300.f / Cfg::fps;
 		radius = ResTpFrames::_size_player1_.x * 0.5f;
@@ -14,7 +14,7 @@ namespace Game {
 		criticalDamageRatio = 2;
 
 		// add init skill for test
-		skills.Emplace().Emplace<PlayerSkill_1>()->Init(this);
+		skills.Emplace().Emplace<Skill_1>()->Init(this, stage->skillCfgs[0]);
 	}
 
 	inline int32_t Player_1::Update() {
@@ -22,7 +22,7 @@ namespace Game {
 		auto posBak = pos;
 		if (auto inc = gLooper.GetKeyboardMoveInc(); inc.has_value()) {
 			pos += inc->second * moveSpeed;
-			ownerStage->ForceLimit(pos);	// for safe
+			stage->ForceLimit(pos);	// for safe
 			// todo: more block limit
 		}
 		auto moved = posBak == pos;
@@ -46,9 +46,9 @@ namespace Game {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
 			.Draw(gLooper.res.player1->tex->GetValue(), 2);
 		// body
-		q[1].pos = ownerStage->camera.ToGLPos(pos);
+		q[1].pos = stage->camera.ToGLPos(pos);
 		q[1].anchor = ResTpFrames::_anchor_player1_;
-		q[1].scale = scale * Cfg::globalScale * ownerStage->camera.scale;
+		q[1].scale = scale * Cfg::globalScale * stage->camera.scale;
 		q[1].radians = 0;
 		q[1].colorplus = 1;
 		q[1].color = xx::RGBA8_White;

@@ -2,30 +2,21 @@
 
 namespace Game {
 
-	inline void PlayerSkill_1::Init(Player* ownerPlayer_) {
-		ownerPlayer = ownerPlayer_;
-        auto& c = cfg.Emplace<PlayerSkillCfg_1>();
-        c->aimRange = Cfg::unitSize * 10;
-		c->radius = ResTpFrames::_size_bullet_coin5_.x * 0.5f;
-		c->damage = 5;
-		c->moveSpeed = 600.f / Cfg::fps;
-        c->shootSpeed = 1.f / Cfg::fps;
-		c->life = 3 * (int32_t)Cfg::fps;
-		c->pierceCount = 0;
-		c->pierceDelay = 0;
-        c->knockbackForce = 123;
+	inline void Skill_1::Init(Player* player_, SkillCfg* skillCfg_) {
+		player = player_;
+		cfg = skillCfg_;
 	}
 
-	inline int32_t PlayerSkill_1::Update() {
+	inline int32_t Skill_1::Update() {
         shootCountPool += cfg->shootSpeed;
         if (auto count = (int)shootCountPool; count > 0) {
             shootCountPool -= count;
             auto speedStep = cfg->moveSpeed / count;
-            auto stage = ownerPlayer->ownerStage;
-            auto pos = ownerPlayer->pos;
+            auto stage = player->stage;
+            auto pos = player->pos;
             for (int i = 0; i < count; ++i) {
                 // shoot nearest one
-                auto p = ownerPlayer->pos;
+                auto p = player->pos;
                 auto o = stage->monsters.FindNearestByRange(pos.x, pos.y, cfg->aimRange);
                 if (o) {
                     auto dy = o->pos.y - pos.y;

@@ -17,11 +17,22 @@ namespace Game {
 		camera.SetOriginal(mapSize * 0.5f);
 
 		ground.Emplace()->Init(this, mapSize);
-		player.Emplace<Player_1>()->Init(this);
 		monsters.Init(&gLooper.rdd, gridSize.y, gridSize.x, (int32_t)Cfg::unitSize);
+
+		auto& c = skillCfgs.Emplace().Emplace<SkillCfg_1>();
+		c->aimRange = Cfg::unitSize * 10;
+		c->radius = ResTpFrames::_size_bullet_coin5_.x * 0.5f;
+		c->damage = 5;
+		c->moveSpeed = 600.f / Cfg::fps;
+		c->shootSpeed = 1.f / Cfg::fps;
+		c->life = 3 * (int32_t)Cfg::fps;
+		c->pierceCount = 0;
+		c->pierceDelay = 0;
 
 		monsterGenerators.Emplace().Emplace<MonsterGenerator_1>()
 			->Init(this, 0, int32_t(Cfg::fps) * 60 * 10, 1);
+
+		player.Emplace<Player_1>()->Init(this);
 	}
 
 	inline void Stage1::Update() {
@@ -87,16 +98,16 @@ namespace Game {
 			yd.Emplace(player->pos.y, player.pointer);
 			for (auto e = playerBullets.len, i = 0; i < e; ++i) {
 				auto& o = playerBullets[i];
-				yd.Emplace(o->pos.x, o.pointer);
+				yd.Emplace(o->pos.y, o.pointer);
 			}
 			for (auto e = monsters.items.len, i = 0; i < e; ++i) {
 				auto& o = monsters.items[i];
-				yd.Emplace(o->pos.x, o.pointer);
+				yd.Emplace(o->pos.y, o.pointer);
 			}
 			// sort
-			std::sort(yd.buf, yd.buf + yd.len, [](auto a, auto b) {
-				return std::get<0>(a) < std::get<0>(b);
-				});
+			std::sort(yd.buf, yd.buf + yd.len, [](auto& a, auto& b) {
+				return a.first < b.first;
+			});
 			// draw
 			for (auto e = yd.len, i = 0; i < e; ++i) {
 				yd[i].second->Draw();

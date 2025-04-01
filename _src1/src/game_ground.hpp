@@ -2,8 +2,8 @@
 
 namespace Game {
 
-	inline void Ground::Init(Stage1* owner_, XY mapSize) {
-		owner = owner_;
+	inline void Ground::Init(Stage* stage_, XY mapSize) {
+		stage = stage_;
 		gridSize = mapSize / ResTpFrames::_size_ground_cell_;
 		if (gridSize.x & 0b11) {
 			gridSize.x = (gridSize.x + 4) & ~0b11;
@@ -24,7 +24,7 @@ namespace Game {
 	}
 
 	inline void Ground::Draw() {
-		auto& camera = owner->camera;
+		auto& camera = stage->camera;
 
 		XY halfSize{ gLooper.windowSize.x * camera.zoom * 0.5f, gLooper.windowSize.y * camera.zoom * 0.5f };
 		auto leftTopPos = camera.original - halfSize;

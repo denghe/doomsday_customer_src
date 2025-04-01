@@ -15,7 +15,7 @@ namespace Game {
 			pos.y = mapSize.y - 1;
 	}
 
-	inline void Player::Idle() {
+	inline void Creature::Idle() {
 		XX_BEGIN(idle_lineNumber);
 		for (scale.y = 1.f; scale.y >= IdleCfg::cEnd; scale.y -= IdleCfg::cInc) {
 			scale.x = IdleCfg::cTotal - scale.y;
@@ -29,8 +29,8 @@ namespace Game {
 		XX_END(idle_lineNumber);
 	}
 
-	inline void MonsterGen::Init(Stage* ownerStage_, int activeTime_, int destroyTime_, float generateNumsPerSeconds_) {
-		ownerStage = ownerStage_;
+	inline void MonsterGen::Init(Stage* stage_, int activeTime_, int destroyTime_, float generateNumsPerSeconds_) {
+		stage = stage_;
 		activeTime = activeTime_;
 		destroyTime = destroyTime_;
 		countIncPerFrame = generateNumsPerSeconds_ / Cfg::fps;

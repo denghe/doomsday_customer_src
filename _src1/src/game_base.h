@@ -11,15 +11,15 @@ namespace Game {
 		L-- player's bullets
 		L-- monsters
 		L-- monster's bullets
+		L-- map / blocks / envs / effects
 		L-- master logic
 			L-- skill configs( drop ways & rates & configs )
 			L-- monster generators ( timeline )
 
-	player
-		L-- skills
-
-	monster
-		L-- skills
+	player : creature
+	monster : creature
+	creature
+		L--  skills
 
 	skill ( bullet generator )
 		L-- skill config
@@ -29,7 +29,7 @@ namespace Game {
 	
 	*/
 
-	// predefine base classes
+	// predef
 	struct Bullet;
 	struct Player;
 	struct Ground;
@@ -55,17 +55,11 @@ namespace Game {
 		xx::Shared<Ground> ground;
 		xx::Listi32<xx::Shared<MonsterGen>> monsterGenerators;
 		// todo: effects
+		xx::Listi32<xx::Shared<SkillCfg>> skillCfgs;
+		// todo
 
 		virtual XY GetPlayerBornPos();
 		void ForceLimit(XY& pos);
-	};
-
-	// stage item's base
-	struct Drawable {
-		Stage* ownerStage{};	// stage's life > this. this is stage's child
-		xx::XY pos{}, scale{};
-		virtual void Draw() {};
-		virtual ~Drawable() {};
 	};
 
 	// animation: idle 's config( global usage )
@@ -77,57 +71,79 @@ namespace Game {
 		static constexpr float cEnd{ 1.f - cRange };
 	};
 
-	// player's base
-	struct Player : Drawable {
+	// stage item's base
+	struct Drawable {
+		Stage* stage{};				// stage's life > this
+		xx::XY pos{}, scale{};
+		float radius{}, radians{};
+		// todo
+		virtual void Draw() {};
+		virtual ~Drawable() {};
+	};
+
+	// stage creature's base
+	struct Creature : Drawable {
 		float moveSpeed{};
 		float radius{};
 		float damage{};
 		float criticalRate{};
 		float criticalDamageRatio{};
+		// todo
+
 		xx::Listi32<xx::Shared<Skill>> skills;
 
 		int32_t idle_lineNumber{};
-		void Idle();		// coroutine
+		void Idle();				// coroutine
 
 		virtual int32_t Update() { return 0; }
 	};
 
-	// monster's base
-	struct Monster : Drawable {
-		XY pos{};
-		float radius{};
-		int32_t indexAtItems{ -1 }, indexAtCells{ -1 };
-		Monster* prev{}, * next{};
+	// player's base
+	struct Player : Creature {
+		// todo
+	};
 
-		virtual int32_t Update() { return 0; };
+	// monster's base
+	struct Monster : Creature {
+		int32_t indexAtItems{ -1 }, indexAtCells{ -1 };		// for space index
+		Monster* prev{}, * next{};							// for space index
+		// todo
 	};
 
 	// monster generator's base
 	struct MonsterGen {
-		Stage* ownerStage{};	// stage's life > this
+		Stage* stage{};				// stage's life > this
 
-		int activeTime{}, destroyTime{};
+		int32_t activeTime{}, destroyTime{};
 		float countPool{}, countIncPerFrame{};
 
-		void Init(Stage* ownerStage_, int activeTime_, int destroyTime_, float generateNumsPerSeconds_);
+		void Init(Stage* stage_, int32_t activeTime_, int32_t destroyTime_, float generateNumsPerSeconds_);
 		virtual void Update() {};
 	};
 
-	// player's bullet's base
+	// bullet's base
 	struct Bullet : Drawable {
-		xx::Weak<Player> ownerPlayer;	// player's life maybe <= this
-		xx::Shared<SkillCfg> cfg{};
-		float radians{};
+		xx::Weak<Creature> ownere;	// owner's life maybe <= this
+		SkillCfg* cfg;				// skill cfg's life > this( copy from maker )
 
 		virtual int32_t Update() { return 0; }
 	};
 
+	struct PlayerBullet : Bullet {
+		// todo
+	};
+
+	struct MonsterBullet : Bullet {
+		int32_t indexAtItems{ -1 }, indexAtCells{ -1 };		// for space index
+		Monster* prev{}, * next{};							// for space index
+		// todo
+	};
+
 	// player's skill's base
 	struct Skill {
-		Player* ownerPlayer{};		// player's life > this
-
-		xx::Shared<SkillCfg> cfg;
-		float shootCountPool{};	// runtime
+		Player* player{};			// player's life > this
+		SkillCfg* cfg;				// skill cfg's life > this
+		float shootCountPool{};		// time pool for shoot
 
 		virtual int32_t Update() { return 0; };
 		virtual ~Skill() {};
