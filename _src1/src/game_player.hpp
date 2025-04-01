@@ -2,21 +2,7 @@
 
 namespace Game {
 
-	void Player::Idle() {
-		XX_BEGIN(idle_lineNumber);
-		for (scale.y = 1.f; scale.y >= IdleCfg::cEnd; scale.y -= IdleCfg::cInc) {
-			scale.x = IdleCfg::cTotal - scale.y;
-			XX_YIELD(idle_lineNumber);
-		}
-		for (; scale.y <= 1.f; scale.y += IdleCfg::cInc) {
-			scale.x = IdleCfg::cTotal - scale.y;
-			XX_YIELD(idle_lineNumber);
-		}
-		XX_YIELD_TO_BEGIN(idle_lineNumber);
-		XX_END(idle_lineNumber);
-	}
-
-	inline void Player::Init(StageBase* ownerStage_) {
+	inline void Player_1::Init(Stage* ownerStage_) {
 		ownerStage = ownerStage_;
 		pos = ownerStage_->GetPlayerBornPos();
 		scale = { 1,1 };
@@ -31,7 +17,7 @@ namespace Game {
 		skills.Emplace().Emplace<PlayerSkill_1>()->Init(this);
 	}
 
-	inline void Player::Update() {
+	inline int32_t Player_1::Update() {
 		// move control
 		auto posBak = pos;
 		if (auto inc = gLooper.GetKeyboardMoveInc(); inc.has_value()) {
@@ -51,9 +37,12 @@ namespace Game {
 				skills.SwapRemoveAt(i);
 			}
 		}
+
+		// if reutrn !0 mean player is dead
+		return 0;
 	}
 
-	inline void Player::Draw() {
+	inline void Player_1::Draw() {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
 			.Draw(gLooper.res.player1->tex->GetValue(), 2);
 		// body

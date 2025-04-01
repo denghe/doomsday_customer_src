@@ -2,10 +2,11 @@
 
 namespace Game {
 
-	void PlayerBullet_1::Init(PlayerSkill* ps) {
+	void PlayerBullet_1::Init(Skill* ps) {
+		ownerStage = ps->ownerPlayer->ownerStage;
 		pos = ps->ownerPlayer->pos;
 		scale = 1;
-		radians = M_PI_2;
+		radians = 0;// -M_PI_2;
 		// todo
 	}
 

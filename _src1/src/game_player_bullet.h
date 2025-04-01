@@ -2,19 +2,9 @@
 
 namespace Game {
 
-	struct Player;
-
-	struct PlayerBullet : Drawable {
-		xx::Weak<Player> ownerPlayer;
-		PlayerSkillCfg cfg;
-		float radians{};
-
-		virtual int32_t Update() { return 0; }	// need override
-	};
-
-	struct PlayerBullet_1 : PlayerBullet {
+	struct PlayerBullet_1 : Bullet {
 		// todo: more args
-		void Init(PlayerSkill* ps);
+		void Init(Skill* ps);
 		int32_t Update() override;
 		void Draw() override;
 	};

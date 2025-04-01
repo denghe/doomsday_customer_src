@@ -17,8 +17,11 @@ namespace Game {
 		camera.SetOriginal(mapSize * 0.5f);
 
 		ground.Emplace()->Init(this, mapSize);
-		player.Emplace()->Init(this);
+		player.Emplace<Player_1>()->Init(this);
 		monsters.Init(&gLooper.rdd, gridSize.y, gridSize.x, (int32_t)Cfg::unitSize);
+
+		monsterGenerators.Emplace().Emplace<MonsterGenerator_1>()
+			->Init(this, 0, int32_t(Cfg::fps) * 60 * 10, 1);
 	}
 
 	inline void Stage1::Update() {
@@ -30,6 +33,9 @@ namespace Game {
 			camera.DecreaseScale(0.1f, 0.1f);
 		}
 
+		// todo: update effects
+
+		// update player bullets
 		for (auto i = playerBullets.len - 1; i >= 0; --i) {
 			auto& o = playerBullets[i];
 			if (o->Update()) {
@@ -37,8 +43,10 @@ namespace Game {
 			}
 		}
 
+		// update player
 		player->Update();
 
+		// update monsters
 		for (auto i = monsters.items.len - 1; i >= 0; --i) {
 			auto& o = monsters.items[i];
 			if (o->Update()) {
@@ -46,9 +54,26 @@ namespace Game {
 			}
 		}
 
+		// update monster generators
+		for (auto i = monsterGenerators.len - 1; i >= 0; i--) {
+			auto& mg = monsterGenerators[i];
+			if (mg->activeTime <= time) {
+				if (mg->destroyTime >= time) {
+					mg->Update();
+				}
+				else {
+					monsterGenerators.SwapRemoveAt(i);
+				}
+			}
+		}
+
 		// ... more updates
 
+		// sync cam
 		camera.SetOriginal(player->pos);
+
+		// update time
+		++time;
 	}
 
 	inline void Stage1::Draw() {

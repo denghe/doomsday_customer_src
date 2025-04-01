@@ -2,12 +2,12 @@
 #include "pch.h"
 #include "res_tp_frames.h"
 
-// design size: 4k
-// 1k for windows mode & easy test
 struct Cfg : xx::GDesign<1920, 1080, 120> {
+	static constexpr XY designSize{ 3840, 2160 };
 	static constexpr float globalScale{ 1.f };
 	static constexpr float unitSize{ 128.f };
-	static constexpr XYi gridSize{ 5000, 5000 };	// default value
+	static constexpr XYi gridSize{ 5000, 5000 };			// default value
+	static constexpr int32_t numMaxMonsters{ 10000 };
 };
 
 #include "game_space.h"
