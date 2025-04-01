@@ -61,6 +61,7 @@ namespace Game {
 		virtual XY GetPlayerBornPos();
 		void ForceLimit(XY& pos);
 		bool IsOutOfMap(XY const& pos);
+		XY GetRndPosDoughnut(float maxRadius, float safeRadius);
 	};
 
 	// animation: idle 's config( global usage )
@@ -84,6 +85,7 @@ namespace Game {
 
 	// stage creature's base
 	struct Creature : Drawable {
+		float hp{};
 		float moveSpeed{};
 		float radius{};
 		float damage{};
@@ -96,7 +98,9 @@ namespace Game {
 		int32_t idle_lineNumber{};
 		void Idle();				// coroutine
 
-		virtual int32_t Update() { return 0; }
+		virtual int32_t Hurt(float dmg) { return 0; }			// return !0 mean need death
+		virtual int32_t Hurt(Bullet* bullet) { return 0; }		// return !0 mean need death
+		virtual int32_t Update() { return 0; }					// return !0 mean need Release/Delete/Remove
 	};
 
 	// player's base
@@ -108,6 +112,7 @@ namespace Game {
 	struct Monster : Creature {
 		int32_t indexAtItems{ -1 }, indexAtCells{ -1 };		// for space index
 		Monster* prev{}, * next{};							// for space index
+		int32_t destroyTime{};		// max life cycle for bug issue
 		// todo
 	};
 

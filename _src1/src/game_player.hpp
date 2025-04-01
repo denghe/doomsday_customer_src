@@ -6,7 +6,7 @@ namespace Game {
 		stage = stage_;
 		pos = stage_->GetPlayerBornPos();
 		scale = { 1,1 };
-		moveSpeed = 300.f / Cfg::fps;
+		moveSpeed = 500.f / Cfg::fps;
 		radius = ResTpFrames::_size_player1_.x * 0.5f;
 
 		damage = 1;

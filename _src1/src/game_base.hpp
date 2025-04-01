@@ -9,14 +9,23 @@ namespace Game {
 	inline void Stage::ForceLimit(XY& pos) {
 		if (pos.x < 0.f) pos.x = 0.f;
 		else if (pos.x >= mapSize.x)
-			pos.x = mapSize.x - 1;
+			pos.x = mapSize.x - std::numeric_limits<float>::epsilon();
 		if (pos.y < 0.f) pos.y = 0.f;
 		else if (pos.y >= mapSize.y)
-			pos.y = mapSize.y - 1;
+			pos.y = mapSize.y - std::numeric_limits<float>::epsilon();
 	}
 
 	inline bool Stage::IsOutOfMap(XY const& pos) {
 		return pos.x < 0 || pos.y < 0 || pos.x >= mapSize.x || pos.y >= mapSize.y;
+	}
+
+	inline XY Stage::GetRndPosDoughnut(float maxRadius, float safeRadius) {
+		auto len = maxRadius - safeRadius;
+		auto len_radius = len / maxRadius;
+		auto safeRadius_radius = safeRadius / maxRadius;
+		auto radius = std::sqrtf(rnd.Next<float>(0, len_radius) + safeRadius_radius) * maxRadius;
+		auto radians = rnd.Next<float>(-M_PI, M_PI);
+		return { std::cosf(radians) * radius, std::sinf(radians) * radius };
 	}
 
 	inline void Creature::Idle() {
