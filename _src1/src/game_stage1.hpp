@@ -25,7 +25,7 @@ namespace Game {
 		sc->radius = ResTpFrames::_size_bullet_coin5_.x * 0.5f;
 		sc->damage = 5;
 		sc->moveSpeed = 600.f / Cfg::fps;
-		sc->shootSpeed = 120.f / Cfg::fps;
+		sc->shootSpeed = 1200.f / Cfg::fps;
 		sc->life = 3 * (int32_t)Cfg::fps;
 		sc->pierceCount = 0;
 		sc->pierceDelay = 0;
@@ -38,8 +38,8 @@ namespace Game {
 			->Init(this, int32_t(Cfg::fps) * 20, int32_t(Cfg::fps) * 30, 100);
 		monsterGenerators.Emplace().Emplace<MonsterGenerator_1>()
 			->Init(this, int32_t(Cfg::fps) * 30, int32_t(Cfg::fps) * 40, 1000);
-		//monsterGenerators.Emplace().Emplace<MonsterGenerator_1>()
-		//	->Init(this, int32_t(Cfg::fps) * 40, int32_t(Cfg::fps) * 50, 10000);
+		monsterGenerators.Emplace().Emplace<MonsterGenerator_1>()
+			->Init(this, int32_t(Cfg::fps) * 40, int32_t(Cfg::fps) * 100, 2000);
 
 		player.Emplace<Player_1>()->Init(this);
 	}
@@ -71,7 +71,7 @@ namespace Game {
 		for (auto i = monsters.items.len - 1; i >= 0; --i) {
 			auto& o = monsters.items[i];
 			if (o->Update()) {
-				monsters.items.SwapRemoveAt(i);
+				monsters.Remove(o);
 			}
 		}
 
