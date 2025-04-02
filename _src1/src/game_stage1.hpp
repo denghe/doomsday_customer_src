@@ -32,14 +32,15 @@ namespace Game {
 
 		monsterGenerators.Emplace().Emplace<MonsterGenerator_1>()
 			->Init(this, 0, int32_t(Cfg::fps) * 10, 1);
-		monsterGenerators.Emplace().Emplace<MonsterGenerator_1>()
+		monsterGenerators.Emplace().Emplace<MonsterGenerator_Chips>()
 			->Init(this, int32_t(Cfg::fps) * 10, int32_t(Cfg::fps) * 20, 10);
-		monsterGenerators.Emplace().Emplace<MonsterGenerator_1>()
+		monsterGenerators.Emplace().Emplace<MonsterGenerator_Cola>()
 			->Init(this, int32_t(Cfg::fps) * 20, int32_t(Cfg::fps) * 30, 100);
-		monsterGenerators.Emplace().Emplace<MonsterGenerator_1>()
+		monsterGenerators.Emplace().Emplace<MonsterGenerator_Hamburger>()
 			->Init(this, int32_t(Cfg::fps) * 30, int32_t(Cfg::fps) * 40, 1000);
-		monsterGenerators.Emplace().Emplace<MonsterGenerator_1>()
-			->Init(this, int32_t(Cfg::fps) * 40, int32_t(Cfg::fps) * 100, 2000);
+
+		monsterGenerators.Emplace().Emplace<MonsterGenerator_Instantnoodles>()
+			->Init(this, int32_t(Cfg::fps) * 40, int32_t(Cfg::fps) * 50, 10000);
 
 		player.Emplace<Player_1>()->Init(this);
 	}
