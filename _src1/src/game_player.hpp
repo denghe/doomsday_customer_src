@@ -50,7 +50,7 @@ namespace Game {
 		// body
 		q[1].pos = stage->camera.ToGLPos(pos);
 		q[1].anchor = ResTpFrames::_anchor_player1_;
-		q[1].scale = scale * Cfg::globalScale * stage->camera.scale;
+		q[1].scale = scale * stage->camera.scale;
 		q[1].radians = 0;
 		q[1].colorplus = 1;
 		q[1].color = xx::RGBA8_White;

@@ -13,7 +13,7 @@ namespace Game {
 		mapSize = Cfg::unitSize * gridSize;
 
 		camera.SetMaxFrameSize(Cfg::unitSize);
-		camera.SetScale(Cfg::globalScale);
+		camera.SetScale(Cfg::defaultScale);
 		camera.SetOriginal(mapSize * 0.5f);
 
 		ground.Emplace()->Init(this, mapSize);
@@ -47,10 +47,10 @@ namespace Game {
 	inline void Stage1::Update() {
 		// scale control
 		if (gLooper.KeyDownDelay(xx::KeyboardKeys::Z, 0.02f)) {
-			camera.IncreaseScale(0.1f, 5);
+			camera.IncreaseScale(0.01f, 5);
 		}
 		else if (gLooper.KeyDownDelay(xx::KeyboardKeys::X, 0.02f)) {
-			camera.DecreaseScale(0.1f, 0.1f);
+			camera.DecreaseScale(0.01f, 0.1f);
 		}
 
 		// todo: update effects

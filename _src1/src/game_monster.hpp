@@ -83,7 +83,7 @@ namespace Game {
 			.Draw(gLooper.res.monster_chips->tex->GetValue(), 1);
 		q->pos = stage->camera.ToGLPos(pos);
 		q->anchor = ResTpFrames::_anchor_monster_chips_;
-		q->scale = scale * Cfg::globalScale * stage->camera.scale;
+		q->scale = scale * stage->camera.scale;
 		q->radians = 0;
 		q->colorplus = whiteColorEndTime >= stage->time ? 10000.f : 1.f;
 		q->color = xx::RGBA8_White;

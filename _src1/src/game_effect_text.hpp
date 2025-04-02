@@ -35,7 +35,7 @@ namespace Game {
 		auto& fs = gLooper.res.font_outline_;
 		auto qs = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(fs[0]->tex->GetValue(), len);
 		auto basePos = stage->camera.ToGLPos(pos);
-		auto s = stage->camera.scale * scale * Cfg::globalScale;
+		auto s = stage->camera.scale * scale;
 		auto widthInc = ResTpFrames::_size_font_outline_48_.x * s;
 		basePos.x -= widthInc * len / 2;
 		for (int32_t i = 0; i < len; ++i) {

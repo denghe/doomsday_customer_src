@@ -61,7 +61,7 @@ namespace Game {
 				xx::XY pos{ colIdx * ResTpFrames::_size_ground_cell_.x, rowIdx * ResTpFrames::_size_ground_cell_.y };
 				q.pos = camera.ToGLPos(pos);
 				q.anchor = { 0, 1 };
-				q.scale = scale * Cfg::globalScale * camera.scale;
+				q.scale = camera.scale;
 				q.radians = 0;
 				q.colorplus = 1;
 				q.color = { 255, 255, 255, colors[gridSize.x * rowIdx + colIdx]};

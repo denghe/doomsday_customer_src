@@ -4,10 +4,10 @@
 
 struct Cfg : xx::GDesign<1920, 1080, 120> {
 	static constexpr XY designSize{ 3840, 2160 };
-	static constexpr float globalScale{ 1.f };
+	static constexpr float defaultScale{ 0.5f };
 	static constexpr float unitSize{ 128.f };
-	static constexpr XYi gridSize{ 5000, 5000 };			// default value
-	static constexpr int32_t numMaxMonsters{ 500000 };
+	static constexpr XYi gridSize{ 2000, 2000 };			// default value
+	static constexpr int32_t numMaxMonsters{ 100000 };
 };
 
 #include "game_space.h"
@@ -28,7 +28,7 @@ struct Looper : xx::Engine<Looper>, Cfg {
 	xx::Task<> MainTask();
 
 	ResTpFrames res;
-	xx::Scale9SpriteConfig btnCfg;
+	xx::Scale9SpriteConfig btnCfg, btnCfg2;
 	xx::SpaceGridRingDiffuseData rdd;
 	xx::Listi32<std::pair<float, Game::Drawable*>> yDraws;
 };
