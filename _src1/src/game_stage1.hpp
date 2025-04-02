@@ -132,7 +132,9 @@ namespace Game {
 		gLooper.DrawNode(ui);
 
 		// draw tips
-		gLooper.ctcDefault.Draw({ 0, gLooper.windowSize_2.y - 5 }, "zoom: ZX  move: ASDW  ", xx::RGBA8_Green, { 0.5f, 1 });
-		gLooper.ctcDefault.Draw({ 0, gLooper.windowSize_2.y - 35 }, xx::ToString("monsters.len == ", monsters.items.len), xx::RGBA8_Green, { 0.5f, 1 });
+		gLooper.ctcDefault.Draw({ 0, gLooper.windowSize_2.y - 5 }
+		, xx::ToString("zoom: ZX  move: ASDW  m = ", monsters.items.len
+			, " b = ", playerBullets.len
+			, " e = ", etm.ens.Count()), xx::RGBA8_Green, {0.5f, 1});
 	}
 }

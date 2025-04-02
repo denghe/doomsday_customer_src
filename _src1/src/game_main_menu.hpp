@@ -5,7 +5,7 @@ namespace Game {
 	inline void MainMenu::Init() {
 		ui.Emplace()->Init();
 		ui->MakeChildren<xx::Button>()->Init(1, Cfg::xy5m + XY{ 0, 0 }
-			, Cfg::xy5a, gLooper.btnCfg, U"new game ( 2025.4.2 11:35 )", [&]() {
+			, Cfg::xy5a, gLooper.btnCfg, U"new game ( 2025.4.2 14.24 )", [&]() {
 				gLooper.DelaySwitchTo<Game::Stage1>();
 		});
 

@@ -28,7 +28,7 @@ namespace Game {
 		}
 		alpha = 0;
 		XX_END(lineNumber);
-		return 0;
+		return 1;
 	}
 
 	XX_INLINE void EffectText::Draw(Stage* stage) {
