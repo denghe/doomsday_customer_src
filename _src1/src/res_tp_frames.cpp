@@ -118,7 +118,16 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 		this->monster_cola = map["monster_cola"sv];
 		this->monster_hamburger = map["monster_hamburger"sv];
 		this->monster_instantnoodles = map["monster_instantnoodles"sv];
+		this->monster_laptop = map["monster_laptop"sv];
+		this->monster_roastduck = map["monster_roastduck"sv];
+		this->monster_sofa = map["monster_sofa"sv];
 		this->player1 = map["player1"sv];
+		this->ui_button = map["ui_button"sv];
+		this->ui_hpbar = map["ui_hpbar"sv];
+		this->ui_hpbar_content = map["ui_hpbar_content"sv];
+		this->ui_menu = map["ui_menu"sv];
+		this->ui_money = map["ui_money"sv];
+		this->ui_pause = map["ui_pause"sv];
 	}
 
 	// fill groups
