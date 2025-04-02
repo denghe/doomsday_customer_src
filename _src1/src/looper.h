@@ -11,6 +11,7 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 };
 
 #include "game_space.h"
+#include "game_effect_text.h"
 #include "game_base.h"
 #include "game_main_menu.h"
 #include "game_ground.h"

@@ -18,6 +18,7 @@ namespace Game {
 
 		ground.Emplace()->Init(this, mapSize);
 		monsters.Init(&gLooper.rdd, gridSize.y, gridSize.x, (int32_t)Cfg::unitSize);
+		etm.Init(this, 10000);
 
 		auto& sc = skillCfgs.Emplace().Emplace<SkillCfg_1>();
 		sc->aimRange = Cfg::unitSize * 20;
@@ -37,8 +38,8 @@ namespace Game {
 			->Init(this, int32_t(Cfg::fps) * 20, int32_t(Cfg::fps) * 30, 100);
 		monsterGenerators.Emplace().Emplace<MonsterGenerator_1>()
 			->Init(this, int32_t(Cfg::fps) * 30, int32_t(Cfg::fps) * 40, 1000);
-		monsterGenerators.Emplace().Emplace<MonsterGenerator_1>()
-			->Init(this, int32_t(Cfg::fps) * 40, int32_t(Cfg::fps) * 50, 10000);
+		//monsterGenerators.Emplace().Emplace<MonsterGenerator_1>()
+		//	->Init(this, int32_t(Cfg::fps) * 40, int32_t(Cfg::fps) * 50, 10000);
 
 		player.Emplace<Player_1>()->Init(this);
 	}
@@ -53,6 +54,7 @@ namespace Game {
 		}
 
 		// todo: update effects
+		etm.Update();
 
 		// update player bullets
 		for (auto i = playerBullets.len - 1; i >= 0; --i) {
@@ -123,6 +125,8 @@ namespace Game {
 			// clean up
 			yd.Clear();
 		}
+
+		etm.Draw();
 
 		// draw ui
 		gLooper.DrawNode(ui);

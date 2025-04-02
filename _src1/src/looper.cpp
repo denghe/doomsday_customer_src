@@ -10,6 +10,7 @@
 #include "game_monster.hpp"
 #include "game_monster_generator.hpp"
 #include "game_stage1.hpp"
+#include "game_effect_text.hpp"
 
 // more include here ...
 

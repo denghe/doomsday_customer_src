@@ -55,6 +55,7 @@ namespace Game {
 		xx::Shared<Ground> ground;
 		xx::Listi32<xx::Shared<MonsterGen>> monsterGenerators;
 		// todo: effects
+		EffectTextManager etm;
 		xx::Listi32<xx::Shared<SkillCfg>> skillCfgs;
 		// todo
 
