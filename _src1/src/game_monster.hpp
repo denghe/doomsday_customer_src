@@ -2,21 +2,42 @@
 
 namespace Game {
 
+	int32_t Monster_1::Hurt(float dmg, XY const& d) {
+		dmg = std::ceilf(dmg);
+		if (hp <= dmg) {
+			// dead
+			stage->etm.Add(pos + ResTpFrames::_size_monster_chips_ * XY{ 0, -0.5f }, d, xx::RGBA8_Red, 6, hp);
+			// todo: death effect
+			stage->monsters.Remove(this);
+			return 1;
+		}
+		else {
+			// hurt
+			hp -= dmg;
+			stage->etm.Add(pos + ResTpFrames::_size_monster_chips_ * XY{ 0, -0.5f }, d, xx::RGBA8_Yellow, 5, dmg);
+			whiteColorEndTime = stage->time + int32_t(0.1f / Cfg::fps);
+			return 0;
+		}
+	}
+
 	void Monster_1::Init(Stage* stage_, XY const& pos_) {
 		stage = stage_;
 		pos = pos_;
 		scale = { 1,1 };
-		moveSpeed = 300.f / Cfg::fps;
 		radius = ResTpFrames::_size_monster_chips_.x * 0.5f;
+		radians = 0;
 
-		tarOffsetRadius = ResTpFrames::_size_monster_chips_.x * 3;
-		tarOffset = stage->GetRndPosDoughnut(tarOffsetRadius, 0.1f);
-
+		hp = 100;
 		damage = 1;
+		moveSpeed = 300.f / Cfg::fps;
 		criticalRate = 0.1f;
 		criticalDamageRatio = 2;
 
+		whiteColorEndTime = 0;
 		destroyTime = stage->time + (int32_t)Cfg::fps * 60 * 5;
+
+		tarOffsetRadius = ResTpFrames::_size_monster_chips_.x * 3;
+		tarOffset = stage->GetRndPosDoughnut(tarOffsetRadius, 0.1f);
 	}
 
 	int32_t Monster_1::Update() {
@@ -27,7 +48,7 @@ namespace Game {
 		auto r2 = p->radius + radius;
 		if (dd < r2 * r2) {
 			// cross with player?
-			p->Hurt(damage);
+			p->Hurt(damage, d);
 		}
 		else {
 			d = pp - pos + tarOffset;
@@ -64,7 +85,7 @@ namespace Game {
 		q->anchor = ResTpFrames::_anchor_monster_chips_;
 		q->scale = scale * Cfg::globalScale * stage->camera.scale;
 		q->radians = 0;
-		q->colorplus = 1;
+		q->colorplus = whiteColorEndTime >= stage->time ? 10000.f : 1.f;
 		q->color = xx::RGBA8_White;
 		q->texRect.data = gLooper.res.monster_chips->textureRect.data;
 	}

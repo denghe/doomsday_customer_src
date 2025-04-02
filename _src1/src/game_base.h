@@ -86,22 +86,19 @@ namespace Game {
 
 	// stage creature's base
 	struct Creature : Drawable {
+		xx::Listi32<xx::Shared<Skill>> skills;
 		float hp{};
-		float moveSpeed{};
-		float radius{};
 		float damage{};
+		float moveSpeed{};
 		float criticalRate{};
 		float criticalDamageRatio{};
 		// todo
 
-		xx::Listi32<xx::Shared<Skill>> skills;
-
 		int32_t idle_lineNumber{};
 		void Idle();				// coroutine
 
-		virtual int32_t Hurt(float dmg) { return 0; }			// return !0 mean need death
-		virtual int32_t Hurt(Bullet* bullet) { return 0; }		// return !0 mean need death
-		virtual int32_t Update() { return 0; }					// return !0 mean need Release/Delete/Remove
+		virtual int32_t Hurt(float dmg, XY const& d) { return 0; }		// d = pos - tar.pos. return !0 mean dead
+		virtual int32_t Update() { return 0; }							// return !0 mean need Release/Delete/Remove
 	};
 
 	// player's base
@@ -113,7 +110,8 @@ namespace Game {
 	struct Monster : Creature {
 		int32_t indexAtItems{ -1 }, indexAtCells{ -1 };		// for space index
 		Monster* prev{}, * next{};							// for space index
-		int32_t destroyTime{};		// max life cycle for bug issue
+		int32_t whiteColorEndTime{};						// hurt effect
+		int32_t destroyTime{};								// max life cycle for bug issue
 		// todo
 	};
 

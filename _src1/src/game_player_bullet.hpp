@@ -18,7 +18,7 @@ namespace Game {
 		pos += inc;
 		if (stage->IsOutOfMap(pos)) return -1;
 		if (auto m = stage->monsters.FindFirstCrossBy9(pos.x, pos.y, cfg->radius)) {
-			m->Hurt(this);
+			m->Hurt((float)cfg->damage, pos - m->pos);	// todo: calc final dmg
 			return 1;
 		}
         return lifeEndTime < stage->time;
