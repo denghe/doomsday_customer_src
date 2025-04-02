@@ -22,6 +22,10 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 #include "game_monster.h"
 #include "game_monster_generator.h"
 #include "game_stage1.h"
+#include "game_monster_chips.h"
+#include "game_monster_hamburger.h"
+#include "game_monster_cola.h"
+#include "game_monster_instantnoodles.h"
 // more include here ...
 
 struct Looper : xx::Engine<Looper>, Cfg {

@@ -47,6 +47,7 @@ namespace Game {
 		XY mapSize{};		// cellSize * gridSize( grid pixel size )
 
 		int32_t time{};		// frame number
+		int32_t round{};	// round number
 		xx::Rnd rnd;
 
 		xx::Listi32<xx::Shared<Bullet>> playerBullets;
