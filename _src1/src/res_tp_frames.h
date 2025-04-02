@@ -343,7 +343,7 @@ struct ResTpFrames {
 	static constexpr xx::XY _size_ui_menu_{ 256, 353 };
 	static constexpr xx::XY _anchor_ui_menu_{ 0.5, 0.5 };
 	xx::Ref<xx::Frame> ui_money;
-	static constexpr xx::XY _size_ui_money_{ 34, 34 };
+	static constexpr xx::XY _size_ui_money_{ 11, 11 };
 	static constexpr xx::XY _anchor_ui_money_{ 0.5, 0.5 };
 	xx::Ref<xx::Frame> ui_pause;
 	static constexpr xx::XY _size_ui_pause_{ 37, 36 };
