@@ -1,8 +1,7 @@
 ﻿#pragma once
 
 namespace Game {
-
-    struct MonsterGenerator_1 : MonsterGen {
+    struct MonsterGenerator_Chips : MonsterGen {
         void Update() override;
     };
 }

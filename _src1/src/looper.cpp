@@ -9,8 +9,16 @@
 #include "game_player_skill.hpp"
 #include "game_monster.hpp"
 #include "game_monster_generator.hpp"
+#include "game_monster_generator_chips.hpp"
+#include "game_monster_generator_hamburger.hpp"
+#include "game_monster_generator_cola.hpp"
+#include "game_monster_generator_instantnood.hpp"
 #include "game_stage1.hpp"
 #include "game_effect_text.hpp"
+#include "game_monster_chips.hpp"
+#include "game_monster_hamburger.hpp"
+#include "game_monster_cola.hpp"
+#include "game_monster_instantnoodles.hpp"
 
 // more include here ...
 
