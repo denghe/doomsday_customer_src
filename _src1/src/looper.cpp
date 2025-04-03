@@ -19,8 +19,8 @@
 #include "game_monster_hamburger.hpp"
 #include "game_monster_cola.hpp"
 #include "game_monster_instantnoodles.hpp"
-
 // more include here ...
+#include "_test1.hpp"
 
 Looper gLooper;
 

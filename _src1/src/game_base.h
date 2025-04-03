@@ -84,9 +84,13 @@ namespace Game {
 		virtual void Draw() {};
 		virtual ~Drawable() {};
 	};
+	struct DrawableEx : Drawable {
+		using Drawable::Drawable;
+		virtual int32_t Update() { return 0; };							// return !0 mean need Release/Delete/Remove
+	};
 
 	// stage creature's base
-	struct Creature : Drawable {
+	struct Creature : DrawableEx {
 		xx::Listi32<xx::Shared<Skill>> skills;
 		float hp{};
 		float damage{};
@@ -99,7 +103,6 @@ namespace Game {
 		void Idle();				// coroutine
 
 		virtual int32_t Hurt(float dmg, XY const& d) { return 0; }		// d = pos - tar.pos. return !0 mean dead
-		virtual int32_t Update() { return 0; }							// return !0 mean need Release/Delete/Remove
 	};
 
 	// player's base
