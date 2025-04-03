@@ -3,8 +3,9 @@
 namespace Game {
 
 	struct Ground {
-		static constexpr float scale{ 1 };
-		static constexpr XY size{ ResTpFrames::_size_ground_cell_ * scale };
+		static constexpr float cScale{ 3 };
+		static constexpr xx::RGB8 cColor{ 100,100,100 };
+		static constexpr XY cSize{ ResTpFrames::_size_ground_cell_ * cScale };
 		Stage* stage{};
 		XYi gridSize{};
 		xx::Rnd rnd;
