@@ -1,8 +1,7 @@
 ﻿#pragma once
 
 namespace Game {
-
-	void MonsterGenerator_1::Update() {
+	void MonsterGenerator_Chips::Update() {
 		auto& p = stage->player->pos;
 		auto& rnd = stage->rnd;
 		static constexpr auto ds_2 = Cfg::designSize / 2;
@@ -28,11 +27,11 @@ namespace Game {
 					break;
 				}
 
-				auto m = xx::MakeShared<Monster_1>();
+
+				auto m = xx::MakeShared<Monster_Hamburger>();
 				m->Init(stage, pos);
 				stage->monsters.Add(std::move(m));
 			}
-
 		}
 	}
 }
