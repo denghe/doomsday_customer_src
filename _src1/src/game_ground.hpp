@@ -2,9 +2,13 @@
 
 namespace Game {
 
-	inline void Ground::Init(Stage* stage_, XY mapSize) {
+	inline void Ground::Init(Stage* stage_, XY mapSize, xx::Ref<xx::Frame> const& frame_, XY scale_, xx::RGB8 color_) {
 		stage = stage_;
-		gridSize = mapSize / cSize;
+		frame = frame_;
+		scale = scale_;
+		color = color_;
+		size = { frame_->textureRect.w * scale_.x, frame_->textureRect.h * scale_.y };
+		gridSize = mapSize / size;
 		if (gridSize.x & 0b11) {
 			gridSize.x = (gridSize.x + 4) & ~0b11;
 		}
@@ -30,19 +34,19 @@ namespace Game {
 		auto leftTopPos = camera.original - halfSize;
 		auto rightBottomPos = camera.original + halfSize;
 
-		auto rowFrom = int32_t(leftTopPos.y / cSize.y);
+		auto rowFrom = int32_t(leftTopPos.y / size.y);
 		if (rowFrom < 0) {
 			rowFrom = 0;
 		}
-		auto rowTo = int32_t(rightBottomPos.y / cSize.y) + 1;
+		auto rowTo = int32_t(rightBottomPos.y / size.y) + 1;
 		if (rowTo > gridSize.y) {
 			rowTo = gridSize.y;
 		}
-		auto colFrom = int32_t(leftTopPos.x / cSize.x);
+		auto colFrom = int32_t(leftTopPos.x / size.x);
 		if (colFrom < 0) {
 			colFrom = 0;
 		}
-		auto colTo = int32_t(rightBottomPos.x / cSize.x) + 1;
+		auto colTo = int32_t(rightBottomPos.x / size.x) + 1;
 		if (colTo > gridSize.x) {
 			colTo = gridSize.x;
 	}
@@ -51,22 +55,22 @@ namespace Game {
 		auto numRows = rowTo - rowFrom;
 		auto numCols = colTo - colFrom;
 
-		auto& frame = *gLooper.res.ground_cell;
 		auto buf = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
-			.Draw(frame.tex->GetValue(), numCols * numRows);
-
-		auto s = camera.scale * cScale;
+			.Draw(frame->tex->GetValue(), numCols * numRows);
+		auto rectData = frame->textureRect.data;
+		auto s = camera.scale * scale;
+		auto size_2 = size * 0.5f;
 		for (int32_t rowIdx = rowFrom; rowIdx < rowTo; ++rowIdx) {
 			for (int32_t colIdx = colFrom; colIdx < colTo; ++colIdx) {
 				auto& q = buf[numCols * (rowIdx - rowFrom) + (colIdx - colFrom)];
-				xx::XY pos{ colIdx * cSize.x, rowIdx * cSize.y };
-				q.pos = camera.ToGLPos(pos + cSize * 0.5f);
+				xx::XY pos{ colIdx * size.x, rowIdx * size.y };
+				q.pos = camera.ToGLPos(pos + size_2);
 				q.anchor = { .5f, .5f };
 				q.scale = s;
 				q.radians = 0;
 				q.colorplus = 1;
-				q.color = { cColor.r, cColor.g, cColor.b, colors[gridSize.x * rowIdx + colIdx]};
-				q.texRect.data = frame.textureRect.data;
+				q.color = { color.r, color.g, color.b, colors[gridSize.x * rowIdx + colIdx]};
+				q.texRect.data = rectData;
 			}
 		}
 

@@ -363,6 +363,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">pngs/ground_cell2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>32,32,64,64</rect>
+                <key>scale9Paddings</key>
+                <rect>32,32,64,64</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">pngs/monster_chips.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -469,9 +484,10 @@
                 <false/>
             </struct>
             <key type="filename">pngs/player1.png</key>
+            <key type="filename">pngs/player2.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
-                <point_f>0.495868,0.957265</point_f>
+                <point_f>0.5,0.95</point_f>
                 <key>spriteScale</key>
                 <double>1</double>
                 <key>scale9Enabled</key>

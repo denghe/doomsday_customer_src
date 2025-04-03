@@ -16,7 +16,7 @@ namespace Game {
 		camera.SetScale(Cfg::defaultScale);
 		camera.SetOriginal(mapSize * 0.5f);
 
-		ground.Emplace()->Init(this, mapSize);
+		ground.Emplace()->Init(this, mapSize, gLooper.res.ground_cell2);
 		monsters.Init(&gLooper.rdd, gridSize.y, gridSize.x, (int32_t)Cfg::unitSize);
 		etm.Init(this, 10000);
 
@@ -42,7 +42,8 @@ namespace Game {
 		monsterGenerators.Emplace().Emplace<MonsterGenerator_Instantnoodles>()
 			->Init(this, int32_t(Cfg::fps) * 40, int32_t(Cfg::fps) * 50, 10000);
 
-		player.Emplace<Player_1>()->Init(this);
+		//player.Emplace<Player_1>()->Init(this);
+		player.Emplace<Player_2>()->Init(this);
 	}
 
 	inline void Stage1::Update() {

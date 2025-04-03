@@ -306,6 +306,9 @@ struct ResTpFrames {
 	xx::Ref<xx::Frame> ground_cell;
 	static constexpr xx::XY _size_ground_cell_{ 85, 85 };
 	static constexpr xx::XY _anchor_ground_cell_{ 0.5, 0.5 };
+	xx::Ref<xx::Frame> ground_cell2;
+	static constexpr xx::XY _size_ground_cell2_{ 128, 128 };
+	static constexpr xx::XY _anchor_ground_cell2_{ 0.5, 0.5 };
 	xx::Ref<xx::Frame> monster_chips;
 	static constexpr xx::XY _size_monster_chips_{ 130, 158 };
 	static constexpr xx::XY _anchor_monster_chips_{ 0.461538, 0.056962 };
@@ -329,7 +332,10 @@ struct ResTpFrames {
 	static constexpr xx::XY _anchor_monster_sofa_{ 0.5, 0.1 };
 	xx::Ref<xx::Frame> player1;
 	static constexpr xx::XY _size_player1_{ 121, 117 };
-	static constexpr xx::XY _anchor_player1_{ 0.495868, 0.042735 };
+	static constexpr xx::XY _anchor_player1_{ 0.5, 0.05 };
+	xx::Ref<xx::Frame> player2;
+	static constexpr xx::XY _size_player2_{ 128, 128 };
+	static constexpr xx::XY _anchor_player2_{ 0.5, 0.05 };
 	xx::Ref<xx::Frame> ui_button;
 	static constexpr xx::XY _size_ui_button_{ 81, 89 };
 	static constexpr xx::XY _anchor_ui_button_{ 0.5, 0.5 };
