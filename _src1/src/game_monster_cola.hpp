@@ -27,7 +27,7 @@ namespace Game {
 		radius = ResTpFrames::_size_monster_chips_.x * 0.5f;
 		radians = 0;
 
-		hp = 30 + stage->round * 8;
+		hp = 30.f + stage->round * 8;
 		damage = 1;
 		moveSpeed = 300.f / Cfg::fps;
 		criticalRate = 0.1f;
@@ -83,7 +83,7 @@ namespace Game {
 			.Draw(gLooper.res.monster_cola->tex->GetValue(), 1);
 		q->pos = stage->camera.ToGLPos(pos);
 		q->anchor = ResTpFrames::_anchor_monster_cola_;
-		q->scale = scale * Cfg::globalScale * stage->camera.scale;
+		q->scale = scale * stage->camera.scale;
 		q->radians = 0;
 		q->colorplus = whiteColorEndTime >= stage->time ? 10000.f : 1.f;
 		q->color = xx::RGBA8_White;
