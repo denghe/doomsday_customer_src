@@ -157,6 +157,7 @@ namespace Game {
 
 	// player's skill's config's base
 	struct SkillCfg {
+		int32_t typeId{};			// for switch case cast Derived*
 		float aimRange{};           // cell size * 10 ?
 		float radius{};             // == res.size.x
 		int32_t damage{};

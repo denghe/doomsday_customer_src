@@ -51,15 +51,24 @@ xx::Task<> Looper::MainTask() {
 	btnCfg.frame = res.button;
 	btnCfg.center = { 2, 3, 2, 2 };
 
-	btnCfg2.frame = res.ui_button;
-	btnCfg2.center = { 30, 25, (uint16_t)ResTpFrames::_size_ui_button_.x - 30 * 2, (uint16_t)ResTpFrames::_size_ui_button_.y - 25 * 2 };
-	btnCfg2.color = xx::RGBA8_White;
-	btnCfg2.txtColor = xx::RGBA8_Black;
+	btnCfg_Scale5.frame = res.ui_button;
+	btnCfg_Scale5.center = { 30, 30, (uint16_t)ResTpFrames::_size_ui_button_.x - 30 * 2, (uint16_t)ResTpFrames::_size_ui_button_.y - 30 * 2 };
+	btnCfg_Scale5.color = xx::RGBA8_White;
+	btnCfg_Scale5.txtColor = xx::RGBA8_Black;
+	btnCfg_Scale5.txtPadding = { 50, 8 };
+	btnCfg_Scale5.txtPaddingRightBottom = { 50, 30 };
+	btnCfg_Scale5.txtScale = 5;
 
-	btnCfg3 = btnCfg2;
-	btnCfg3.borderScale = 0.5f;
-	btnCfg3.txtPadding = {};
+	btnCfg_Scale5Icon = btnCfg_Scale5;
+	btnCfg_Scale5Icon.txtPadding = { 200, 8 };
+	btnCfg_Scale5Icon.iconPadding = 15;
 
+	btnCfg_Scale1Icon = btnCfg_Scale5Icon;
+	btnCfg_Scale1Icon.borderScale = 0.5f;
+	btnCfg_Scale1Icon.txtScale = 1;
+	btnCfg_Scale1Icon.txtPadding = { 40, 2 };
+	btnCfg_Scale1Icon.txtPaddingRightBottom = { 10, 6 };
+	btnCfg_Scale1Icon.iconPadding = 6;
 
 	clearColor = { 33, 33, 33, 255 };
 
