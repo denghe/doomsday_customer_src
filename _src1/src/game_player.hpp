@@ -4,6 +4,8 @@ namespace Game {
 
 	inline void Player_1::Init(Stage* stage_) {
 		stage = stage_;
+		frame = gLooper.res.player1;
+
 		pos = stage_->GetPlayerBornPos();
 		scale = { 1,1 };
 		radius = ResTpFrames::_size_player1.x * 0.5f;
@@ -42,27 +44,6 @@ namespace Game {
 		return 0;
 	}
 
-	inline void Player_1::Draw() {
-		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
-			.Draw(gLooper.res._texid_player1, 2);
-		// body
-		q[1].pos = stage->camera.ToGLPos(pos);
-		q[1].anchor = ResTpFrames::_anchor_player1;
-		q[1].scale = scale * stage->camera.scale;
-		q[1].radians = 0;
-		q[1].colorplus = 1;
-		q[1].color = xx::RGBA8_White;
-		q[1].texRect.data = ResTpFrames::_uvrect_player1.data;
-		// shadow
-		q[0].scale = { q[1].scale.x, q[1].scale.y * 0.2f };
-		q[0].pos = { q[1].pos.x, q[1].pos.y - q[0].scale.y * ResTpFrames::_size_player1.y * 0.5f };
-		q[0].anchor = { ResTpFrames::_anchor_player1.x, 0.3 };
-		q[0].radians = q[1].radians;
-		q[0].colorplus = q[1].colorplus;
-		q[0].color = { 0,0,0,127 };
-		q[0].texRect.data = q[1].texRect.data;
-	}
-
 
 	/********************************************************************************************************************/
 	/********************************************************************************************************************/
@@ -70,6 +51,8 @@ namespace Game {
 
 	inline void Player_2::Init(Stage* stage_) {
 		stage = stage_;
+		frame = gLooper.res.player2;
+
 		pos = stage_->GetPlayerBornPos();
 		scale = { 1,1 };
 		radius = ResTpFrames::_size_player2.x * 0.5f;
@@ -114,26 +97,4 @@ namespace Game {
 		return 0;
 	}
 
-	inline void Player_2::Draw() {
-		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
-			.Draw(gLooper.res._texid_player2, 2);
-		XY s{ scale * stage->camera.scale };
-		if (needFlipX) s.x = -s.x;
-		// body
-		q[1].pos = stage->camera.ToGLPos(pos);
-		q[1].anchor = ResTpFrames::_anchor_player2;
-		q[1].scale = s;
-		q[1].radians = 0;
-		q[1].colorplus = 1;
-		q[1].color = xx::RGBA8_White;
-		q[1].texRect.data = ResTpFrames::_uvrect_player2.data;
-		// shadow
-		q[0].scale = { q[1].scale.x, q[1].scale.y * 0.2f };
-		q[0].pos = { q[1].pos.x, q[1].pos.y - q[0].scale.y * ResTpFrames::_size_player2.y * 0.5f };
-		q[0].anchor = { ResTpFrames::_anchor_player2.x, 0.3 };
-		q[0].radians = q[1].radians;
-		q[0].colorplus = q[1].colorplus;
-		q[0].color = { 0,0,0,127 };
-		q[0].texRect.data = q[1].texRect.data;
-	}
 }

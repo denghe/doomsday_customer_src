@@ -78,16 +78,20 @@ namespace Game {
 
 	// stage item's base
 	struct Drawable {
-		Stage* stage{};				// stage's life > this
+		Stage* stage{};										// stage's life > this
+		xx::Ref<xx::Frame> frame;
 		xx::XY pos{}, scale{};
-		float radius{}, radians{};
+		bool needFlipX{};
+		float radius{}, radians{};							// for logic
+		int32_t whiteColorEndTime{};						// for hurt effect
+		int32_t destroyTime{};								// max life cycle for bug issue
 		// todo
-		virtual void Draw() {};
+		virtual void Draw();
 		virtual ~Drawable() {};
 	};
 	struct DrawableEx : Drawable {
 		using Drawable::Drawable;
-		virtual int32_t Update() { return 0; };							// return !0 mean need Release/Delete/Remove
+		virtual int32_t Update() { return 0; };				// return !0 mean need Release/Delete/Remove
 	};
 
 	// stage creature's base
@@ -102,8 +106,6 @@ namespace Game {
 
 		int32_t idle_lineNumber{};
 		void Idle();				// coroutine
-
-		virtual int32_t Hurt(float dmg, XY const& d) { return 0; }		// d = pos - tar.pos. return !0 mean dead
 	};
 
 	// player's base
@@ -115,9 +117,8 @@ namespace Game {
 	struct Monster : Creature {
 		int32_t indexAtItems{ -1 }, indexAtCells{ -1 };		// for space index
 		Monster* prev{}, * next{};							// for space index
-		int32_t whiteColorEndTime{};						// hurt effect
-		int32_t destroyTime{};								// max life cycle for bug issue
 		// todo
+		int32_t Hurt(float dmg, XY const& d);				// d = pos - tar.pos. return !0 mean dead
 	};
 
 	// monster generator's base
