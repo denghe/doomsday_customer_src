@@ -25,7 +25,7 @@ namespace Game {
 	}
 
 	inline void MainMenu::Draw() {
-		xx::Quad().SetFrame(gLooper.res.ui_menu).SetRotate(M_PI_2).SetScale(Cfg::width / ResTpFrames::_size_ui_menu_.x).Draw();
+		xx::Quad().SetFrame(gLooper.res.ui_menu).SetRotate(M_PI_2).SetScale(Cfg::width / ResTpFrames::_size_ui_menu.x).Draw();
 		gLooper.DrawNode(ui);
 	}
 }

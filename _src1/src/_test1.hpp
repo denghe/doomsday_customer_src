@@ -39,14 +39,14 @@ namespace Game {
 
 		void Draw() override {
 			auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
-				.Draw(gLooper.res.monster_chips->tex->GetValue(), 1);
+				.Draw(gLooper.res._tex_monster_chips->GetValue(), 1);
 			q->pos = pos;
-			q->anchor = ResTpFrames::_anchor_monster_chips_;
+			q->anchor = ResTpFrames::_anchor_monster_chips;
 			q->scale = { totalScale * scaleX, totalScale };
 			q->radians = 0;
 			q->colorplus = 1.f;
 			q->color = xx::RGBA8_White;
-			q->texRect.data = gLooper.res.monster_chips->textureRect.data;
+			q->texRect.data = gLooper.res._uvrect_monster_chips.data;
 		}
 	};
 
@@ -82,7 +82,7 @@ namespace Game {
 	}
 
 	inline void Test1::Draw() {
-		xx::Quad().SetFrame(gLooper.res.ui_menu).SetRotate(M_PI_2).SetScale(Cfg::width / ResTpFrames::_size_ui_menu_.x).Draw();
+		xx::Quad().SetFrame(gLooper.res.ui_menu).SetRotate(M_PI_2).SetScale(Cfg::width / ResTpFrames::_size_ui_menu.x).Draw();
 		gLooper.DrawNode(ui);
 
 		for (auto e = items.len, i = 0; i < e; ++i) {

@@ -22,7 +22,7 @@ namespace Game {
 
 		auto& sc = skillCfgs.Emplace().Emplace<SkillCfg_1>();
 		sc->aimRange = Cfg::unitSize * 20;
-		sc->radius = ResTpFrames::_size_bullet_coin5_.x * 0.5f;
+		sc->radius = ResTpFrames::_size_bullet_coin5.x * 0.5f;
 		sc->damage = 5;
 		sc->moveSpeed = 600.f / Cfg::fps;
 		sc->shootSpeed = 1200.f / Cfg::fps;

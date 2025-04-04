@@ -4,7 +4,7 @@ namespace Game {
 
 	XX_INLINE void EffectText::Init(xx::XY const& pos_, xx::XY const& dist_, xx::RGBA8 color_, float scale_, double value_) {
 		// calculate center point
-		pos = { pos_.x - ResTpFrames::_size_font_outline_48_.x * scale_ * len * 0.5f, pos_.y };
+		pos = { pos_.x - ResTpFrames::_size_font_outline_48.x * scale_ * len * 0.5f, pos_.y };
 		// calculate move frame inc with random speed
 		auto _1_mag = 1.f / std::sqrtf(dist_.x * dist_.x + dist_.y * dist_.y);
 		inc = dist_ * _1_mag * gLooper.rnd.Next<float>(cMoveSpeedMin, cMoveSpeedMax);
@@ -36,7 +36,7 @@ namespace Game {
 		auto qs = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(fs[0]->tex->GetValue(), len);
 		auto basePos = stage->camera.ToGLPos(pos);
 		auto s = stage->camera.scale * scale;
-		auto widthInc = ResTpFrames::_size_font_outline_48_.x * s;
+		auto widthInc = ResTpFrames::_size_font_outline_48.x * s;
 		basePos.x -= widthInc * len / 2;
 		for (int32_t i = 0; i < len; ++i) {
 			auto& q = qs[i];

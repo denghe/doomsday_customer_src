@@ -52,7 +52,7 @@ xx::Task<> Looper::MainTask() {
 	btnCfg.center = { 2, 3, 2, 2 };
 
 	btnCfg_Scale5.frame = res.ui_button;
-	btnCfg_Scale5.center = { 30, 30, (uint16_t)ResTpFrames::_size_ui_button_.x - 30 * 2, (uint16_t)ResTpFrames::_size_ui_button_.y - 30 * 2 };
+	btnCfg_Scale5.center = { 30, 30, (uint16_t)ResTpFrames::_size_ui_button.x - 30 * 2, (uint16_t)ResTpFrames::_size_ui_button.y - 30 * 2 };
 	btnCfg_Scale5.color = xx::RGBA8_White;
 	btnCfg_Scale5.txtColor = xx::RGBA8_Black;
 	btnCfg_Scale5.txtPadding = { 50, 8 };

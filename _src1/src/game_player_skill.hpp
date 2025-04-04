@@ -21,7 +21,7 @@ namespace Game {
                     auto a = std::atan2f(d.y, d.x);
                     auto cos = std::cosf(a);
                     auto sin = std::sinf(a);
-                    auto r = ResTpFrames::_size_player1_.x - speedStep * i;
+                    auto r = ResTpFrames::_size_player1.x - speedStep * i;
                     auto pos = pp + XY{ cos * r, sin * r };
                     stage->playerBullets.Emplace().Emplace<PlayerBullet_1>()->Init(this, pos, 0, 1, cos, sin);
                 }

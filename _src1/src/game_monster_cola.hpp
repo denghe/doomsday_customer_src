@@ -6,7 +6,7 @@ namespace Game {
 		dmg = std::ceilf(dmg);
 		if (hp <= dmg) {
 			// dead
-			stage->etm.Add(pos + ResTpFrames::_size_monster_chips_ * XY{ 0, -0.5f }, d, xx::RGBA8_Red, 6, hp);
+			stage->etm.Add(pos + ResTpFrames::_size_monster_chips * XY{ 0, -0.5f }, d, xx::RGBA8_Red, 6, hp);
 			// todo: death effect
 			stage->monsters.Remove(this);
 			return 1;
@@ -14,7 +14,7 @@ namespace Game {
 		else {
 			// hurt
 			hp -= dmg;
-			stage->etm.Add(pos + ResTpFrames::_size_monster_chips_ * XY{ 0, -0.5f }, d, xx::RGBA8_Yellow, 5, dmg);
+			stage->etm.Add(pos + ResTpFrames::_size_monster_chips * XY{ 0, -0.5f }, d, xx::RGBA8_Yellow, 5, dmg);
 			whiteColorEndTime = stage->time + int32_t(0.1f / Cfg::fps);
 			return 0;
 		}
@@ -24,7 +24,7 @@ namespace Game {
 		stage = stage_;
 		pos = pos_;
 		scale = { 1,1 };
-		radius = ResTpFrames::_size_monster_chips_.x * 0.5f;
+		radius = ResTpFrames::_size_monster_chips.x * 0.5f;
 		radians = 0;
 
 		hp = 30.f + stage->round * 8;
@@ -36,7 +36,7 @@ namespace Game {
 		whiteColorEndTime = 0;
 		destroyTime = stage->time + (int32_t)Cfg::fps * 60 * 5;
 
-		tarOffsetRadius = ResTpFrames::_size_monster_chips_.x * 3;
+		tarOffsetRadius = ResTpFrames::_size_monster_chips.x * 3;
 		tarOffset = stage->GetRndPosDoughnut(tarOffsetRadius, 0.1f);
 	}
 
@@ -80,14 +80,14 @@ namespace Game {
 
 	void Monster_Cola::Draw() {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
-			.Draw(gLooper.res.monster_cola->tex->GetValue(), 1);
+			.Draw(gLooper.res._tex_monster_cola->GetValue(), 1);
 		q->pos = stage->camera.ToGLPos(pos);
-		q->anchor = ResTpFrames::_anchor_monster_cola_;
+		q->anchor = ResTpFrames::_anchor_monster_cola;
 		q->scale = scale * stage->camera.scale;
 		q->radians = 0;
 		q->colorplus = whiteColorEndTime >= stage->time ? 10000.f : 1.f;
 		q->color = xx::RGBA8_White;
-		q->texRect.data = gLooper.res.monster_cola->textureRect.data;
+		q->texRect.data = gLooper.res._uvrect_monster_cola.data;
 	}
 
 }
