@@ -13,7 +13,7 @@ namespace Game {
 			gridSize.x = (gridSize.x + 4) & ~0b11;
 		}
 		colors = std::make_unique_for_overwrite<uint8_t[]>(gridSize.x * gridSize.y);
-		rnd.SetSeed(12345678901234567890L);
+		rnd.SetSeed(12345678901234567890UL);
 		for (int32_t rowIdx = 0; rowIdx < gridSize.x; ++rowIdx) {
 			for (int32_t colIdx = 0; colIdx < gridSize.y; colIdx += 4) {
 				auto idxBase = gridSize.x * rowIdx;
