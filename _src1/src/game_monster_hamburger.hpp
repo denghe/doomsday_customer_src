@@ -80,7 +80,7 @@ namespace Game {
 
 	void Monster_Hamburger::Draw() {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
-			.Draw(gLooper.res._tex_monster_hamburger->GetValue(), 1);
+			.Draw(gLooper.res._tex_monster_hamburger, 1);
 		q->pos = stage->camera.ToGLPos(pos);
 		q->anchor = ResTpFrames::_anchor_monster_chips;
 		q->scale = scale * stage->camera.scale;

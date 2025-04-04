@@ -39,7 +39,7 @@ namespace Game {
 
 		void Draw() override {
 			auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
-				.Draw(gLooper.res._tex_monster_chips->GetValue(), 1);
+				.Draw(gLooper.res._tex_monster_chips, 1);
 			q->pos = pos;
 			q->anchor = ResTpFrames::_anchor_monster_chips;
 			q->scale = { totalScale * scaleX, totalScale };

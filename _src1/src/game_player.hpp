@@ -44,7 +44,7 @@ namespace Game {
 
 	inline void Player_1::Draw() {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
-			.Draw(gLooper.res._tex_player1->GetValue(), 2);
+			.Draw(gLooper.res._tex_player1, 2);
 		// body
 		q[1].pos = stage->camera.ToGLPos(pos);
 		q[1].anchor = ResTpFrames::_anchor_player1;
@@ -116,7 +116,7 @@ namespace Game {
 
 	inline void Player_2::Draw() {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
-			.Draw(gLooper.res._tex_player2->GetValue(), 2);
+			.Draw(gLooper.res._tex_player2, 2);
 		XY s{ scale * stage->camera.scale };
 		if (needFlipX) s.x = -s.x;
 		// body

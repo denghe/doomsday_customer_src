@@ -33,7 +33,7 @@ namespace Game {
 
 	XX_INLINE void EffectText::Draw(Stage* stage) {
 		auto& fs = gLooper.res.font_outline_;
-		auto qs = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(fs[0]->tex->GetValue(), len);
+		auto qs = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(fs[0]->tex, len);
 		auto basePos = stage->camera.ToGLPos(pos);
 		auto s = stage->camera.scale * scale;
 		auto widthInc = ResTpFrames::_size_font_outline_48.x * s;

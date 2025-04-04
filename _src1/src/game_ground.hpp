@@ -56,7 +56,7 @@ namespace Game {
 		auto numCols = colTo - colFrom;
 
 		auto buf = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
-			.Draw(frame->tex->GetValue(), numCols * numRows);
+			.Draw(frame->tex, numCols * numRows);
 		auto rectData = frame->textureRect.data;
 		auto s = camera.scale * scale;
 		auto size_2 = size * 0.5f;

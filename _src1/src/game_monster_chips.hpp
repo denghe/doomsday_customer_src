@@ -80,7 +80,7 @@ namespace Game {
 
 	void Monster_Chips::Draw() {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
-			.Draw(gLooper.res._tex_monster_chips->GetValue(), 1);
+			.Draw(gLooper.res._tex_monster_chips, 1);
 		q->pos = stage->camera.ToGLPos(pos);
 		q->anchor = ResTpFrames::_anchor_monster_chips;
 		q->scale = scale * stage->camera.scale;

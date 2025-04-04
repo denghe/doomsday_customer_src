@@ -80,7 +80,7 @@ namespace Game {
 
 	void Monster_Cola::Draw() {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
-			.Draw(gLooper.res._tex_monster_cola->GetValue(), 1);
+			.Draw(gLooper.res._tex_monster_cola, 1);
 		q->pos = stage->camera.ToGLPos(pos);
 		q->anchor = ResTpFrames::_anchor_monster_cola;
 		q->scale = scale * stage->camera.scale;

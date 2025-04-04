@@ -26,7 +26,7 @@ namespace Game {
 
 	void PlayerBullet_1::Draw() {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
-			.Draw(gLooper.res._tex_bullet_coin5->GetValue(), 1);
+			.Draw(gLooper.res._tex_bullet_coin5, 1);
 		q->pos = stage->camera.ToGLPos(pos);
 		q->anchor = ResTpFrames::_anchor_bullet_coin5;
 		q->scale = scale * stage->camera.scale;
