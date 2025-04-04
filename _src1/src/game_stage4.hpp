@@ -2,7 +2,7 @@
 
 namespace Game {
 
-	inline void Stage2::Init() {
+	inline void Stage4::Init() {
 		ui.Emplace()->Init();
 		ui->MakeChildren<xx::Button>()->Init(1, Cfg::xy7m + XY{ 10, -10 }
 			, Cfg::xy7a, gLooper.btnCfg, U"exit", [&]() {
@@ -25,18 +25,18 @@ namespace Game {
 		sc->radius = ResTpFrames::_size_bullet_coin5.x * 0.5f;
 		sc->damage = 5;
 		sc->moveSpeed = 600.f / Cfg::fps;
-		sc->shootSpeed = 5 / Cfg::fps;
+		sc->shootSpeed = 500 / Cfg::fps;
 		sc->life = 3 * (int32_t)Cfg::fps;
 		sc->pierceCount = 0;
 		sc->pierceDelay = 0;
 
 		monsterGenerators.Emplace().Emplace<MonsterGenerator_1>()
-			->Init(this, 0, int32_t(Cfg::fps) * 10, 5);
+			->Init(this, 0, int32_t(Cfg::fps) * 10, 500);
 
 		player.Emplace<Player_1>()->Init(this);
 
 		onCleanup = [this] {
-			gLooper.DelaySwitchTo<Game::Stage3>();
+			gLooper.DelaySwitchTo<Game::Stage5>();
 		};
 	}
 
