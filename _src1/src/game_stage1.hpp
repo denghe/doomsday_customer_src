@@ -25,22 +25,21 @@ namespace Game {
 		sc->radius = ResTpFrames::_size_bullet_coin5.x * 0.5f;
 		sc->damage = 5;
 		sc->moveSpeed = 600.f / Cfg::fps;
-		sc->shootSpeed = 1200.f / Cfg::fps;
+		sc->shootSpeed = 1 / Cfg::fps;
 		sc->life = 3 * (int32_t)Cfg::fps;
 		sc->pierceCount = 0;
 		sc->pierceDelay = 0;
 
 		monsterGenerators.Emplace().Emplace<MonsterGenerator_1>()
 			->Init(this, 0, int32_t(Cfg::fps) * 10, 1);
-		monsterGenerators.Emplace().Emplace<MonsterGenerator_Chips>()
-			->Init(this, int32_t(Cfg::fps) * 10, int32_t(Cfg::fps) * 20, 10);
-		monsterGenerators.Emplace().Emplace<MonsterGenerator_Cola>()
-			->Init(this, int32_t(Cfg::fps) * 20, int32_t(Cfg::fps) * 30, 100);
-		monsterGenerators.Emplace().Emplace<MonsterGenerator_Hamburger>()
-			->Init(this, int32_t(Cfg::fps) * 30, int32_t(Cfg::fps) * 40, 1000);
-
-		monsterGenerators.Emplace().Emplace<MonsterGenerator_Instantnoodles>()
-			->Init(this, int32_t(Cfg::fps) * 40, int32_t(Cfg::fps) * 50, 10000);
+		//monsterGenerators.Emplace().Emplace<MonsterGenerator_Chips>()
+		//	->Init(this, int32_t(Cfg::fps) * 10, int32_t(Cfg::fps) * 20, 10);
+		//monsterGenerators.Emplace().Emplace<MonsterGenerator_Cola>()
+		//	->Init(this, int32_t(Cfg::fps) * 20, int32_t(Cfg::fps) * 30, 100);
+		//monsterGenerators.Emplace().Emplace<MonsterGenerator_Hamburger>()
+		//	->Init(this, int32_t(Cfg::fps) * 30, int32_t(Cfg::fps) * 40, 1000);
+		//monsterGenerators.Emplace().Emplace<MonsterGenerator_Instantnoodles>()
+		//	->Init(this, int32_t(Cfg::fps) * 40, int32_t(Cfg::fps) * 50, 10000);
 
 		//player.Emplace<Player_1>()->Init(this);
 		player.Emplace<Player_2>()->Init(this);
@@ -90,6 +89,14 @@ namespace Game {
 			}
 		}
 
+		// update effects
+		for (auto i = effects.len - 1; i >= 0; --i) {
+			auto& o = effects[i];
+			if (o->Update()) {
+				effects.SwapRemoveAt(i);
+			}
+		}
+
 		// ... more updates
 
 		// sync cam
@@ -114,6 +121,10 @@ namespace Game {
 			}
 			for (auto e = monsters.items.len, i = 0; i < e; ++i) {
 				auto& o = monsters.items[i];
+				yd.Emplace(o->pos.y, o.pointer);
+			}
+			for (auto e = effects.len, i = 0; i < e; ++i) {
+				auto& o = effects[i];
 				yd.Emplace(o->pos.y, o.pointer);
 			}
 			// sort

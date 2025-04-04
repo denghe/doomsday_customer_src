@@ -7,7 +7,7 @@ namespace Game {
 		if (hp <= dmg) {
 			// dead
 			stage->etm.Add(pos + ResTpFrames::_size_monster_chips * XY{ 0, -0.5f }, d, xx::RGBA8_Red, 6, hp);
-			// todo: death effect
+			stage->effects.Emplace().Emplace<EffectDeath>()->Init(stage, gLooper.res.monster_chips, pos);
 			stage->monsters.Remove(this);
 			return 1;
 		}

@@ -37,6 +37,7 @@ namespace Game {
 	struct MonsterGen;
 	struct Skill;
 	struct SkillCfg;
+	struct DrawableEx;
 
 	// stage's base
 	struct Stage : xx::SceneBase {
@@ -55,7 +56,7 @@ namespace Game {
 		Space<Monster> monsters;
 		xx::Shared<Ground> ground;
 		xx::Listi32<xx::Shared<MonsterGen>> monsterGenerators;
-		// todo: effects
+		xx::Listi32<xx::Shared<DrawableEx>> effects;
 		EffectTextManager etm;
 		xx::Listi32<xx::Shared<SkillCfg>> skillCfgs;
 		// todo

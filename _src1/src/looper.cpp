@@ -1,6 +1,7 @@
 ﻿#include "pch.h"
 #include "looper.h"
 #include "game_base.hpp"
+#include "game_effect_death.hpp"
 #include "game_main_menu.hpp"
 #include "game_ground.hpp"
 #include "game_player.hpp"
