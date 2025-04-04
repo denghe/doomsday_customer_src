@@ -80,14 +80,14 @@ namespace Game {
 
 	void Monster_Cola::Draw() {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
-			.Draw(gLooper.res._tex_monster_cola, 1);
+			.Draw(gLooper.res._texid_monster_cola, 1);
 		q->pos = stage->camera.ToGLPos(pos);
 		q->anchor = ResTpFrames::_anchor_monster_cola;
 		q->scale = scale * stage->camera.scale;
 		q->radians = 0;
 		q->colorplus = whiteColorEndTime >= stage->time ? 10000.f : 1.f;
 		q->color = xx::RGBA8_White;
-		q->texRect.data = gLooper.res._uvrect_monster_cola.data;
+		q->texRect.data = ResTpFrames::_uvrect_monster_cola.data;
 	}
 
 }

@@ -44,7 +44,7 @@ namespace Game {
 
 	inline void Player_1::Draw() {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
-			.Draw(gLooper.res._tex_player1, 2);
+			.Draw(gLooper.res._texid_player1, 2);
 		// body
 		q[1].pos = stage->camera.ToGLPos(pos);
 		q[1].anchor = ResTpFrames::_anchor_player1;
@@ -52,7 +52,7 @@ namespace Game {
 		q[1].radians = 0;
 		q[1].colorplus = 1;
 		q[1].color = xx::RGBA8_White;
-		q[1].texRect.data = gLooper.res._uvrect_player1.data;
+		q[1].texRect.data = ResTpFrames::_uvrect_player1.data;
 		// shadow
 		q[0].scale = { q[1].scale.x, q[1].scale.y * 0.2f };
 		q[0].pos = { q[1].pos.x, q[1].pos.y - q[0].scale.y * ResTpFrames::_size_player1.y * 0.5f };
@@ -116,7 +116,7 @@ namespace Game {
 
 	inline void Player_2::Draw() {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
-			.Draw(gLooper.res._tex_player2, 2);
+			.Draw(gLooper.res._texid_player2, 2);
 		XY s{ scale * stage->camera.scale };
 		if (needFlipX) s.x = -s.x;
 		// body
@@ -126,7 +126,7 @@ namespace Game {
 		q[1].radians = 0;
 		q[1].colorplus = 1;
 		q[1].color = xx::RGBA8_White;
-		q[1].texRect.data = gLooper.res._uvrect_player2.data;
+		q[1].texRect.data = ResTpFrames::_uvrect_player2.data;
 		// shadow
 		q[0].scale = { q[1].scale.x, q[1].scale.y * 0.2f };
 		q[0].pos = { q[1].pos.x, q[1].pos.y - q[0].scale.y * ResTpFrames::_size_player2.y * 0.5f };
