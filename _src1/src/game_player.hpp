@@ -8,6 +8,7 @@ namespace Game {
 
 		pos = stage_->GetPlayerBornPos();
 		scale = { 1,1 };
+		offsetRatio = { 0.f, -0.3f };
 		radius = ResTpFrames::_size_player1.x * 0.5f;
 		radians = 0;
 
@@ -55,6 +56,7 @@ namespace Game {
 
 		pos = stage_->GetPlayerBornPos();
 		scale = { 1,1 };
+		offsetRatio = { 0.f, -0.3f };
 		radius = ResTpFrames::_size_player2.x * 0.5f;
 		radians = 0;
 

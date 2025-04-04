@@ -11,7 +11,7 @@ namespace Game {
         shootCountPool += cfg->shootSpeed;
         if (auto count = (int)shootCountPool; count > 0) {
             shootCountPool -= count;
-            auto pp = player->frame->spriteSize * *player->frame->anchor - player->frame->spriteSize * 0.35f + player->pos;
+            auto pp = player->pos + player->frame->spriteSize * player->scale * player->offsetRatio;
             auto stage = player->stage;
             // shoot nearest one
             if (auto o = stage->monsters.FindNearestByRange(pp.x, pp.y, cfg->aimRange)) {
