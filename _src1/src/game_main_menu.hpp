@@ -6,7 +6,7 @@ namespace Game {
 		ui.Emplace()->Init();
 
 		ui->MakeChildren<xx::Button>()->Init(1, Cfg::xy5m + XY{ 0, 280 }
-			, Cfg::xy5a, gLooper.btnCfg_Scale5, U"new game 4.4.21.39", [&]() {
+			, Cfg::xy5a, gLooper.btnCfg_Scale5, U"new game 4.4.21.58", [&]() {
 				gLooper.DelaySwitchTo<Game::Stage1>();
 		});
 

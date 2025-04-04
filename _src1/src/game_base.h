@@ -61,10 +61,14 @@ namespace Game {
 		xx::Listi32<xx::Shared<SkillCfg>> skillCfgs;
 		// todo
 
+		std::function<void()> onCleanup;
+
 		virtual XY GetPlayerBornPos();
 		void ForceLimit(XY& pos);
 		bool IsOutOfMap(XY const& pos);
 		XY GetRndPosDoughnut(float maxRadius, float safeRadius);
+		void Update() override;
+		void Draw() override;
 	};
 
 	// animation: idle 's config( global usage )

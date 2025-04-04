@@ -15,6 +15,7 @@
 #include "game_monster_generator_cola.hpp"
 #include "game_monster_generator_instantnood.hpp"
 #include "game_stage1.hpp"
+#include "game_stage2.hpp"
 #include "game_effect_text.hpp"
 #include "game_monster_chips.hpp"
 #include "game_monster_hamburger.hpp"

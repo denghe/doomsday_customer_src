@@ -2,7 +2,7 @@
 
 namespace Game {
 
-	struct Stage1 : Stage {
+	struct Stage2 : Stage {
 		void Init() override;
 	};
 
