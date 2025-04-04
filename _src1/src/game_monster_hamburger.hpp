@@ -11,7 +11,7 @@ namespace Game {
 		radius = frame->spriteSize.x * 0.5f;
 		radians = 0;
 
-		hp = 15.f + stage->round * 5;
+		hp = 10;//15.f + stage->round * 5;
 		damage = 1;
 		moveSpeed = 300.f / Cfg::fps;
 		criticalRate = 0.1f;

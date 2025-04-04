@@ -3,7 +3,6 @@
 namespace Game {
 
 	struct EffectDeath : DrawableEx {
-		xx::Ref<xx::Frame> frame;
 		float totalScale{}, scaleX{};
 		int32_t n1{}, n2{};
 

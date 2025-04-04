@@ -21,11 +21,7 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 #include "game_player_bullet.h"
 #include "game_player.h"
 #include "game_monster.h"
-#include "game_monster_generator.h"
-#include "game_monster_generator_chips.h"
-#include "game_monster_generator_hamburger.h"
-#include "game_monster_generator_cola.h"
-#include "game_monster_generator_instantnood.h"
+#include "game_monstergen_generic.h"
 #include "game_stage1.h"
 #include "game_stage2.h"
 #include "game_stage3.h"
@@ -35,6 +31,9 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 #include "game_monster_hamburger.h"
 #include "game_monster_cola.h"
 #include "game_monster_instantnoodles.h"
+#include "game_monster_laptop.h"
+#include "game_monster_roastduck.h"
+#include "game_monster_sofa.h"
 // more include here ...
 #include "_test1.h"
 

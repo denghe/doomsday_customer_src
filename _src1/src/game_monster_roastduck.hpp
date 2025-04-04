@@ -2,16 +2,16 @@
 
 namespace Game {
 
-	void Monster_Chips::Init(Stage* stage_, XY const& pos_) {
+	void Monster_Roastduck::Init(Stage* stage_, XY const& pos_) {
 		stage = stage_;
-		frame = gLooper.res.monster_chips;
+		frame = gLooper.res.monster_roastduck;
 
 		pos = pos_;
 		scale = { 1,1 };
 		radius = frame->spriteSize.x * 0.5f;
 		radians = 0;
 
-		hp = 10;// 20.f + stage->round * 6;
+		hp = 10;//30.f + stage->round * 8;
 		damage = 1;
 		moveSpeed = 300.f / Cfg::fps;
 		criticalRate = 0.1f;

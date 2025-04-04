@@ -146,7 +146,9 @@ namespace Game {
 		float countPool{}, countIncPerFrame{};
 
 		void Init(Stage* stage_, int32_t activeTime_, int32_t destroyTime_, float generateNumsPerSeconds_);
-		virtual void Update() {};
+		virtual int32_t Update() { return 0; }
+		template<typename T> void CreateFromRect();
+		template<typename T> void CreateFromDoughnut();
 	};
 
 	// bullet's base

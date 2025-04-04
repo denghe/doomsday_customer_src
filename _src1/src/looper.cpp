@@ -9,11 +9,7 @@
 #include "game_player_skill_cfg.hpp"
 #include "game_player_skill.hpp"
 #include "game_monster.hpp"
-#include "game_monster_generator.hpp"
-#include "game_monster_generator_chips.hpp"
-#include "game_monster_generator_hamburger.hpp"
-#include "game_monster_generator_cola.hpp"
-#include "game_monster_generator_instantnood.hpp"
+#include "game_monstergen_generic.hpp"
 #include "game_stage1.hpp"
 #include "game_stage2.hpp"
 #include "game_stage3.hpp"
@@ -24,6 +20,9 @@
 #include "game_monster_hamburger.hpp"
 #include "game_monster_cola.hpp"
 #include "game_monster_instantnoodles.hpp"
+#include "game_monster_laptop.hpp"
+#include "game_monster_roastduck.hpp"
+#include "game_monster_sofa.hpp"
 // more include here ...
 #include "_test1.hpp"
 
