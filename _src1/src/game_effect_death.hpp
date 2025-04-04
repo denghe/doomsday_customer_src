@@ -2,10 +2,11 @@
 
 namespace Game {
 
-	inline void EffectDeath::Init(Stage* stage_, xx::Ref<xx::Frame> frame_, XY pos_) {
+	inline void EffectDeath::Init(Stage* stage_, xx::Ref<xx::Frame> frame_, XY pos_, float scale_) {
 		stage = stage_;
-		pos = pos_;
 		frame = std::move(frame_);
+		pos = pos_;
+		scale = scale_;
 		totalScale = 1;
 		scaleX = 1;
 	}
@@ -42,7 +43,7 @@ namespace Game {
 			.Draw(frame->tex, 1);
 		q->pos = stage->camera.ToGLPos(pos);
 		q->anchor = frame->anchor.has_value() ? frame->anchor.value() : XY{ 0.5f, 0.5f };
-		q->scale = XY{ totalScale * scaleX, totalScale } * stage->camera.scale;
+		q->scale = XY{ totalScale * scaleX, totalScale } * scale * stage->camera.scale;
 		q->radians = 0;
 		q->colorplus = 1.f;
 		q->color = xx::RGBA8_White;

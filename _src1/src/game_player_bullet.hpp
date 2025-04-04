@@ -2,12 +2,14 @@
 
 namespace Game {
 
-	void PlayerBullet_1::Init(Skill* skill, XY const& pos_, float radians_, float scale_, float cos, float sin) {
+	void PlayerBullet_1::Init(Skill* skill, XY const& pos_, float radians_, float cos, float sin) {
 		stage = skill->player->stage;
+		frame = gLooper.res.bullet_coin5;
+
 		cfg = skill->cfg;
 
 		pos = pos_;
-		scale = scale_;
+		scale = cfg->radius / ResTpFrames::_size_bullet_coin5.x;
 		radians = radians_;
 
 		lifeEndTime = stage->time + cfg->life;
@@ -20,7 +22,7 @@ namespace Game {
 		if (auto m = stage->monsters.FindFirstCrossBy9(pos.x, pos.y, cfg->radius)) {
 			auto d = pos - m->pos;
 			m->Hurt((float)cfg->damage, d, -d);	// todo: calc final dmg
-			stage->effects.Emplace().Emplace<EffectDeath>()->Init(stage, gLooper.res.bullet_coin5, pos);
+			stage->effects.Emplace().Emplace<EffectDeath>()->Init(stage, gLooper.res.bullet_coin5, pos, scale.x);
 			return 1;
 		}
         return lifeEndTime < stage->time;

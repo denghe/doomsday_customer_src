@@ -11,7 +11,7 @@ namespace Game {
         shootCountPool += cfg->shootSpeed;
         if (auto count = (int)shootCountPool; count > 0) {
             shootCountPool -= count;
-            auto pp = player->pos;
+            auto pp = player->frame->spriteSize * *player->frame->anchor - player->frame->spriteSize * 0.35f + player->pos;
             auto stage = player->stage;
             // shoot nearest one
             if (auto o = stage->monsters.FindNearestByRange(pp.x, pp.y, cfg->aimRange)) {
@@ -21,9 +21,9 @@ namespace Game {
                     auto a = std::atan2f(d.y, d.x);
                     auto cos = std::cosf(a);
                     auto sin = std::sinf(a);
-                    auto r = ResTpFrames::_size_player1.x - speedStep * i;
+                    auto r = (player->frame->spriteSize.x * 0.5f - speedStep * i) * player->scale.x;
                     auto pos = pp + XY{ cos * r, sin * r };
-                    stage->playerBullets.Emplace().Emplace<PlayerBullet_1>()->Init(this, pos, 0, 1, cos, sin);
+                    stage->playerBullets.Emplace().Emplace<PlayerBullet_1>()->Init(this, pos, 0, cos, sin);
                 }
             }
         }

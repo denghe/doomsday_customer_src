@@ -24,8 +24,8 @@ namespace Game {
 		sc->aimRange = Cfg::unitSize * 20;
 		sc->radius = ResTpFrames::_size_bullet_coin5.x * 0.5f;
 		sc->damage = 5;
-		sc->moveSpeed = 600.f / Cfg::fps;
-		sc->shootSpeed = 50 / Cfg::fps;
+		sc->moveSpeed = 800.f / Cfg::fps;
+		sc->shootSpeed = 100 / Cfg::fps;
 		sc->life = 3 * (int32_t)Cfg::fps;
 		sc->pierceCount = 0;
 		sc->pierceDelay = 0;
