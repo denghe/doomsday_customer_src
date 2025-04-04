@@ -102,6 +102,11 @@ namespace Game {
 		float moveSpeed{};
 		float criticalRate{};
 		float criticalDamageRatio{};
+
+		bool knockback{};
+		XY knockbackDist{};
+		float knockbackSpeed{};
+		float knockbackReduceValuePerFrame{};
 		// todo
 
 		int32_t idle_lineNumber{};
@@ -117,8 +122,14 @@ namespace Game {
 	struct Monster : Creature {
 		int32_t indexAtItems{ -1 }, indexAtCells{ -1 };		// for space index
 		Monster* prev{}, * next{};							// for space index
+
+		XY tarOffset{};
+		float tarOffsetRadius{};
 		// todo
-		int32_t Hurt(float dmg, XY const& d);				// d = pos - tar.pos. return !0 mean dead
+
+		int32_t Hurt(float dmg, XY const& txtD, XY const& knockbackD);		// return !0 mean dead
+		void Knowckback(float speed, XY const& d);
+		int32_t Update() override;
 	};
 
 	// monster generator's base

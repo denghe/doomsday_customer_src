@@ -24,42 +24,4 @@ namespace Game {
 		tarOffset = stage->GetRndPosDoughnut(tarOffsetRadius, 0.1f);
 	}
 
-	int32_t Monster_Cola::Update() {
-		auto p = stage->player.pointer;
-		auto pp = p->pos;
-		auto d = pp - pos;
-		auto dd = d.x * d.x + d.y * d.y;
-		auto r2 = p->radius + radius;
-		if (dd < r2 * r2) {
-			// cross with player?
-			//p->Hurt(damage, d);
-		}
-		else {
-			d = pp - pos + tarOffset;
-			auto dd = d.x * d.x + d.y * d.y;
-			if (dd < radius * radius) {
-				// reached offset point? reset offset point
-				tarOffset = stage->GetRndPosDoughnut(tarOffsetRadius, 0.1f);
-			}
-			// calc & move
-#if 0
-			auto r = std::atan2f(d.y, d.x);
-			pos += XY{ std::cosf(r) * moveSpeed, std::sinf(r) * moveSpeed };
-#else
-			// faster than atan2 + sin cos  1/4
-			auto mag = std::sqrt(dd);
-			auto norm = d / mag;
-			pos += norm * moveSpeed;
-#endif
-			stage->ForceLimit(pos);
-			stage->monsters.Update(this);	// sync space index
-		}
-
-		// always
-		Idle();
-
-		// todo
-		return destroyTime <= stage->time;
-	}
-
 }

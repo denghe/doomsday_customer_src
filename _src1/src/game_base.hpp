@@ -3,15 +3,6 @@
 namespace Game {
 
 	inline void Drawable::Draw() {
-		//auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(frame->tex, 1);
-		//q->pos = stage->camera.ToGLPos(pos);
-		//q->anchor = frame->anchor.has_value() ? *frame->anchor : XY{ 0.5f, 0.5f };
-		//q->scale = scale * stage->camera.scale;
-		//q->radians = 0;
-		//q->colorplus = whiteColorEndTime >= stage->time ? 10000.f : 1.f;
-		//q->color = xx::RGBA8_White;
-		//q->texRect.data = frame->textureRect.data;
-
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(frame->tex, 2);
 		XY s{ scale * stage->camera.scale };
 		if (needFlipX) s.x = -s.x;
@@ -73,18 +64,72 @@ namespace Game {
 		XX_END(idle_lineNumber);
 	}
 
-	inline void MonsterGen::Init(Stage* stage_, int activeTime_, int destroyTime_, float generateNumsPerSeconds_) {
-		stage = stage_;
-		activeTime = activeTime_;
-		destroyTime = destroyTime_;
-		countIncPerFrame = generateNumsPerSeconds_ / Cfg::fps;
+	void Monster::Knowckback(float speed, XY const& d) {
+		knockback = true;
+		knockbackSpeed = speed * (1.f / Cfg::fps);
+		auto dd = d.x * d.x + d.y * d.y;
+		auto mag = std::sqrt(dd);
+		knockbackDist = d / mag;
+		knockbackReduceValuePerFrame = knockbackSpeed * (1.f / (Cfg::fps * 0.5f));
 	}
 
-	int32_t Monster::Hurt(float dmg, XY const& d) {
+	int32_t Monster::Update() {
+		if (knockback) {
+			knockbackSpeed -= knockbackReduceValuePerFrame;
+			if (knockbackSpeed <= 0) {
+				knockback = false;
+			}
+			else {
+				pos = pos + knockbackDist * knockbackSpeed;
+				stage->ForceLimit(pos);
+				stage->monsters.Update(this);	// sync space index
+			}
+		}
+		else {
+			// move to player
+			auto p = stage->player.pointer;
+			auto pp = p->pos;
+			auto d = pp - pos;
+			auto dd = d.x * d.x + d.y * d.y;
+			auto r2 = p->radius + radius;
+			if (dd < r2 * r2) {
+				// cross with player?
+				//p->Hurt(damage, d);   // todo
+			}
+			else {
+				d = pp - pos + tarOffset;
+				auto dd = d.x * d.x + d.y * d.y;
+				if (dd < radius * radius) {
+					// reached offset point? reset offset point
+					tarOffset = stage->GetRndPosDoughnut(tarOffsetRadius, 0.1f);
+				}
+				// calc & move
+#if 0
+				// slowly than mag normalize
+				auto r = std::atan2f(d.y, d.x);
+				pos += XY{ std::cosf(r) * moveSpeed, std::sinf(r) * moveSpeed };
+#else
+				// faster than atan2 + sin cos  1/4
+				auto mag = std::sqrt(dd);
+				auto norm = d / mag;
+				pos += norm * moveSpeed;
+#endif
+				stage->ForceLimit(pos);
+				stage->monsters.Update(this);	// sync space index
+			}
+
+			Idle();	// always play this  anim
+		}
+
+		// todo
+		return destroyTime <= stage->time;
+	}
+
+	int32_t Monster::Hurt(float dmg, XY const& txtD, XY const& knockbackD) {
 		dmg = std::ceilf(dmg);
 		if (hp <= dmg) {
 			// dead
-			stage->etm.Add(pos + frame->spriteSize * XY{ 0, -0.5f }, d, xx::RGBA8_Red, 6, hp);
+			stage->etm.Add(pos + frame->spriteSize * XY{ 0, -0.5f }, txtD, xx::RGBA8_Red, 6, hp);
 			stage->effects.Emplace().Emplace<EffectDeath>()->Init(stage, frame, pos);
 			stage->monsters.Remove(this);
 			return 1;
@@ -92,9 +137,18 @@ namespace Game {
 		else {
 			// hurt
 			hp -= dmg;
-			stage->etm.Add(pos + frame->spriteSize * XY{ 0, -0.5f }, d, xx::RGBA8_Yellow, 5, dmg);
+			stage->etm.Add(pos + frame->spriteSize * XY{ 0, -0.5f }, txtD, xx::RGBA8_Yellow, 5, dmg);
 			whiteColorEndTime = stage->time + int32_t(0.1f * Cfg::fps);
+			Knowckback(500.f, knockbackD);
 			return 0;
 		}
 	}
+
+	inline void MonsterGen::Init(Stage* stage_, int activeTime_, int destroyTime_, float generateNumsPerSeconds_) {
+		stage = stage_;
+		activeTime = activeTime_;
+		destroyTime = destroyTime_;
+		countIncPerFrame = generateNumsPerSeconds_ / Cfg::fps;
+	}
+
 }
