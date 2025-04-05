@@ -30,10 +30,10 @@ namespace Game {
 		sc->pierceCount = 0;
 		sc->pierceDelay = 0;
 
-		monsterGenerators.Emplace().Emplace<MonsterGen_Generic<Monster_Chips>>()
+		monsterGenerators.Emplace().Emplace<MonsterGen_Generic<Monster_Laptop>>()
 			->Init(this, 0, int32_t(Cfg::fps) * 10, 2.5);
 
-		monsterGenerators.Emplace().Emplace<MonsterGen_Generic<Monster_Cola>>()
+		monsterGenerators.Emplace().Emplace<MonsterGen_Generic<Monster_Roastduck>>()
 			->Init(this, 0, int32_t(Cfg::fps) * 10, 2.5);
 
 		player.Emplace<Player_1>()->Init(this);

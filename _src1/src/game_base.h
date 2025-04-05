@@ -11,7 +11,7 @@ namespace Game {
 		L-- player's bullets
 		L-- monsters
 		L-- monster's bullets
-		L-- map / blocks / envs / effects
+		L-- map / blocks / envs / effects / spawners
 		L-- master logic
 			L-- skill configs( drop ways & rates & configs )
 			L-- monster generators ( timeline )
@@ -38,6 +38,7 @@ namespace Game {
 	struct Skill;
 	struct SkillCfg;
 	struct DrawableEx;
+	struct Spawner;
 
 	// stage's base
 	struct Stage : xx::SceneBase {
@@ -54,6 +55,7 @@ namespace Game {
 		xx::Listi32<xx::Shared<Bullet>> playerBullets;
 		xx::Shared<Player> player;
 		Space<Monster> monsters;
+		xx::Listi32<xx::Shared<Spawner>> spawners;
 		xx::Shared<Ground> ground;
 		xx::Listi32<xx::Shared<MonsterGen>> monsterGenerators;
 		xx::Listi32<xx::Shared<DrawableEx>> effects;

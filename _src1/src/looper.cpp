@@ -1,6 +1,7 @@
 ﻿#include "pch.h"
 #include "looper.h"
 #include "game_base.hpp"
+#include "game_base_stage.hpp"
 #include "game_effect_death.hpp"
 #include "game_main_menu.hpp"
 #include "game_ground.hpp"
@@ -24,6 +25,7 @@
 #include "game_monster_laptop.hpp"
 #include "game_monster_roastduck.hpp"
 #include "game_monster_sofa.hpp"
+#include "game_spawner.hpp"
 // more include here ...
 #include "_test1.hpp"
 

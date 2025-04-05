@@ -2,8 +2,8 @@
 
 namespace Game {
 
-	inline void Skill_1::Init(Creature* creature, SkillCfg* skillCfg_) {
-		creature = creature;
+	inline void Skill_1::Init(Creature* creature_, SkillCfg* skillCfg_) {
+		creature = creature_;
 		cfg = skillCfg_;
 	}
 
