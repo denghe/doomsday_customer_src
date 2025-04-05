@@ -22,6 +22,8 @@ namespace Game {
 
 		tarOffsetRadius = frame->spriteSize.x * 3;
 		tarOffset = stage->GetRndPosDoughnut(tarOffsetRadius, 0.1f);
+
+		skills.Emplace().Emplace<Skill_DashAttack>()->Init(this, stage->skillCfgs[1]);
 	}
 
 }

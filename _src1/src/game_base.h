@@ -134,7 +134,7 @@ namespace Game {
 		// todo
 
 		int32_t Hurt(float dmg, XY const& txtD, XY const& knockbackD);		// return !0 mean dead
-		void Knowckback(float speed, XY const& d);
+		void Knockback(float speed, XY const& d);
 		int32_t Update() override;
 	};
 
@@ -169,9 +169,9 @@ namespace Game {
 		// todo
 	};
 
-	// player's skill's base
+	// creature's skill's base
 	struct Skill {
-		Player* player{};			// player's life > this
+		Creature* creature{};			// creature's life > this
 		SkillCfg* cfg;				// skill cfg's life > this
 		float shootCountPool{};		// time pool for shoot
 
@@ -179,7 +179,7 @@ namespace Game {
 		virtual ~Skill() {};
 	};
 
-	// player's skill's config's base
+	// creature's skill's config's base
 	struct SkillCfg {
 		int32_t typeId{};			// for switch case cast Derived*
 		float aimRange{};           // cell size * 10 ?

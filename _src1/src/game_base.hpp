@@ -175,7 +175,7 @@ namespace Game {
 		XX_END(idle_lineNumber);
 	}
 
-	void Monster::Knowckback(float speed, XY const& d) {
+	void Monster::Knockback(float speed, XY const& d) {
 		knockback = true;
 		knockbackSpeed = speed * (1.f / Cfg::fps);
 		auto dd = d.x * d.x + d.y * d.y;
@@ -232,6 +232,13 @@ namespace Game {
 			Idle();	// always play this  anim
 		}
 
+		for (auto i = skills.len - 1; i >= 0; --i) {
+			auto& skill = skills[i];
+			if (skill->Update()) {
+				skills.SwapRemoveAt(i);
+			}
+		}
+
 		// todo
 		return destroyTime <= stage->time;
 	}
@@ -250,7 +257,7 @@ namespace Game {
 			hp -= dmg;
 			stage->etm.Add(pos + frame->spriteSize * XY{ 0, -0.5f }, txtD, xx::RGBA8_Yellow, 5, dmg);
 			whiteColorEndTime = stage->time + int32_t(0.1f * Cfg::fps);
-			Knowckback(500.f, knockbackD);
+			Knockback(500.f, knockbackD);
 			return 0;
 		}
 	}
