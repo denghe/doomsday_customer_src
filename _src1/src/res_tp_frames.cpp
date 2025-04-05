@@ -14,6 +14,30 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 		xx_assert(tp);
 		auto map = tp->GetMapSV();
 
+		this->buff_996 = map["buff_996"sv];
+		this->_tex_buff_996 = this->buff_996->tex;
+		this->_texid_buff_996 = this->_tex_buff_996->GetValue();
+		this->buff_chair = map["buff_chair"sv];
+		this->_tex_buff_chair = this->buff_chair->tex;
+		this->_texid_buff_chair = this->_tex_buff_chair->GetValue();
+		this->buff_chinese_medicine = map["buff_chinese_medicine"sv];
+		this->_tex_buff_chinese_medicine = this->buff_chinese_medicine->tex;
+		this->_texid_buff_chinese_medicine = this->_tex_buff_chinese_medicine->GetValue();
+		this->buff_elbow = map["buff_elbow"sv];
+		this->_tex_buff_elbow = this->buff_elbow->tex;
+		this->_texid_buff_elbow = this->_tex_buff_elbow->GetValue();
+		this->buff_glasses = map["buff_glasses"sv];
+		this->_tex_buff_glasses = this->buff_glasses->tex;
+		this->_texid_buff_glasses = this->_tex_buff_glasses->GetValue();
+		this->buff_running_shoes = map["buff_running_shoes"sv];
+		this->_tex_buff_running_shoes = this->buff_running_shoes->tex;
+		this->_texid_buff_running_shoes = this->_tex_buff_running_shoes->GetValue();
+		this->buff_treadmill = map["buff_treadmill"sv];
+		this->_tex_buff_treadmill = this->buff_treadmill->tex;
+		this->_texid_buff_treadmill = this->_tex_buff_treadmill->GetValue();
+		this->buff_work_meal = map["buff_work_meal"sv];
+		this->_tex_buff_work_meal = this->buff_work_meal->tex;
+		this->_texid_buff_work_meal = this->_tex_buff_work_meal->GetValue();
 		this->bullet_cash = map["bullet_cash"sv];
 		this->_tex_bullet_cash = this->bullet_cash->tex;
 		this->_texid_bullet_cash = this->_tex_bullet_cash->GetValue();
@@ -369,6 +393,7 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 
 	// fill groups
 
+	buff_.Add(buff_996);
 	font_outline_.Add(font_outline_32);
 	font_outline_.Add(font_outline_33);
 	font_outline_.Add(font_outline_34);

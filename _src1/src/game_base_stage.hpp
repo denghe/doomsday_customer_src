@@ -96,7 +96,7 @@ namespace Game {
 		++time;
 
 		// finish check
-		if (monsterGenerators.Empty() && monsters.items.Empty()) {
+		if (monsterGenerators.Empty() && spawners.Empty() && monsters.items.Empty()) {
 			onCleanup();
 		}
 	}
