@@ -15,6 +15,7 @@
 #include "game_stage3.hpp"
 #include "game_stage4.hpp"
 #include "game_stage5.hpp"
+#include "game_stage_dash.hpp"
 #include "game_effect_text.hpp"
 #include "game_monster_chips.hpp"
 #include "game_monster_hamburger.hpp"

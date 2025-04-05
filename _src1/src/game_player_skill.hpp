@@ -2,8 +2,8 @@
 
 namespace Game {
 
-	inline void Skill_1::Init(Player* player_, SkillCfg* skillCfg_) {
-		player = player_;
+	inline void Skill_1::Init(Creature* creature, SkillCfg* skillCfg_) {
+		creature = creature;
 		cfg = skillCfg_;
 	}
 
@@ -11,8 +11,8 @@ namespace Game {
         shootCountPool += cfg->shootSpeed;
         if (auto count = (int)shootCountPool; count > 0) {
             shootCountPool -= count;
-            auto pp = player->pos + player->frame->spriteSize * player->scale * player->offsetRatio;
-            auto stage = player->stage;
+            auto pp = creature->pos + creature->frame->spriteSize * creature->scale * creature->offsetRatio;
+            auto stage = creature->stage;
             // shoot nearest one
             if (auto o = stage->monsters.FindNearestByRange(pp.x, pp.y, cfg->aimRange)) {
                 auto speedStep = cfg->moveSpeed / count;
@@ -21,7 +21,7 @@ namespace Game {
                     auto a = std::atan2f(d.y, d.x);
                     auto cos = std::cosf(a);
                     auto sin = std::sinf(a);
-                    auto r = (player->frame->spriteSize.x * 0.5f - speedStep * i) * player->scale.x;
+                    auto r = (creature->frame->spriteSize.x * 0.5f - speedStep * i) * creature->scale.x;
                     auto pos = pp + XY{ cos * r, sin * r };
                     stage->playerBullets.Emplace().Emplace<PlayerBullet_1>()->Init(this, pos, 0, cos, sin);
                 }
@@ -30,4 +30,17 @@ namespace Game {
 		return 0;
 	}
 
+
+	inline void Skill_DashAttack::Init(Creature* creature_, SkillCfg* skillCfg_) {
+		creature = creature_;
+		cfg = skillCfg_;
+	}
+
+	inline int32_t Skill_DashAttack::Update() {
+        if (coolDownTimer) return 0;
+        
+		coolDownTimer = coolDown;
+        xx::CoutN("dash attack");
+		return 0;
+	}
 }

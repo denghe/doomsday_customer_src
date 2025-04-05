@@ -27,6 +27,7 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 #include "game_stage3.h"
 #include "game_stage4.h"
 #include "game_stage5.h"
+#include "game_stage_dash.h"
 #include "game_monster_chips.h"
 #include "game_monster_hamburger.h"
 #include "game_monster_cola.h"

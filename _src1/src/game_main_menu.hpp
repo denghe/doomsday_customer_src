@@ -10,6 +10,11 @@ namespace Game {
 				gLooper.DelaySwitchTo<Game::Stage5>();
 		});
 
+		ui->MakeChildren<xx::Button>()->Init(1, Cfg::xy5m + XY{ 0, 0 }
+			, Cfg::xy5a, gLooper.btnCfg_Scale5, U"dash test", [&]() {
+				gLooper.DelaySwitchTo<Game::Stage_Dash>();
+			});
+
 		ui->MakeChildren<xx::Button>()->Init(1, Cfg::xy7m + XY{ 10, -10 }
 			, Cfg::xy7a, gLooper.btnCfg, U"test1", [&]() {
 				gLooper.DelaySwitchTo<Game::Test1>();

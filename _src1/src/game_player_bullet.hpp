@@ -3,7 +3,7 @@
 namespace Game {
 
 	void PlayerBullet_1::Init(Skill* skill, XY const& pos_, float radians_, float cos, float sin) {
-		stage = skill->player->stage;
+		stage = skill->creature->stage;
 		frame = gLooper.res.bullet_coin5;
 
 		cfg = skill->cfg;
