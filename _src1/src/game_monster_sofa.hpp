@@ -11,9 +11,9 @@ namespace Game {
 		radius = frame->spriteSize.x * 0.5f;
 		radians = 0;
 
-		statCfg.Emplace();	// todo: choose stat cfg
-		InitStat();
-		movementSpeedPerFrame = sp.movementSpeed * Cfg::frameDelay;	// * delay == / fps
+		// todo: init
+		StatCalc();
+		hp = sp.healthPoint;
 
 		whiteColorEndTime = 0;
 		destroyTime = stage->time + (int32_t)Cfg::fps * 60 * 5;

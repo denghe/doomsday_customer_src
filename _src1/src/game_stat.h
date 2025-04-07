@@ -16,7 +16,7 @@ namespace Game {
 		lucky, __POINTS_END__ = lucky,
 
 		// results
-		life,
+		life,					// nickname: health point / HP
 		lifeRegeneration,
 		energy,
 		energyRegeneration,
@@ -75,6 +75,7 @@ namespace Game {
 	};
 
 	struct alignas(8) StatPanelBase {
+		static constexpr int32_t numFields{ (int32_t)StatTypes::__POINTS_END__ + 1 };
 		Stat_t health{};						// + life max, energy max
 		Stat_t vitality{};						// + life regeneration, energy regeneration
 		Stat_t strength{};						// + damage scale
@@ -84,24 +85,14 @@ namespace Game {
 		Stat_t defense{};						// + damage reduce scale
 		Stat_t wisdom{};						// + experience scale
 		Stat_t lucky{};							// + critical chance, improve drop rate
-
-		void Clear() {
-			memset(this, 0, sizeof(StatPanelBase));
-		}
-
-		XX_INLINE Stat_t& At(StatTypes t) const {
-			assert((uint32_t)t <= (uint32_t)StatTypes::__POINTS_END__);
-			return ((Stat_t*)this)[(uint32_t)t];
-		}
-
-		void Dump() {
-			for (uint32_t i = 0; i <= (uint32_t)StatTypes::__POINTS_END__; ++i) {
-				xx::CoutN(strings_StatTypes[i], " = ", At((StatTypes)i));
-			}
+		constexpr Stat_t& operator[](int32_t idx) const {
+			assert(idx <= SP::numFields);
+			return ((Stat_t*)this)[idx];
 		}
 	};
 
-	struct alignas(8) StatPanel : StatPanelBase {
+	struct alignas(8) StatPanelResult {
+		static constexpr int32_t numFields{ (int32_t)StatTypes::__RESULTS_END__ - (int32_t)StatTypes::__POINTS_END__ };
 		Stat_t life{};							// from health			// max val
 		Stat_t lifeRegeneration{};				// from vitality		// restore runtime life per seconds
 		Stat_t energy{};						// from health			// max val
@@ -114,130 +105,118 @@ namespace Game {
 		Stat_t experienceScale{};				// from wisdom			// final exp = exp * experienceScale
 		Stat_t criticalChance{};				// from lucky			// if rand(0, 1) < criticalChance then final damage = damage * (1 + criticalBonus)
 		Stat_t criticalBonus{};					// from dexterity		// for crtical hit damage calculate ( scale )
-
-		void Clear() {
-			memset(this, 0, sizeof(StatPanel));
+		void ZeroResult() {
+			memset(this, 0, sizeof(StatPanelResult));
 		}
-
-		XX_INLINE Stat_t& At(StatTypes t) const {
-			assert((uint32_t)t <= (uint32_t)StatTypes::__RESULTS_END__);
-			return ((Stat_t*)this)[(uint32_t)t];
+		constexpr Stat_t& operator[](int32_t idx) const {
+			assert(idx <= SP::numFields);
+			return ((Stat_t*)this)[idx];
 		}
+	};
 
+	struct alignas(8) StatPanel : StatPanelBase, StatPanelResult {
+		static constexpr int32_t numFields{ (int32_t)StatTypes::__RESULTS_END__ + 1 };
+		constexpr Stat_t& operator[](int32_t idx) const {
+			assert(idx <= SP::numFields);
+			return ((Stat_t*)this)[idx];
+		}
 		void Dump() {
-			for (uint32_t i = 0; i <= (uint32_t)StatTypes::__RESULTS_END__; ++i) {
-				xx::CoutN(strings_StatTypes[i], " = ", At((StatTypes)i));
+			for (int32_t i = 0; i < numFields; ++i) {
+				xx::CoutN(strings_StatTypes[i], " = ", operator[](i));
 			}
 		}
 	};
 
 	struct StatCfg {
-		// initial values
-		Stat_t initHealth{10};
-		Stat_t initVitality{10};
-		Stat_t initStrength{10};
-		Stat_t initDodge{0};
-		Stat_t initAgile{300};
-		Stat_t initDexterity{10};
-		Stat_t initDefense{10};
-		Stat_t initWisdom{10};
-		Stat_t initLucky{10};
-
-		// level up ratios
-		Stat_t levelToHealthRatio{2};
-		Stat_t levelToVitalityRatio{2};
-		Stat_t levelToStrengthRatio{2};
-		Stat_t levelToDodgeRatio{2};
-		Stat_t levelToAgileRatio{0.1};
-		Stat_t levelToDexterityRatio{2};
-		Stat_t levelToDefenseRatio{2};
-		Stat_t levelToWisdomRatio{2};
-		Stat_t levelToLuckyRatio{2};
-
-		// base to result ratios
-		Stat_t healthToLifeRatio{2};
-		Stat_t healthToEnergyRatio{5};
-		Stat_t vitalityToLifeRegenerationRatio{0.2};
-		Stat_t vitalityToEnergyRegenerationRatio{0.5};
-		Stat_t strengthToDamageScaleRatio{0.1};
-		Stat_t dodgeToEvasionRatio{0.1};
-		Stat_t agileToMovementSpeedRatio{1};
-		Stat_t dexterityToAttackSpeedRatio{0.1};
-		Stat_t dexterityToCritialBonusScaleRatio{0.1};
-		Stat_t wisdomToExperienceScaleRatio{0.1};
-		Stat_t luckyToCritialChanceScaleRatio{0.01};
-
 		// rules
-		bool enableCritChanceToBonus{ false };
-		Stat_t evasionFactor{100};
-		Stat_t defenseFactor{100};
-		xx::FromTo<Stat_t> rangeLife{ 1, 1000000 };
-		xx::FromTo<Stat_t> rangeLifeRegeneration{ 1, 1000000 };
-		xx::FromTo<Stat_t> rangeEnergy{ 1, 1000000 };
-		xx::FromTo<Stat_t> rangeEnergyRegeneration{ 1, 1000000 };
-		xx::FromTo<Stat_t> rangeDamageScale{ 0, 1000000 };
-		xx::FromTo<Stat_t> rangeEvasion{ 0, 0.99999 };
-		xx::FromTo<Stat_t> rangeMovementSpeed{ 0, Cfg::unitSize * Cfg::fps * 0.5 };
-		xx::FromTo<Stat_t> rangeAttackSpeed{ 0, 120 };
-		xx::FromTo<Stat_t> rangeDefenseScale{ 0, 0.99999 };
-		xx::FromTo<Stat_t> rangeExperienceScale{ 1, 1000000 };
-		xx::FromTo<Stat_t> rangeCriticalChance{ 0, 1000000 };
-		xx::FromTo<Stat_t> rangeCriticalBonus{ 0, 1000000 };
+		static constexpr bool enableCritChanceToBonus{ false };
+		static constexpr Stat_t evasionFactor{ 16 };
+		static constexpr Stat_t defenseFactor{ 66 };
+		static constexpr StatPanelResult rangeFrom{};	// all zero
+		static constexpr StatPanelResult rangeTo{
+			.life = 1000000,
+			.lifeRegeneration = 1000000,
+			.energy = 1000000,
+			.energyRegeneration = 1000000,
+			.damageScale = 1000,
+			.evasion = 0.8,
+			.movementSpeed = 2000,
+			.attackSpeed = 100,
+			.defenseScale = 0.99999,
+			.experienceScale = 1000,
+			.criticalChance = 1000,
+			.criticalBonus = 1000,
+		};
+		StatPanelBase init;						// first time fill to curr value
+		StatPanelBase levelRatio;				// every time when level up: curr value *= ratio
+		StatPanelResult resultRatio;			// result = curr value * ratio
 
-		// requires C:: Count() & operator[]
-		// requires List/TinyList C::ElementType::stats
-		// level: runtime int32. range: 1 ~ xxxx
+		template<bool fillPoint = true, bool fillLevelRatio = true, bool fillResultRatio = true>
+		void Init(Stat_t defaultPoint = 0, Stat_t defaultLevelRatio = 1.1, Stat_t defaultResultRatio = 1) {
+			if constexpr (fillPoint) {
+				for (int32_t i = 0; i < init.numFields; ++i) {
+					init[i] = defaultPoint;
+				}
+			}
+			if constexpr (fillLevelRatio) {
+				for (int32_t i = 0; i < levelRatio.numFields; ++i) {
+					levelRatio[i] = defaultLevelRatio;
+				}
+			}
+			if constexpr (fillResultRatio) {
+				for (int32_t i = 0; i < resultRatio.numFields; ++i) {
+					resultRatio[i] = defaultResultRatio;
+				}
+			}
+		}
+
 		template<typename C>
-		void Calc(StatPanel& sp, int32_t level, C const& equipments) const {
-			sp.Clear();
-			// calculate points by level
-			sp.health = this->initHealth + (level - 1) * this->levelToHealthRatio;
-			sp.vitality = this->initVitality + (level - 1) * this->levelToVitalityRatio;
-			sp.strength = this->initStrength + (level - 1) * this->levelToStrengthRatio;
-			sp.dodge = this->initDodge + (level - 1) * this->levelToDodgeRatio;
-			sp.agile = this->initAgile + (level - 1) * this->levelToAgileRatio;
-			sp.dexterity = this->initDexterity + (level - 1) * this->levelToDexterityRatio;
-			sp.defense = this->initDefense + (level - 1) * this->levelToDefenseRatio;
-			sp.wisdom = this->initWisdom + (level - 1) * this->levelToWisdomRatio;
-			sp.lucky = this->initLucky + (level - 1) * this->levelToLuckyRatio;
+		void Calc(StatPanelBase& spb, StatPanel& sp, int32_t& currLevel, int32_t tarLevel, C const& equipments) const {
+			// upgrade base points by target level
+			if (currLevel == 0) {
+				memcpy(&spb, &init, sizeof(spb));
+				currLevel = 1;
+			}
+			while (currLevel < tarLevel) {
+				for (int32_t i = 0; i < spb.numFields; ++i) {
+					spb[i] *= levelRatio[i];
+					sp[i] = spb[i];
+				}
+				++currLevel;
+			}
 			// gather points & results from items
+			sp.ZeroResult();
 			if (auto equipmentsCount = equipments.Count(); equipmentsCount > 0) {
 				for (int32_t ei = 0; ei < equipmentsCount; ++ei) {
 					auto& e = equipments[ei];
 					if (auto statsCount = e->stats.Count(); statsCount > 0) {
 						for (int32_t si = 0; si < statsCount; ++si) {
 							auto& s = e->stats[si];
-							sp.At(s.type) += s.value;
+							sp[(uint32_t)s.type] += s.value;
 						}
 					}
 				}
 			}
 			// calculate final results
-			sp.life += sp.health * this->healthToLifeRatio;
-			sp.energy += sp.health * this->healthToEnergyRatio;
-			sp.lifeRegeneration += sp.vitality * this->vitalityToLifeRegenerationRatio;
-			sp.energyRegeneration += sp.vitality * this->vitalityToEnergyRegenerationRatio;
-			sp.damageScale += sp.strength * this->strengthToDamageScaleRatio;
-			sp.evasion += 1 - this->evasionFactor / (this->evasionFactor + sp.dodge);
-			sp.movementSpeed += sp.agile * this->agileToMovementSpeedRatio;
-			sp.attackSpeed += sp.dexterity * this->dexterityToAttackSpeedRatio;
-			sp.defenseScale += this->defenseFactor / (this->defenseFactor + sp.defense);
-			sp.experienceScale += sp.wisdom * this->wisdomToExperienceScaleRatio;
-			sp.criticalChance += sp.lucky * this->luckyToCritialChanceScaleRatio;
-			sp.criticalBonus += sp.dexterity * this->dexterityToCritialBonusScaleRatio;
-			// handle rules
-			this->rangeLife.Limit(sp.life);
-			this->rangeLifeRegeneration.Limit(sp.lifeRegeneration);
-			this->rangeEnergy.Limit(sp.energy);
-			this->rangeEnergyRegeneration.Limit(sp.energyRegeneration);
-			this->rangeDamageScale.Limit(sp.damageScale);
-			this->rangeEvasion.Limit(sp.evasion);
-			this->rangeMovementSpeed.Limit(sp.movementSpeed);
-			this->rangeAttackSpeed.Limit(sp.attackSpeed);
-			this->rangeDefenseScale.Limit(sp.defenseScale);
-			this->rangeExperienceScale.Limit(sp.experienceScale);
-			this->rangeCriticalChance.Limit(sp.criticalChance);
-			this->rangeCriticalBonus.Limit(sp.criticalBonus);
+			sp.life += sp.health * resultRatio.life;
+			sp.energy += sp.health * resultRatio.energy;
+			sp.lifeRegeneration += sp.vitality * resultRatio.lifeRegeneration;
+			sp.energyRegeneration += sp.vitality * resultRatio.energyRegeneration;
+			sp.damageScale += sp.strength * resultRatio.damageScale;
+			sp.evasion += sp.dodge / (sp.dodge + this->evasionFactor);
+			sp.movementSpeed += sp.agile * resultRatio.movementSpeed;
+			sp.attackSpeed += sp.dexterity * resultRatio.attackSpeed;
+			sp.defenseScale += sp.defense / (sp.defense + this->defenseFactor);
+			sp.experienceScale += sp.wisdom * resultRatio.experienceScale;
+			sp.criticalChance += sp.lucky * resultRatio.criticalChance;
+			sp.criticalBonus += sp.dexterity * resultRatio.criticalBonus;
+			// apply rules
+			auto& spr = *(StatPanelResult*)&sp;
+			for (int32_t i = 0; i < StatPanelResult::numFields; ++i) {
+				auto& v = spr[i];
+				if (v < rangeFrom[i]) v = rangeFrom[i];
+				else if (v > rangeTo[i]) v = rangeTo[i];
+			}
 			if (sp.criticalChance > 1 && enableCritChanceToBonus) sp.criticalBonus += sp.criticalChance - 1;
 		}
 	};
@@ -245,17 +224,17 @@ namespace Game {
 	template<typename E>
 	struct StatBase {
 		xx::TinyList<xx::Shared<E>> equipments;
-		xx::Ref<StatCfg> statCfg;
 		int32_t level{}, experience{};
 		Stat_t life{}, energy{};
-		Stat_t movementSpeedPerFrame{};			// cache: == sp.movementSpeed / Cfg::fps
 		bool spDirty{ true };
+		StatPanelBase spb;		// backup base point for level up
 		StatPanel sp;
+		StatCfg statCfg;
 
-		void InitStat() {
-			level = 1;
-			experience = 0;
-			statCfg->Calc(sp, level, equipments);
+		void InitStat(int32_t tarLevel) {
+			assert(level == 0);
+			assert(experience == 0);
+			statCfg.Calc(spb, sp, level, tarLevel, equipments);
 			life = sp.life;
 			energy = sp.energy;
 		}
@@ -266,7 +245,6 @@ namespace Game {
 /*********************************************************************************************/
 /*********************************************************************************************/
 // ref codes
-
 
 
 //struct Creature;

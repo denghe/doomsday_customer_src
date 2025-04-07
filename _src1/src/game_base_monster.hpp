@@ -72,16 +72,16 @@ namespace Game {
 
 	int32_t Monster::Hurt(float dmg, XY const& txtD, XY const& knockbackD) {
 		dmg = std::ceilf(dmg);
-		if (life <= dmg) {
+		if (hp <= dmg) {
 			// dead
-			stage->etm.Add(pos + frame->spriteSize * XY{ 0, -0.5f }, txtD, xx::RGBA8_Red, 6, life);
+			stage->etm.Add(pos + frame->spriteSize * XY{ 0, -0.5f }, txtD, xx::RGBA8_Red, 6, hp);
 			stage->effects.Emplace().Emplace<EffectDeath>()->Init(stage, frame, pos);
 			stage->monsters.Remove(this);
 			return 1;
 		}
 		else {
 			// hurt
-			life -= dmg;
+			hp -= dmg;
 			stage->etm.Add(pos + frame->spriteSize * XY{ 0, -0.5f }, txtD, xx::RGBA8_Yellow, 5, dmg);
 			whiteColorEndTime = stage->time + int32_t(0.1f * Cfg::fps);
 			Knockback(500.f, knockbackD);

@@ -12,9 +12,10 @@ namespace Game {
 		radius = ResTpFrames::_size_player1.x * 0.5f;
 		radians = 0;
 
-		statCfg.Emplace();	// todo: choose stat cfg
-		InitStat();
-		movementSpeedPerFrame = sp.movementSpeed * Cfg::frameDelay;	// * delay == / fps
+		// todo: init
+		StatCalc();
+		hp = sp.healthPoint;
+		//
 
 		// add init skill for test
 		skills.Emplace().Emplace<Skill_1>()->Init(this, stage->skillCfgs[0]);
