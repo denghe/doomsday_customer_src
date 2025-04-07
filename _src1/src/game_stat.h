@@ -8,6 +8,7 @@ namespace Game {
 		health,
 		vitality,
 		strength,
+		dodge,
 		agile,
 		dexterity,
 		defense,
@@ -40,6 +41,7 @@ namespace Game {
 		"health",
 		"vitality",
 		"strength",
+		"dodge",
 		"agile",
 		"dexterity",
 		"defense",
@@ -76,7 +78,8 @@ namespace Game {
 		Stat_t health{};						// + life max, energy max
 		Stat_t vitality{};						// + life regeneration, energy regeneration
 		Stat_t strength{};						// + damage scale
-		Stat_t agile{};							// + evasion, movement speed
+		Stat_t dodge{};							// + evasion
+		Stat_t agile{};							// + movement speed
 		Stat_t dexterity{};						// + attack speed, critical bonus
 		Stat_t defense{};						// + damage reduce scale
 		Stat_t wisdom{};						// + experience scale
@@ -104,7 +107,7 @@ namespace Game {
 		Stat_t energy{};						// from health			// max val
 		Stat_t energyRegeneration{};			// from vitality		// restore runtime energy per seconds
 		Stat_t damageScale{};					// from strength		// final damage = weapon damage * damageScale
-		Stat_t evasion{};						// from agile			// dodge chance
+		Stat_t evasion{};						// from dodge			// chance 0 ~ 1
 		Stat_t movementSpeed{};					// from agile			// position change max pixel per seconds
 		Stat_t attackSpeed{};					// from dexterity		// attack times per seconds
 		Stat_t defenseScale{};					// from defense			// final damage = damage * defenseScale
@@ -128,22 +131,13 @@ namespace Game {
 		}
 	};
 
-
-
-	struct Creature;
-	struct Equipment {
-		virtual ~Equipment() {}
-		xx::Weak<Creature> owner;
-		xx::TinyList<StatItem> stats;		// maybe use fixed length array instead of list
-		// ...
-	};
-
 	struct StatCfg {
 		// initial values
 		Stat_t initHealth{10};
 		Stat_t initVitality{10};
 		Stat_t initStrength{10};
-		Stat_t initAgile{10};
+		Stat_t initDodge{0};
+		Stat_t initAgile{300};
 		Stat_t initDexterity{10};
 		Stat_t initDefense{10};
 		Stat_t initWisdom{10};
@@ -153,7 +147,8 @@ namespace Game {
 		Stat_t levelToHealthRatio{2};
 		Stat_t levelToVitalityRatio{2};
 		Stat_t levelToStrengthRatio{2};
-		Stat_t levelToAgileRatio{2};
+		Stat_t levelToDodgeRatio{2};
+		Stat_t levelToAgileRatio{0.1};
 		Stat_t levelToDexterityRatio{2};
 		Stat_t levelToDefenseRatio{2};
 		Stat_t levelToWisdomRatio{2};
@@ -165,17 +160,17 @@ namespace Game {
 		Stat_t vitalityToLifeRegenerationRatio{0.2};
 		Stat_t vitalityToEnergyRegenerationRatio{0.5};
 		Stat_t strengthToDamageScaleRatio{0.1};
-		Stat_t evasionFactor{100};
-		Stat_t baseMovementSpeed{300};
-		Stat_t agileToMovementSpeedRatio{0.1};
+		Stat_t dodgeToEvasionRatio{0.1};
+		Stat_t agileToMovementSpeedRatio{1};
 		Stat_t dexterityToAttackSpeedRatio{0.1};
 		Stat_t dexterityToCritialBonusScaleRatio{0.1};
-		Stat_t defenseFactor{100};
 		Stat_t wisdomToExperienceScaleRatio{0.1};
 		Stat_t luckyToCritialChanceScaleRatio{0.01};
 
 		// rules
 		bool enableCritChanceToBonus{ false };
+		Stat_t evasionFactor{100};
+		Stat_t defenseFactor{100};
 		xx::FromTo<Stat_t> rangeLife{ 1, 1000000 };
 		xx::FromTo<Stat_t> rangeLifeRegeneration{ 1, 1000000 };
 		xx::FromTo<Stat_t> rangeEnergy{ 1, 1000000 };
@@ -190,6 +185,7 @@ namespace Game {
 		xx::FromTo<Stat_t> rangeCriticalBonus{ 0, 1000000 };
 
 		// requires C:: Count() & operator[]
+		// requires List/TinyList C::ElementType::stats
 		// level: runtime int32. range: 1 ~ xxxx
 		template<typename C>
 		void Calc(StatPanel& sp, int32_t level, C const& equipments) const {
@@ -198,6 +194,7 @@ namespace Game {
 			sp.health = this->initHealth + (level - 1) * this->levelToHealthRatio;
 			sp.vitality = this->initVitality + (level - 1) * this->levelToVitalityRatio;
 			sp.strength = this->initStrength + (level - 1) * this->levelToStrengthRatio;
+			sp.dodge = this->initDodge + (level - 1) * this->levelToDodgeRatio;
 			sp.agile = this->initAgile + (level - 1) * this->levelToAgileRatio;
 			sp.dexterity = this->initDexterity + (level - 1) * this->levelToDexterityRatio;
 			sp.defense = this->initDefense + (level - 1) * this->levelToDefenseRatio;
@@ -221,8 +218,8 @@ namespace Game {
 			sp.lifeRegeneration += sp.vitality * this->vitalityToLifeRegenerationRatio;
 			sp.energyRegeneration += sp.vitality * this->vitalityToEnergyRegenerationRatio;
 			sp.damageScale += sp.strength * this->strengthToDamageScaleRatio;
-			sp.evasion += 1 - this->evasionFactor / (this->evasionFactor + sp.agile);
-			sp.movementSpeed += this->baseMovementSpeed + sp.agile * this->agileToMovementSpeedRatio;
+			sp.evasion += 1 - this->evasionFactor / (this->evasionFactor + sp.dodge);
+			sp.movementSpeed += sp.agile * this->agileToMovementSpeedRatio;
 			sp.attackSpeed += sp.dexterity * this->dexterityToAttackSpeedRatio;
 			sp.defenseScale += this->defenseFactor / (this->defenseFactor + sp.defense);
 			sp.experienceScale += sp.wisdom * this->wisdomToExperienceScaleRatio;
@@ -245,11 +242,40 @@ namespace Game {
 		}
 	};
 
+	template<typename E>
+	struct StatBase {
+		xx::TinyList<xx::Shared<E>> equipments;
+		xx::Ref<StatCfg> statCfg;
+		int32_t level{}, experience{};
+		Stat_t life{}, energy{};
+		Stat_t movementSpeedPerFrame{};			// cache: == sp.movementSpeed / Cfg::fps
+		bool spDirty{ true };
+		StatPanel sp;
+
+		void InitStat() {
+			level = 1;
+			experience = 0;
+			statCfg->Calc(sp, level, equipments);
+			life = sp.life;
+			energy = sp.energy;
+		}
+	};
+
 };
 
 /*********************************************************************************************/
 /*********************************************************************************************/
 // ref codes
+
+
+
+//struct Creature;
+//struct Equipment {
+//	virtual ~Equipment() {}
+//	xx::Weak<Creature> owner;
+//	xx::TinyList<StatItem> stats;		// maybe use fixed length array instead of list
+//	// ...
+//};
 
 
 
@@ -281,7 +307,7 @@ namespace Game {
 //struct Creature {
 //	// ...
 
-//	xx::Ref<StatCfg> cfg;
+//	xx::Ref<StatCfg> statCfg;
 //	xx::TinyList<xx::Shared<Equipment>> equipments;
 //	Stat_t level{}, experience{};
 //	Stat_t life{}, energy{};
@@ -292,7 +318,7 @@ namespace Game {
 //	void Init() {
 //		level = 1;
 //		experience = 0;
-//		UpdateSP();
+//		statCfg->Calc(sp, level, equipments);
 //		life = sp.life;
 //		energy = sp.energy;
 //	}
@@ -300,7 +326,7 @@ namespace Game {
 //	void UpdateSP() {
 //		if (spDirty) {
 //			spDirty = false;
-//			cfg->Calc(sp, equipments);
+//			statCfg->Calc(sp, level, equipments);
 //		}
 //		// handle regenerations
 //		if (life < sp.life) {

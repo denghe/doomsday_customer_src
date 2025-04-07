@@ -1,6 +1,10 @@
 ﻿#include "pch.h"
 #include "looper.h"
-#include "game_base.hpp"
+
+#include "game_base_creature.hpp"
+#include "game_base_drawable.hpp"
+#include "game_base_monster.hpp"
+#include "game_base_monstergen.hpp"
 #include "game_base_stage.hpp"
 #include "game_effect_death.hpp"
 #include "game_main_menu.hpp"

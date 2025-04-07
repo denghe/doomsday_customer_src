@@ -12,11 +12,9 @@ namespace Game {
 		radius = ResTpFrames::_size_player1.x * 0.5f;
 		radians = 0;
 
-		hp = 100;
-		damage = 1;
-		moveSpeed = 500.f / Cfg::fps;
-		criticalRate = 0.1f;
-		criticalDamageRatio = 2;
+		statCfg.Emplace();	// todo: choose stat cfg
+		InitStat();
+		movementSpeedPerFrame = sp.movementSpeed * Cfg::frameDelay;	// * delay == / fps
 
 		// add init skill for test
 		skills.Emplace().Emplace<Skill_1>()->Init(this, stage->skillCfgs[0]);
@@ -25,7 +23,7 @@ namespace Game {
 	inline int32_t Player_1::Update() {
 		// move control
 		if (auto inc = gLooper.GetKeyboardMoveInc(); inc.has_value()) {
-			pos += inc->second * moveSpeed;
+			pos += inc->second * movementSpeedPerFrame;
 			stage->ForceLimit(pos);	// for safe
 			// todo: more block limit
 		}
@@ -60,11 +58,9 @@ namespace Game {
 		radius = ResTpFrames::_size_player2.x * 0.5f;
 		radians = 0;
 
-		hp = 100;
-		damage = 1;
-		moveSpeed = 500.f / Cfg::fps;
-		criticalRate = 0.1f;
-		criticalDamageRatio = 2;
+		statCfg.Emplace();	// todo: choose stat cfg
+		InitStat();
+		movementSpeedPerFrame = sp.movementSpeed * Cfg::frameDelay;	// * delay == / fps
 
 		// add init skill for test
 		skills.Emplace().Emplace<Skill_1>()->Init(this, stage->skillCfgs[0]);
@@ -74,7 +70,7 @@ namespace Game {
 		// move control
 		auto posBak = pos;
 		if (auto inc = gLooper.GetKeyboardMoveInc(); inc.has_value()) {
-			pos += inc->second * moveSpeed;
+			pos += inc->second * movementSpeedPerFrame;
 			stage->ForceLimit(pos);	// for safe
 			// todo: more block limit
 		}
@@ -114,11 +110,9 @@ namespace Game {
 		radius = ResTpFrames::_size_player2.x * 0.5f;
 		radians = 0;
 
-		hp = 100;
-		damage = 1;
-		moveSpeed = 500.f / Cfg::fps;
-		criticalRate = 0.1f;
-		criticalDamageRatio = 2;
+		statCfg.Emplace();	// todo: choose stat cfg
+		InitStat();
+		movementSpeedPerFrame = sp.movementSpeed * Cfg::frameDelay;	// * delay == / fps
 
 		// add init skill for test
 		//skills.Emplace().Emplace<Skill_1>()->Init(this, stage->skillCfgs[0]);
@@ -128,7 +122,7 @@ namespace Game {
 		// move control
 		auto posBak = pos;
 		if (auto inc = gLooper.GetKeyboardMoveInc(); inc.has_value()) {
-			pos += inc->second * moveSpeed;
+			pos += inc->second * movementSpeedPerFrame;
 			stage->ForceLimit(pos);	// for safe
 			// todo: more block limit
 		}

@@ -39,6 +39,7 @@ namespace Game {
 	struct SkillCfg;
 	struct DrawableEx;
 	struct Spawner;
+	struct Creature;
 
 	// stage's base
 	struct Stage : xx::SceneBase {
@@ -102,14 +103,16 @@ namespace Game {
 		virtual int32_t Update() { return 0; };				// return !0 mean need Release/Delete/Remove
 	};
 
+	// creature's equipments base
+	struct EquipmentBase : Drawable {
+		xx::Weak<Creature> owner;
+		xx::TinyList<StatItem> stats;		// maybe use fixed length array instead of list
+		// todo
+	};
+
 	// stage creature's base
-	struct Creature : DrawableEx {
+	struct Creature : DrawableEx, StatBase<EquipmentBase> {
 		xx::Listi32<xx::Shared<Skill>> skills;
-		float hp{};
-		float damage{};
-		float moveSpeed{};
-		float criticalRate{};
-		float criticalDamageRatio{};
 
 		bool knockback{};
 		XY knockbackDist{};
@@ -120,6 +123,7 @@ namespace Game {
 		int32_t idle_lineNumber{};
 		void Idle();				// coroutine
 	};
+
 
 	// player's base
 	struct Player : Creature {
