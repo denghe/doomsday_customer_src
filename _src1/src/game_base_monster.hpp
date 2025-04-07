@@ -56,8 +56,10 @@ namespace Game {
 				stage->monsters.Update(this);	// sync space index
 			}
 
-			Idle();	// always play this  anim
+			Idle();	// always play this anim
 		}
+
+		StatCalc();
 
 		for (auto i = skills.len - 1; i >= 0; --i) {
 			auto& skill = skills[i];
@@ -70,19 +72,25 @@ namespace Game {
 		return destroyTime <= stage->time;
 	}
 
-	int32_t Monster::Hurt(float dmg, XY const& txtD, XY const& knockbackD) {
-		dmg = std::ceilf(dmg);
-		if (hp <= dmg) {
+	int32_t Monster::Hurt(float dmg, XY const& txtD, XY const& knockbackD, bool isCrit) {
+		if (dodgeChance > 0.f && stage->rnd.Next<float>(1) < dodgeChance) {
+			// todo: show miss txt?
+			return 0;
+		}
+		dmg = std::ceilf(dmg * defenseRatio);
+		if (healthPoint <= dmg) {
 			// dead
-			stage->etm.Add(pos + frame->spriteSize * XY{ 0, -0.5f }, txtD, xx::RGBA8_Red, 6, hp);
+			stage->etm.Add(pos + frame->spriteSize * XY{ 0, -0.5f }, txtD, xx::RGBA8_Red, 6, healthPoint);
 			stage->effects.Emplace().Emplace<EffectDeath>()->Init(stage, frame, pos);
 			stage->monsters.Remove(this);
 			return 1;
 		}
 		else {
 			// hurt
-			hp -= dmg;
-			stage->etm.Add(pos + frame->spriteSize * XY{ 0, -0.5f }, txtD, xx::RGBA8_Yellow, 5, dmg);
+			healthPoint -= dmg;
+			stage->etm.Add(pos + frame->spriteSize * XY{ 0, -0.5f }, txtD
+				, isCrit ? xx::RGBA8_Yellow : xx::RGBA8_White
+				, 5, dmg);
 			whiteColorEndTime = stage->time + int32_t(0.1f * Cfg::fps);
 			Knockback(500.f, knockbackD);
 			return 0;

@@ -2,7 +2,7 @@
 
 namespace Game {
 
-	void Monster_1::Init(Stage* stage_, XY const& pos_) {
+	void Monster_1::Init(Stage* stage_, StatCfg const& statCfg_, XY const& pos_) {
 		stage = stage_;
 		frame = gLooper.res.monster_chips;
 
@@ -11,9 +11,9 @@ namespace Game {
 		radius = frame->spriteSize.x * 0.5f;
 		radians = 0;
 
-		// todo: init
+		statCfg = statCfg_;
 		StatCalc();
-		hp = sp.healthPoint;
+		healthPoint = sp.healthPoint;
 
 		whiteColorEndTime = 0;
 		destroyTime = stage->time + (int32_t)Cfg::fps * 60 * 5;

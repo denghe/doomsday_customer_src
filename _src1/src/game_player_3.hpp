@@ -14,7 +14,7 @@ namespace Game {
 
 		// todo: init
 		StatCalc();
-		hp = sp.healthPoint;
+		healthPoint = sp.healthPoint;
 
 		// add init skill for test
 		//skills.Emplace().Emplace<Skill_1>()->Init(this, stage->skillCfgs[0]);

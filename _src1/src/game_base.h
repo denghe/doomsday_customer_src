@@ -111,7 +111,7 @@ namespace Game {
 	};
 
 	// stage creature's base
-	struct Creature : DrawableEx, StatBase<EquipmentBase> {
+	struct Creature : DrawableEx, StatExt<EquipmentBase> {
 		xx::Listi32<xx::Shared<Skill>> skills;
 
 		bool knockback{};
@@ -139,7 +139,7 @@ namespace Game {
 		float tarOffsetRadius{};
 		// todo
 
-		int32_t Hurt(float dmg, XY const& txtD, XY const& knockbackD);		// return !0 mean dead
+		int32_t Hurt(float dmg, XY const& txtD, XY const& knockbackD, bool isCrit = false);		// return !0 mean dead
 		void Knockback(float speed, XY const& d);
 		int32_t Update() override;
 	};
@@ -147,11 +147,12 @@ namespace Game {
 	// monster generator's base
 	struct MonsterGen {
 		Stage* stage{};				// stage's life > this
+		StatCfg statCfg;
 
 		int32_t activeTime{}, destroyTime{};
 		float countPool{}, countIncPerFrame{};
 
-		void Init(Stage* stage_, int32_t activeTime_, int32_t destroyTime_, float generateNumsPerSeconds_);
+		StatPanel& Init(Stage* stage_, int32_t activeTime_, int32_t destroyTime_, float generateNumsPerSeconds_);
 		virtual int32_t Update() { return 0; }
 		template<typename T> void CreateFromRect();
 		template<typename T> void CreateFromDoughnut();
@@ -159,8 +160,9 @@ namespace Game {
 
 	// bullet's base
 	struct Bullet : Drawable {
-		xx::Weak<Creature> owner;	// owner's life maybe <= this
-		SkillCfg* cfg;				// skill cfg's life > this( copy from maker )
+		xx::Weak<Creature> owner;										// owner's life maybe <= this
+		SkillCfg* cfg{};												// skill cfg's life > this( copy from maker )
+		Stat_t damageRatio{}, criticalChance{}, criticalBonusRatio{};	// for calculate damage( copy from maker )
 
 		virtual int32_t Update() { return 0; }
 	};
@@ -177,7 +179,7 @@ namespace Game {
 
 	// creature's skill's base
 	struct Skill {
-		Creature* creature{};			// creature's life > this
+		Creature* creature{};		// creature's life > this
 		SkillCfg* cfg;				// skill cfg's life > this
 		float shootCountPool{};		// time pool for shoot
 

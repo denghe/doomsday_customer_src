@@ -222,7 +222,7 @@ namespace Game {
 	};
 
 	template<typename E>
-	struct StatBase {
+	struct StatExt {
 		xx::TinyList<xx::Shared<E>> equipments;
 		int32_t level{}, experience{};
 		Stat_t life{}, energy{};

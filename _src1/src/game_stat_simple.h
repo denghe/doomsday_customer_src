@@ -14,6 +14,7 @@ namespace Game {
 		criticalBonusRatio,
 		attackSpeed,
 		luckyPoint,
+		harvestRatio,
 		__MAX_VALUE__
 	};
 
@@ -28,6 +29,7 @@ namespace Game {
 		"criticalBonusRatio",
 		"attackSpeed",
 		"luckyPoint",
+		"harvestRatio",
 	};
 
 	using Stat_t = float;
@@ -48,6 +50,7 @@ namespace Game {
 		Stat_t criticalBonusRatio;
 		Stat_t attackSpeed;		// times per seconds
 		Stat_t luckyPoint;
+		Stat_t harvestRatio;
 		void Clear() {
 			memset(this, 0, sizeof(StatPanel));
 		}
@@ -63,9 +66,13 @@ namespace Game {
 	};
 
 	struct StatCfg {
-		static constexpr float baseMovementSpeed{ 300 / 5 };
+		static constexpr Stat_t baseMovementSpeed{ 300 / 5 };
 		static constexpr Stat_t dodgeFactor{ 16 };
 		static constexpr Stat_t defenseFactor{ 66 };
+		static constexpr Stat_t luckyToHealthRegenerationRatio{ 0.01 };
+		static constexpr Stat_t luckyToDamageRatio{ 0.01 };
+		static constexpr Stat_t luckyTocriticalChanceRatio{ 0.001 };
+
 		static constexpr StatPanel rangeFrom{};	// all zero
 		static constexpr StatPanel rangeTo{
 			.healthPoint = 999999,
@@ -77,7 +84,8 @@ namespace Game {
 			.criticalChance = 1,
 			.criticalBonusRatio = 1.5,
 			.attackSpeed = 999999,
-			.luckyPoint = 999999,
+			.luckyPoint = 1000,
+			.harvestRatio = 999999,
 		};
 		StatPanel init{
 			.healthPoint = 1000,
@@ -90,20 +98,26 @@ namespace Game {
 			.criticalBonusRatio = 1.5,
 			.attackSpeed = 1,
 			.luckyPoint = 10,
+			.harvestRatio = 0,
 		};
 	};
 
-	template<typename E>
+	// need backup to bullet when skill create for calculate
 	struct StatBase {
-		xx::TinyList<xx::Shared<E>> equipments;
-		StatCfg statCfg;
 		StatPanel sp;
-		bool spDirty{ true };
-		Stat_t hp{};			// left / current
+		Stat_t healthPoint{};			// left / current
 		Stat_t defenseRatio{};
-		Stat_t dodgeRatio{};
+		Stat_t dodgeChance{};
 		Stat_t movementSpeed{};
 		Stat_t movementSpeedPerFrame{};
+	};
+
+	// Creature inherit this
+	template<typename E>
+	struct StatExt : StatBase {
+		xx::TinyList<xx::Shared<E>> equipments;
+		StatCfg statCfg;
+		bool spDirty{ true };
 
 		// first, need assign statCfg.init.xxxxxxxxx = xxxxxxxxxxx
 		void StatCalc() {
@@ -120,6 +134,10 @@ namespace Game {
 					}
 				}
 			}
+			// calculate
+			sp.healthRegeneration += sp.luckyPoint * statCfg.luckyToHealthRegenerationRatio;
+			sp.damageRatio += sp.luckyPoint * statCfg.luckyToDamageRatio;
+			sp.criticalChance += sp.luckyPoint * statCfg.luckyTocriticalChanceRatio;
 			// apply rules
 			for (int32_t i = 0; i < StatPanel::numFields; ++i) {
 				auto& v = sp[i];
@@ -127,8 +145,8 @@ namespace Game {
 				else if (v > statCfg.rangeTo[i]) v = statCfg.rangeTo[i];
 			}
 			// fill some final result
-			defenseRatio = sp.defensePoint / (sp.defensePoint + statCfg.defenseFactor);
-			dodgeRatio = sp.dodgePoint / (sp.dodgePoint + statCfg.dodgeFactor);
+			defenseRatio = statCfg.defenseFactor / (statCfg.defenseFactor + sp.defensePoint);
+			dodgeChance = sp.dodgePoint / (sp.dodgePoint + statCfg.dodgeFactor);
 			movementSpeed = statCfg.baseMovementSpeed * sp.movementSpeedPoint;
 			movementSpeedPerFrame = movementSpeed * Cfg::frameDelay;
 		}

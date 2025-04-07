@@ -7,6 +7,9 @@ namespace Game {
 		frame = gLooper.res.bullet_coin5;
 
 		cfg = skill->cfg;
+		damageRatio = skill->creature->sp.damageRatio;
+		criticalChance = skill->creature->sp.criticalChance;
+		criticalBonusRatio = skill->creature->sp.criticalBonusRatio;
 
 		pos = pos_;
 		scale = cfg->radius / ResTpFrames::_size_bullet_coin5.x;
@@ -20,9 +23,15 @@ namespace Game {
 		pos += inc;
 		if (stage->IsOutOfMap(pos)) return -1;
 		if (auto m = stage->monsters.FindFirstCrossBy9(pos.x, pos.y, cfg->radius)) {
-			auto d = pos - m->pos;
-			m->Hurt((float)cfg->damage, d, -d);	// todo: calc final dmg
 			stage->effects.Emplace().Emplace<EffectDeath>()->Init(stage, gLooper.res.bullet_coin5, pos, scale.x);
+			auto d = pos - m->pos;
+			auto dmg = cfg->damage * damageRatio;
+			bool isCrit{};
+			if (stage->rnd.Next<float>(0, 1) < criticalChance) {
+				dmg *= criticalBonusRatio;
+				isCrit = true;
+			}
+			m->Hurt(dmg, d, -d, isCrit);
 			return 1;
 		}
         return lifeEndTime < stage->time;

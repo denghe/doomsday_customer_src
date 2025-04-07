@@ -30,11 +30,37 @@ namespace Game {
 		sc->pierceCount = 0;
 		sc->pierceDelay = 0;
 
-		monsterGenerators.Emplace().Emplace<MonsterGen_Generic<Monster_Laptop>>()
-			->Init(this, 0, int32_t(Cfg::fps) * 10, 2.5);
+		{
+			auto& sp = monsterGenerators.Emplace().Emplace<MonsterGen_Generic<Monster_Laptop>>()
+				->Init(this, 0, int32_t(Cfg::fps) * 10, 2);
+			sp.healthPoint = 15;
+			sp.healthRegeneration = 0;
+			sp.defensePoint = 0;
+			sp.dodgePoint = 0;
+			sp.movementSpeedPoint = 3;
+			sp.damageRatio = 1;
+			sp.criticalChance = 0;
+			sp.criticalBonusRatio = 0;
+			sp.attackSpeed = 0.2;
+			sp.luckyPoint = 0;
+			sp.harvestRatio = 0;
+		}
 
-		monsterGenerators.Emplace().Emplace<MonsterGen_Generic<Monster_Roastduck>>()
-			->Init(this, 0, int32_t(Cfg::fps) * 10, 2.5);
+		{
+			auto& sp = monsterGenerators.Emplace().Emplace<MonsterGen_Generic<Monster_Roastduck>>()
+				->Init(this, 0, int32_t(Cfg::fps) * 10, 2);
+			sp.healthPoint = 15;
+			sp.healthRegeneration = 0;
+			sp.defensePoint = 0;
+			sp.dodgePoint = 0;
+			sp.movementSpeedPoint = 3;
+			sp.damageRatio = 1;
+			sp.criticalChance = 0;
+			sp.criticalBonusRatio = 0;
+			sp.attackSpeed = 0.2;
+			sp.luckyPoint = 0;
+			sp.harvestRatio = 0;
+		}
 
 		player.Emplace<Player_1>()->Init(this);
 

@@ -2,11 +2,12 @@
 
 namespace Game {
 
-	inline void MonsterGen::Init(Stage* stage_, int activeTime_, int destroyTime_, float generateNumsPerSeconds_) {
+	inline StatPanel& MonsterGen::Init(Stage* stage_, int activeTime_, int destroyTime_, float generateNumsPerSeconds_) {
 		stage = stage_;
 		activeTime = activeTime_;
 		destroyTime = destroyTime_;
 		countIncPerFrame = generateNumsPerSeconds_ / Cfg::fps;
+		return statCfg.init;
 	}
 
 	template<typename T>
@@ -52,9 +53,9 @@ namespace Game {
 				auto pos = stage->player->pos + stage->GetRndPosDoughnut(Cfg::designSize.x, 200.f);
 
 				// todo: calculate scale
-				stage->spawners.Emplace().Emplace()->Init(stage, pos, 1.f, 1.5f, [](Stage* stage_, XY const& pos_) {
+				stage->spawners.Emplace().Emplace()->Init(stage, statCfg, pos, 1.f, 1.5f, [](Stage* stage_, StatCfg const& statCfg_, XY const& pos_) {
 					auto m = xx::MakeShared<T>();
-					m->Init(stage_, pos_);
+					m->Init(stage_, statCfg_, pos_);
 					stage_->monsters.Add(std::move(m));
 				});
 			}
