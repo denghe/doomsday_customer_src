@@ -22,7 +22,8 @@ namespace Game {
 		tarOffsetRadius = frame->spriteSize.x * 3;
 		tarOffset = stage->GetRndPosDoughnut(tarOffsetRadius, 0.1f);
 
-		skills.Emplace().Emplace<Skill_DashAttack>()->Init(this, stage->skillCfgs[1]);
+		skills.Emplace().Emplace<Skill_MoveToPlayer>()->Init(this);
+		skills.Emplace().Emplace<Skill_DashAttack>()->Init(this);
 
 		state = State::Idle;
 	}
@@ -36,79 +37,40 @@ namespace Game {
 			}
 		}
 
-		auto p = stage->player.pointer;
-		xx::XY pp{};
-		xx::XYf d{};
-		float dd{};
-		float r2{};
-		float mag{};
-		xx::XYf norm{};
-		switch (state)
-		{
-		case State::Idle:
-			// move to player
-			Idle();
-			pp = p->pos;
-			d = pp - pos;
-			dd = d.x * d.x + d.y * d.y;
-			r2 = p->radius + radius;
-			if (dd < r2 * r2) {
-				// cross with player?
-				//p->Hurt(damage, d);   // todo
-			}
-			else {
-				d = pp - pos + tarOffset;
-				dd = d.x * d.x + d.y * d.y;
-				if (dd < radius * radius) {
-					// reached offset point? reset offset point
-					tarOffset = stage->GetRndPosDoughnut(tarOffsetRadius, 0.1f);
-				}
-				// calc & move
-#if 0
-				// slowly than mag normalize
-				auto r = std::atan2f(d.y, d.x);
-				pos += XY{ std::cosf(r) * moveSpeed, std::sinf(r) * moveSpeed };
-#else
-				// faster than atan2 + sin cos  1/4
-				mag = std::sqrt(dd);
-				norm = d / mag;
-				pos += norm * movementSpeedPerFrame;
-#endif
-				stage->ForceLimit(pos);
-				stage->monsters.Update(this);	// sync space index
-			}
-			break;
-		case State::Dash:
-			pp = p->pos;
-			d = pp - pos;
-			dd = d.x * d.x + d.y * d.y;
-			r2 = p->radius + radius;
-			if (dd < r2 * r2) {
-				ExitDash();
-			}
-			else {
-				mag = std::sqrt(dd);
-				norm = d / mag;
-				pos += norm * movementSpeedPerFrame;
-				stage->ForceLimit(pos);
-				stage->monsters.Update(this);	// sync space index
-			}
-			break;
-		case State::Knockback:
-			knockbackSpeed -= knockbackReduceValuePerFrame;
-			if (knockbackSpeed <= 0) {
-				ExitKnockback();
-			}
-			else {
-				pos = pos + knockbackDist * knockbackSpeed;
-				stage->ForceLimit(pos);
-				stage->monsters.Update(this);	// sync space index
-			}
-			break;
-		default:
-			Idle();
-			break;
-		}
+		Idle();
+
+		//auto p = stage->player.pointer;
+		//xx::XY pp{};
+		//xx::XYf d{};
+		//float dd{};
+		//float r2{};
+		//float mag{};
+		//xx::XYf norm{};
+		//switch (state)
+		//{
+		//case State::Idle:
+		//	// move to player
+		//	Idle();
+			//MoveToPlayer();
+		//	break;
+		//case State::Dash:
+		//	MoveToPosition(p->pos,p->radius);
+		//	break;
+		//case State::Knockback:
+		//	knockbackSpeed -= knockbackReduceValuePerFrame;
+		//	if (knockbackSpeed <= 0) {
+		//		ExitKnockback();
+		//	}
+		//	else {
+		//		pos = pos + knockbackDist * knockbackSpeed;
+		//		stage->ForceLimit(pos);
+		//		stage->monsters.Update(this);	// sync space index
+		//	}
+		//	break;
+		//default:
+		//	Idle();
+		//	break;
+		//}
 
 		// todo
 		return destroyTime <= stage->time;

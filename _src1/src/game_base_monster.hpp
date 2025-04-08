@@ -2,7 +2,7 @@
 
 namespace Game {
 
-	void Monster::Knockback(float speed, XY const& d) {
+	inline void Monster::Knockback(float speed, XY const& d) {
 		knockback = true;
 		knockbackSpeed = speed * (1.f / Cfg::fps);
 		auto dd = d.x * d.x + d.y * d.y;
@@ -11,7 +11,7 @@ namespace Game {
 		knockbackReduceValuePerFrame = knockbackSpeed * (1.f / (Cfg::fps * 0.5f));
 	}
 
-	int32_t Monster::Update() {
+	inline int32_t Monster::Update() {
 		if (knockback) {
 			knockbackSpeed -= knockbackReduceValuePerFrame;
 			if (knockbackSpeed <= 0) {
@@ -48,7 +48,7 @@ namespace Game {
 				pos += XY{ std::cosf(r) * moveSpeed, std::sinf(r) * moveSpeed };
 #else
 				// faster than atan2 + sin cos  1/4
-				auto mag = std::sqrt(dd);
+				auto mag = std::sqrtf(dd);
 				auto norm = d / mag;
 				pos += norm * movementSpeedPerFrame;
 #endif
@@ -61,18 +61,11 @@ namespace Game {
 
 		StatCalc();
 
-		for (auto i = skills.len - 1; i >= 0; --i) {
-			auto& skill = skills[i];
-			if (skill->Update()) {
-				skills.SwapRemoveAt(i);
-			}
-		}
-
 		// todo
 		return destroyTime <= stage->time;
 	}
 
-	int32_t Monster::Hurt(float dmg, XY const& txtD, XY const& knockbackD, bool isCrit) {
+	inline int32_t Monster::Hurt(float dmg, XY const& txtD, XY const& knockbackD, bool isCrit) {
 		if (dodgeChance > 0.f && stage->rnd.Next<float>(1) < dodgeChance) {
 			// todo: show miss txt?
 			return 0;
@@ -97,4 +90,52 @@ namespace Game {
 		}
 	}
 
+	inline int32_t Monster::MoveToPosition(xx::XY targetPos, float targetRadius) {
+		auto d = targetPos - pos;
+		auto dd = d.x * d.x + d.y * d.y;
+		auto r2 = targetRadius + radius;
+
+		if (dd < r2 * r2) {
+			return 1;
+		}
+
+		auto mag = std::sqrtf(dd);
+		auto norm = d / mag;
+		pos += norm * movementSpeedPerFrame;
+		stage->ForceLimit(pos);
+		stage->monsters.Update(this);	// sync space index
+		return 0;
+	}
+
+	inline int32_t Monster::MoveToPlayer() {
+		auto p = stage->player;
+		auto pp = p->pos;
+		auto d = pp - pos;
+		auto dd = d.x * d.x + d.y * d.y;
+		auto r2 = p->radius + radius;
+		if (dd < r2 * r2) {
+			return 1;
+		}
+
+		d = pp - pos + tarOffset;
+		dd = d.x * d.x + d.y * d.y;
+		if (dd < radius * radius) {
+			// reached offset point? reset offset point
+			tarOffset = stage->GetRndPosDoughnut(tarOffsetRadius, 0.1f);
+		}
+		// calc & move
+#if 0
+		// slowly than mag normalize
+		auto r = std::atan2f(d.y, d.x);
+		pos += XY{ std::cosf(r) * moveSpeed, std::sinf(r) * moveSpeed };
+#else
+				// faster than atan2 + sin cos  1/4
+		auto mag = std::sqrtf(dd);
+		auto norm = d / mag;
+		pos += norm * movementSpeedPerFrame;
+#endif
+		stage->ForceLimit(pos);
+		stage->monsters.Update(this);	// sync space index
+		return 0;
+	}
 }
