@@ -58,6 +58,7 @@ namespace Game {
 		XYi gridSize{};		// grid's num cols rows
 		XY mapSize{};		// cellSize * gridSize( grid pixel size )
 
+		bool paused{};		// for pop ui stop logic
 		int32_t time{};		// frame number
 		int32_t round{};	// round number
 		xx::Rnd rnd;

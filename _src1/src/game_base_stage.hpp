@@ -30,6 +30,8 @@ namespace Game {
 
 
 	inline void Stage::Update() {
+		if (paused) return;
+
 		// scale control
 		if (gLooper.KeyDownDelay(xx::KeyboardKeys::Z, 0.02f)) {
 			camera.IncreaseScale(0.01f, 5);

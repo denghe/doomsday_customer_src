@@ -68,12 +68,40 @@ xx::Task<> Looper::MainTask() {
 	btnCfg.center = { 2, 3, 2, 2 };
 
 	btnCfg_Scale5.frame = res.ui_button;
+	btnCfg_Scale5.texScale = 1;
 	btnCfg_Scale5.center = { 30, 30, (uint16_t)ResTpFrames::_size_ui_button.x - 30 * 2, (uint16_t)ResTpFrames::_size_ui_button.y - 30 * 2 };
 	btnCfg_Scale5.color = xx::RGBA8_White;
 	btnCfg_Scale5.txtColor = xx::RGBA8_Black;
 	btnCfg_Scale5.txtPadding = { 50, 8 };
 	btnCfg_Scale5.txtPaddingRightBottom = { 50, 30 };
 	btnCfg_Scale5.txtScale = 5;
+
+	btnCfg_Scale4.frame = res.ui_button;
+	btnCfg_Scale4.texScale = 1;
+	btnCfg_Scale4.center = { 30, 30, (uint16_t)ResTpFrames::_size_ui_button.x - 30 * 2, (uint16_t)ResTpFrames::_size_ui_button.y - 30 * 2 };
+	btnCfg_Scale4.color = xx::RGBA8_White;
+	btnCfg_Scale4.txtColor = xx::RGBA8_Black;
+	btnCfg_Scale4.txtPadding = { 40, 5 };
+	btnCfg_Scale4.txtPaddingRightBottom = { 40, 20 };
+	btnCfg_Scale4.txtScale = 4;
+
+	btnCfg_Scale3.frame = res.ui_button;
+	btnCfg_Scale3.texScale = 1;
+	btnCfg_Scale3.center = { 30, 30, (uint16_t)ResTpFrames::_size_ui_button.x - 30 * 2, (uint16_t)ResTpFrames::_size_ui_button.y - 30 * 2 };
+	btnCfg_Scale3.color = xx::RGBA8_White;
+	btnCfg_Scale3.txtColor = xx::RGBA8_Black;
+	btnCfg_Scale3.txtPadding = { 30, 0 };
+	btnCfg_Scale3.txtPaddingRightBottom = { 30, 10 };
+	btnCfg_Scale3.txtScale = 3;
+
+	btnCfg_Scale2.frame = res.ui_button;
+	btnCfg_Scale2.texScale = 0.5;
+	btnCfg_Scale2.center = { 30, 30, (uint16_t)ResTpFrames::_size_ui_button.x - 30 * 2, (uint16_t)ResTpFrames::_size_ui_button.y - 30 * 2 };
+	btnCfg_Scale2.color = xx::RGBA8_White;
+	btnCfg_Scale2.txtColor = xx::RGBA8_Black;
+	btnCfg_Scale2.txtPadding = { 40, 20 };
+	btnCfg_Scale2.txtPaddingRightBottom = { 40, 20 };
+	btnCfg_Scale2.txtScale = 1;
 
 	btnCfg_Scale5Icon = btnCfg_Scale5;
 	btnCfg_Scale5Icon.txtPadding = { 200, 8 };
