@@ -41,6 +41,15 @@ namespace Game {
 	struct Spawner;
 	struct Creature;
 
+	enum class State : uint32_t {
+		Unknown = 0,
+		Idle,
+		Attack,
+		Knockback,
+		Dash,
+		Hurt,
+	};
+
 	// stage's base
 	struct Stage : xx::SceneBase {
 		xx::Camera camera;
@@ -95,6 +104,7 @@ namespace Game {
 		float radius{}, radians{};							// for logic
 		int32_t whiteColorEndTime{};						// for hurt effect
 		int32_t destroyTime{};								// max life cycle for bug issue
+		xx::RGBA8 color{xx::RGBA8_White};
 		// todo
 		virtual void Draw();
 		virtual ~Drawable() {};
@@ -115,6 +125,9 @@ namespace Game {
 	struct Creature : DrawableEx, StatExt<EquipmentBase> {
 		xx::Listi32<xx::Shared<Skill>> skills;
 
+		State state{};
+
+		int32_t castingSkillCount{};
 		bool knockback{};
 		XY knockbackDist{};
 		float knockbackSpeed{};
@@ -143,6 +156,8 @@ namespace Game {
 		int32_t Hurt(float dmg, XY const& txtD, XY const& knockbackD, bool isCrit = false);		// return !0 mean dead
 		void Knockback(float speed, XY const& d);
 		int32_t Update() override;
+		int32_t MoveToPosition(xx::XY targetPos, float targetRadius);
+		int32_t MoveToPlayer();
 	};
 
 	// monster generator's base
@@ -181,11 +196,15 @@ namespace Game {
 	// creature's skill's base
 	struct Skill {
 		Creature* creature{};		// creature's life > this
-		SkillCfg* cfg;				// skill cfg's life > this
-		float shootCountPool{};		// time pool for shoot
 
 		virtual int32_t Update() { return 0; };
 		virtual ~Skill() {};
+	};
+
+	// creature's skill's base 2
+	struct ShootSkill : Skill {
+		SkillCfg* cfg{};			// skill cfg's life > this
+		float shootCountPool{};		// time pool for shoot
 	};
 
 	// creature's skill's config's base

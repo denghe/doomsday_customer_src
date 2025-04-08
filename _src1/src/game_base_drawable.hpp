@@ -12,7 +12,7 @@ namespace Game {
 		q[1].scale = s;
 		q[1].radians = 0;
 		q[1].colorplus = whiteColorEndTime >= stage->time ? 10000.f : 1.f;
-		q[1].color = xx::RGBA8_White;
+		q[1].color = color;
 		q[1].texRect.data = frame->textureRect.data;
 		// shadow
 		q[0].scale = { q[1].scale.x, q[1].scale.y * 0.2f };

@@ -32,12 +32,12 @@ namespace Game {
 
 		// monster dash
 		sc = skillCfgs.Emplace().Emplace<SkillCfg_1>();
-		sc->aimRange = Cfg::unitSize * 20;
+		sc->aimRange = Cfg::unitSize * 5;
 		sc->radius = ResTpFrames::_size_bullet_coin5.x * 0.5f;
 		sc->damage = 5;
 		sc->moveSpeed = 1800.f / Cfg::fps;
 		sc->shootSpeed = 0;
-		sc->life = 0;
+		sc->life = (int32_t)Cfg::fps >> 1;
 		sc->pierceCount = 0;
 		sc->pierceDelay = 0;
 

@@ -6,7 +6,7 @@ namespace Game {
 		XY inc{};							// move increase pixel per frame
 		int32_t lifeEndTime{};				// max life point
 
-		void Init(Skill* skill, XY const& pos_, float radians_, float cos, float sin);
+		void Init(ShootSkill* skill, XY const& pos_, float radians_, float cos, float sin);
 		int32_t Update() override;
 		void Draw() override;
 	};
