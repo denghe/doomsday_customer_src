@@ -37,10 +37,30 @@ namespace Game {
 	}
 
 	inline int32_t Skill_DashAttack::Update() {
-        if (coolDownTimer) return 0;
-        
-		coolDownTimer = coolDown;
-        xx::CoutN("dash attack");
+		if (coolDownTimer) {
+			coolDownTimer--;
+		}
+		else {   // auto use skill
+			auto p = creature->stage->player.pointer;
+			auto pp = p->pos;
+			auto d = pp - creature->pos;
+			auto dd = d.x * d.x + d.y * d.y;
+			if (dd <= cfg->aimRange * cfg->aimRange) {
+				creature->state = State::Dash;
+				xx::CoutN("Enter Dash");
+				defaultSpeed = creature->movementSpeedPerFrame;
+				creature->movementSpeedPerFrame = cfg->moveSpeed;
+				coolDownTimer = coolDown;
+				endFrameNumber = creature->stage->time + cfg->life;
+				xx::CoutN("defaultSpeed: ",defaultSpeed, ", currentSpeed: ", creature->movementSpeedPerFrame);
+			}
+		}
+
+		if(creature->state == State::Dash && creature->stage->time >= endFrameNumber) {
+			xx::CoutN("Exit Dash");
+			creature->state = State::Idle;
+			creature->movementSpeedPerFrame = defaultSpeed;
+		}
 		return 0;
 	}
 }

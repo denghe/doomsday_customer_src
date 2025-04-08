@@ -41,6 +41,16 @@ namespace Game {
 	struct Spawner;
 	struct Creature;
 
+	enum class State : uint32_t {
+		Unknown = 0,
+		Idle,
+		Attack,
+		Knockback,
+		Dash,
+		Hurt,
+		Die,
+	};
+
 	// stage's base
 	struct Stage : xx::SceneBase {
 		xx::Camera camera;
@@ -114,6 +124,8 @@ namespace Game {
 	// stage creature's base
 	struct Creature : DrawableEx, StatExt<EquipmentBase> {
 		xx::Listi32<xx::Shared<Skill>> skills;
+
+		State state{};
 
 		bool knockback{};
 		XY knockbackDist{};
