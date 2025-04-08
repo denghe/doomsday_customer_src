@@ -1,6 +1,7 @@
 ﻿#include "pch.h"
 #include "looper.h"
 
+#include "game_ui_hpbar.hpp"
 #include "game_base_creature.hpp"
 #include "game_base_drawable.hpp"
 #include "game_base_monster.hpp"

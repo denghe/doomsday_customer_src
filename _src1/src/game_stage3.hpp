@@ -4,10 +4,13 @@ namespace Game {
 
 	inline void Stage3::Init() {
 		ui.Emplace()->Init();
-		ui->MakeChildren<xx::Button>()->Init(1, Cfg::xy7m + XY{ 10, -10 }
-			, Cfg::xy7a, gLooper.btnCfg, U"exit", [&]() {
+		ui->MakeChildren<xx::Button>()->Init(1, Cfg::xy1m, Cfg::xy1a, gLooper.btnCfg, U"exit", [&]() {
 			gLooper.DelaySwitchTo<Game::MainMenu>();
 		});
+
+		uiHPBar.Init();
+		// todo: pause ui
+		// todo: resume ui
 
 		gridSize = Cfg::gridSize;
 		mapSize = Cfg::unitSize * gridSize;
@@ -69,4 +72,10 @@ namespace Game {
 		};
 	}
 
+	inline void Stage3::DrawCustomUI() {
+		// draw hp bar
+		uiHPBar.hp = player->healthPoint;
+		uiHPBar.hpMax = player->sp.healthPoint;
+		uiHPBar.Draw();
+	}
 }

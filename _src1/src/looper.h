@@ -10,6 +10,7 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 	static constexpr int32_t numMaxMonsters{ 100000 };
 };
 
+#include "game_ui_hpbar.h"
 #include "game_space.h"
 #include "game_effect_text.h"
 #include "game_stat_simple.h"
