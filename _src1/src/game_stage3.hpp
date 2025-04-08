@@ -8,9 +8,12 @@ namespace Game {
 			gLooper.DelaySwitchTo<Game::MainMenu>();
 		});
 
+		static constexpr float pauseButtonSize{ 64.f / 1080.f * Cfg::height };
+		ui->MakeChildren<xx::ImageButton>()->Init(1, Cfg::xy9m, Cfg::xy9a, pauseButtonSize, gLooper.res.ui_pause).onClicked = [&]() {
+			// todo: resume ui
+		};
+
 		uiHPBar.Init();
-		// todo: pause ui
-		// todo: resume ui
 
 		gridSize = Cfg::gridSize;
 		mapSize = Cfg::unitSize * gridSize;
