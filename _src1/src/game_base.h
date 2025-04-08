@@ -71,6 +71,7 @@ namespace Game {
 		bool IsOutOfMap(XY const& pos);
 		XY GetRndPosDoughnut(float maxRadius, float safeRadius);
 		void Update() override;
+		virtual void DrawCustomUI() {};
 		void Draw() override;
 	};
 

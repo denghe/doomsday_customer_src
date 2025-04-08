@@ -4,10 +4,12 @@ namespace Game {
 
 	inline void Stage1::Init() {
 		ui.Emplace()->Init();
-		ui->MakeChildren<xx::Button>()->Init(1, Cfg::xy7m + XY{ 10, -10 }
-			, Cfg::xy7a, gLooper.btnCfg, U"exit", [&]() {
+		ui->MakeChildren<xx::Button>()->Init(1, Cfg::xy1m, Cfg::xy1a, gLooper.btnCfg, U"exit", [&]() {
 			gLooper.DelaySwitchTo<Game::MainMenu>();
 		});
+
+		// todo: pause ui
+		// todo: resume ui
 
 		gridSize = Cfg::gridSize;
 		mapSize = Cfg::unitSize * gridSize;
@@ -47,10 +49,48 @@ namespace Game {
 		}
 
 		player.Emplace<Player_2>()->Init(this);
+		player->healthPoint /= 2;	// for test
 
 		onCleanup = [this] {
 			gLooper.DelaySwitchTo<Game::Stage2>();
 		};
 	}
 
+	inline void Stage1::DrawCustomUI() {
+
+		// hp bar
+		static constexpr xx::UVRect hpbarCenter{ 2,2,4,4 };		// from res
+		static constexpr float hpbarScale{ 1.f / 1920.f * Cfg::width };
+		static constexpr float hpbarTexScale{ 4.f * hpbarScale };
+		static constexpr XY hpbarSize{ 256.f * hpbarScale, 48 * hpbarScale };
+		static constexpr XY hpbarPos{ Cfg::xy7.x + 10, Cfg::xy7.y - hpbarSize.y - 10 };	// left bottom
+		static constexpr float hpbarContentBorderWidth{ 2 * hpbarTexScale };
+		static constexpr XY hpbarContentPos{ hpbarPos.x + hpbarContentBorderWidth, hpbarPos.y + hpbarContentBorderWidth };	// left bottom
+		static constexpr XY hpbarContentMaxSize{ hpbarSize - hpbarContentBorderWidth * 2 };
+		static constexpr XY hpbarContentScale{ hpbarContentMaxSize / ResTpFrames::_size_ui_hpbar_content };
+
+		// draw hp bar border
+		{
+			xx::Scale9 s9{
+				.frame = gLooper.res.ui_hpbar,
+				.center = hpbarCenter,
+				.texScale{ hpbarTexScale },
+				.size{ hpbarSize },
+				.pos{ hpbarPos },
+			};
+			s9.Draw();
+		}
+		// draw hp bar content
+		{
+			XY s{ hpbarContentScale.x * ( player->healthPoint / player->sp.healthPoint ) , hpbarContentScale.y};
+			auto& q = *gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(gLooper.res._texid_ui_hpbar_content, 1);
+			q.pos = hpbarContentPos;
+			q.anchor = {};
+			q.scale = s;
+			q.radians = 0;
+			q.colorplus = 1;
+			q.color = xx::RGBA8_White;
+			q.texRect = { ResTpFrames::_uvrect_ui_hpbar_content };
+		}
+	}
 }

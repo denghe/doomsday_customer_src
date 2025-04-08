@@ -141,6 +141,9 @@ namespace Game {
 
 		etm.Draw();
 
+		// custom ui here
+		DrawCustomUI();
+
 		// draw ui
 		gLooper.DrawNode(ui);
 

@@ -73,8 +73,20 @@ namespace Game {
 		static constexpr Stat_t luckyToDamageRatio{ 0.01 };
 		static constexpr Stat_t luckyTocriticalChanceRatio{ 0.001 };
 
-		static constexpr StatPanel rangeFrom{};	// all zero
-		static constexpr StatPanel rangeTo{
+		static constexpr StatPanel rangeFrom{	// min val
+			.healthPoint = 1,
+			.healthRegeneration = 0,
+			.defensePoint = 0,
+			.dodgePoint = 0,
+			.movementSpeedPoint = 0,
+			.damageRatio = 0,
+			.criticalChance = 0,
+			.criticalBonusRatio = 0,
+			.attackSpeed = 0,
+			.luckyPoint = 0,
+			.harvestRatio = 0,
+		};
+		static constexpr StatPanel rangeTo{		// max val
 			.healthPoint = 999999,
 			.healthRegeneration = 999999,
 			.defensePoint = 999999,
@@ -87,7 +99,7 @@ namespace Game {
 			.luckyPoint = 1000,
 			.harvestRatio = 999999,
 		};
-		StatPanel init{
+		StatPanel init{							// init val
 			.healthPoint = 1000,
 			.healthRegeneration = 5,
 			.defensePoint = 0,
