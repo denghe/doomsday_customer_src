@@ -12,34 +12,34 @@ namespace Game {
 		gridSize = Cfg::gridSize;
 		mapSize = Cfg::unitSize * gridSize;
 
-		camera.SetMaxFrameSize(Cfg::unitSize);
-		camera.SetScale(Cfg::defaultScale);
-		camera.SetOriginal(mapSize * 0.5f);
+		camera.scale = Cfg::defaultScale;
+		camera.mapSize = mapSize;
+		camera.newOriginal = camera.original = mapSize * 0.5f;
 
 		ground.Emplace()->Init(this, mapSize, gLooper.res.ground_cell2);
 		monsters.Init(&gLooper.rdd, gridSize.y, gridSize.x, (int32_t)Cfg::unitSize);
 		etm.Init(this, 10000);
 
-		auto& sc = skillCfgs.Emplace().Emplace<SkillCfg_1>();
-		sc->aimRange = Cfg::unitSize * 20;
-		sc->radius = ResTpFrames::_size_bullet_coin5.x * 0.5f;
-		sc->damage = 5;
-		sc->moveSpeed = 800.f / Cfg::fps;
-		sc->shootSpeed = 2 / Cfg::fps;
-		sc->life = 3 * (int32_t)Cfg::fps;
-		sc->pierceCount = 0;
-		sc->pierceDelay = 0;
+		//auto& sc = skillCfgs.Emplace().Emplace<SkillCfg_1>();
+		//sc->aimRange = Cfg::unitSize * 20;
+		//sc->radius = ResTpFrames::_size_bullet_coin5.x * 0.5f;
+		//sc->damage = 5;
+		//sc->moveSpeed = 800.f / Cfg::fps;
+		//sc->shootSpeed = 2 / Cfg::fps;
+		//sc->life = 3 * (int32_t)Cfg::fps;
+		//sc->pierceCount = 0;
+		//sc->pierceDelay = 0;
 
-		// monster dash
-		sc = skillCfgs.Emplace().Emplace<SkillCfg_1>();
-		sc->aimRange = Cfg::unitSize * 5;
-		sc->radius = ResTpFrames::_size_bullet_coin5.x * 0.5f;
-		sc->damage = 5;
-		sc->moveSpeed = 1800.f / Cfg::fps;
-		sc->shootSpeed = 0;
-		sc->life = (int32_t)Cfg::fps >> 1;
-		sc->pierceCount = 0;
-		sc->pierceDelay = 0;
+		//// monster dash
+		//sc = skillCfgs.Emplace().Emplace<SkillCfg_1>();
+		//sc->aimRange = Cfg::unitSize * 5;
+		//sc->radius = ResTpFrames::_size_bullet_coin5.x * 0.5f;
+		//sc->damage = 5;
+		//sc->moveSpeed = 1800.f / Cfg::fps;
+		//sc->shootSpeed = 0;
+		//sc->life = (int32_t)Cfg::fps >> 1;
+		//sc->pierceCount = 0;
+		//sc->pierceDelay = 0;
 
 		monsterGenerators.Emplace().Emplace<MonsterGen_Generic<Monster_Chips>>()
 			->Init(this, 0, int32_t(Cfg::fps) * 10, 1);

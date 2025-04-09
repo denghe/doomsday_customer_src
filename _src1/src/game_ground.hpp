@@ -30,7 +30,7 @@ namespace Game {
 	inline void Ground::Draw() {
 		auto& camera = stage->camera;
 
-		XY halfSize{ gLooper.windowSize.x * camera.zoom * 0.5f, gLooper.windowSize.y * camera.zoom * 0.5f };
+		XY halfSize{ gLooper.windowSize.x / camera.scale * 0.5f, gLooper.windowSize.y / camera.scale * 0.5f };
 		auto leftTopPos = camera.original - halfSize;
 		auto rightBottomPos = camera.original + halfSize;
 

@@ -92,7 +92,8 @@ namespace Game {
 		// ... more updates
 
 		// sync cam
-		camera.SetOriginal(player->pos);
+		camera.SetOriginal(player->pos, camera.ToLogicPos(gLooper.mouse.pos));
+		camera.Update();
 
 		// update time
 		++time;

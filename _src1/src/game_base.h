@@ -52,7 +52,8 @@ namespace Game {
 
 	// stage's base
 	struct Stage : xx::SceneBase {
-		xx::Camera camera;
+		//xx::Camera camera;
+		xx::CameraEx camera;
 		xx::Shared<xx::Node> ui;
 
 		XYi gridSize{};		// grid's num cols rows
@@ -71,7 +72,7 @@ namespace Game {
 		xx::Listi32<xx::Shared<MonsterGen>> monsterGenerators;
 		xx::Listi32<xx::Shared<DrawableEx>> effects;
 		EffectTextManager etm;
-		xx::Listi32<xx::Shared<SkillCfg>> skillCfgs;
+		//xx::Listi32<xx::Shared<SkillCfg>> skillCfgs;
 		// todo
 
 		std::function<void()> onCleanup;
@@ -178,20 +179,18 @@ namespace Game {
 	// bullet's base
 	struct Bullet : Drawable {
 		xx::Weak<Creature> owner;										// owner's life maybe <= this
-		SkillCfg* cfg{};												// skill cfg's life > this( copy from maker )
-		Stat_t damageRatio{}, criticalChance{}, criticalBonusRatio{};	// for calculate damage( copy from maker )
+		int32_t indexAtItems{ -1 }, indexAtCells{ -1 };					// for space index
+		Monster* prev{}, * next{};										// for space index
+
+		// following fields: init by maker
+		float moveSpeed{};
+		float radius{};
+		float damage{};
+		Stat_t damageRatio{};
+		Stat_t criticalChance{};
+		Stat_t criticalBonusRatio{};
 
 		virtual int32_t Update() { return 0; }
-	};
-
-	struct PlayerBullet : Bullet {
-		// todo
-	};
-
-	struct MonsterBullet : Bullet {
-		int32_t indexAtItems{ -1 }, indexAtCells{ -1 };		// for space index
-		Monster* prev{}, * next{};							// for space index
-		// todo
 	};
 
 	// creature's skill's base
@@ -202,23 +201,23 @@ namespace Game {
 		virtual ~Skill() {};
 	};
 
-	// creature's skill's base 2
-	struct ShootSkill : Skill {
-		SkillCfg* cfg{};			// skill cfg's life > this
-		float shootCountPool{};		// time pool for shoot
-	};
+	//// creature's skill's base 2
+	//struct ShootSkill : Skill {
+	//	//SkillCfg* cfg{};			// skill cfg's life > this
+	//	float shootCountPool{};		// time pool for shoot
+	//};
 
-	// creature's skill's config's base
-	struct SkillCfg {
-		int32_t typeId{};			// for switch case cast Derived*
-		float aimRange{};           // cell size * 10 ?
-		float radius{};             // == res.size.x
-		int32_t damage{};
-		float moveSpeed{};          // ??? / fps
-		float shootSpeed{};         // times per seconds / fps
-		int32_t life{};             // seconds * fps
-		int32_t pierceCount{};
-		int32_t pierceDelay{};      // seconds * fps
-	};
+	//// creature's skill's config's base
+	//struct SkillCfg {
+	//	int32_t typeId{};			// for switch case cast Derived*
+	//	float aimRange{};           // cell size * 10 ?
+	//	float radius{};             // == res.size.x
+	//	int32_t damage{};
+	//	float moveSpeed{};          // ??? / fps
+	//	float shootSpeed{};         // times per seconds / fps
+	//	int32_t life{};             // seconds * fps
+	//	int32_t pierceCount{};
+	//	int32_t pierceDelay{};      // seconds * fps
+	//};
 
 }

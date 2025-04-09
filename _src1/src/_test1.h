@@ -3,10 +3,8 @@
 namespace Game {
 
 	struct Test1 : Stage {
-		xx::Camera camera;
 		xx::Shared<xx::Node> ui;
-		xx::Listi32<xx::Ref<xx::Frame>> frames;
-		xx::Listi32<xx::Shared<DrawableEx>> items;
+		xx::Shared<Player> player;
 
 		void Init() override;
 		void Update() override;

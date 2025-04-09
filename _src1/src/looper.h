@@ -10,6 +10,7 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 	static constexpr int32_t numMaxMonsters{ 100000 };
 };
 
+#include "xx2d_camera_ex.h"
 #include "game_ui_hpbar.h"
 #include "game_space.h"
 #include "game_effect_text.h"
@@ -18,11 +19,11 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 #include "game_effect_death.h"
 #include "game_main_menu.h"
 #include "game_ground.h"
-#include "game_player_skill_cfg.h"
-#include "game_skill.h"
+#include "game_skill_shoot_1.h"
+#include "game_skill_control.h"
 #include "game_skill_move.h"
 #include "game_skill_dash.h"
-#include "game_player_bullet.h"
+#include "game_bullet_1.h"
 #include "game_player_1.h"
 #include "game_player_2.h"
 #include "game_player_3.h"

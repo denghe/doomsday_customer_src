@@ -2,20 +2,28 @@
 
 namespace Game {
 
-	inline void Skill_1::Init(Creature* creature_, SkillCfg* skillCfg_) {
+	inline void Skill_Shoot_1::Init(Creature* creature_) {
 		creature = creature_;
-		cfg = skillCfg_;
+
+		aimRange = Cfg::unitSize * 20;
+		radius = ResTpFrames::_size_bullet_coin5.x * 0.5f;
+		damage = 5;
+		moveSpeed = 800.f / Cfg::fps;
+		shootSpeed = 2 / Cfg::fps;
+		life = 3 * (int32_t)Cfg::fps;
+		pierceCount = 0;
+		pierceDelay = 0;
 	}
 
-	inline int32_t Skill_1::Update() {
-		shootCountPool += cfg->shootSpeed;
+	inline int32_t Skill_Shoot_1::Update() {
+		shootCountPool += shootSpeed;
 		if (auto count = (int)shootCountPool; count > 0) {
 			shootCountPool -= count;
 			auto pp = creature->pos + creature->frame->spriteSize * creature->scale * creature->offsetRatio;
 			auto stage = creature->stage;
 			// shoot nearest one
-			if (auto o = stage->monsters.FindNearestByRange(pp.x, pp.y, cfg->aimRange)) {
-				auto speedStep = cfg->moveSpeed / count;
+			if (auto o = stage->monsters.FindNearestByRange(pp.x, pp.y, aimRange)) {
+				auto speedStep = moveSpeed / count;
 				for (int i = 0; i < count; ++i) {
 					auto d = o->pos - pp;
 					auto a = std::atan2f(d.y, d.x);
@@ -23,7 +31,7 @@ namespace Game {
 					auto sin = std::sinf(a);
 					auto r = (creature->frame->spriteSize.x * 0.5f - speedStep * i) * creature->scale.x;
 					auto pos = pp + XY{ cos * r, sin * r };
-					stage->playerBullets.Emplace().Emplace<PlayerBullet_1>()->Init(this, pos, 0, cos, sin);
+					stage->playerBullets.Emplace().Emplace<Bullet_1>()->Init(this, pos, 0, 3, cos, sin);
 				}
 			}
 		}
