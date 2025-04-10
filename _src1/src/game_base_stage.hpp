@@ -114,35 +114,47 @@ namespace Game {
 		}
 
 		// draw game items ( order by y )
-		{
-			// prepare
-			auto& yd = gLooper.yDraws;
-			yd.Emplace(player->pos.y, player.pointer);
-			for (auto e = playerBullets.len, i = 0; i < e; ++i) {
-				auto& o = playerBullets[i];
-				yd.Emplace(o->pos.y, o.pointer);
-			}
-			for (auto e = monsters.items.len, i = 0; i < e; ++i) {
-				auto& o = monsters.items[i];
-				yd.Emplace(o->pos.y, o.pointer);
-			}
-			for (auto e = effects.len, i = 0; i < e; ++i) {
-				auto& o = effects[i];
-				yd.Emplace(o->pos.y, o.pointer);
-			}
-			// sort
-			std::sort(yd.buf, yd.buf + yd.len, [](auto& a, auto& b) {
-				return a.first < b.first;
-				});
-			// draw
-			for (auto e = yd.len, i = 0; i < e; ++i) {
-				yd[i].second->Draw();
-			}
-			// clean up
-			yd.Clear();
+		// todo: camera screen cut check
+		// 
+		// prepare
+		auto& yd = gLooper.yDraws;
+		yd.Emplace(player->pos.y, player.pointer);
+		for (auto e = playerBullets.len, i = 0; i < e; ++i) {
+			auto& o = playerBullets[i];
+			yd.Emplace(o->pos.y, o.pointer);
+		}
+		for (auto e = monsters.items.len, i = 0; i < e; ++i) {
+			auto& o = monsters.items[i];
+			yd.Emplace(o->pos.y, o.pointer);
+		}
+		for (auto e = effects.len, i = 0; i < e; ++i) {
+			auto& o = effects[i];
+			yd.Emplace(o->pos.y, o.pointer);
 		}
 
+		// sort
+		std::sort(yd.buf, yd.buf + yd.len, [](auto& a, auto& b) {
+			return a.first < b.first;
+			});
+
+		// draw
+		for (auto e = yd.len, i = 0; i < e; ++i) {
+			yd[i].second->Draw();
+		}
+
+		// draw effect texts
 		etm.Draw();
+
+		// draw name
+		for (auto e = yd.len, i = 0; i < e; ++i) {
+			yd[i].second->DrawNameBG();
+		}
+		for (auto e = yd.len, i = 0; i < e; ++i) {
+			yd[i].second->DrawName();
+		}
+
+		// clean up
+		yd.Clear();
 
 		// custom ui here
 		DrawCustomUI();

@@ -20,6 +20,8 @@ namespace Game {
 
 		tarOffsetRadius = frame->spriteSize.x * 3;
 		tarOffset = stage->GetRndPosDoughnut(tarOffsetRadius, 0.1f);
+
+		SetName({ 0, -100 }, U"可乐怪");
 	}
 
 }

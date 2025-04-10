@@ -108,6 +108,16 @@ namespace Game {
 		int32_t destroyTime{};								// max life cycle for bug issue
 		xx::RGBA8 color{xx::RGBA8_White};
 		// todo
+
+		std::u32string name;								// for debug?
+		xx::Listi32<xx::TinyFrame> nameFrames;				// store name -> frame list
+		XY nameSize{}, namePosOffset{};						// anchor == 0.5
+		void SetName(XY const& posOffset, std::u32string_view const& name_);		// name_ -> name
+		void SetName(XY const& posOffset, std::string_view const& name_);
+		void FillNameFrames(std::u32string_view const& name_);
+		void DrawNameBG();
+		void DrawName();
+
 		virtual void Draw();
 		virtual ~Drawable() {};
 	};

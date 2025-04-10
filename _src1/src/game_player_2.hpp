@@ -17,6 +17,8 @@ namespace Game {
 		StatCalc();
 		healthPoint = sp.healthPoint;
 
+		SetName({0, -100},U"玩家2");
+
 		// add init skill
 		skills.Emplace().Emplace<Skill_Control>()->Init(this);
 		skills.Emplace().Emplace<Skill_Shoot_1>()->Init(this);
