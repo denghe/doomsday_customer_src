@@ -15,14 +15,14 @@ namespace Game {
 		s9.Draw();
 		// draw hp bar content
 		XY s{ hpbarContentScale.x * (hp / hpMax) , hpbarContentScale.y };
-		auto& q = *gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(gLooper.res._texid_ui_hpbar_content, 1);
+		auto& q = *gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(gLooper.res._texid_pixel, 1);
 		q.pos = hpbarContentPos;
 		q.anchor = {};
 		q.scale = s;
 		q.radians = 0;
 		q.colorplus = 1;
-		q.color = xx::RGBA8_White;
-		q.texRect = { ResTpFrames::_uvrect_ui_hpbar_content };
+		q.color = hpbarContentColor;
+		q.texRect = { ResTpFrames::_uvrect_pixel };
 	}
 
 }

@@ -589,6 +589,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">pngs/pixel.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>0,0,1,1</rect>
+                <key>scale9Paddings</key>
+                <rect>0,0,1,1</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">pngs/player1.png</key>
             <key type="filename">pngs/player2.png</key>
             <struct type="IndividualSpriteSettings">
@@ -635,36 +650,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">pngs/ui_hpbar_content.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>0,0,1,1</rect>
-                <key>scale9Paddings</key>
-                <rect>0,0,1,1</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">pngs/ui_menu.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>64,88,128,177</rect>
-                <key>scale9Paddings</key>
-                <rect>64,88,128,177</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">pngs/ui_money.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -680,6 +665,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">pngs/ui_paper.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>64,88,128,177</rect>
+                <key>scale9Paddings</key>
+                <rect>64,88,128,177</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">pngs/ui_pause.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -692,6 +692,21 @@
                 <rect>9,9,19,18</rect>
                 <key>scale9Paddings</key>
                 <rect>9,9,19,18</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/ui_refresh.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>9,9,18,18</rect>
+                <key>scale9Paddings</key>
+                <rect>9,9,18,18</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

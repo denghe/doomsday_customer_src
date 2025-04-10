@@ -20,6 +20,7 @@ namespace Game {
 		xx::Listi32<xx::Shared<T>> items;
 		int32_t cellsLen{};
 		std::unique_ptr<T*[]> cells;
+		std::unique_ptr<int32_t[]> counts;
 		xx::SpaceGridRingDiffuseData const* rdd{};	// ref to requires data
 
 		void Init(xx::SpaceGridRingDiffuseData const* rdd_, int32_t numRows_, int32_t numCols_, int32_t cellSize_, int32_t cap = 10000) {
@@ -35,6 +36,8 @@ namespace Game {
 			cellsLen = numRows * numCols;
 			cells = std::make_unique_for_overwrite<T*[]>(cellsLen);
 			memset(cells.get(), 0, sizeof(T*) * cellsLen);
+			counts = std::make_unique_for_overwrite<int32_t[]>(cellsLen);
+			memset(counts.get(), 0, sizeof(int32_t) * cellsLen);
 
 			items.Reserve(cap);
 		}
@@ -63,6 +66,7 @@ namespace Game {
 				c->indexAtCells = ci;
 				cells[ci] = c;
 			}
+			++counts[ci];
 
 			// store
 			c->indexAtItems = items.len;
@@ -100,6 +104,7 @@ namespace Game {
 				assert(cells[c->indexAtCells] == c);
 				cells[c->indexAtCells] = nullptr;
 			}
+			--counts[c->indexAtCells];
 
 			// clear
 			auto ii = c->indexAtItems;
@@ -133,6 +138,7 @@ namespace Game {
 					c->next->prev = {};
 				}
 			}
+			--counts[c->indexAtCells];
 			assert(cells[c->indexAtCells] != c);
 			assert(ci != c->indexAtCells);
 
@@ -144,6 +150,7 @@ namespace Game {
 			c->next = cells[ci];
 			cells[ci] = c;
 			c->indexAtCells = ci;
+			++counts[ci];
 			assert(!cells[ci]->prev);
 			assert(c->next != c);
 			assert(c->prev != c);

@@ -54,14 +54,14 @@ namespace Game {
 		// draw bg
 		{
 			static constexpr XY padding{ 5,2 };
-			auto q = shader.Draw(gLooper.res._texid_ui_hpbar_content, 1);
+			auto q = shader.Draw(gLooper.res._texid_pixel, 1);
 			q->pos = basePos - padding;
 			q->anchor = {};
-			q->scale = (nameSize + padding * 2) / ResTpFrames::_size_ui_hpbar_content;
+			q->scale = (nameSize + padding * 2) / ResTpFrames::_size_pixel;
 			q->radians = {};
 			q->colorplus = 1;
 			q->color = {0,0,0,122};
-			q->texRect.data = ResTpFrames::_uvrect_ui_hpbar_content.data;
+			q->texRect.data = ResTpFrames::_uvrect_pixel.data;
 		}
 	}
 

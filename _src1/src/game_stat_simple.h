@@ -129,7 +129,6 @@ namespace Game {
 	struct StatExt : StatBase {
 		xx::TinyList<xx::Shared<E>> equipments;
 		StatCfg statCfg;
-		bool spDirty{ true };
 
 		// first, need assign statCfg.init.xxxxxxxxx = xxxxxxxxxxx
 		void StatCalc() {

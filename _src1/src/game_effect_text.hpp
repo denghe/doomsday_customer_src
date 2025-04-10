@@ -11,6 +11,7 @@ namespace Game {
 		color = color_;
 		alpha = 1;
 		scale = scale_;
+		//std::numeric_limits<double>::min()
 		len = xx::ToStringEN(value_, buf.data());
 	}
 
