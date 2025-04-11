@@ -11,20 +11,94 @@ namespace Game {
 		ui.Emplace()->Init();
 		ui->MakeChildren<xx::SwallowButton>()->Init(1).onClicked = [] {};		// avoid user click other buttons
 
-		auto& img = ui->MakeChildren<xx::Image>();
-		static constexpr auto bgScale = 1080.f * 0.95f / gLooper.res._size_ui_paper.x;
-		img->Init(2, Cfg::xy5, bgScale, Cfg::xy5a, gLooper.res.ui_paper, xx::ImageRadians::PiDiv2);
+		static constexpr float leftPos{ -620 };
+		static constexpr float rightPos{ 620 };
+		static constexpr float topPos{ 380 };
+		static constexpr float bottomPos{ -380 };
 
-		float posX = gLooper.res._size_ui_paper.y * 0.5f;
-		//img->MakeChildren<xx::Label>()->Init(3, { posX, gLooper.res._size_ui_paper.y * (4.f / 5.f) }, 1.5f, 0.5f, xx::RGBA8_Black, "Pause");
-		//img->MakeChildren<xx::Button>()->Init(3, { posX, gLooper.res._size_ui_paper.y * (1.f / 2.f) }, .5f, gLooper.btnCfg_Scale2, U"Restart")
-		//	.onClicked = [this] {
-		//	gLooper.DelaySwitchTo<Game::MainMenu>();
-		//};
-		img->MakeChildren<xx::Button>()->Init(3, { posX, gLooper.res._size_ui_paper.y * (1.f / 4.f) }, .5f, gLooper.btnCfg_Scale2, U"Continue").onClicked = [this] {
+		static constexpr auto bgScale = 1080.f * 0.95f / gLooper.res._size_ui_paper.x;
+		ui->MakeChildren<xx::Image>()->Init(2, {}, bgScale, 0.5f, gLooper.res.ui_paper, xx::ImageRadians::PiDiv2);
+
+		static constexpr XY goodsBtnSize{ 300, 450 };
+		static constexpr float goodsBtnMargin{ 20 };
+		static constexpr XY goodsBtnOffset{ leftPos + (goodsBtnSize.x * 3 + goodsBtnMargin * 2) / 2, 0 };
+		static constexpr XY goodsBtnPoss[3] = { { goodsBtnOffset + XY{ -goodsBtnSize.x * 1.f - goodsBtnMargin, 0 } }, { goodsBtnOffset + XY{ 0, 0 } }, { goodsBtnOffset + XY{ goodsBtnSize.x * 1.f + goodsBtnMargin, 0 } } };
+		static constexpr XY goodsBtnContentPoss[3] = { goodsBtnPoss[0] + XY{ 0, 200 }, goodsBtnPoss[1] + XY{ 0, 200 }, goodsBtnPoss[2] + XY{ 0, 200 } };
+
+		ui->MakeChildren<xx::Label>()->Init(3, { goodsBtnOffset.x, topPos }, 4.f, 0.5f, xx::RGBA8_Black, "Shop");
+
+		ui->MakeChildren<xx::IconButton>()->Init(3, { rightPos, topPos }, { 1, 0.5f }, gLooper.btnCfg3i, gLooper.res.ui_refresh, U"$123", {}, xx::RGBA8_Black).onClicked = [&]() {
+			// todo
+		};
+
+
+		ui->MakeChildren<xx::EmptyButton>()->Init(3, goodsBtnPoss[0], 0.5f, gLooper.btnCfg4, goodsBtnSize);
+		ui->MakeChildren<xx::EmptyButton>()->Init(3, goodsBtnPoss[1], 0.5f, gLooper.btnCfg4, goodsBtnSize);
+		ui->MakeChildren<xx::EmptyButton>()->Init(3, goodsBtnPoss[2], 0.5f, gLooper.btnCfg4, goodsBtnSize);
+
+		static constexpr float goodsBtnContentWidth{ goodsBtnSize.x - goodsBtnMargin * 2 };
+		auto goodsBtnIconFrame = gLooper.res.ui_money;
+		static constexpr float goodsBtnIconDrawHeight{ 100 };
+		auto goodsBtnIconScale = goodsBtnIconDrawHeight / goodsBtnIconFrame->spriteSize.y;
+		auto goodsBtnIconDrawWidth = goodsBtnIconFrame->spriteSize.x * goodsBtnIconScale;
+		{
+			// goods1
+			auto& rich = ui->MakeChildren<xx::RichLabel>()->Init(4, goodsBtnContentPoss[0], 1, { 0.5f, 1 }, goodsBtnContentWidth);
+			rich.SetOffset(goodsBtnContentWidth / 2 - goodsBtnIconDrawWidth / 2).AddPicture(gLooper.res.ui_money, goodsBtnIconScale)
+				.AddText("\nATK   ", 2, xx::RGBA8_Black).AddText("+20%", 2, xx::RGBA8_Red)
+				.AddText("\nHP GEN", 2, xx::RGBA8_Black).AddText(" -5%", 2, xx::RGBA8_Green)
+				.AddText("\nMAX HP", 2, xx::RGBA8_Black).AddText(" -5%", 2, xx::RGBA8_Green)
+				.Commit();
+		}
+		{
+			// goods2
+			auto& rich = ui->MakeChildren<xx::RichLabel>()->Init(4, goodsBtnContentPoss[1], 1, { 0.5f, 1 }, goodsBtnContentWidth);
+			rich.SetOffset(goodsBtnContentWidth / 2 - goodsBtnIconDrawWidth / 2).AddPicture(gLooper.res.ui_money, goodsBtnIconScale)
+				.AddText("\nATK   ", 2, xx::RGBA8_Black).AddText("+20%", 2, xx::RGBA8_Red)
+				.AddText("\nHP GEN", 2, xx::RGBA8_Black).AddText(" -5%", 2, xx::RGBA8_Green)
+				.AddText("\nMAX HP", 2, xx::RGBA8_Black).AddText(" -5%", 2, xx::RGBA8_Green)
+				.Commit();
+		}
+		{
+			// goods3
+			auto& rich = ui->MakeChildren<xx::RichLabel>()->Init(4, goodsBtnContentPoss[2], 1, { 0.5f, 1 }, goodsBtnContentWidth);
+			rich.SetOffset(goodsBtnContentWidth / 2 - goodsBtnIconDrawWidth / 2).AddPicture(gLooper.res.ui_money, goodsBtnIconScale)
+				.AddText("\nATK   ", 2, xx::RGBA8_Black).AddText("+20%", 2, xx::RGBA8_Red)
+				.AddText("\nHP GEN", 2, xx::RGBA8_Black).AddText(" -5%", 2, xx::RGBA8_Green)
+				.AddText("\nMAX HP", 2, xx::RGBA8_Black).AddText(" -5%", 2, xx::RGBA8_Green)
+				.Commit();
+		}
+
+		{
+			// player stat
+			static constexpr XY statRichPos{ rightPos, goodsBtnSize.y / 2 };
+			auto& rich = ui->MakeChildren<xx::RichLabel>()->Init(4, statRichPos, 1, { 1, 1 }, goodsBtnContentWidth);
+			rich.AddText("\nATK   ", 2, xx::RGBA8_Black).AddText("+20%", 2, xx::RGBA8_Red)
+				.AddText("\nHP GEN", 2, xx::RGBA8_Black).AddText(" -5%", 2, xx::RGBA8_Green)
+				.AddText("\nMAX HP", 2, xx::RGBA8_Black).AddText(" -5%", 2, xx::RGBA8_Green)
+				.AddText("\nMAX HP", 2, xx::RGBA8_Black).AddText(" -5%", 2, xx::RGBA8_Green)
+				.AddText("\nLUCK  ", 2, xx::RGBA8_Black).AddText("   5", 2, xx::RGBA8_Green)
+				.AddText("\nCRIT  ", 2, xx::RGBA8_Black).AddText(" 10%", 2, xx::RGBA8_Green)
+				.Commit();
+		}
+
+		auto& btnContinue = ui->MakeChildren<xx::Button>()->Init(3, { rightPos, bottomPos }, { 1, 0.5f }, gLooper.btnCfg3, "Continue");
+		btnContinue.onClicked = [this] {
 			stage->paused = false;							// resume
 			ui.Reset();										// close popup panel
 		};
+
+		ui->MakeChildren<xx::Button>()->Init(3, { rightPos - 30 - btnContinue.size.x, bottomPos }, { 1, 0.5f }, gLooper.btnCfg3, "Rent").onClicked = [this] {
+			// todo
+		};
+
+		static constexpr float moneyIconWidth{ 50 };
+		static constexpr float moneyIconScale{ 50 / gLooper.res._size_ui_money.x };
+		static constexpr float moneyIconTextMargin{ 30 };
+		static constexpr XY moneyIconPos{ leftPos + moneyIconWidth, bottomPos };
+		static constexpr XY moneyTextPos{ moneyIconPos.x + moneyIconTextMargin, bottomPos };
+		ui->MakeChildren<xx::Image>()->Init(2, moneyIconPos, moneyIconScale, { 1, 0.5f }, gLooper.res.ui_money);
+		ui->MakeChildren<xx::Label>()->Init(3, moneyTextPos, 2.f, { 0, 0.5f }, xx::RGBA8_Black, "123456");
 	}
 
 	void UI_ShopPanel::TryDraw() {

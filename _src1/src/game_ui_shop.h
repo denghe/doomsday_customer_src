@@ -2,8 +2,9 @@
 
 namespace Game {
 
-	// modal panel
 	struct Stage;
+
+	// modal panel
 	struct UI_ShopPanel {
 		Stage* stage{};
 		xx::Shared<xx::Node> ui;

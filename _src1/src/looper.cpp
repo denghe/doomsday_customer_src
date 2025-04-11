@@ -69,53 +69,53 @@ xx::Task<> Looper::MainTask() {
 	btnCfg.frame = res.button;
 	btnCfg.center = { 2, 3, 2, 2 };
 
-	btnCfg_Scale5.frame = res.ui_button;
-	btnCfg_Scale5.texScale = 1;
-	btnCfg_Scale5.center = { 30, 30, (uint16_t)ResTpFrames::_size_ui_button.x - 30 * 2, (uint16_t)ResTpFrames::_size_ui_button.y - 30 * 2 };
-	btnCfg_Scale5.color = xx::RGBA8_White;
-	btnCfg_Scale5.txtColor = xx::RGBA8_Black;
-	btnCfg_Scale5.txtPadding = { 50, 8 };
-	btnCfg_Scale5.txtPaddingRightBottom = { 50, 30 };
-	btnCfg_Scale5.txtScale = 5;
+	btnCfg1.frame = res.ui_button;
+	btnCfg1.texScale = 1;
+	btnCfg1.center = { 30, 30, (uint16_t)ResTpFrames::_size_ui_button.x - 30 * 2, (uint16_t)ResTpFrames::_size_ui_button.y - 30 * 2 };
+	btnCfg1.color = xx::RGBA8_White;
+	btnCfg1.txtColor = xx::RGBA8_Black;
+	btnCfg1.txtPadding = { 15, 10 };
+	btnCfg1.txtPaddingRightBottom = { 15, 10 };
+	btnCfg1.txtScale = 1;
+	btnCfg1.borderScale = 0.5f;
 
-	btnCfg_Scale4.frame = res.ui_button;
-	btnCfg_Scale4.texScale = 1;
-	btnCfg_Scale4.center = { 30, 30, (uint16_t)ResTpFrames::_size_ui_button.x - 30 * 2, (uint16_t)ResTpFrames::_size_ui_button.y - 30 * 2 };
-	btnCfg_Scale4.color = xx::RGBA8_White;
-	btnCfg_Scale4.txtColor = xx::RGBA8_Black;
-	btnCfg_Scale4.txtPadding = { 40, 5 };
-	btnCfg_Scale4.txtPaddingRightBottom = { 40, 20 };
-	btnCfg_Scale4.txtScale = 4;
+	btnCfg2.frame = res.ui_button;
+	btnCfg2.texScale = 1;
+	btnCfg2.center = { 30, 30, (uint16_t)ResTpFrames::_size_ui_button.x - 30 * 2, (uint16_t)ResTpFrames::_size_ui_button.y - 30 * 2 };
+	btnCfg2.color = xx::RGBA8_White;
+	btnCfg2.txtColor = xx::RGBA8_Black;
+	btnCfg2.txtPadding = { 30, 20 };
+	btnCfg2.txtPaddingRightBottom = { 30, 20 };
+	btnCfg2.txtScale = 1;
+	btnCfg2.borderScale = 0.5f;
 
-	btnCfg_Scale3.frame = res.ui_button;
-	btnCfg_Scale3.texScale = 1;
-	btnCfg_Scale3.center = { 30, 30, (uint16_t)ResTpFrames::_size_ui_button.x - 30 * 2, (uint16_t)ResTpFrames::_size_ui_button.y - 30 * 2 };
-	btnCfg_Scale3.color = xx::RGBA8_White;
-	btnCfg_Scale3.txtColor = xx::RGBA8_Black;
-	btnCfg_Scale3.txtPadding = { 30, 0 };
-	btnCfg_Scale3.txtPaddingRightBottom = { 30, 10 };
-	btnCfg_Scale3.txtScale = 3;
+	btnCfg2i = btnCfg2;
+	btnCfg2i.txtPadding = { 80, 20 };
+	btnCfg2i.iconPadding = 12;
 
-	btnCfg_Scale2.frame = res.ui_button;
-	btnCfg_Scale2.texScale = 0.5;
-	btnCfg_Scale2.center = { 30, 30, (uint16_t)ResTpFrames::_size_ui_button.x - 30 * 2, (uint16_t)ResTpFrames::_size_ui_button.y - 30 * 2 };
-	btnCfg_Scale2.color = xx::RGBA8_White;
-	btnCfg_Scale2.txtColor = xx::RGBA8_Black;
-	btnCfg_Scale2.txtPadding = { 40, 20 };
-	btnCfg_Scale2.txtPaddingRightBottom = { 40, 20 };
-	btnCfg_Scale2.txtScale = 1;
+	btnCfg3.frame = res.ui_button;
+	btnCfg3.texScale = 1;
+	btnCfg3.center = { 30, 30, (uint16_t)ResTpFrames::_size_ui_button.x - 30 * 2, (uint16_t)ResTpFrames::_size_ui_button.y - 30 * 2 };
+	btnCfg3.color = xx::RGBA8_White;
+	btnCfg3.txtColor = xx::RGBA8_Black;
+	btnCfg3.txtPadding = { 40, 30 };
+	btnCfg3.txtPaddingRightBottom = { 40, 30 };
+	btnCfg3.txtScale = 2;
+	btnCfg3.borderScale = 1.f;
+	btnCfg3.iconPadding = 20;
 
-	btnCfg_Scale2Icon.frame = res.ui_button;
-	btnCfg_Scale2Icon.texScale = 1;
-	btnCfg_Scale2Icon.center = { 30, 30, (uint16_t)ResTpFrames::_size_ui_button.x - 30 * 2, (uint16_t)ResTpFrames::_size_ui_button.y - 30 * 2 };
-	btnCfg_Scale2Icon.color = xx::RGBA8_White;
-	btnCfg_Scale2Icon.txtColor = xx::RGBA8_Black;
-	btnCfg_Scale2Icon.txtPadding = { 80, 20 };
-	btnCfg_Scale2Icon.txtPaddingRightBottom = { 30, 20 };
-	btnCfg_Scale2Icon.txtScale = 1;
-	btnCfg_Scale2Icon.borderScale = 0.5f;
-	btnCfg_Scale2Icon.iconPadding = 12;
+	btnCfg3i = btnCfg3;
+	btnCfg3i.txtPadding = { 120, 30 };
 
+
+	btnCfg4.frame = res.ui_button;
+	btnCfg4.texScale = 1;
+	btnCfg4.center = { 30, 30, (uint16_t)ResTpFrames::_size_ui_button.x - 30 * 2, (uint16_t)ResTpFrames::_size_ui_button.y - 30 * 2 };
+	btnCfg4.color = xx::RGBA8_White;
+	btnCfg4.txtColor = xx::RGBA8_Black;
+	btnCfg4.txtPadding = { 40, 5 };
+	btnCfg4.txtPaddingRightBottom = { 40, 20 };
+	btnCfg4.txtScale = 4;
 
 	clearColor = { 33, 33, 33, 255 };
 
