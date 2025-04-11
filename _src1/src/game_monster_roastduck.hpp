@@ -5,6 +5,7 @@ namespace Game {
 	void Monster_Roastduck::Init(Stage* stage_, StatCfg const& statCfg_, XY const& pos_) {
 		stage = stage_;
 		frame = gLooper.res.monster_roastduck;
+		state = State::Idle;
 
 		pos = pos_;
 		scale = { 1,1 };
@@ -20,6 +21,20 @@ namespace Game {
 
 		tarOffsetRadius = frame->spriteSize.x * 3;
 		tarOffset = stage->GetRndPosDoughnut(tarOffsetRadius, 0.1f);
+
+		skills.Emplace().Emplace<Skill_MoveToPlayer>()->Init(this);
+		skills.Emplace().Emplace<Skill_DashAttack>()->Init(this);
 	}
 
+	int32_t Monster_Roastduck::Update() {
+		// auto use skill
+		for (auto i = skills.len - 1; i >= 0; --i) {
+			auto& skill = skills[i];
+			if (skill->Update()) {
+				skills.SwapRemoveAt(i);
+			}
+		}
+		Idle();
+		return 0;
+	}
 }
