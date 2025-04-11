@@ -8,12 +8,18 @@ namespace Game {
 			gLooper.DelaySwitchTo<Game::MainMenu>();
 		});
 
-		static constexpr float pauseButtonSize{ 64.f / 1080.f * Cfg::height };
-		ui->MakeChildren<xx::ImageButton>()->Init(1, Cfg::xy9m, Cfg::xy9a, pauseButtonSize, gLooper.res.ui_pause).onClicked = [&]() {
-			// todo: resume ui
+		static constexpr float imgBtnSize{ 64.f / 1080.f * Cfg::height };
+		ui->MakeChildren<xx::ImageButton>()->Init(1, Cfg::xy9m, Cfg::xy9a, imgBtnSize, gLooper.res.ui_pause).onClicked = [&]() {
+			uiPausePanel.Popup();
 		};
 
-		uiHPBar.Init();
+		ui->MakeChildren<xx::ImageButton>()->Init(1, Cfg::xy9m + XY{ -imgBtnSize - 10, 0 }, Cfg::xy9a, imgBtnSize, gLooper.res.ui_money).onClicked = [&]() {
+			// todo
+		};
+
+		uiHPBar.Init(this);
+		uiPausePanel.Init(this);
+		// ...
 
 		gridSize = Cfg::gridSize;
 		mapSize = Cfg::unitSize * gridSize;
@@ -77,8 +83,9 @@ namespace Game {
 
 	inline void Stage4::DrawCustomUI() {
 		// draw hp bar
-		uiHPBar.hp = player->healthPoint;
-		uiHPBar.hpMax = player->sp.healthPoint;
-		uiHPBar.Draw();
+		uiHPBar.SetValue(player->healthPoint, player->sp.healthPoint).Draw();
+
+		// draw pause panel
+		uiPausePanel.TryDraw();
 	}
 }

@@ -4,7 +4,8 @@ namespace Game {
 
 	struct Stage1 : Stage {
 		UI_HPBar uiHPBar;
-		xx::Shared<xx::Node> pausePanel;
+		UI_PausePanel uiPausePanel;
+		UI_ShopPanel uiShopPanel;
 		void DrawCustomUI() override;
 		void Init() override;
 	};

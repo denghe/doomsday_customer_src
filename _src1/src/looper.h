@@ -12,6 +12,8 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 
 #include "xx2d_camera_ex.h"
 #include "game_ui_hpbar.h"
+#include "game_ui_pause.h"
+#include "game_ui_shop.h"
 #include "game_space.h"
 #include "game_effect_text.h"
 #include "game_stat_simple.h"
@@ -50,8 +52,8 @@ struct Looper : xx::Engine<Looper>, Cfg {
 	xx::Task<> MainTask();
 
 	ResTpFrames res;
-	xx::Scale9SpriteConfig btnCfg, btnCfg_Scale2, btnCfg_Scale3, btnCfg_Scale4, btnCfg_Scale5, btnCfg_Scale1Icon;
-	xx::Scale9SpriteConfig btnCfg_Scale5Icon;
+	xx::Scale9SpriteConfig btnCfg, btnCfg_Scale2, btnCfg_Scale3, btnCfg_Scale4, btnCfg_Scale5;
+	xx::Scale9SpriteConfig btnCfg_Scale2Icon;
 	xx::SpaceGridRingDiffuseData rdd;
 	xx::Listi32<std::pair<float, Game::Drawable*>> yDraws;
 };

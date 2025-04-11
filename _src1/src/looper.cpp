@@ -1,7 +1,6 @@
 ﻿#include "pch.h"
 #include "looper.h"
 
-#include "game_ui_hpbar.hpp"
 #include "game_base_creature.hpp"
 #include "game_base_drawable.hpp"
 #include "game_base_monster.hpp"
@@ -35,6 +34,9 @@
 #include "game_monster_roastduck.hpp"
 #include "game_monster_sofa.hpp"
 #include "game_spawner.hpp"
+#include "game_ui_hpbar.hpp"
+#include "game_ui_pause.hpp"
+#include "game_ui_shop.hpp"
 // more include here ...
 #include "_test1.hpp"
 
@@ -103,16 +105,17 @@ xx::Task<> Looper::MainTask() {
 	btnCfg_Scale2.txtPaddingRightBottom = { 40, 20 };
 	btnCfg_Scale2.txtScale = 1;
 
-	btnCfg_Scale5Icon = btnCfg_Scale5;
-	btnCfg_Scale5Icon.txtPadding = { 200, 8 };
-	btnCfg_Scale5Icon.iconPadding = 15;
+	btnCfg_Scale2Icon.frame = res.ui_button;
+	btnCfg_Scale2Icon.texScale = 1;
+	btnCfg_Scale2Icon.center = { 30, 30, (uint16_t)ResTpFrames::_size_ui_button.x - 30 * 2, (uint16_t)ResTpFrames::_size_ui_button.y - 30 * 2 };
+	btnCfg_Scale2Icon.color = xx::RGBA8_White;
+	btnCfg_Scale2Icon.txtColor = xx::RGBA8_Black;
+	btnCfg_Scale2Icon.txtPadding = { 80, 20 };
+	btnCfg_Scale2Icon.txtPaddingRightBottom = { 30, 20 };
+	btnCfg_Scale2Icon.txtScale = 1;
+	btnCfg_Scale2Icon.borderScale = 0.5f;
+	btnCfg_Scale2Icon.iconPadding = 12;
 
-	btnCfg_Scale1Icon = btnCfg_Scale5Icon;
-	btnCfg_Scale1Icon.borderScale = 0.5f;
-	btnCfg_Scale1Icon.txtScale = 1;
-	btnCfg_Scale1Icon.txtPadding = { 40, 2 };
-	btnCfg_Scale1Icon.txtPaddingRightBottom = { 10, 6 };
-	btnCfg_Scale1Icon.iconPadding = 6;
 
 	clearColor = { 33, 33, 33, 255 };
 

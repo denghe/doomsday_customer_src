@@ -2,6 +2,7 @@
 
 namespace Game {
 
+	struct Stage;
 	struct UI_HPBar {
 		// hp bar arguments
 		static constexpr xx::UVRect hpbarCenter{ 2,2,4,4 };		// from res
@@ -16,10 +17,12 @@ namespace Game {
 		static constexpr XY hpbarContentMaxSize{ hpbarSize - hpbarContentBorderWidth * 2 };
 		static constexpr XY hpbarContentScale{ hpbarContentMaxSize / ResTpFrames::_size_pixel };
 
+		Stage* stage{};
 		xx::Scale9 s9;
 		float hp{ 1 }, hpMax{ 2 };		// need change when update
 
-		void Init();
+		void Init(Stage* stage_);
+		UI_HPBar& SetValue(float hp_, float hpMax_);
 		void Draw();
 	};
 

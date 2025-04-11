@@ -8,25 +8,20 @@ namespace Game {
 			gLooper.DelaySwitchTo<Game::MainMenu>();
 		});
 
-		static constexpr float pauseButtonSize{ 64.f / 1080.f * Cfg::height };
-		ui->MakeChildren<xx::ImageButton>()->Init(1, Cfg::xy9m, Cfg::xy9a, pauseButtonSize, gLooper.res.ui_pause).onClicked = [&]() {
-			paused = true;	// pause
-			static constexpr auto bgScale = 1080.f * 0.8f / gLooper.res._size_ui_paper.y;
-			pausePanel.Emplace<xx::Image>()->Init(1, Cfg::xy5, bgScale, Cfg::xy5a, gLooper.res.ui_paper);
-			pausePanel->MakeChildren<xx::Label>()->Init(2, { gLooper.res._size_ui_paper.x * 0.5f, gLooper.res._size_ui_paper.y * (4.f / 5.f) }, 1.5f, 0.5f, xx::RGBA8_Black, "Pause");
-			pausePanel->MakeChildren<xx::Button>()->Init(3, { gLooper.res._size_ui_paper.x * 0.5f, gLooper.res._size_ui_paper.y * (1.f / 2.f) }, .5f, gLooper.btnCfg_Scale2, U"Restart")
-				.onClicked = [this] {
-				gLooper.DelaySwitchTo<Game::MainMenu>();
-			};
-			pausePanel->MakeChildren<xx::Button>()->Init(3, { gLooper.res._size_ui_paper.x * 0.5f, gLooper.res._size_ui_paper.y * (1.f / 4.f) }, .5f, gLooper.btnCfg_Scale2, U"Continue")
-				.onClicked = [this] {
-				paused = false;	// resume
-				pausePanel.Reset();
-			};
+		static constexpr float imgBtnSize{ 64.f / 1080.f * Cfg::height };
+		// make pause button
+		ui->MakeChildren<xx::ImageButton>()->Init(1, Cfg::xy9m, Cfg::xy9a, imgBtnSize, gLooper.res.ui_pause).onClicked = [&]() {
+			uiPausePanel.Popup();
+		};
+		// make shop button
+		ui->MakeChildren<xx::ImageButton>()->Init(1, Cfg::xy9m + XY{ -imgBtnSize - 10, 0 }, Cfg::xy9a, imgBtnSize, gLooper.res.ui_money).onClicked = [&]() {
+			uiShopPanel.Popup();
 		};
 
-
-		uiHPBar.Init();
+		uiHPBar.Init(this);
+		uiPausePanel.Init(this);
+		uiShopPanel.Init(this);
+		// ...
 
 		gridSize = Cfg::gridSize;
 		mapSize = Cfg::unitSize * gridSize;
@@ -64,13 +59,10 @@ namespace Game {
 
 	inline void Stage1::DrawCustomUI() {
 		// draw hp bar
-		uiHPBar.hp = player->healthPoint;
-		uiHPBar.hpMax = player->sp.healthPoint;
-		uiHPBar.Draw();
+		uiHPBar.SetValue(player->healthPoint, player->sp.healthPoint).Draw();
 
-		// draw pause panel ( if exists )
-		if (pausePanel) {
-			gLooper.DrawNode(pausePanel);
-		}
+		// draw panels
+		uiPausePanel.TryDraw();
+		uiShopPanel.TryDraw();
 	}
 }
