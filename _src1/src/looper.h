@@ -4,10 +4,10 @@
 
 struct Cfg : xx::GDesign<1920, 1080, 120> {
 	static constexpr XY designSize{ 3840, 2160 };
-	static constexpr float defaultScale{ 0.5f };
 	static constexpr float unitSize{ 128.f };
-	static constexpr XYi gridSize{ 2000, 2000 };			// default value
-	static constexpr int32_t numMaxMonsters{ 100000 };
+	static constexpr float defaultScale{ height / 20 / unitSize };
+	static constexpr XYi gridSize{ 60, 60 };			// default value
+	static constexpr int32_t numMaxMonsters{ 50000 };
 };
 
 #include "xx2d_camera_ex.h"

@@ -36,6 +36,7 @@ namespace Game {
 						, p.y + ds_2.y + Cfg::unitSize };
 					break;
 				}
+				stage->ForceLimit(pos);
 
 				auto m = xx::MakeShared<T>();
 				m->Init(stage, pos);
@@ -51,9 +52,28 @@ namespace Game {
 		for (countPool += countIncPerFrame; countPool >= 1; --countPool) {
 			if (stage->monsters.items.len < Cfg::numMaxMonsters) {
 				auto pos = stage->player->pos + stage->GetRndPosDoughnut(Cfg::designSize.x, 200.f);
+				stage->ForceLimit(pos);
 
 				// todo: calculate scale
 				stage->spawners.Emplace().Emplace()->Init(stage, statCfg, pos, 1.f, 1.5f, [](Stage* stage_, StatCfg const& statCfg_, XY const& pos_) {
+					auto m = xx::MakeShared<T>();
+					m->Init(stage_, statCfg_, pos_);
+					stage_->monsters.Add(std::move(m));
+				});
+			}
+		}
+	}
+
+	template<typename T>
+	inline void MonsterGen::CreateFromFullMap() {
+		auto& rnd = stage->rnd;
+		for (countPool += countIncPerFrame; countPool >= 1; --countPool) {
+			if (stage->monsters.items.len < Cfg::numMaxMonsters) {
+				auto x = rnd.Next<float>(stage->mapSize.x);
+				auto y = rnd.Next<float>(stage->mapSize.y);
+
+				// todo: calculate scale
+				stage->spawners.Emplace().Emplace()->Init(stage, statCfg, {x,y}, 1.f, 1.5f, [](Stage* stage_, StatCfg const& statCfg_, XY const& pos_) {
 					auto m = xx::MakeShared<T>();
 					m->Init(stage_, statCfg_, pos_);
 					stage_->monsters.Add(std::move(m));

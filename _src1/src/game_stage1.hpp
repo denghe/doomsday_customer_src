@@ -35,7 +35,7 @@ namespace Game {
 		etm.Init(this, 10000);
 
 		{
-			auto& sp = monsterGenerators.Emplace().Emplace<MonsterGen_Generic<Monster_Cola>>()->Init(this, 0, int32_t(Cfg::fps) * 10, 5000);
+			auto& sp = monsterGenerators.Emplace().Emplace<MonsterGen_Generic<Monster_Cola>>()->Init(this, 0, int32_t(Cfg::fps) * 10, 50);
 			sp.healthPoint = 10;
 			sp.healthRegeneration = 0;
 			sp.defensePoint = 0;

@@ -184,6 +184,7 @@ namespace Game {
 		virtual int32_t Update() { return 0; }
 		template<typename T> void CreateFromRect();
 		template<typename T> void CreateFromDoughnut();
+		template<typename T> void CreateFromFullMap();
 	};
 
 	// bullet's base
