@@ -24,6 +24,7 @@ include_directories(
 	../3rd
 	../xx
 	../soloud/include
+	../thread-pool/include
 )
 
 file(GLOB sources

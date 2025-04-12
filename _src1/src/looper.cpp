@@ -117,7 +117,7 @@ xx::Task<> Looper::MainTask() {
 	btnCfg4.txtPaddingRightBottom = { 40, 20 };
 	btnCfg4.txtScale = 4;
 
-	clearColor = { 33, 33, 33, 255 };
+	clearColor = { 0xdf, 0xc1, 0x98, 255 };
 
 	scene.Emplace<Game::MainMenu>()->Init();
 }

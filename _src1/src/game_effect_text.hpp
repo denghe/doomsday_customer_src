@@ -72,10 +72,10 @@ namespace Game {
 		return ens.Empty();
 	}
 
-	XX_INLINE void EffectTextManager::Draw() {
-		for (int32_t i = 0, e = ens.Count(); i < e; ++i) {
-			ens[i].Draw(stage);
-		}
-	}
+	//XX_INLINE void EffectTextManager::Draw() {
+	//	for (int32_t i = 0, e = ens.Count(); i < e; ++i) {
+	//		ens[i].Draw(stage);
+	//	}
+	//}
 
 };

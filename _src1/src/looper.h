@@ -50,6 +50,9 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 
 struct Looper : xx::Engine<Looper>, Cfg {
 	xx::Task<> MainTask();
+#ifndef __EMSCRIPTEN__
+	BS::thread_pool<> threadPool;
+#endif
 
 	ResTpFrames res;
 	xx::Scale9SpriteConfig btnCfg, btnCfg1, btnCfg2, btnCfg2i, btnCfg3, btnCfg3i, btnCfg4;
