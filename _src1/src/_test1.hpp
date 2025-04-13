@@ -104,21 +104,21 @@ namespace Game {
 		return (T&)actions[index];
 	}
 
-	void PlayerWithAction::StepSpriteIndex(int32_t from, int32_t to, float step) {
+	XX_INLINE void PlayerWithAction::StepSpriteIndex(int32_t from, int32_t to, float step) {
 		spriteIndex += step;
 		while ((int32_t)spriteIndex > to) {
 			spriteIndex = from + (spriteIndex - to);
 		}
 	}
 
-	int32_t PlayerWithAction::Add_Action_Walk() {
+	XX_INLINE int32_t PlayerWithAction::Add_Action_Walk() {
 		if (ActionExists<Action_Walk>()) return 0;
 		auto& o = ActionAdd<Action_Walk>();
 		o.n = 0;
 		return 1;
 	}
 
-	int32_t PlayerWithAction::Add_Action_Atk1() {
+	XX_INLINE int32_t PlayerWithAction::Add_Action_Atk1() {
 		if (ActionExists<Action_Atk1>()) return 0;
 		if (ActionExists<Action_Atk2>()) return -1;
 		auto& o = ActionAdd<Action_Atk1>();
@@ -126,7 +126,7 @@ namespace Game {
 		return 1;
 	}
 
-	int32_t PlayerWithAction::Add_Action_Atk2() {
+	XX_INLINE int32_t PlayerWithAction::Add_Action_Atk2() {
 		if (ActionExists<Action_Atk2>()) return 0;
 		if (ActionExists<Action_Atk1>()) return -1;
 		auto& o = ActionAdd<Action_Atk2>();
@@ -134,7 +134,7 @@ namespace Game {
 		return 1;
 	}
 
-	void PlayerWithAction::Case_(Action_Walk& o) {
+	XX_INLINE void PlayerWithAction::Case_(Action_Walk& o) {
 		if (ActionExists<Action_Atk1>() || ActionExists<Action_Atk2>()) return;
 		XX_BEGIN(o.n);
 		for (x = 0.f; x < 100.f; x += 100.f / 10.f / 60.f) {		// player use 10 seconds move
@@ -149,7 +149,7 @@ namespace Game {
 		XX_END(o.n);
 	}
 
-	void PlayerWithAction::Case_(Action_Atk1& o) {
+	XX_INLINE void PlayerWithAction::Case_(Action_Atk1& o) {
 		XX_BEGIN(o.n);
 		spriteIndexBak = spriteIndex;
 		spriteIndex = 10.f;
@@ -162,7 +162,7 @@ namespace Game {
 		XX_END(o.n);
 	}
 
-	void PlayerWithAction::Case_(Action_Atk2& o) {
+	XX_INLINE void PlayerWithAction::Case_(Action_Atk2& o) {
 		XX_BEGIN(o.n);
 		spriteIndexBak = spriteIndex;
 		spriteIndex = 15.f;

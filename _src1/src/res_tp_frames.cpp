@@ -392,6 +392,9 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 		this->warning1 = map["warning1"sv];
 		this->_tex_warning1 = this->warning1->tex;
 		this->_texid_warning1 = this->_tex_warning1->GetValue();
+		this->warning2 = map["warning2"sv];
+		this->_tex_warning2 = this->warning2->tex;
+		this->_texid_warning2 = this->_tex_warning2->GetValue();
 	}
 
 	// fill groups

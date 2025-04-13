@@ -888,6 +888,13 @@ struct ResTpFrames {
 	static constexpr xx::XY _anchor_warning1{ 0.471429, 0.601562 };
 	static constexpr xx::UVRect _uvrect_warning1{ 303, 500, 140, 128 };
 
+	xx::Ref<xx::Frame> warning2;
+	xx::Ref<xx::GLTexture> _tex_warning2;
+	GLuint _texid_warning2{};	// unsafe
+	static constexpr xx::XY _size_warning2{ 6, 6 };
+	static constexpr xx::XY _anchor_warning2{ 0.5, 0.5 };
+	static constexpr xx::UVRect _uvrect_warning2{ 437, 745, 6, 6 };
+
 
 	xx::Listi32<xx::Ref<xx::Frame>> buff_;
 	static constexpr int32_t _countof_buff_{ 1 };
