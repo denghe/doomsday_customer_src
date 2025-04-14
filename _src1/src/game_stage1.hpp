@@ -14,11 +14,12 @@ namespace Game {
 			uiPausePanel.Popup();
 		};
 		// make shop button
-		ui->MakeChildren<xx::ImageButton>()->Init(1, Cfg::xy9m + XY{ -imgBtnSize - 10, 0 }, Cfg::xy9a, imgBtnSize, gLooper.res.ui_money).onClicked = [&]() {
+		ui->MakeChildren<xx::ImageButton>()->Init(1, Cfg::xy8m, Cfg::xy8a, imgBtnSize, gLooper.res.ui_money).onClicked = [&]() {
 			uiShopPanel.Popup();
 		};
 
 		uiHPBar.Init(this);
+		uiCoinBar.Init(this);
 		uiPausePanel.Init(this);
 		uiShopPanel.Init(this);
 		// ...
@@ -35,7 +36,7 @@ namespace Game {
 		etm.Init(this, 10000);
 
 		{
-			auto& sp = monsterGenerators.Emplace().Emplace<MonsterGen_Generic<Monster_Cola>>()->Init(this, 0, int32_t(Cfg::fps) * 10, 50);
+			auto& sp = monsterGenerators.Emplace().Emplace<MonsterGen_Generic<Monster_Cola>>()->Init(this, 0, int32_t(Cfg::fps) * 10, 1);
 			sp.healthPoint = 10;
 			sp.healthRegeneration = 0;
 			sp.defensePoint = 0;
@@ -60,6 +61,7 @@ namespace Game {
 	inline void Stage1::DrawCustomUI() {
 		// draw hp bar
 		uiHPBar.SetValue(player->healthPoint, player->sp.healthPoint).Draw();
+		uiCoinBar.SetValue(/*player->coin*/123456789).Draw();
 
 		// draw panels
 		uiPausePanel.TryDraw();

@@ -136,6 +136,7 @@ namespace Game {
 	// stage creature's base
 	struct Creature : DrawableEx, StatExt<EquipmentBase> {
 		xx::Listi32<xx::Shared<Skill>> skills;
+		// todo: inventory ? buff collection?
 
 		State state{};
 
@@ -144,6 +145,7 @@ namespace Game {
 		XY knockbackDist{};
 		float knockbackSpeed{};
 		float knockbackReduceValuePerFrame{};
+		double coin{};
 		// todo
 
 		int32_t idle_lineNumber{};

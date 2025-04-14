@@ -20,7 +20,7 @@ namespace Game {
 
 	inline void UI_HPBar::Draw() {
 		// draw hp bar border
-		s9.Draw<false>();
+		s9.Draw<true, false>();
 		// draw hp bar content
 		XY s{ hpbarContentScale.x * (hp / hpMax) , hpbarContentScale.y };
 		auto& q = *gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(gLooper.res._texid_pixel, 1);

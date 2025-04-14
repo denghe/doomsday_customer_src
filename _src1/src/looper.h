@@ -12,6 +12,7 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 
 #include "xx2d_camera_ex.h"
 #include "game_ui_hpbar.h"
+#include "game_ui_coinbar.h"
 #include "game_ui_pause.h"
 #include "game_ui_shop.h"
 #include "game_space.h"

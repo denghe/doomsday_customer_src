@@ -41,12 +41,12 @@ namespace Game {
 		basePos.x -= widthInc * len / 2;
 		for (int32_t i = 0; i < len; ++i) {
 			auto& q = qs[i];
-			q.anchor = { 0, 0.5f };
-			q.color = {color.r, color.g, color.b, (uint8_t)(color.a * alpha)};
-			q.colorplus = 1;
 			q.pos = basePos;
-			q.radians = 0;
+			q.anchor = { 0, 0.5f };
 			q.scale = s;
+			q.radians = 0;
+			q.colorplus = 1;
+			q.color = {color.r, color.g, color.b, (uint8_t)(color.a * alpha)};
 			q.texRect.data = fs[buf[i] - 32]->textureRect.data;
 			basePos.x += widthInc;
 		}
