@@ -97,7 +97,7 @@ namespace Game {
 	};
 
 	// stage item's base
-	struct Drawable {
+	struct alignas(8) Drawable {
 		Stage* stage{};										// stage's life > this
 		xx::Ref<xx::Frame> frame;
 		xx::XY pos{};										// pivot position

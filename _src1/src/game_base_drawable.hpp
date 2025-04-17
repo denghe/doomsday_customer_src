@@ -15,9 +15,9 @@ namespace Game {
 		q[1].color = color;
 		q[1].texRect.data = frame->textureRect.data;
 		// shadow
-		q[0].scale = { q[1].scale.x, q[1].scale.y * 0.2f };
-		q[0].pos = { q[1].pos.x, q[1].pos.y - q[0].scale.y * frame->spriteSize.y * 0.5f };
-		q[0].anchor = { q[1].anchor.x, 0.3 };
+		q[0].scale = { q[1].scale.x, -q[1].scale.y * 0.3f };
+		q[0].pos = q[1].pos;//{ q[1].pos.x, q[1].pos.y - q[0].scale.y * frame->spriteSize.y * 0.5f };
+		q[0].anchor = { q[1].anchor.x, 0 };
 		q[0].radians = q[1].radians;
 		q[0].colorplus = q[1].colorplus;
 		q[0].color = { 0,0,0,127 };
