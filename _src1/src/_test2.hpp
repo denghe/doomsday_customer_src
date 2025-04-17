@@ -97,6 +97,7 @@ namespace Game {
 		player->Draw();
 
 		s9.pos = camera.ToGLPos(player->pos);
+		s9.scale = camera.scale;
 		s9.Draw();
 
 		gLooper.DrawNode(ui);

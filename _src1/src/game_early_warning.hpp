@@ -2,11 +2,12 @@
 
 namespace Game {
 
-	inline void DashEarlyWarning::Init(Stage* stage_, Creature* creature_, xx::XY targetPos_, int32_t length_) {
+	inline void DashEarlyWarning::Init(Stage* stage_, Creature* creature_, xx::XY targetPos_, int32_t length_, int32_t dashDelay_) {
 		stage = stage_;
 		creature = creature_;
 		pos = creature->pos;
 		targetPos = targetPos_;
+		dashDelay = dashDelay_;
 
 		xx::XY size = {length_, creature->frame->spriteSize.x };
 		auto textScale = 2;
@@ -23,10 +24,10 @@ namespace Game {
 
 	inline int32_t DashEarlyWarning::Update() {
 		XX_BEGIN(n);
-		for (s9.centerScale.y = 1.f; s9.centerScale.y >= 0; s9.centerScale.y -= 1.f * Cfg::frameDelay) {
+		for (s9.centerScale.y = 0.f; s9.centerScale.y <= 1.f; s9.centerScale.y += 1.0 / dashDelay ) {
 			XX_YIELD_I(n);
 		}
-		for (s9.centerScale.y = 0.f; s9.centerScale.y < 1.f; s9.centerScale.y += 1.f * Cfg::frameDelay) {
+		for (s9.color.a = 255; s9.color.a >= 0; s9.color.a--) {
 			XX_YIELD_I(n);
 		}
 		XX_END(n);
@@ -42,6 +43,7 @@ namespace Game {
 		auto norm = d / mag;
 		auto radians = std::atan2f(norm.y, norm.x);
 		s9.radians = radians;
+		s9.scale = stage->camera.scale;
 		s9.Draw();
 	}
 }
