@@ -31,7 +31,7 @@ namespace Game {
 		}
 
 		
-		c = 1.f;
+		c = 1.f	;
 		while (i > stage->time) {
 			creature->color = xx::RGBA8{ 255,uint8_t(255 * c),uint8_t(255 * c),255 };
 			c -= cColorStep;
