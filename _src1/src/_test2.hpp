@@ -73,6 +73,14 @@ namespace Game {
 	}
 
 	inline void Test2::Update() {
+		// scale control
+		if (gLooper.KeyDownDelay(xx::KeyboardKeys::Z, 0.02f)) {
+			camera.IncreaseScale(0.01f, 5);
+		}
+		else if (gLooper.KeyDownDelay(xx::KeyboardKeys::X, 0.02f)) {
+			camera.DecreaseScale(0.01f, 0.1f);
+		}
+
 		player->Update();
 		camera.SetOriginal<true>(player->pos, camera.ToLogicPos(gLooper.mouse.pos));
 		camera.Update();
@@ -88,6 +96,8 @@ namespace Game {
 		ground->Draw();
 		player->Draw();
 
+		s9.pos = camera.ToGLPos(player->pos);
+		s9.scale = camera.scale;
 		s9.Draw();
 
 		gLooper.DrawNode(ui);
