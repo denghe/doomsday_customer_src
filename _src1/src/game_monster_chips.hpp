@@ -24,8 +24,6 @@ namespace Game {
 
 		skills.Emplace().Emplace<Skill_MoveToPlayer>()->Init(this);
 		skills.Emplace().Emplace<Skill_DashAttack>()->Init(this);
-
-		state = State::Idle;
 	}
 
 	int32_t Monster_Chips::Update() {

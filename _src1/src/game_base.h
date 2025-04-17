@@ -46,7 +46,8 @@ namespace Game {
 		Idle,
 		Attack,
 		Knockback,
-		Dash,
+		PreDash,
+		Dashing,
 		Hurt,
 	};
 

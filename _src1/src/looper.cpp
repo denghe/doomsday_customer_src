@@ -7,6 +7,7 @@
 #include "game_base_monstergen.hpp"
 #include "game_base_stage.hpp"
 #include "game_effect_death.hpp"
+#include "game_warning_dash.hpp"
 #include "game_main_menu.hpp"
 #include "game_ground.hpp"
 #include "game_player_1.hpp"
