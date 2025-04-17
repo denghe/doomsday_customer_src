@@ -25,9 +25,9 @@ namespace Game {
 			auto norm = d / mag;
 			vec = norm * creature->movementSpeedPerFrame * cSpeedScale;
 			creature->state = State::PreDash;
-			i = stage->time + cDashDelay;
+			i = stage->time + cDashDelayFrames;
 			auto length = cSpeedScale * creature->movementSpeedPerFrame * cDuration;
-			stage->effects.Emplace().Emplace<DashEarlyWarning>()->Init(stage,creature->pos,p->pos ,creature->frame->spriteSize.x,length,cDashDelay);
+			stage->effects.Emplace().Emplace<DashEarlyWarning>()->Init(stage,creature->pos,p->pos ,creature->frame->spriteSize.x,length, cDashDelaySeconds);
 		}
 
 		

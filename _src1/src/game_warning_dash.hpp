@@ -2,13 +2,13 @@
 
 namespace Game {
 
-	inline void DashEarlyWarning::Init(Stage* stage_, xx::XY pos_, xx::XY targetPos_, int32_t width_ ,int32_t length_, int32_t dashDelay_) {
-		assert(dashDelay_ > 0);
+	inline void DashEarlyWarning::Init(Stage* stage_, xx::XY pos_, xx::XY targetPos_, int32_t width_ ,int32_t length_, float dashDelaySecond_) {
+		assert(dashDelaySecond <= 0);
 
 		stage = stage_;
 		pos = pos_;
-		dashDelay = dashDelay_;
-		centerScaleStep = 1.0f / dashDelay;
+		dashDelaySecond = dashDelaySecond_;
+		centerScaleStep = 1.0f / (dashDelaySecond_ * Cfg::fps);
 
 		xx::XY size = {length_, width_ };
 		auto textScale = 2;
