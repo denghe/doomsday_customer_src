@@ -5,7 +5,6 @@ namespace Game {
 	inline void DashEarlyWarning::Init(Stage* stage_, xx::XY pos_, xx::XY targetPos_, int32_t width_ ,int32_t length_, int32_t dashDelay_) {
 		stage = stage_;
 		pos = pos_;
-		targetPos = targetPos_;
 		dashDelay = dashDelay_;
 
 		xx::XY size = {length_, width_ };
@@ -20,7 +19,7 @@ namespace Game {
 		s9.size = size;
 		s9.anchor = { 0, 0.5f };
 
-		auto d = targetPos - pos;
+		auto d = targetPos_ - pos;
 		auto dd = d.x * d.x + d.y * d.y;
 		auto mag = std::sqrtf(dd);
 		auto norm = d / mag;
