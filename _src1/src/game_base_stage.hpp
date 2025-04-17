@@ -159,12 +159,12 @@ namespace Game {
 		}
 
 		// draw name
-		for (auto e = yd.len, i = 0; i < e; ++i) {
-			yd[i].second->DrawNameBG();
-		}
-		for (auto e = yd.len, i = 0; i < e; ++i) {
-			yd[i].second->DrawName();
-		}
+		//for (auto e = yd.len, i = 0; i < e; ++i) {
+		//	yd[i].second->DrawNameBG();
+		//}
+		//for (auto e = yd.len, i = 0; i < e; ++i) {
+		//	yd[i].second->DrawName();
+		//}
 
 		// clean up
 		yd.Clear();

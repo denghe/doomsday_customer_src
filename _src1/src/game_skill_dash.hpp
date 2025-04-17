@@ -24,15 +24,20 @@ namespace Game {
 			auto mag = std::sqrtf(dd);
 			auto norm = d / mag;
 			vec = norm * creature->movementSpeedPerFrame * cSpeedScale;
+			creature->state = State::PreDash;
+			i = stage->time + cDashDelay;
+			auto length = cSpeedScale * creature->movementSpeedPerFrame * cDuration;
+			stage->effects.Emplace().Emplace<DashEarlyWarning>()->Init(stage,creature,p->pos,length);
 		}
 
-		i = stage->time + cDashDelay;
+		
 		c = 1;
 		while (i > stage->time) {
 			creature->color = xx::RGBA8{ 255,uint8_t(255 * c),uint8_t(255 * c),255 };
 			c -= cColorStep;
 			XX_YIELD_I(n);
 		}
+		creature->state = State::Dashing;
 		c = 0;
 		for (i = 0;i < cDuration; i++) {
 			creature->color = xx::RGBA8{ 255,uint8_t(255 * c),uint8_t(255 * c),255 };
@@ -45,9 +50,9 @@ namespace Game {
 		}
 
 		creature->color = xx::RGBA8_White;
-		i = stage->time + cDashDelay;
+		i = stage->time + cCastDelay;
 		XX_YIELD_I_TO_BEGIN(n);
-
+		creature->state = State::Idle;
 		XX_END(n);
 		return 0;
 	}

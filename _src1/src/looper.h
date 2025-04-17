@@ -20,6 +20,7 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 #include "game_stat_simple.h"
 #include "game_base.h"
 #include "game_effect_death.h"
+#include "game_early_warning.h"
 #include "game_main_menu.h"
 #include "game_ground.h"
 #include "game_skill_shoot_1.h"

@@ -6,7 +6,9 @@ namespace Game {
 	}
 
 	int32_t Skill_MoveToPlayer::Update() {
-		((Monster*)creature)->MoveToPlayer();
+		if (creature->state == State::Idle) {
+			((Monster*)creature)->MoveToPlayer();
+		}
 		return 0;
 	}
 }
