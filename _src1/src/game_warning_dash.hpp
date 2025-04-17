@@ -3,10 +3,12 @@
 namespace Game {
 
 	inline void DashEarlyWarning::Init(Stage* stage_, xx::XY pos_, xx::XY targetPos_, int32_t width_ ,int32_t length_, int32_t dashDelay_) {
+		assert(dashDelay_ > 0);
+
 		stage = stage_;
 		pos = pos_;
-		targetPos = targetPos_;
 		dashDelay = dashDelay_;
+		centerScaleStep = 1.0f / dashDelay;
 
 		xx::XY size = {length_, width_ };
 		auto textScale = 2;
@@ -20,7 +22,7 @@ namespace Game {
 		s9.size = size;
 		s9.anchor = { 0, 0.5f };
 
-		auto d = targetPos - pos;
+		auto d = targetPos_ - pos;
 		auto dd = d.x * d.x + d.y * d.y;
 		auto mag = std::sqrtf(dd);
 		auto norm = d / mag;
@@ -30,7 +32,7 @@ namespace Game {
 
 	inline int32_t DashEarlyWarning::Update() {
 		XX_BEGIN(n);
-		for (s9.centerScale.y = 0.f; s9.centerScale.y <= 1.f; s9.centerScale.y += 1.0 / dashDelay ) {
+		for (s9.centerScale.y = 0.f; s9.centerScale.y <= 1.f; s9.centerScale.y += centerScaleStep) {
 			XX_YIELD_I(n);
 		}
 		for (s9.color.a = 255; s9.color.a >= 0; s9.color.a--) {
