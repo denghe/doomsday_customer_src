@@ -27,9 +27,8 @@ namespace Game {
 			creature->state = State::PreDash;
 			i = stage->time + cDashDelayFrames;
 			auto length = cSpeedScale * creature->movementSpeedPerFrame * cDurationFrames;
-			stage->effects.Emplace().Emplace<WarningDash>()->Init(stage, creature->pos, p->pos, {length,creature->frame->spriteSize.x }, cDashDelaySeconds,1.f);
+			stage->effects.Emplace().Emplace<WarningDash>()->Init(stage, creature->pos, p->pos, { length,creature->frame->spriteSize.x }, cDashDelaySeconds, 1.f);
 		}
-
 
 		c = 1.f;
 		while (i > stage->time) {
