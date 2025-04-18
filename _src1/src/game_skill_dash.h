@@ -7,11 +7,11 @@ namespace Game {
 		static constexpr float cDashDelaySeconds{ 1.f };
 		static constexpr int32_t cDashDelayFrames{ int32_t(cDashDelaySeconds * Cfg::fps) };
 		static constexpr float cSpeedScale{ 5 };
-		static constexpr float cDurationSeconds{1.f};
+		static constexpr float cDurationSeconds{ 1.f };
 		static constexpr int32_t cDurationFrames{ int32_t(cDurationSeconds * Cfg::fps) };
 		static constexpr float cAimRangeScale{ 10.f };
-		static constexpr float cColorStep{ 1.f / cDurationFrames };
-		static constexpr float cColorStep2{ 1.f / cDurationFrames };
+		static constexpr float cColorStepDashDelay{ 1.f / cDashDelayFrames };
+		static constexpr float cColorStepReset{ 1.f / cDurationFrames };
 
 		int32_t i{};
 		int32_t n{};

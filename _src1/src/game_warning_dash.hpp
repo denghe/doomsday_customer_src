@@ -37,7 +37,7 @@ namespace Game {
 			XX_YIELD_I(n);
 		}
 		for (a = 255.f; a >= 0; a -= aStep) {
-			s9.color = xx::RGBA8{ 255, uint8_t(a), uint8_t(a), uint8_t(a) };
+			s9.color.a = (uint8_t)a;
 			XX_YIELD_I(n);
 		}
 		XX_END(n);
