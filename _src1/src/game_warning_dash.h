@@ -2,7 +2,7 @@
 
 namespace Game {
 
-	struct DashEarlyWarning : DrawableEx {
+	struct DashEarlyWarning : Drawable {
 		xx::Scale9 s9;
 		int32_t n{};
 		Stage* stage;

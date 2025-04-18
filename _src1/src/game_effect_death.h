@@ -2,7 +2,7 @@
 
 namespace Game {
 
-	struct EffectDeath : DrawableEx {
+	struct EffectDeath : Drawable {
 		float totalScale{}, scaleX{};
 		int32_t n1{}, n2{};
 

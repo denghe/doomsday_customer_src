@@ -37,7 +37,7 @@ namespace Game {
 	struct MonsterGen;
 	struct Skill;
 	struct SkillCfg;
-	struct DrawableEx;
+	struct Drawable;
 	struct Spawner;
 	struct Creature;
 
@@ -71,7 +71,7 @@ namespace Game {
 		xx::Listi32<xx::Shared<Spawner>> spawners;
 		xx::Shared<Ground> ground;
 		xx::Listi32<xx::Shared<MonsterGen>> monsterGenerators;
-		xx::Listi32<xx::Shared<DrawableEx>> effects;
+		xx::Listi32<xx::Shared<Drawable>> effects;
 		EffectTextManager etm;
 		//xx::Listi32<xx::Shared<SkillCfg>> skillCfgs;
 		// todo
@@ -100,6 +100,10 @@ namespace Game {
 	struct alignas(8) Drawable {
 		Stage* stage{};										// stage's life > this
 		xx::Ref<xx::Frame> frame;
+
+		int32_t indexAtItems{ -1 }, indexAtCells{ -1 };		// for space index
+		Drawable* prev{}, * next{};							// for space index
+
 		xx::XY pos{};										// pivot position
 		xx::XY scale{ 1.f, 1.f };							//
 		xx::XY offsetRatio{ 0.5f, 0.3f};					// pos + size * scale * offsetRatio == center pos
@@ -119,12 +123,9 @@ namespace Game {
 		void DrawNameBG();
 		void DrawName();
 
+		virtual int32_t Update() { return 0; };				// return !0 mean need Release/Delete/Remove
 		virtual void Draw();
 		virtual ~Drawable() {};
-	};
-	struct DrawableEx : Drawable {
-		using Drawable::Drawable;
-		virtual int32_t Update() { return 0; };				// return !0 mean need Release/Delete/Remove
 	};
 
 	// creature's equipments base
@@ -135,7 +136,7 @@ namespace Game {
 	};
 
 	// stage creature's base
-	struct Creature : DrawableEx, StatExt<EquipmentBase> {
+	struct Creature : Drawable, StatExt<EquipmentBase> {
 		xx::Listi32<xx::Shared<Skill>> skills;
 		// todo: inventory ? buff collection?
 
@@ -153,7 +154,6 @@ namespace Game {
 		void Idle();				// coroutine
 	};
 
-
 	// player's base
 	struct Player : Creature {
 		// todo
@@ -161,9 +161,6 @@ namespace Game {
 
 	// monster's base
 	struct Monster : Creature {
-		int32_t indexAtItems{ -1 }, indexAtCells{ -1 };		// for space index
-		Monster* prev{}, * next{};							// for space index
-
 		XY tarOffset{};
 		float tarOffsetRadius{};
 		// todo
@@ -193,8 +190,6 @@ namespace Game {
 	// bullet's base
 	struct Bullet : Drawable {
 		xx::Weak<Creature> owner;										// owner's life maybe <= this
-		int32_t indexAtItems{ -1 }, indexAtCells{ -1 };					// for space index
-		Monster* prev{}, * next{};										// for space index
 
 		// following fields: init by maker
 		float moveSpeed{};
