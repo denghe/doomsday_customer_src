@@ -101,9 +101,6 @@ namespace Game {
 		Stage* stage{};										// stage's life > this
 		xx::Ref<xx::Frame> frame;
 
-		int32_t indexAtItems{ -1 }, indexAtCells{ -1 };		// for space index
-		Drawable* prev{}, * next{};							// for space index
-
 		xx::XY pos{};										// pivot position
 		xx::XY scale{ 1.f, 1.f };							//
 		xx::XY offsetRatio{ 0.5f, 0.3f};					// pos + size * scale * offsetRatio == center pos
@@ -114,6 +111,16 @@ namespace Game {
 		xx::RGBA8 color{xx::RGBA8_White};
 		// todo
 
+		virtual int32_t Update() { return 0; };				// return !0 mean need Release/Delete/Remove
+		virtual void Draw();
+		virtual ~Drawable() {};
+	};
+
+	// 
+	struct StageItem : Drawable {
+		int32_t indexAtItems{ -1 }, indexAtCells{ -1 };		// for space index
+		StageItem* prev{}, * next{};						// for space index
+
 		std::u32string name;								// for debug?
 		xx::Listi32<xx::TinyFrame> nameFrames;				// store name -> frame list
 		XY nameSize{}, namePosOffset{};						// anchor == 0.5
@@ -122,35 +129,156 @@ namespace Game {
 		void FillNameFrames(std::u32string_view const& name_);
 		void DrawNameBG();
 		void DrawName();
+	};
 
-		virtual int32_t Update() { return 0; };				// return !0 mean need Release/Delete/Remove
-		virtual void Draw();
-		virtual ~Drawable() {};
+
+	enum class StatTypes : uint32_t {
+		healthPoint,
+		healthRegeneration,
+		defensePoint,
+		dodgePoint,
+		movementSpeedPoint,
+		damageRatio,
+		criticalChance,
+		criticalBonusRatio,
+		attackSpeed,
+		luckyPoint,
+		harvestRatio,
+		__MAX_VALUE__
+	};
+
+	static constexpr std::array<const char*, (uint32_t)StatTypes::__MAX_VALUE__> strings_StatTypes{
+		"healthPoint",
+		"healthRegeneration",
+		"defensePoint",
+		"dodgePoint",
+		"movementSpeedPoint",
+		"damageRatio",
+		"criticalChance",
+		"criticalBonusRatio",
+		"attackSpeed",
+		"luckyPoint",
+		"harvestRatio",
+	};
+
+	using Stat_t = float;
+	struct alignas(8) StatItem {
+		StatTypes type;
+		Stat_t value;
+	};
+
+	struct alignas(8) StatPanel {
+		static constexpr int32_t numFields{ (int32_t)StatTypes::__MAX_VALUE__ };
+		Stat_t healthPoint;
+		Stat_t healthRegeneration;
+		Stat_t defensePoint;
+		Stat_t dodgePoint;
+		Stat_t movementSpeedPoint;
+		Stat_t damageRatio;
+		Stat_t criticalChance;
+		Stat_t criticalBonusRatio;
+		Stat_t attackSpeed;		// times per seconds
+		Stat_t luckyPoint;
+		Stat_t harvestRatio;
+		void Clear() {
+			memset(this, 0, sizeof(StatPanel));
+		}
+		constexpr Stat_t& operator[](int32_t idx) const {
+			assert(idx <= numFields);
+			return ((Stat_t*)this)[idx];
+		}
+		void Dump() {
+			for (int32_t i = 0; i < numFields; ++i) {
+				xx::CoutN(strings_StatTypes[i], " = ", operator[](i));
+			}
+		}
+	};
+
+	struct StatCfg {
+		static constexpr Stat_t baseMovementSpeed{ 300 / 5 };
+		static constexpr Stat_t dodgeFactor{ 16 };
+		static constexpr Stat_t defenseFactor{ 66 };
+		static constexpr Stat_t luckyToHealthRegenerationRatio{ 0.01 };
+		static constexpr Stat_t luckyToDamageRatio{ 0.01 };
+		static constexpr Stat_t luckyTocriticalChanceRatio{ 0.001 };
+
+		static constexpr StatPanel rangeFrom{	// min val
+			.healthPoint = 1,
+			.healthRegeneration = 0,
+			.defensePoint = 0,
+			.dodgePoint = 0,
+			.movementSpeedPoint = 0,
+			.damageRatio = 0,
+			.criticalChance = 0,
+			.criticalBonusRatio = 0,
+			.attackSpeed = 0,
+			.luckyPoint = 0,
+			.harvestRatio = 0,
+		};
+		static constexpr StatPanel rangeTo{		// max val
+			.healthPoint = 999999,
+			.healthRegeneration = 999999,
+			.defensePoint = 999999,
+			.dodgePoint = 65,
+			.movementSpeedPoint = 25,
+			.damageRatio = 999999,
+			.criticalChance = 1,
+			.criticalBonusRatio = 1.5,
+			.attackSpeed = 999999,
+			.luckyPoint = 1000,
+			.harvestRatio = 999999,
+		};
+		StatPanel init{							// init val
+			.healthPoint = 1000,
+			.healthRegeneration = 5,
+			.defensePoint = 0,
+			.dodgePoint = 0,
+			.movementSpeedPoint = 5,
+			.damageRatio = 1,
+			.criticalChance = 0.2,
+			.criticalBonusRatio = 1.5,
+			.attackSpeed = 1,
+			.luckyPoint = 10,
+			.harvestRatio = 0,
+		};
 	};
 
 	// creature's equipments base
-	struct EquipmentBase : Drawable {
+	struct EquipmentBase {
 		xx::Weak<Creature> owner;
 		xx::TinyList<StatItem> stats;		// maybe use fixed length array instead of list
 		// todo
 	};
 
 	// stage creature's base
-	struct Creature : Drawable, StatExt<EquipmentBase> {
+	struct Creature : StageItem {
+
+		StatPanel sp;
+		Stat_t healthPoint{};				// left / current
+		Stat_t defenseRatio{};
+		Stat_t dodgeChance{};
+		Stat_t movementSpeed{};
+		Stat_t movementSpeedPerFrame{};
+		double coin{};
+
+		xx::TinyList<xx::Shared<EquipmentBase>> equipments;
+		StatCfg statCfg;
+
+		void StatCalc();
+
 		xx::Listi32<xx::Shared<Skill>> skills;
-		// todo: inventory ? buff collection?
-
 		State state{};
-
 		int32_t castingSkillCount{};
+
 		bool knockback{};
 		XY knockbackDist{};
 		float knockbackSpeed{};
 		float knockbackReduceValuePerFrame{};
-		double coin{};
-		// todo
 
-		int32_t idle_lineNumber{};
+		// todo
+		// todo: inventory ? buff collection?
+
+		int32_t n_Idle{};
 		void Idle();				// coroutine
 	};
 
@@ -188,7 +316,7 @@ namespace Game {
 	};
 
 	// bullet's base
-	struct Bullet : Drawable {
+	struct Bullet : StageItem {
 		xx::Weak<Creature> owner;										// owner's life maybe <= this
 
 		// following fields: init by maker
@@ -209,24 +337,5 @@ namespace Game {
 		virtual int32_t Update() { return 0; };
 		virtual ~Skill() {};
 	};
-
-	//// creature's skill's base 2
-	//struct ShootSkill : Skill {
-	//	//SkillCfg* cfg{};			// skill cfg's life > this
-	//	float shootCountPool{};		// time pool for shoot
-	//};
-
-	//// creature's skill's config's base
-	//struct SkillCfg {
-	//	int32_t typeId{};			// for switch case cast Derived*
-	//	float aimRange{};           // cell size * 10 ?
-	//	float radius{};             // == res.size.x
-	//	int32_t damage{};
-	//	float moveSpeed{};          // ??? / fps
-	//	float shootSpeed{};         // times per seconds / fps
-	//	int32_t life{};             // seconds * fps
-	//	int32_t pierceCount{};
-	//	int32_t pierceDelay{};      // seconds * fps
-	//};
 
 }
