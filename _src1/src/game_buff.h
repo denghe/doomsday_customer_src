@@ -132,7 +132,7 @@ namespace Game {
 	// 攻击+20%，攻速-5%，最大血量-5%
 	template<> void BuffAddToSP<BuffTypes::_996>(StatPanel& sp) {
 		sp.damageRatio += 0.2f;
-		sp.attackSpeed -= 0.05f;
+		sp.attackSpeedRatio -= 0.05f;
 		sp.healthRatio -= 0.05f;
 	}
 
@@ -155,7 +155,7 @@ namespace Game {
 
 	// 射速+5%
 	template<> void BuffAddToSP<BuffTypes::肘击>(StatPanel& sp) {
-		sp.attackSpeed += 0.05f;
+		sp.attackSpeedRatio += 0.05f;
 	}
 
 	// 攻击+15%，血量回复-5/s
@@ -171,13 +171,13 @@ namespace Game {
 
 	// 攻速+20%，移速-1
 	template<> void BuffAddToSP<BuffTypes::旋转办公椅>(StatPanel& sp) {
-		sp.attackSpeed += 0.2f;
+		sp.attackSpeedRatio += 0.2f;
 		sp.movementSpeedPoint -= 1;
 	}
 
 	// 攻速+10%，幸运-5，收获+5%
 	template<> void BuffAddToSP<BuffTypes::塑料友情>(StatPanel& sp) {
-		sp.attackSpeed += 0.1f;
+		sp.attackSpeedRatio += 0.1f;
 		sp.luckyPoint -= 5;
 		sp.harvestRatio += 0.05f;
 	}
@@ -214,7 +214,7 @@ namespace Game {
 	// 攻击+30%，攻速+10%，每5秒不受控制的固定向前方冲刺0.5秒
 	template<> void BuffAddToSP<BuffTypes::社交牛逼症>(StatPanel& sp) {
 		sp.damageRatio += 0.3f;
-		sp.attackSpeed += 0.1f;
+		sp.attackSpeedRatio += 0.1f;
 		// todo: register player auto control skill?
 	}
 
@@ -227,7 +227,7 @@ namespace Game {
 	// 攻击-5%，攻速+30%
 	template<> void BuffAddToSP<BuffTypes::CRUD糕手>(StatPanel& sp) {
 		sp.damageRatio -= 0.05f;
-		sp.attackSpeed += 0.3f;
+		sp.attackSpeedRatio += 0.3f;
 	}
 
 	// 幸运+20，移速-1，血量回复+15/s
@@ -240,14 +240,14 @@ namespace Game {
 	// 攻击+15%，攻速+30%，血量回复-20/s
 	template<> void BuffAddToSP<BuffTypes::屎山代码>(StatPanel& sp) {
 		sp.damageRatio += 0.15f;
-		sp.attackSpeed += 0.3f;
+		sp.attackSpeedRatio += 0.3f;
 		sp.healthRegeneration -= 20;
 	}
 
 	// 最大血量-50%，攻速+100%，攻击-20%
 	template<> void BuffAddToSP<BuffTypes::福报>(StatPanel& sp) {
 		sp.healthRatio -= 0.5f;
-		sp.attackSpeed += 1;
+		sp.attackSpeedRatio += 1;
 		sp.damageRatio -= 0.2f;
 	}
 
@@ -262,7 +262,7 @@ namespace Game {
 		sp.damageRatio += 0.03f;
 		sp.luckyPoint += 5;
 		sp.healthRegeneration += 5;
-		sp.attackSpeed += 0.05f;
+		sp.attackSpeedRatio += 0.05f;
 		sp.healthRatio += 0.05f;
 		sp.criticalChance += 0.03f;
 		sp.criticalBonusRatio += 0.05f;
@@ -278,7 +278,7 @@ namespace Game {
 	// 闪避+15%，攻速 -10%，每3秒强制向后方冲刺0.5秒
 	template<> void BuffAddToSP<BuffTypes::社恐>(StatPanel& sp) {
 		sp.dodgeRatio += 0.15f;
-		sp.attackSpeed -= 0.1f;
+		sp.attackSpeedRatio -= 0.1f;
 		// todo: register player auto control skill?
 	}
 
@@ -295,7 +295,7 @@ namespace Game {
 	// 攻击+40%，攻速+20%，每回合最大HP-10%，收获-10%
 	template<> void BuffAddToSP<BuffTypes::技术债>(StatPanel& sp) {
 		sp.damageRatio += 0.4f;
-		sp.attackSpeed += 0.2f;
+		sp.attackSpeedRatio += 0.2f;
 		// todo: register round begin event? add extra store field?
 	}
 
@@ -314,7 +314,7 @@ namespace Game {
 		sp.damageRatio -= 0.03f;
 		sp.luckyPoint -= 5;
 		sp.healthRegeneration -= 5;
-		sp.attackSpeed -= 0.05f;
+		sp.attackSpeedRatio -= 0.05f;
 		sp.healthRatio -= 0.05f;
 		sp.criticalChance -= 0.03f;
 		sp.criticalBonusRatio -= 0.05f;

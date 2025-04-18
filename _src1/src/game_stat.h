@@ -14,6 +14,7 @@ namespace Game {
 		criticalChance,
 		criticalBonusRatio,
 		attackSpeed,
+		attackSpeedRatio,
 		luckyPoint,
 		harvestRatio,
 		cameraScale,
@@ -32,6 +33,7 @@ namespace Game {
 		"criticalChance",
 		"criticalBonusRatio",
 		"attackSpeed",
+		"attackSpeedRatio",
 		"luckyPoint",
 		"harvestRatio",
 		"cameraZoom",
@@ -56,6 +58,7 @@ namespace Game {
 		Stat_t criticalChance;
 		Stat_t criticalBonusRatio;
 		Stat_t attackSpeed;		// times per seconds
+		Stat_t attackSpeedRatio;
 		Stat_t luckyPoint;
 		Stat_t harvestRatio;
 		Stat_t cameraZoom;
@@ -93,6 +96,7 @@ namespace Game {
 			.criticalChance = 0,
 			.criticalBonusRatio = 0,
 			.attackSpeed = 0,
+			.attackSpeedRatio = 1,
 			.luckyPoint = 0,
 			.harvestRatio = 0,
 			.cameraZoom = 1,
@@ -109,6 +113,7 @@ namespace Game {
 			.criticalChance = 1,
 			.criticalBonusRatio = 1.5,
 			.attackSpeed = 999999,
+			.attackSpeedRatio = 999999,
 			.luckyPoint = 1000,
 			.harvestRatio = 999999,
 			.cameraZoom = 10,
@@ -125,6 +130,7 @@ namespace Game {
 			.criticalChance = 0.2,
 			.criticalBonusRatio = 1.5,
 			.attackSpeed = 1,
+			.attackSpeedRatio = 1,
 			.luckyPoint = 10,
 			.harvestRatio = 0,
 			.cameraZoom = 1,
