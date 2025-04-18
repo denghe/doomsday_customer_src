@@ -3,6 +3,7 @@
 
 #include "game_base_creature.hpp"
 #include "game_base_drawable.hpp"
+#include "game_base_stageitem.hpp"
 #include "game_base_monster.hpp"
 #include "game_base_monstergen.hpp"
 #include "game_base_stage.hpp"

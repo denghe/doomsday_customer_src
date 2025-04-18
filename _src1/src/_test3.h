@@ -2,7 +2,7 @@
 
 namespace Game {
 	
-	struct CreatureGroup : DrawableEx {
+	struct CreatureGroup : Drawable {
 		static constexpr float cMaxDistance{ ResTpFrames::_size_monster_hamburger.x * 0.7f };
 		static constexpr float cMinDistance{ cMaxDistance * 0.4f };
 		xx::Listi32<XY> memberPoss;

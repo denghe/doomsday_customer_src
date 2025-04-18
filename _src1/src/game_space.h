@@ -9,7 +9,7 @@ namespace Game {
 		XY pos{};
 		float radius{};
 		int32_t indexAtItems{ -1 }, indexAtCells{ -1 };
-		T *prev{}, *next{};		// if enableDoubleLink == true
+		Base *prev{}, *next{};		// if enableDoubleLink == true
 	*/
 	template<typename T, bool enableDoubleLink = true>
 	struct Space {
@@ -93,7 +93,7 @@ namespace Game {
 					c->prev = {};
 				} else {
 					assert(cells[c->indexAtCells] == c);
-					cells[c->indexAtCells] = c->next;
+					cells[c->indexAtCells] = (T*)c->next;
 					if (c->next) {
 						c->next->prev = {};
 						c->next = {};
@@ -133,7 +133,7 @@ namespace Game {
 				}
 			} else {
 				assert(cells[c->indexAtCells] == c);
-				cells[c->indexAtCells] = c->next;
+				cells[c->indexAtCells] = (T*)c->next;
 				if (c->next) {
 					c->next->prev = {};
 				}
@@ -225,7 +225,7 @@ namespace Game {
 
 					auto c = cells[cidx];
 					while (c) {
-						auto nex = c->next;
+						auto nex = (T*)c->next;
 						if constexpr (enableExcept) {
 							if (c == except) {
 								c = nex;
@@ -264,7 +264,7 @@ namespace Game {
 			int idx = rIdx * numCols + cIdx;
 			auto c = cells[idx];
 			while (c) {
-				auto nex = c->next;
+				auto nex = (T*)c->next;
 
 				if constexpr (enableExcept) {
 					if (c == except) {
@@ -286,7 +286,7 @@ namespace Game {
 			++idx;
 			c = cells[idx];
 			while (c) {
-				auto nex = c->next;
+				auto nex = (T*)c->next;
 
 				if constexpr (enableExcept) {
 					if (c == except) {
@@ -308,7 +308,7 @@ namespace Game {
 			idx += numCols;
 			c = cells[idx];
 			while (c) {
-				auto nex = c->next;
+				auto nex = (T*)c->next;
 
 				if constexpr (enableExcept) {
 					if (c == except) {
@@ -328,7 +328,7 @@ namespace Game {
 			--idx;
 			c = cells[idx];
 			while (c) {
-				auto nex = c->next;
+				auto nex = (T*)c->next;
 
 				if constexpr (enableExcept) {
 					if (c == except) {
@@ -350,7 +350,7 @@ namespace Game {
 			--idx;
 			c = cells[idx];
 			while (c) {
-				auto nex = c->next;
+				auto nex = (T*)c->next;
 
 				if constexpr (enableExcept) {
 					if (c == except) {
@@ -370,7 +370,7 @@ namespace Game {
 			idx -= numCols;
 			c = cells[idx];
 			while (c) {
-				auto nex = c->next;
+				auto nex = (T*)c->next;
 
 				if constexpr (enableExcept) {
 					if (c == except) {
@@ -392,7 +392,7 @@ namespace Game {
 			idx -= numCols;
 			c = cells[idx];
 			while (c) {
-				auto nex = c->next;
+				auto nex = (T*)c->next;
 
 				if constexpr (enableExcept) {
 					if (c == except) {
@@ -412,7 +412,7 @@ namespace Game {
 			++idx;
 			c = cells[idx];
 			while (c) {
-				auto nex = c->next;
+				auto nex = (T*)c->next;
 
 				if constexpr (enableExcept) {
 					if (c == except) {
@@ -432,7 +432,7 @@ namespace Game {
 			++idx;
 			c = cells[idx];
 			while (c) {
-				auto nex = c->next;
+				auto nex = (T*)c->next;
 
 				if constexpr (enableExcept) {
 					if (c == except) {

@@ -37,7 +37,7 @@ namespace Game {
 	struct MonsterGen;
 	struct Skill;
 	struct SkillCfg;
-	struct DrawableEx;
+	struct Drawable;
 	struct Spawner;
 	struct Creature;
 
@@ -71,7 +71,7 @@ namespace Game {
 		xx::Listi32<xx::Shared<Spawner>> spawners;
 		xx::Shared<Ground> ground;
 		xx::Listi32<xx::Shared<MonsterGen>> monsterGenerators;
-		xx::Listi32<xx::Shared<DrawableEx>> effects;
+		xx::Listi32<xx::Shared<Drawable>> effects;
 		EffectTextManager etm;
 		//xx::Listi32<xx::Shared<SkillCfg>> skillCfgs;
 		// todo
@@ -100,6 +100,7 @@ namespace Game {
 	struct alignas(8) Drawable {
 		Stage* stage{};										// stage's life > this
 		xx::Ref<xx::Frame> frame;
+
 		xx::XY pos{};										// pivot position
 		xx::XY scale{ 1.f, 1.f };							//
 		xx::XY offsetRatio{ 0.5f, 0.3f};					// pos + size * scale * offsetRatio == center pos
@@ -110,6 +111,16 @@ namespace Game {
 		xx::RGBA8 color{xx::RGBA8_White};
 		// todo
 
+		virtual int32_t Update() { return 0; };				// return !0 mean need Release/Delete/Remove
+		virtual void Draw();
+		virtual ~Drawable() {};
+	};
+
+	// 
+	struct StageItem : Drawable {
+		int32_t indexAtItems{ -1 }, indexAtCells{ -1 };		// for space index
+		StageItem* prev{}, * next{};						// for space index
+
 		std::u32string name;								// for debug?
 		xx::Listi32<xx::TinyFrame> nameFrames;				// store name -> frame list
 		XY nameSize{}, namePosOffset{};						// anchor == 0.5
@@ -118,41 +129,46 @@ namespace Game {
 		void FillNameFrames(std::u32string_view const& name_);
 		void DrawNameBG();
 		void DrawName();
-
-		virtual void Draw();
-		virtual ~Drawable() {};
-	};
-	struct DrawableEx : Drawable {
-		using Drawable::Drawable;
-		virtual int32_t Update() { return 0; };				// return !0 mean need Release/Delete/Remove
 	};
 
 	// creature's equipments base
-	struct EquipmentBase : Drawable {
+	struct EquipmentBase {
 		xx::Weak<Creature> owner;
 		xx::TinyList<StatItem> stats;		// maybe use fixed length array instead of list
 		// todo
 	};
 
 	// stage creature's base
-	struct Creature : DrawableEx, StatExt<EquipmentBase> {
+	struct Creature : StageItem {
+
+		StatPanel sp;
+		Stat_t healthPoint{};				// left / current
+		Stat_t defenseRatio{};
+		Stat_t dodgeChance{};
+		Stat_t movementSpeed{};
+		Stat_t movementSpeedPerFrame{};
+		double coin{};
+
+		xx::TinyList<xx::Shared<EquipmentBase>> equipments;
+		StatCfg statCfg;
+
+		void StatCalc();
+
 		xx::Listi32<xx::Shared<Skill>> skills;
-		// todo: inventory ? buff collection?
-
 		State state{};
-
 		int32_t castingSkillCount{};
+
 		bool knockback{};
 		XY knockbackDist{};
 		float knockbackSpeed{};
 		float knockbackReduceValuePerFrame{};
-		double coin{};
-		// todo
 
-		int32_t idle_lineNumber{};
+		// todo
+		// todo: inventory ? buff collection?
+
+		int32_t n_Idle{};
 		void Idle();				// coroutine
 	};
-
 
 	// player's base
 	struct Player : Creature {
@@ -161,9 +177,6 @@ namespace Game {
 
 	// monster's base
 	struct Monster : Creature {
-		int32_t indexAtItems{ -1 }, indexAtCells{ -1 };		// for space index
-		Monster* prev{}, * next{};							// for space index
-
 		XY tarOffset{};
 		float tarOffsetRadius{};
 		// todo
@@ -191,10 +204,8 @@ namespace Game {
 	};
 
 	// bullet's base
-	struct Bullet : Drawable {
+	struct Bullet : StageItem {
 		xx::Weak<Creature> owner;										// owner's life maybe <= this
-		int32_t indexAtItems{ -1 }, indexAtCells{ -1 };					// for space index
-		Monster* prev{}, * next{};										// for space index
 
 		// following fields: init by maker
 		float moveSpeed{};
@@ -214,24 +225,5 @@ namespace Game {
 		virtual int32_t Update() { return 0; };
 		virtual ~Skill() {};
 	};
-
-	//// creature's skill's base 2
-	//struct ShootSkill : Skill {
-	//	//SkillCfg* cfg{};			// skill cfg's life > this
-	//	float shootCountPool{};		// time pool for shoot
-	//};
-
-	//// creature's skill's config's base
-	//struct SkillCfg {
-	//	int32_t typeId{};			// for switch case cast Derived*
-	//	float aimRange{};           // cell size * 10 ?
-	//	float radius{};             // == res.size.x
-	//	int32_t damage{};
-	//	float moveSpeed{};          // ??? / fps
-	//	float shootSpeed{};         // times per seconds / fps
-	//	int32_t life{};             // seconds * fps
-	//	int32_t pierceCount{};
-	//	int32_t pierceDelay{};      // seconds * fps
-	//};
 
 }

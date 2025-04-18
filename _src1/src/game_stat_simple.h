@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include <looper.h>
 
+// unused
+
 namespace Game {
 
 	enum class StatTypes : uint32_t {

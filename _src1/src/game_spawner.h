@@ -2,7 +2,7 @@
 
 namespace Game {
 
-	struct Spawner : DrawableEx {
+	struct Spawner : Drawable {
 		std::function<void(Stage* stage_, StatCfg const& statCfg_, XY const& pos_)> onDispose;
 		StatCfg statCfg;
 		int32_t elapsedTime{}, flashTime{};
