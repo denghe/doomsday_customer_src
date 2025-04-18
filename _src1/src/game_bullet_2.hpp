@@ -32,7 +32,6 @@ namespace Game {
 		if (dd < r2 * r2) {
 			return 1;
 		}
-
         return lifeEndTime < stage->time;
 	}
 

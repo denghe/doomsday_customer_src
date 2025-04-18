@@ -25,6 +25,7 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 #include "game_main_menu.h"
 #include "game_ground.h"
 #include "game_skill_shoot_1.h"
+#include "game_skill_shoot_2.h"
 #include "game_skill_control.h"
 #include "game_skill_move.h"
 #include "game_skill_dash.h"

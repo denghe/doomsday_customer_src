@@ -66,6 +66,7 @@ namespace Game {
 		xx::Rnd rnd;
 
 		xx::Listi32<xx::Shared<Bullet>> playerBullets;
+		xx::Listi32<xx::Shared<Bullet>> monsterBullets;
 		xx::Shared<Player> player;
 		Space<Monster> monsters;
 		xx::Listi32<xx::Shared<Spawner>> spawners;
