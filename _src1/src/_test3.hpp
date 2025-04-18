@@ -11,7 +11,7 @@ namespace Game {
 		distance = cMaxDistance;
 		distanceStep = speed_ * Cfg::frameDelay;
 		vec = { std::cosf(radians), std::sinf(radians) };
-		endLifeTime = stage->time + Cfg::fps * 60;
+		endLifeTime = stage->time + (int32_t)(Cfg::fps * 60);
 		for (int32_t i = 0; i < len; ++i) {
 			memberPoss.Emplace(pos + vec * i * distance);
 		}

@@ -26,22 +26,22 @@ namespace Game {
 			vec = norm * creature->movementSpeedPerFrame * cSpeedScale;
 			creature->state = State::PreDash;
 			i = stage->time + cDashDelayFrames;
-			auto length = cSpeedScale * creature->movementSpeedPerFrame * cDuration;
-			stage->effects.Emplace().Emplace<DashEarlyWarning>()->Init(stage,creature->pos,p->pos ,creature->frame->spriteSize.x,length, cDashDelaySeconds);
+			auto length = cSpeedScale * creature->movementSpeedPerFrame * cDurationFrames;
+			stage->effects.Emplace().Emplace<WarningDash>()->Init(stage, creature->pos, p->pos, { length,creature->frame->spriteSize.x }, cDashDelaySeconds, 1.f);
 		}
 
-		
-		c = 1;
+
+		c = 1.f;
 		while (i > stage->time) {
 			creature->color = xx::RGBA8{ 255,uint8_t(255 * c),uint8_t(255 * c),255 };
-			c -= cColorStep;
+			c -= cColorStepDashDelay;
 			XX_YIELD_I(n);
 		}
 		creature->state = State::Dashing;
 		c = 0;
-		for (i = 0;i < cDuration; i++) {
+		for (i = 0;i < cDurationFrames; i++) {
 			creature->color = xx::RGBA8{ 255,uint8_t(255 * c),uint8_t(255 * c),255 };
-			c += cColorStep2;
+			c += cColorStepReset;
 
 			creature->pos += vec;
 			stage->ForceLimit(creature->pos);
