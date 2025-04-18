@@ -29,6 +29,7 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 #include "game_skill_move.h"
 #include "game_skill_dash.h"
 #include "game_bullet_1.h"
+#include "game_bullet_2.h"
 #include "game_player_1.h"
 #include "game_player_2.h"
 #include "game_player_3.h"

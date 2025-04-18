@@ -12,7 +12,6 @@ namespace Game {
 		static constexpr float cAimRangeScale{ 10.f };
 		static constexpr float cColorStepDashDelay{ 1.f / cDashDelayFrames };
 		static constexpr float cColorStepReset{ 1.f / cDurationFrames };
-
 		int32_t i{};
 		int32_t n{};
 		xx::XY vec{};
