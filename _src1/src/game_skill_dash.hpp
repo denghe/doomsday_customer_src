@@ -50,8 +50,8 @@ namespace Game {
 
 		creature->color = xx::RGBA8_White;
 		i = stage->time + cCastDelayFrames;
-		XX_YIELD_I_TO_BEGIN(n);
 		creature->state = State::Idle;
+		XX_YIELD_I_TO_BEGIN(n);
 		XX_END(n);
 		return 0;
 	}
