@@ -30,7 +30,6 @@ namespace Game {
 			stage->effects.Emplace().Emplace<WarningDash>()->Init(stage, creature->pos, p->pos, { length,creature->frame->spriteSize.x }, cDashDelaySeconds, 1.f);
 		}
 
-
 		c = 1.f;
 		while (i > stage->time) {
 			creature->color = xx::RGBA8{ 255,uint8_t(255 * c),uint8_t(255 * c),255 };
@@ -51,8 +50,8 @@ namespace Game {
 
 		creature->color = xx::RGBA8_White;
 		i = stage->time + cCastDelayFrames;
-		XX_YIELD_I_TO_BEGIN(n);
 		creature->state = State::Idle;
+		XX_YIELD_I_TO_BEGIN(n);
 		XX_END(n);
 		return 0;
 	}

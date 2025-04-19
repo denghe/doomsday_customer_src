@@ -21,6 +21,8 @@ namespace Game {
 		tarOffsetRadius = frame->spriteSize.x * 3;
 		tarOffset = stage->GetRndPosDoughnut(tarOffsetRadius, 0.1f);
 
+		skills.Emplace().Emplace<Skill_Shoot_2>()->Init(this);
+		skills.Emplace().Emplace<Skill_MoveToPlayer>()->Init(this);
 		SetName({ 0, -100 }, U"可乐怪");
 	}
 

@@ -2,7 +2,7 @@
 
 namespace Game {
 
-struct WarningDash : Drawable {
+	struct WarningDash : Drawable {
 		xx::Scale9 s9;
 		int32_t n{};
 		float a{};

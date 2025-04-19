@@ -59,6 +59,14 @@ namespace Game {
 		// update player
 		player->Update();
 
+		// update monster bullets
+		for (auto i = monsterBullets.len - 1; i >= 0; --i) {
+			auto& o = monsterBullets[i];
+			if (o->Update()) {
+				monsterBullets.SwapRemoveAt(i);
+			}
+		}
+
 		// update monsters
 		for (auto i = monsters.items.len - 1; i >= 0; --i) {
 			auto& o = monsters.items[i];
@@ -126,6 +134,11 @@ namespace Game {
 		yd.Emplace(player->pos.y, player.pointer);
 		for (auto e = playerBullets.len, i = 0; i < e; ++i) {
 			auto& o = playerBullets[i];
+			if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
+			yd.Emplace(o->pos.y, o.pointer);
+		}
+		for (auto e = monsterBullets.len, i = 0; i < e; ++i) {
+			auto& o = monsterBullets[i];
 			if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
 			yd.Emplace(o->pos.y, o.pointer);
 		}
