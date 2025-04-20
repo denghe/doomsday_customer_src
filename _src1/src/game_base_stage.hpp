@@ -29,7 +29,7 @@ namespace Game {
 	}
 
 
-	inline void Stage::Update() {
+	inline void Stage::UpdateItems() {
 		if (paused) return;
 
 		// scale control
@@ -89,7 +89,7 @@ namespace Game {
 		}
 
 		// update effects
-		etm.Update();
+		effectTexts.Update();
 		for (auto i = effects.len - 1; i >= 0; --i) {
 			auto& o = effects[i];
 			if (o->Update()) {
@@ -108,7 +108,7 @@ namespace Game {
 
 		// finish check
 		if (monsterGenerators.Empty() && spawners.Empty() && monsters.items.Empty()) {
-			onCleanup();
+			OnRoundEnd();
 		}
 	}
 
@@ -165,8 +165,8 @@ namespace Game {
 		}
 
 		// draw effect texts
-		for (int32_t i = 0, e = etm.ens.Count(); i < e; ++i) {
-			auto& o = etm.ens[i];
+		for (int32_t i = 0, e = effectTexts.ens.Count(); i < e; ++i) {
+			auto& o = effectTexts.ens[i];
 			if (o.pos.x < areaMin.x || o.pos.x > areaMax.x || o.pos.y < areaMin.y || o.pos.y > areaMax.y) continue;
 			o.Draw(this);
 		}
@@ -192,7 +192,7 @@ namespace Game {
 		gLooper.ctcDefault.Draw({ 0, gLooper.windowSize_2.y - 5 }
 			, xx::ToString("zoom: ZX  move: ASDW  m = ", monsters.items.len
 				, " b = ", playerBullets.len
-				, " e = ", etm.ens.Count()), xx::RGBA8_Green, { 0.5f, 1 });
+				, " e = ", effectTexts.ens.Count()), xx::RGBA8_Green, { 0.5f, 1 });
 	}
 
 }

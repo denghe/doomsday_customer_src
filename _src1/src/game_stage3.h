@@ -7,6 +7,8 @@ namespace Game {
 		UI_PausePanel uiPausePanel;
 		void DrawCustomUI() override;
 		void Init() override;
+		void OnRoundBegin() override;
+		void OnRoundEnd() override;
 	};
 
 }

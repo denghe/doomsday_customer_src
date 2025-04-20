@@ -63,6 +63,7 @@ namespace Game {
 		bool paused{};		// for pop ui stop logic
 		int32_t time{};		// frame number
 		int32_t round{};	// round number
+		int32_t n{};		// for round coroutine
 		xx::Rnd rnd;
 
 		xx::Listi32<xx::Shared<Bullet>> playerBullets;
@@ -73,17 +74,18 @@ namespace Game {
 		xx::Shared<Ground> ground;
 		xx::Listi32<xx::Shared<MonsterGen>> monsterGenerators;
 		xx::Listi32<xx::Shared<Drawable>> effects;
-		EffectTextManager etm;
-		//xx::Listi32<xx::Shared<SkillCfg>> skillCfgs;
-		// todo
+		EffectTextManager effectTexts;
+		void UpdateItems();
 
-		std::function<void()> onCleanup;
+		virtual void OnRoundBegin() {};			// apply some buffer effect
+		virtual void OnRoundEnd() {};			// popup shop? or finish game?
+		// todo
 
 		virtual XY GetPlayerBornPos();
 		void ForceLimit(XY& pos);
 		bool IsOutOfMap(XY const& pos);
 		XY GetRndPosDoughnut(float maxRadius, float safeRadius);
-		void Update() override;
+		virtual void Update() { UpdateItems(); };
 		virtual void DrawCustomUI() {};
 		void Draw() override;
 	};
@@ -132,13 +134,6 @@ namespace Game {
 		void DrawName();
 	};
 
-	// creature's equipments base
-	struct EquipmentBase {
-		xx::Weak<Creature> owner;
-		xx::TinyList<StatItem> stats;		// maybe use fixed length array instead of list
-		// todo
-	};
-
 	// stage creature's base
 	struct Creature : StageItem {
 
@@ -150,9 +145,8 @@ namespace Game {
 		Stat_t movementSpeedPerFrame{};
 		double coin{};
 
-		xx::TinyList<xx::Shared<EquipmentBase>> equipments;
+		BuffContainer buffs;
 		StatCfg statCfg;
-
 		void StatCalc();
 
 		xx::Listi32<xx::Shared<Skill>> skills;

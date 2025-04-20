@@ -4,7 +4,7 @@ namespace Game {
 
 	template<typename F> void Spawner::Init(Stage* stage_, StatCfg const& statCfg_, XY const& pos_, float scale_, float delaySeconds, F&& createFunc) {
 		stage = stage_;
-		frame = gLooper.res.warning1;
+		frame = gLooper.res.warning1a;
 
 		statCfg = statCfg_;
 		pos = pos_;

@@ -73,7 +73,7 @@ namespace Game {
 		dmg = std::ceilf(dmg * defenseRatio);
 		if (healthPoint <= dmg) {
 			// dead
-			stage->etm.Add(pos + frame->spriteSize * XY{ 0, -0.5f }, txtD, xx::RGBA8_Red, 6, healthPoint);
+			stage->effectTexts.Add(pos + frame->spriteSize * XY{ 0, -0.5f }, txtD, xx::RGBA8_Red, 6, healthPoint);
 			stage->effects.Emplace().Emplace<EffectDeath>()->Init(stage, frame, pos);
 			stage->monsters.Remove(this);
 			return 1;
@@ -81,7 +81,7 @@ namespace Game {
 		else {
 			// hurt
 			healthPoint -= dmg;
-			stage->etm.Add(pos + frame->spriteSize * XY{ 0, -0.5f }, txtD
+			stage->effectTexts.Add(pos + frame->spriteSize * XY{ 0, -0.5f }, txtD
 				, isCrit ? xx::RGBA8_Yellow : xx::RGBA8_White
 				, 5, dmg);
 			whiteColorEndTime = stage->time + int32_t(0.1f * Cfg::fps);

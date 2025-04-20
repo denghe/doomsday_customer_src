@@ -33,7 +33,7 @@ namespace Game {
 
 		ground.Emplace()->Init(this, mapSize, gLooper.res.ground_cell2);
 		monsters.Init(&gLooper.rdd, gridSize.y, gridSize.x, (int32_t)Cfg::unitSize);
-		etm.Init(this, 10000);
+		effectTexts.Init(this, 10000);
 
 		{
 			auto& sp = monsterGenerators.Emplace().Emplace<MonsterGen_Generic<Monster_Cola>>()->Init(this, 0, int32_t(Cfg::fps) * 10, 1);
@@ -52,10 +52,6 @@ namespace Game {
 
 		player.Emplace<Player_2>()->Init(this);
 		player->healthPoint /= 2;	// for test
-
-		onCleanup = [this] {
-			gLooper.DelaySwitchTo<Game::Stage2>();
-		};
 	}
 
 	inline void Stage1::DrawCustomUI() {
@@ -67,4 +63,11 @@ namespace Game {
 		uiPausePanel.TryDraw();
 		uiShopPanel.TryDraw();
 	}
+
+	inline void Stage1::OnRoundBegin() {}
+
+	inline void Stage1::OnRoundEnd() {
+		gLooper.DelaySwitchTo<Game::Stage2>();
+	}
+
 }

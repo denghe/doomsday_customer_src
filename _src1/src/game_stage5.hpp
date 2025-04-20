@@ -30,7 +30,7 @@ namespace Game {
 
 		ground.Emplace()->Init(this, mapSize, gLooper.res.ground_cell2);
 		monsters.Init(&gLooper.rdd, gridSize.y, gridSize.x, (int32_t)Cfg::unitSize);
-		etm.Init(this, 10000);
+		effectTexts.Init(this, 10000);
 
 		//auto& sc = skillCfgs.Emplace().Emplace<SkillCfg_1>();
 		//sc->aimRange = Cfg::unitSize * 20;
@@ -75,10 +75,6 @@ namespace Game {
 		}
 
 		player.Emplace<Player_2>()->Init(this);
-
-		onCleanup = [this] {
-			gLooper.DelaySwitchTo<Game::Stage1>();
-		};
 	}
 
 	inline void Stage5::DrawCustomUI() {
@@ -87,5 +83,11 @@ namespace Game {
 
 		// draw pause panel
 		uiPausePanel.TryDraw();
+	}
+
+	inline void Stage5::OnRoundBegin() {}
+
+	inline void Stage5::OnRoundEnd() {
+		gLooper.DelaySwitchTo<Game::Stage1>();
 	}
 }

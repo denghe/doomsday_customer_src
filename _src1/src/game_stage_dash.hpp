@@ -18,7 +18,7 @@ namespace Game {
 
 		ground.Emplace()->Init(this, mapSize, gLooper.res.ground_cell2);
 		monsters.Init(&gLooper.rdd, gridSize.y, gridSize.x, (int32_t)Cfg::unitSize);
-		etm.Init(this, 10000);
+		effectTexts.Init(this, 10000);
 
 		//auto& sc = skillCfgs.Emplace().Emplace<SkillCfg_1>();
 		//sc->aimRange = Cfg::unitSize * 20;
@@ -55,9 +55,5 @@ namespace Game {
 
 		//player.Emplace<Player_1>()->Init(this);
 		player.Emplace<Player_3>()->Init(this);
-
-		onCleanup = [this] {
-			//gLooper.DelaySwitchTo<Game::Stage2>();
-		};
 	}
 }

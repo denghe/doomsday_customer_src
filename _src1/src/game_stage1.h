@@ -9,6 +9,8 @@ namespace Game {
 		UI_ShopPanel uiShopPanel;
 		void DrawCustomUI() override;
 		void Init() override;
+		void OnRoundBegin() override;
+		void OnRoundEnd() override;
 	};
 
 }
