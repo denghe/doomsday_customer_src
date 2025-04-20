@@ -7,10 +7,11 @@ namespace Game {
 		UI_CoinBar uiCoinBar;
 		UI_PausePanel uiPausePanel;
 		UI_ShopPanel uiShopPanel;
+		xx::Ref<xx::Node> ui1, ui2, ui3;
+
 		void DrawCustomUI() override;
 		void Init() override;
-		void OnRoundBegin() override;
-		void OnRoundEnd() override;
+		void Update() override;
 	};
 
 }

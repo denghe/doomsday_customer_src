@@ -196,6 +196,12 @@ namespace Game {
 			return cells[ci];
 		}
 
+		void Clear() {
+			items.Clear();
+			memset(cells.get(), 0, sizeof(T*) * cellsLen);
+			memset(counts.get(), 0, sizeof(int32_t) * cellsLen);
+		}
+
 		// todo: more search funcs
 
 		// ring diffuse search   nearest edge   best one and return

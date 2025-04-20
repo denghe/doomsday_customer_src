@@ -49,25 +49,104 @@ namespace Game {
 			sp.luckyPoint = 0;
 			sp.harvestRatio = 0;
 		}
+	}
 
-		player.Emplace<Player_2>()->Init(this);
-		player->healthPoint /= 2;	// for test
+	inline void Stage1::Update() {
+		static constexpr int32_t roundIdMax = 2;
+		XX_BEGIN(n);
+		/********************************************************************/
+		// todo: init here
+
+		for (roundId = 1; roundId <= roundIdMax; ++roundId) {
+
+			// todo: create player
+			// todo: fill round monster generator
+			// todo: round begin event handlers
+			// 
+			player.Emplace<Player_2>()->Init(this);
+			player->healthPoint /= 2;	// for test
+
+			/********************************************************************/
+			// show Round xxxx ? secs
+			{
+				ui1.Emplace<xx::Label>()->Init(1, { 0, 200 }, 4, 0.5f, xx::RGBA8_White, xx::ToString("Round ", roundId));
+				for (sleepCounter = gLooper.frameNumber + int32_t(Cfg::fps * 1.5f); sleepCounter > gLooper.frameNumber;) {
+					XX_YIELD(n);
+				}
+				ui1.Reset();
+			}
+
+			/********************************************************************/
+			// battle
+			// todo: 60 seconds timeout check ( finish game condition 2 )
+
+			while (!(monsterGenerators.Empty() && spawners.Empty() && monsters.items.Empty())) {
+				// maybe button pause game
+				if (!paused) {
+					UpdateItems();
+				}
+				XX_YIELD(n);
+			}
+
+			/********************************************************************/
+			// wait 2 seconds
+			// todo: absorb all stuff?
+			for (sleepCounter = gLooper.frameNumber + int32_t(Cfg::fps * 2.f); sleepCounter > gLooper.frameNumber;) {
+				UpdateItems();
+				XX_YIELD(n);
+			}
+
+			/********************************************************************/
+			// show info ? secs
+			{
+				ui1.Emplace<xx::Label>()->Init(1, { 0, 200 }, 4, 0.5f, xx::RGBA8_White, "congratulations!!!");
+				for (sleepCounter = gLooper.frameNumber + int32_t(Cfg::fps * 1.5f); sleepCounter > gLooper.frameNumber;) {
+					XX_YIELD(n);
+				}
+				ui1.Reset();
+			}
+
+			// cleanup
+			ClearItems();
+
+			// popup shop?
+			if (roundId < roundIdMax) {
+				uiShopPanel.Popup();
+				while (paused) {
+					XX_YIELD(n);
+				}
+			}
+		}
+
+		/********************************************************************/
+		// show info ? secs
+		{
+			ui1.Emplace<xx::Label>()->Init(1, { 0, 200 }, 4, 0.5f, xx::RGBA8_White, "game over ( happy end )");
+			for (sleepCounter = gLooper.frameNumber + int32_t(Cfg::fps * 1.5f); sleepCounter > gLooper.frameNumber;) {
+				XX_YIELD(n);
+			}
+			ui1.Reset();
+		}
+
+		// return menu
+		gLooper.DelaySwitchTo<Game::MainMenu>();
+		XX_END(n);
 	}
 
 	inline void Stage1::DrawCustomUI() {
+		// draw game uis
+		if (ui1) gLooper.DrawNode(ui1);
+		if (ui2) gLooper.DrawNode(ui2);
+		if (ui3) gLooper.DrawNode(ui3);
+
 		// draw hp bar
-		uiHPBar.SetValue(player->healthPoint, player->sp.healthPoint).Draw();
-		uiCoinBar.SetValue(/*player->coin*/123456789).Draw();
+		if (player) {
+			uiHPBar.SetValue(player->healthPoint, player->sp.healthPoint).Draw();
+			uiCoinBar.SetValue(player->coin).Draw();
+		}
 
 		// draw panels
 		uiPausePanel.TryDraw();
 		uiShopPanel.TryDraw();
 	}
-
-	inline void Stage1::OnRoundBegin() {}
-
-	inline void Stage1::OnRoundEnd() {
-		gLooper.DelaySwitchTo<Game::Stage2>();
-	}
-
 }

@@ -44,5 +44,6 @@ namespace Game {
 		void Add(XY const& pos_, XY const& vec_, xx::RGBA8 color_, float scale_, double value_);
 		bool Update();
 		void Draw();
+		void Clear();
 	};
 }

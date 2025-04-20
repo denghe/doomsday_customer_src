@@ -84,10 +84,4 @@ namespace Game {
 		// draw pause panel
 		uiPausePanel.TryDraw();
 	}
-
-	inline void Stage4::OnRoundBegin() {}
-
-	inline void Stage4::OnRoundEnd() {
-		gLooper.DelaySwitchTo<Game::Stage5>();
-	}
 }

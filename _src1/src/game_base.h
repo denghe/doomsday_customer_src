@@ -57,14 +57,15 @@ namespace Game {
 		xx::CameraEx camera;
 		xx::Shared<xx::Node> ui;
 
-		XYi gridSize{};		// grid's num cols rows
-		XY mapSize{};		// cellSize * gridSize( grid pixel size )
+		XYi gridSize{};							// grid's num cols rows
+		XY mapSize{};							// cellSize * gridSize( grid pixel size )
 
-		bool paused{};		// for pop ui stop logic
-		int32_t time{};		// frame number
-		int32_t round{};	// round number
-		int32_t n{};		// for round coroutine
-		xx::Rnd rnd;
+		xx::Rnd rnd;							// for game logic only
+		int32_t time{};							// for game logic only
+		int32_t roundId{};						// for round coroutine
+		int32_t n{};							// for round coroutine
+		int32_t sleepCounter{};					// for round coroutine
+		bool paused{};							// for ui stop logic
 
 		xx::Listi32<xx::Shared<Bullet>> playerBullets;
 		xx::Listi32<xx::Shared<Bullet>> monsterBullets;
@@ -76,9 +77,7 @@ namespace Game {
 		xx::Listi32<xx::Shared<Drawable>> effects;
 		EffectTextManager effectTexts;
 		void UpdateItems();
-
-		virtual void OnRoundBegin() {};			// apply some buffer effect
-		virtual void OnRoundEnd() {};			// popup shop? or finish game?
+		void ClearItems();						// for round finished
 		// todo
 
 		virtual XY GetPlayerBornPos();

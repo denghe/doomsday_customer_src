@@ -28,9 +28,21 @@ namespace Game {
 		return { std::cosf(radians) * radius, std::sinf(radians) * radius };
 	}
 
+	inline void Stage::ClearItems() {
+		playerBullets.Clear();
+		monsterBullets.Clear();
+		player.Reset();
+		monsters.Clear();
+		spawners.Clear();
+		monsterGenerators.Clear();
+		effects.Clear();
+		effectTexts.Clear();
+		// todo: rnd reset?
+		// todo: time reset?
+	}
 
 	inline void Stage::UpdateItems() {
-		if (paused) return;
+		//if (paused) return;
 
 		// scale control
 		if (gLooper.KeyDownDelay(xx::KeyboardKeys::Z, 0.02f)) {
@@ -106,10 +118,10 @@ namespace Game {
 		// update time
 		++time;
 
-		// finish check
-		if (monsterGenerators.Empty() && spawners.Empty() && monsters.items.Empty()) {
-			OnRoundEnd();
-		}
+		//// finish check
+		//if (monsterGenerators.Empty() && spawners.Empty() && monsters.items.Empty()) {
+		//	OnRoundEnd();
+		//}
 	}
 
 	inline void Stage::Draw() {
@@ -131,12 +143,17 @@ namespace Game {
 		// 
 		// prepare
 		auto& yd = gLooper.yDraws;
-		yd.Emplace(player->pos.y, player.pointer);
+
+		if (player) {
+			yd.Emplace(player->pos.y, player.pointer);
+		}
+
 		for (auto e = playerBullets.len, i = 0; i < e; ++i) {
 			auto& o = playerBullets[i];
 			if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
 			yd.Emplace(o->pos.y, o.pointer);
 		}
+
 		for (auto e = monsterBullets.len, i = 0; i < e; ++i) {
 			auto& o = monsterBullets[i];
 			if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
