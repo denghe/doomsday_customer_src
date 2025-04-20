@@ -12,6 +12,7 @@ namespace Game {
 		void DrawCustomUI() override;
 		void Init() override;
 		void Update() override;
+		void RoundInit();
 	};
 
 }

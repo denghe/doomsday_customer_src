@@ -24,19 +24,34 @@ namespace Game {
 		uiShopPanel.Init(this);
 		// ...
 
-		gridSize = Cfg::gridSize;
+		gridSize = {30, 20};
 		mapSize = Cfg::unitSize * gridSize;
 
 		camera.scale = Cfg::defaultScale;
 		camera.mapSize = mapSize;
 		camera.newOriginal = camera.original = mapSize * 0.5f;
 
-		ground.Emplace()->Init(this, mapSize, gLooper.res.ground_cell2);
-		monsters.Init(&gLooper.rdd, gridSize.y, gridSize.x, (int32_t)Cfg::unitSize);
 		effectTexts.Init(this, 10000);
 
+		// maybe these init can move to RoundInit()
+		ground.Emplace()->Init(this, mapSize, gLooper.res.ground_cell2);
+		monsters.Init(&gLooper.rdd, gridSize.y, gridSize.x, (int32_t)Cfg::unitSize);
+
+	}
+
+	inline void Stage1::RoundInit() {
+		// reset player
+		// player->NewRound();	// todo
+		camera.newOriginal = camera.original = mapSize * 0.5f;
+		player->healthPoint = player->sp.healthPoint;	// todo: * healthRatio
+		player->pos = GetPlayerBornPos();
+		// todo: round begin event handlers
+
+		// fill round monster generator
+		switch (roundId) {
+		case 1:
 		{
-			auto& sp = monsterGenerators.Emplace().Emplace<MonsterGen_Generic<Monster_Cola>>()->Init(this, 0, int32_t(Cfg::fps) * 10, 1);
+			auto& sp = monsterGenerators.Emplace().Emplace<MonsterGen_Generic<Monster_Cola>>()->Init(this, 0, int32_t(Cfg::fps) * 2, 1);
 			sp.healthPoint = 10;
 			sp.healthRegeneration = 0;
 			sp.defensePoint = 0;
@@ -49,27 +64,35 @@ namespace Game {
 			sp.luckyPoint = 0;
 			sp.harvestRatio = 0;
 		}
+		break;
+		case 2:
+		{
+		}
+			break;
+		case 3:
+		{
+		}
+			break;
+			// ...
+		}
 	}
 
 	inline void Stage1::Update() {
 		static constexpr int32_t roundIdMax = 2;
 		XX_BEGIN(n);
 		/********************************************************************/
-		// todo: init here
+		// todo: more init here
+		player.Emplace<Player_2>()->Init(this);
 
 		for (roundId = 1; roundId <= roundIdMax; ++roundId) {
 
-			// todo: create player
-			// todo: fill round monster generator
-			// todo: round begin event handlers
-			// 
-			player.Emplace<Player_2>()->Init(this);
-			player->healthPoint /= 2;	// for test
+			/********************************************************************/
+			RoundInit();
 
 			/********************************************************************/
 			// show Round xxxx ? secs
 			{
-				ui1.Emplace<xx::Label>()->Init(1, { 0, 200 }, 4, 0.5f, xx::RGBA8_White, xx::ToString("Round ", roundId));
+				ui1.Emplace<xx::Label>()->Init(1, { 0, 300 }, 6, 0.5f, xx::RGBA8_Red, xx::ToString("round ", roundId));
 				for (sleepCounter = gLooper.frameNumber + int32_t(Cfg::fps * 1.5f); sleepCounter > gLooper.frameNumber;) {
 					XX_YIELD(n);
 				}
@@ -99,7 +122,7 @@ namespace Game {
 			/********************************************************************/
 			// show info ? secs
 			{
-				ui1.Emplace<xx::Label>()->Init(1, { 0, 200 }, 4, 0.5f, xx::RGBA8_White, "congratulations!!!");
+				ui1.Emplace<xx::Label>()->Init(1, { 0, 300 }, 6, 0.5f, xx::RGBA8_Red, "congratulations!!!");
 				for (sleepCounter = gLooper.frameNumber + int32_t(Cfg::fps * 1.5f); sleepCounter > gLooper.frameNumber;) {
 					XX_YIELD(n);
 				}
@@ -121,8 +144,8 @@ namespace Game {
 		/********************************************************************/
 		// show info ? secs
 		{
-			ui1.Emplace<xx::Label>()->Init(1, { 0, 200 }, 4, 0.5f, xx::RGBA8_White, "game over ( happy end )");
-			for (sleepCounter = gLooper.frameNumber + int32_t(Cfg::fps * 1.5f); sleepCounter > gLooper.frameNumber;) {
+			ui1.Emplace<xx::Label>()->Init(1, { 0, 200 }, 6, 0.5f, xx::RGBA8_Red, "game over ( happy end )");
+			for (sleepCounter = gLooper.frameNumber + int32_t(Cfg::fps * 3.f); sleepCounter > gLooper.frameNumber;) {
 				XX_YIELD(n);
 			}
 			ui1.Reset();

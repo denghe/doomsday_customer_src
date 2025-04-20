@@ -28,10 +28,13 @@ namespace Game {
 		return { std::cosf(radians) * radius, std::sinf(radians) * radius };
 	}
 
+	template<bool clearPlayer>
 	inline void Stage::ClearItems() {
 		playerBullets.Clear();
 		monsterBullets.Clear();
-		player.Reset();
+		if constexpr (clearPlayer) {
+			player.Reset();
+		}
 		monsters.Clear();
 		spawners.Clear();
 		monsterGenerators.Clear();
