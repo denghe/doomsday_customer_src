@@ -71,7 +71,8 @@ namespace Game {
 		fb.Draw(wh, true, xx::RGBA8_White, [this] {
 			xx::Quad().SetFrame(gLooper.res.bullet_coin5).Draw();
 		}, &flashAreaData);
-		xx::CoutN(flashAreaData);
+		//xx::CoutN(flashAreaData);
+
 		auto colors = (uint32_t*)flashAreaData.buf;
 		for (int y = 0; y < wh.y; ++y) {
 			for (int x = 0; x < wh.x; ++x) {
@@ -79,7 +80,7 @@ namespace Game {
 				auto c = colors[i];
 				// ori: RGBA = 11 0f 0c ff, captured: ff 0b 0e 11 == ABGR( little endian? )
 				if (c == 0xff0b0e11) {
-					flashPosIndexs.Emplace(i);
+					flashPosIndexs.Emplace(xx::UV{(uint16_t)x, (uint16_t)y});
 				}
 			}
 		}
@@ -108,11 +109,8 @@ namespace Game {
 
 		// make some flash point
 		for (auto i = 0; i < 10; ++i) {
-			constexpr XYi wh{ ResTpFrames::_size_bullet_coin5 };
-			auto idx = flashPosIndexs[rnd.Next<int32_t>(flashPosIndexs.len)];
-			auto y = idx / wh.x;
-			auto x = idx - y * wh.x;
-			flashPoints.Emplace().Init(this, player->pos + XY{ x, y });
+			auto uv = flashPosIndexs[rnd.Next<int32_t>(flashPosIndexs.len)];
+			flashPoints.Emplace().Init(this, player->pos + XY{ uv.u, uv.v });
 		}
 
 		++time;
