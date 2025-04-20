@@ -45,8 +45,9 @@ namespace Game {
 		Unknown = 0,
 		Idle,
 		Attack,
+		ShootDelay,
 		Knockback,
-		PreDash,
+		DashDelay,
 		Dashing,
 		Hurt,
 	};

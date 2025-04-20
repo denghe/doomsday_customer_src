@@ -14,14 +14,29 @@ namespace Game {
 		criticalBonusRatio = skill->creature->sp.criticalBonusRatio;
 
 		pos = pos_;
-		scale = radius / ResTpFrames::_size_bullet_coin5.x;
 		radians = radians_;
 
-		lifeEndTime = stage->time + int32_t(lifeSeconds_ * Cfg::fps);
 		inc = { cos * moveSpeed, sin * moveSpeed };
+		scale = skill->cInitScale;
+		scaleStep = skill->cShootDelayScaleStep;
+		shootDelaySeconds = skill->cShootDelaySeconds;
+		shootDelayFrames = int32_t(shootDelaySeconds * Cfg::fps);
+		shootTime = stage->time + shootDelayFrames;
+		lifeEndTime = stage->time + int32_t(lifeSeconds_ * Cfg::fps) + shootDelayFrames;
 	}
 
 	int32_t Bullet_2::Update() {
+		if (stage->time < shootTime) {
+			xx::CoutN("Before Add Scale: ",scale.x,scale.y);
+			scale.x += scaleStep;
+			scale.y += scaleStep;
+			xx::CoutN("After Add Scale: ", scale.x, scale.y);
+			return 0;
+		}
+
+		if (scale.x != 1.f) scale.x = 1.f;
+		if (scale.y != 1.f) scale.y = 1.f;
+
 		pos += inc;
 		if (stage->IsOutOfMap(pos)) return -1;
 		auto player = stage->player;
@@ -30,7 +45,6 @@ namespace Game {
 		auto dd = d.x * d.x + d.y * d.y;
 		auto r2 = player->radius + radius;
 		if (dd < r2 * r2) {
-			xx::CoutN(U"Hit Player");
 			return 1;
 		}
         return lifeEndTime < stage->time;
@@ -38,14 +52,14 @@ namespace Game {
 
 	void Bullet_2::Draw() {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
-			.Draw(gLooper.res._texid_bullet_coin5, 1);
+			.Draw(gLooper.res._texid_monster_hamburger, 1);
 		q->pos = stage->camera.ToGLPos(pos);
-		q->anchor = ResTpFrames::_anchor_bullet_coin5;
+		q->anchor = ResTpFrames::_anchor_monster_hamburger;
 		q->scale = scale * stage->camera.scale;
 		q->radians = radians;
 		q->colorplus = 1;
 		q->color = xx::RGBA8_White;
-		q->texRect.data = ResTpFrames::_uvrect_bullet_coin5.data;
+		q->texRect.data = ResTpFrames::_uvrect_monster_hamburger.data;
 	}
 
 }

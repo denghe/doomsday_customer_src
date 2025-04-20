@@ -5,6 +5,7 @@ namespace Game {
 	void Monster_Cola::Init(Stage* stage_, StatCfg const& statCfg_, XY const& pos_) {
 		stage = stage_;
 		frame = gLooper.res.monster_cola;
+		state = State::Idle;
 
 		pos = pos_;
 		scale = { 1,1 };
@@ -21,9 +22,20 @@ namespace Game {
 		tarOffsetRadius = frame->spriteSize.x * 3;
 		tarOffset = stage->GetRndPosDoughnut(tarOffsetRadius, 0.1f);
 
-		skills.Emplace().Emplace<Skill_Shoot_2>()->Init(this);
 		skills.Emplace().Emplace<Skill_MoveToPlayer>()->Init(this);
+		skills.Emplace().Emplace<Skill_Shoot_2>()->Init(this);
 		SetName({ 0, -100 }, U"可乐怪");
 	}
 
+	int32_t Monster_Cola::Update() {
+		// auto use skill
+		for (auto i = skills.len - 1; i >= 0; --i) {
+			auto& skill = skills[i];
+			if (skill->Update()) {
+				skills.SwapRemoveAt(i);
+			}
+		}
+		Idle();
+		return destroyTime <= stage->time;
+	}
 }
