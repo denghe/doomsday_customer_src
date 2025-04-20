@@ -143,6 +143,9 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 		this->ef_money = map["ef_money"sv];
 		this->_tex_ef_money = this->ef_money->tex;
 		this->_texid_ef_money = this->_tex_ef_money->GetValue();
+		this->ef_starlight = map["ef_starlight"sv];
+		this->_tex_ef_starlight = this->ef_starlight->tex;
+		this->_texid_ef_starlight = this->_tex_ef_starlight->GetValue();
 		this->font_outline_32 = map["font_outline_32"sv];
 		this->_tex_font_outline_32 = this->font_outline_32->tex;
 		this->_texid_font_outline_32 = this->_tex_font_outline_32->GetValue();

@@ -46,6 +46,7 @@
 #include "_test1.hpp"
 #include "_test2.hpp"
 #include "_test3.hpp"
+#include "_test4.hpp"
 
 Looper gLooper;
 
