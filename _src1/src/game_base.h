@@ -85,7 +85,7 @@ namespace Game {
 		void ForceLimit(XY& pos);
 		bool IsOutOfMap(XY const& pos);
 		XY GetRndPosDoughnut(float maxRadius, float safeRadius);
-		virtual void Update() { UpdateItems(); };
+		void Update() override { UpdateItems(); };
 		virtual void DrawCustomUI() {};
 		void Draw() override;
 	};
