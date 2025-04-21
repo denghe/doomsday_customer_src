@@ -181,7 +181,7 @@ namespace Game {
 		void Knockback(float speed, XY const& d);
 		int32_t Update() override;
 		int32_t MoveToPosition(xx::XY targetPos, float targetRadius);
-		int32_t MoveToPlayer();
+		int32_t MoveToPlayer(float keepDistance = 0);
 	};
 
 	// monster generator's base

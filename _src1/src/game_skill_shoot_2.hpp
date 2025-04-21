@@ -2,10 +2,10 @@
 
 namespace Game {
 
-	inline void Skill_Shoot_2::Init(Creature* creature_) {
+	inline void Skill_Shoot_2::Init(Creature* creature_, float aimRange_) {
 		creature = creature_;
 		stage = creature->stage;
-		aimRange = Cfg::unitSize * 10;
+		aimRange = aimRange_;
 		radius = ResTpFrames::_size_monster_hamburger.x;
 		damage = 5;
 		moveSpeed = 800.f / Cfg::fps;

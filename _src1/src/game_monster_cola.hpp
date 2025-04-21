@@ -22,8 +22,11 @@ namespace Game {
 		tarOffsetRadius = frame->spriteSize.x * 3;
 		tarOffset = stage->GetRndPosDoughnut(tarOffsetRadius, 0.1f);
 
-		skills.Emplace().Emplace<Skill_MoveToPlayer>()->Init(this);
-		skills.Emplace().Emplace<Skill_Shoot_2>()->Init(this);
+		auto bulletRadius = gLooper.res._size_monster_hamburger.x*.5f;
+		auto aimRange = cAimRange * bulletRadius;
+
+		skills.Emplace().Emplace<Skill_MoveToPlayer>()->Init(this, aimRange);
+		skills.Emplace().Emplace<Skill_Shoot_2>()->Init(this, aimRange);
 		SetName({ 0, -100 }, U"可乐怪");
 	}
 

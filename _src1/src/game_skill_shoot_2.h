@@ -21,7 +21,7 @@ namespace Game {
 
 		Stage* stage{};
 
-		void Init(Creature* creature_);
+		void Init(Creature* creature_, float aimRange_);
 		int32_t Update() override;
 	};
 }
