@@ -46,15 +46,13 @@ namespace Game {
 		// rebuild player
 		player.Emplace<Player_2>()->Init(this);
 
-		// restore buffs from shop log
-		for (auto& o : shopLogs) {
-			auto success = player->buffs.TryAdd(o);
-			assert(success);
-		}
-		// todo: round begin event handlers ( special buff? )
+		// restore player some data ( inherit from last round )
+		player->coin = coinBak;
+		player->buffs = buffsBak;
+		player->buffs.owner = player.ToWeak();
 
-		player->StatCalc();
-		player->healthPoint = player->sp.healthPoint * player->sp.healthRatio;
+		// call round begin event handler
+		player->OnRoundBegin();
 
 		// fill round monster generator
 		switch (roundId) {
@@ -152,15 +150,20 @@ namespace Game {
 			// cleanup without player
 			ClearItems<false>();
 
+			// handle round end event
+			player->OnRoundEnd();
+
 			// popup shop?
 			if (roundId < roundIdMax) {
-				uiShopPanel.Popup();		// handle coin & shopLogs
+				uiShopPanel.Popup();
 				while (paused) {
 					XX_YIELD(n);
 				}
 			}
 
-			// cleanup player
+			// backup & cleanup player
+			coinBak = player->coin;
+			buffsBak = player->buffs;
 			player.Reset();
 		}
 

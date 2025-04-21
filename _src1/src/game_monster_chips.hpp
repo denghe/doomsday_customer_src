@@ -14,7 +14,7 @@ namespace Game {
 
 		statCfg = statCfg_;
 		StatCalc();
-		healthPoint = sp.healthPoint * sp.healthRatio;
+		healthPoint = healthPointMax;
 
 		whiteColorEndTime = 0;
 		destroyTime = stage->time + (int32_t)Cfg::fps * 60 * 5;

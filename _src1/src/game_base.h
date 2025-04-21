@@ -138,6 +138,7 @@ namespace Game {
 	struct Creature : StageItem {
 
 		StatPanel sp;
+		Stat_t healthPointMax{};
 		Stat_t healthPoint{};				// left / current
 		Stat_t defenseRatio{};
 		Stat_t dodgeChance{};
@@ -148,6 +149,11 @@ namespace Game {
 		BuffContainer buffs;
 		StatCfg statCfg;
 		void StatCalc();
+		void OnRoundBegin();
+		void OnRoundEnd();
+		void OnKilled(Creature* tar);
+		bool OnDie();		// return false: no die
+		std::pair<Stat_t, bool> GetFinalDamageOnce(Stat_t skillDamage);	// second = true: critical
 
 		xx::Listi32<xx::Shared<Skill>> skills;
 		State state{};
@@ -157,9 +163,7 @@ namespace Game {
 		XY knockbackDist{};
 		float knockbackSpeed{};
 		float knockbackReduceValuePerFrame{};
-
 		// todo
-		// todo: inventory ? buff collection?
 
 		int32_t n_Idle{};
 		void Idle();				// coroutine

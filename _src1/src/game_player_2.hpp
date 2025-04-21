@@ -15,7 +15,7 @@ namespace Game {
 		// todo:
 		// statCfg.init.xxxxxx = ?????
 		StatCalc();
-		healthPoint = sp.healthPoint * sp.healthRatio;
+		healthPoint = healthPointMax;
 
 		SetName({0, -100},U"玩家2");
 

@@ -15,7 +15,7 @@ namespace Game {
 		// todo:
 		// statCfg.init.xxxxxx = ?????
 		StatCalc();
-		healthPoint = sp.healthPoint * sp.healthRatio;
+		healthPoint = healthPointMax;
 
 		// add init skill
 		skills.Emplace().Emplace<Skill_Control>()->Init(this);
