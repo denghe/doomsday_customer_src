@@ -76,6 +76,18 @@ namespace Game {
 		break;
 		case 2:
 		{
+			auto& sp = monsterGenerators.Emplace().Emplace<MonsterGen_Generic<Monster_Chips>>()->Init(this, 0, int32_t(Cfg::fps) * 2, 1);
+			sp.healthPoint = 10;
+			sp.healthRegeneration = 0;
+			sp.defensePoint = 0;
+			sp.dodgePoint = 0;
+			sp.movementSpeedPoint = 3;
+			sp.damageRatio = 1;
+			sp.criticalChance = 0;
+			sp.criticalBonusRatio = 0;
+			sp.attackSpeed = 0.2;
+			sp.luckyPoint = 0;
+			sp.harvestRatio = 0;
 		}
 			break;
 		case 3:
@@ -130,7 +142,7 @@ namespace Game {
 			/********************************************************************/
 			// show info ? secs
 			{
-				ui1.Emplace<xx::Label>()->Init(1, { 0, 300 }, 6, 0.5f, xx::RGBA8_Red, "congratulations!!!");
+				ui1.Emplace<xx::Label>()->Init(1, { 0, 300 }, 6, 0.5f, xx::RGBA8_Red, "round finish!");
 				for (sleepCounter = gLooper.frameNumber + int32_t(Cfg::fps * 1.5f); sleepCounter > gLooper.frameNumber;) {
 					XX_YIELD(n);
 				}
@@ -155,7 +167,7 @@ namespace Game {
 		/********************************************************************/
 		// show info ? secs
 		{
-			ui1.Emplace<xx::Label>()->Init(1, { 0, 200 }, 6, 0.5f, xx::RGBA8_Red, "game over ( happy end )");
+			ui1.Emplace<xx::Label>()->Init(1, { 0, 200 }, 5, 0.5f, xx::RGBA8_Red, "congratulations!!!");
 			for (sleepCounter = gLooper.frameNumber + int32_t(Cfg::fps * 3.f); sleepCounter > gLooper.frameNumber;) {
 				XX_YIELD(n);
 			}

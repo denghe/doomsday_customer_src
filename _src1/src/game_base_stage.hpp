@@ -41,7 +41,7 @@ namespace Game {
 		effects.Clear();
 		effectTexts.Clear();
 		// todo: rnd reset?
-		// todo: time reset?
+		time = 0;
 	}
 
 	inline void Stage::UpdateItems() {
