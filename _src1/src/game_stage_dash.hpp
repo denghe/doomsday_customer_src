@@ -41,13 +41,13 @@ namespace Game {
 		//sc->pierceCount = 0;
 		//sc->pierceDelay = 0;
 
-		monsterGenerators.Emplace().Emplace<MonsterGen_Generic<Monster_Chips>>()
-			->Init(this, 0, int32_t(Cfg::fps), 1);
+		//monsterGenerators.Emplace().Emplace<MonsterGen_Generic<Monster_Chips>>()
+		//	->Init(this, 0, int32_t(Cfg::fps), 1);
 
 		//monsterGenerators.Emplace().Emplace<MonsterGenerator_Chips>()
 		//	->Init(this, int32_t(Cfg::fps) * 10, int32_t(Cfg::fps) * 20, 10);
-		//monsterGenerators.Emplace().Emplace<MonsterGenerator_Cola>()
-		//	->Init(this, int32_t(Cfg::fps) * 20, int32_t(Cfg::fps) * 30, 100);
+		monsterGenerators.Emplace().Emplace<MonsterGen_Generic<Monster_Cola>>()
+			->Init(this, 0, int32_t(Cfg::fps), 1);
 		//monsterGenerators.Emplace().Emplace<MonsterGenerator_Hamburger>()
 		//	->Init(this, int32_t(Cfg::fps) * 30, int32_t(Cfg::fps) * 40, 1000);
 		//monsterGenerators.Emplace().Emplace<MonsterGenerator_Instantnoodles>()

@@ -107,12 +107,12 @@ namespace Game {
 		return 0;
 	}
 
-	inline int32_t Monster::MoveToPlayer() {
+	inline int32_t Monster::MoveToPlayer(float keepDistance) {
 		auto p = stage->player;
 		auto pp = p->pos;
 		auto d = pp - pos;
 		auto dd = d.x * d.x + d.y * d.y;
-		auto r2 = p->radius + radius;
+		auto r2 = p->radius + radius + keepDistance;
 		if (dd < r2 * r2) {
 			return 1;
 		}
