@@ -77,7 +77,7 @@ namespace Game {
 		xx::Listi32<xx::Shared<Drawable>> effects;
 		EffectTextManager effectTexts;
 		void UpdateItems();
-		template<bool clearPlayer = false>
+		template<bool clearPlayer>
 		void ClearItems();						// for round finished
 		// todo
 

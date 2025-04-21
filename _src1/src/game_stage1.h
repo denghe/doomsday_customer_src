@@ -9,6 +9,9 @@ namespace Game {
 		UI_ShopPanel uiShopPanel;
 		xx::Ref<xx::Node> ui1, ui2, ui3;
 
+		double coin{};
+		xx::Listi32<BuffTypes> shopLogs;
+
 		void DrawCustomUI() override;
 		void Init() override;
 		void Update() override;

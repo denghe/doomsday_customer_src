@@ -40,12 +40,21 @@ namespace Game {
 	}
 
 	inline void Stage1::RoundInit() {
-		// reset player
-		// player->NewRound();	// todo
+		// reset camera
 		camera.newOriginal = camera.original = mapSize * 0.5f;
-		player->healthPoint = player->sp.healthPoint;	// todo: * healthRatio
-		player->pos = GetPlayerBornPos();
-		// todo: round begin event handlers
+
+		// rebuild player
+		player.Emplace<Player_2>()->Init(this);
+
+		// restore buffs from shop log
+		for (auto& o : shopLogs) {
+			auto success = player->buffs.TryAdd(o);
+			assert(success);
+		}
+		// todo: round begin event handlers ( special buff? )
+
+		player->StatCalc();
+		player->healthPoint = player->sp.healthPoint * player->sp.healthRatio;
 
 		// fill round monster generator
 		switch (roundId) {
@@ -82,7 +91,6 @@ namespace Game {
 		XX_BEGIN(n);
 		/********************************************************************/
 		// todo: more init here
-		player.Emplace<Player_2>()->Init(this);
 
 		for (roundId = 1; roundId <= roundIdMax; ++roundId) {
 
@@ -129,16 +137,19 @@ namespace Game {
 				ui1.Reset();
 			}
 
-			// cleanup
-			ClearItems();
+			// cleanup without player
+			ClearItems<false>();
 
 			// popup shop?
 			if (roundId < roundIdMax) {
-				uiShopPanel.Popup();
+				uiShopPanel.Popup();		// handle coin & shopLogs
 				while (paused) {
 					XX_YIELD(n);
 				}
 			}
+
+			// cleanup player
+			player.Reset();
 		}
 
 		/********************************************************************/
