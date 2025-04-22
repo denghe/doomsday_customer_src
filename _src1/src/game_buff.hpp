@@ -2,7 +2,9 @@
 
 namespace Game {
 
-	template<> void BuffAddTo<BuffTypes::__Default__>(BuffContainer& bc) {}
+	template<> void BuffAddTo<BuffTypes::__Default__>(BuffContainer& bc) {
+		assert(false);
+	}
 
 	// 攻击+20%，攻速-5%，最大血量-5%
 	template<> void BuffAddTo<BuffTypes::_996>(BuffContainer& bc) {
@@ -238,14 +240,14 @@ namespace Game {
 		owner = xx::WeakFromThis(owner_);
 		memset(&nums, 0, sizeof(nums));
 		sp.Clear();
+		FillRanks();
 	}
 
-	inline int32_t& BuffContainer::At(BuffTypes bt) const {
+	XX_INLINE int32_t& BuffContainer::At(BuffTypes bt) const {
 		return (int32_t&)nums[(int32_t)bt];
 	}
 
-	// for assert
-	inline bool BuffContainer::IsLimited(BuffTypes bt) const {
+	XX_INLINE bool BuffContainer::IsLimited(BuffTypes bt) const {
 		assert(At(bt) <= BuffLimits[(int32_t)bt]);
 		return At(bt) == BuffLimits[(int32_t)bt];
 	}
@@ -260,4 +262,58 @@ namespace Game {
 		}
 		return false;
 	}
+	
+	inline void BuffContainer::FillRanks() {
+		auto v = owner->sp.luckyPoint;
+		if (lastLuckyVal == v) return;
+		for (int i = 1; i < numBuffers; ++i) {
+			auto r = BuffRanks[i];
+			if (r == 1) {
+				ranks[i] = 70 - 60 * (v * 0.001f);
+			}
+			else if (r == 2) {
+				ranks[i] = 20 + 40 * (v * 0.001f);
+			}
+			else {
+				ranks[i] = 10 + 20 * (v * 0.001f);
+			}
+		}
+		lastLuckyVal = v;
+	}
+
+	inline int32_t BuffContainer::GetShopBuffs(BuffTypes* buff, int32_t buffLen) {
+		assert(buff && buffLen > 0);
+		FillRanks();
+		auto& rnd = owner->stage->rnd;
+		std::array<std::pair<BuffTypes, Stat_t>, numBuffers + 1> steps;		// tmp container
+		auto ns = nums;								// copy for calc
+		int32_t rtv{};														// filled len
+		for (int j = 0; j < buffLen; j++) {
+			steps[0] = {};
+			int n{ 1 };
+			for (int i = 1; i < numBuffers; ++i) {							// fill avaliable buffs into steps
+				if (ns[i] < BuffLimits[i]) {
+					steps[n].first = (BuffTypes)i;
+					steps[n].second = steps[n - 1].second + ranks[i];
+					++n;
+				}
+			}
+			steps[n] = { steps[n - 1].first, steps[n - 1].second + 1 };		// for easy compare. +1 ensure bigger than last
+
+			if (n > 1) {
+				auto tar = rnd.Next<Stat_t>(steps[n - 1].second);
+				for (int i = 1; i <= n; ++i) {
+					if (steps[i].second > tar) {
+						++ns[(int32_t)steps[i].first];
+						buff[rtv] = steps[i].first;
+						++rtv;
+						break;
+					}
+				}
+			}
+			else return rtv;
+		}
+		return rtv;
+	}
+
 }

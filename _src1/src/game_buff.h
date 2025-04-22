@@ -216,11 +216,13 @@ namespace Game {
 
 		xx::Weak<Creature> owner;
 		std::array<int32_t, numBuffers> nums;
+		std::array<Stat_t, numBuffers> ranks;
 		StatPanel sp;								// sum
 		bool _跑步机_used{};
 		bool _筋肉兄贵_used{};
 		Stat_t _肉食主义_damageScaleCount{};
 		int32_t _裁员大动脉_usedCount{};
+		Stat_t lastLuckyVal{ -1 };
 		// ...
 
 		void Init(Creature* owner_);
@@ -233,7 +235,11 @@ namespace Game {
 		// for shopping. return value for assert
 		bool TryAdd(BuffTypes bt);
 
-		// todo: get drop list with exclude limited ?
+		// fill this->ranks by owner->sp.luckyPoint
+		void FillRanks();
+
+		// fill shop list. return len
+		int32_t GetShopBuffs(BuffTypes* buff, int32_t buffLen);
 	};
 
 }
