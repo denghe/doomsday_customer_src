@@ -78,8 +78,8 @@ namespace Game {
 			for (int x = 0; x < wh.x; ++x) {
 				auto i = y * wh.x + x;
 				auto c = colors[i];
-				// ori: RGBA = 11 0f 0c ff, captured: ff 0b 0e 11 == ABGR( little endian? )
-				if (c == 0xff0b0e11) {
+				// ff 0c 0f 11 == ABGR( little endian? )
+				if (c == 0xff0c0f11) {
 					flashPosIndexs.Emplace(xx::UV{(uint16_t)x, (uint16_t)y});
 				}
 			}

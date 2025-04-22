@@ -285,11 +285,11 @@ namespace Game {
 		assert(buff && buffLen > 0);
 		FillRanks();
 		auto& rnd = owner->stage->rnd;
-		std::array<std::pair<BuffTypes, Stat_t>, numBuffers + 1> steps;		// tmp container
+		std::array<std::pair<BuffTypes, Stat_t>, numBuffers> steps;			// tmp container
+		steps[0] = { BuffTypes::__Default__, 0 };
 		auto ns = nums;								// copy for calc
 		int32_t rtv{};														// filled len
 		for (int j = 0; j < buffLen; j++) {
-			steps[0] = {};
 			int n{ 1 };
 			for (int i = 1; i < numBuffers; ++i) {							// fill avaliable buffs into steps
 				if (ns[i] < BuffLimits[i]) {
