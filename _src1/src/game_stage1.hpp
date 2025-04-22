@@ -58,8 +58,10 @@ namespace Game {
 		switch (roundId) {
 		case 1:
 		{
-			monsterGenerators.Emplace().Emplace<MonsterGen_2xHamburger>()->Init(this, 0, 18, 8);
-			//monsterGenerators.Emplace().Emplace<MonsterGen_2xHamburger>()->Init(this, 5, 20, 5);
+			monsterGenerators.Emplace().Emplace<MonsterGen_Group<Monster_Chips>>()->Init(this
+				, 0, 18, 3, Cfg::unitSize * 1, 1, 8);
+			monsterGenerators.Emplace().Emplace<MonsterGen_Group<Monster_Hamburger>>()->Init(this
+				, 5, 20, 2, Cfg::unitSize * 1, 1, 5);
 		}
 		break;
 		case 2:
