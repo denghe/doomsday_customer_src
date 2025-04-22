@@ -28,6 +28,7 @@ namespace Game {
 			creature->state = State::DashDelay;
 			i = stage->time + cDashDelayFrames;
 			stage->effects.Emplace().Emplace<WarningDash>()->Init(stage, creature->pos, p->pos, { aimRange, creature->frame->spriteSize.x }, cDashDelaySeconds, 1.f);
+			colorStepReset = 1.f / durationFrames;
 		}
 
 		c = 1.f;
