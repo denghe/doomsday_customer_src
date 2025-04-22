@@ -9,7 +9,7 @@ namespace Game {
 		float shootDelaySeconds{};
 		int32_t shootDelayFrames{};
 
-		int32_t shootTime{};				
+		int32_t shootTime{};	
 
 		void Init(Skill_Shoot_2* skill, XY const& pos_, float radians_, float lifeSeconds_, float cos, float sin);
 		int32_t Update() override;

@@ -27,15 +27,11 @@ namespace Game {
 
 	int32_t Bullet_2::Update() {
 		if (stage->time < shootTime) {
-			xx::CoutN("Before Add Scale: ",scale.x,scale.y);
-			scale.x += scaleStep;
-			scale.y += scaleStep;
-			xx::CoutN("After Add Scale: ", scale.x, scale.y);
+			scale += scaleStep;
 			return 0;
 		}
 
-		if (scale.x != 1.f) scale.x = 1.f;
-		if (scale.y != 1.f) scale.y = 1.f;
+		scale = 1.f;
 
 		pos += inc;
 		if (stage->IsOutOfMap(pos)) return -1;
