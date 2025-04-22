@@ -2,7 +2,7 @@
 
 namespace Game {
 
-	void Monster_Chips::Init(Stage* stage_, StatCfg const& statCfg_, XY const& pos_) {
+	void Monster_Chips::Init(Stage* stage_, XY const& pos_) {
 		stage = stage_;
 		frame = gLooper.res.monster_chips;
 		state = State::Idle;
@@ -12,7 +12,7 @@ namespace Game {
 		radius = frame->spriteSize.x * 0.5f;
 		radians = 0;
 
-		statCfg = statCfg_;
+		// todo: fill init stat
 		StatCalc();
 		healthPoint = healthPointMax;
 
@@ -37,40 +37,6 @@ namespace Game {
 
 		Idle();
 
-		//auto p = stage->player.pointer;
-		//xx::XY pp{};
-		//xx::XYf d{};
-		//float dd{};
-		//float r2{};
-		//float mag{};
-		//xx::XYf norm{};
-		//switch (state)
-		//{
-		//case State::Idle:
-		//	// move to player
-		//	Idle();
-			//MoveToPlayer();
-		//	break;
-		//case State::Dash:
-		//	MoveToPosition(p->pos,p->radius);
-		//	break;
-		//case State::Knockback:
-		//	knockbackSpeed -= knockbackReduceValuePerFrame;
-		//	if (knockbackSpeed <= 0) {
-		//		ExitKnockback();
-		//	}
-		//	else {
-		//		pos = pos + knockbackDist * knockbackSpeed;
-		//		stage->ForceLimit(pos);
-		//		stage->monsters.Update(this);	// sync space index
-		//	}
-		//	break;
-		//default:
-		//	Idle();
-		//	break;
-		//}
-
-		// todo
 		return destroyTime <= stage->time;
 	}
 

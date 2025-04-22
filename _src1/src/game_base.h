@@ -191,12 +191,11 @@ namespace Game {
 	// monster generator's base
 	struct MonsterGen {
 		Stage* stage{};				// stage's life > this
-		StatCfg statCfg;
 
 		int32_t activeTime{}, destroyTime{};
 		float countPool{}, countIncPerFrame{};
 
-		StatPanel& Init(Stage* stage_, int32_t activeTime_, int32_t destroyTime_, float generateNumsPerSeconds_);
+		void Init(Stage* stage_, int32_t activeTime_, int32_t destroyTime_, float generateNumsPerSeconds_);
 		virtual int32_t Update() { return 0; }
 		template<typename T> void CreateFromRect();
 		template<typename T> void CreateFromDoughnut();

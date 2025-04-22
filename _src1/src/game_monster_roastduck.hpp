@@ -2,7 +2,7 @@
 
 namespace Game {
 
-	void Monster_Roastduck::Init(Stage* stage_, StatCfg const& statCfg_, XY const& pos_) {
+	void Monster_Roastduck::Init(Stage* stage_, XY const& pos_) {
 		stage = stage_;
 		frame = gLooper.res.monster_roastduck;
 		state = State::Idle;
@@ -12,7 +12,7 @@ namespace Game {
 		radius = frame->spriteSize.x * 0.5f;
 		radians = 0;
 
-		statCfg = statCfg_;
+		// todo: fill statCfg
 		StatCalc();
 		healthPoint = healthPointMax;
 

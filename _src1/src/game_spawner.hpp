@@ -2,11 +2,10 @@
 
 namespace Game {
 
-	template<typename F> void Spawner::Init(Stage* stage_, StatCfg const& statCfg_, XY const& pos_, float scale_, float delaySeconds, F&& createFunc) {
+	template<typename F> void Spawner::Init(Stage* stage_, XY const& pos_, float scale_, float delaySeconds, F&& createFunc) {
 		stage = stage_;
 		frame = gLooper.res.warning1a;
 
-		statCfg = statCfg_;
 		pos = pos_;
 		scale = scale_;
 		elapsedTime =  stage_->time + int32_t(delaySeconds * Cfg::fps);
@@ -15,7 +14,7 @@ namespace Game {
 
 	inline int32_t Spawner::Update() {
 		if (stage->time >= elapsedTime) {
-			onDispose(stage, statCfg, pos);
+			onDispose(stage, pos);
 			return 1;
 		}
 

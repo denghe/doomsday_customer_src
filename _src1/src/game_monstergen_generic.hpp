@@ -32,11 +32,11 @@ namespace Game {
 				{
 					auto x = pos.x + stage->rnd.Next<float>(-cRadius, cRadius);
 					auto y = pos.y + stage->rnd.Next<float>(-cRadius, cRadius);
-					stage->spawners.Emplace().Emplace()->Init(stage, statCfg, { x,y }, 1.f, 1.5f, [](Stage* stage_, StatCfg const& statCfg_, XY const& pos_) {
+					stage->spawners.Emplace().Emplace()->Init(stage, { x,y }, 1.f, 1.5f, [](Stage* stage_, XY const& pos_) {
 						auto m = xx::MakeShared<Monster_Hamburger>();
-						m->Init(stage_, statCfg_, pos_);
+						m->Init(stage_, pos_);
 						stage_->monsters.Add(std::move(m));
-						});
+					});
 				}
 
 				for (t = stage->time + cStepNumFrames; stage->time < t;) {
@@ -49,8 +49,7 @@ namespace Game {
 			}
 		}
 
-		return 1;
-
 		XX_END(n);
+		return 1;
 	}
 }
