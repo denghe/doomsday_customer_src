@@ -9,7 +9,7 @@ namespace Game {
 		radius = ResTpFrames::_size_bullet_coin5.x * 0.5f;
 		damage = 5;
 		moveSpeed = 800.f / Cfg::fps;
-		shootSpeed = 2 / Cfg::fps;
+		shootSpeed = 3 / Cfg::fps;
 		life = 3 * (int32_t)Cfg::fps;
 		pierceCount = 0;
 		pierceDelay = 0;

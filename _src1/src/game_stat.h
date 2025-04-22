@@ -119,7 +119,7 @@ namespace Game {
 			.cameraZoom = 10,
 		};
 		StatPanel init{							// init val
-			.healthPoint = 1000,
+			.healthPoint = 10,
 			.healthRatio = 1,
 			.healthRegeneration = 5,
 			.defensePoint = 0,

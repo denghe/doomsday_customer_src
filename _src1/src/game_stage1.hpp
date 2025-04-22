@@ -59,13 +59,19 @@ namespace Game {
 		case 1:
 		{
 			monsterGenerators.Emplace().Emplace<MonsterGen_Group<Monster_Chips>>()->Init(this
-				, 0, 18, 3, Cfg::unitSize * 1, 1, 8);
+				, 0, 18, 3, Cfg::unitRadius * 2, 1, 8);
 			monsterGenerators.Emplace().Emplace<MonsterGen_Group<Monster_Hamburger>>()->Init(this
-				, 5, 20, 2, Cfg::unitSize * 1, 1, 5);
+				, 5, 20, 2, Cfg::unitRadius * 2, 1, 5);
 		}
 		break;
 		case 2:
 		{
+			monsterGenerators.Emplace().Emplace<MonsterGen_Group<Monster_Chips>>()->Init(this
+				, 0, 18, 3, Cfg::unitRadius * 2, 1, 6);
+			monsterGenerators.Emplace().Emplace<MonsterGen_Group<Monster_Hamburger>>()->Init(this
+				, 6, 20, 2, Cfg::unitRadius * 2, 1, 5);
+			monsterGenerators.Emplace().Emplace<MonsterGen_Group2<Monster_Hamburger, Monster_Chips>>()->Init(this
+				, 10, 25, 4, 1, Cfg::unitRadius * 3, 2, 3);
 		}
 			break;
 		case 3:
