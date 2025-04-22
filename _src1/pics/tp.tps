@@ -446,6 +446,7 @@
             </struct>
             <key type="filename">pngs/buff_return_home.png</key>
             <key type="filename">pngs/buff_social.png</key>
+            <key type="filename">pngs/icon_clover.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -536,6 +537,7 @@
                 <false/>
             </struct>
             <key type="filename">pngs/buff_treadmill.png</key>
+            <key type="filename">pngs/icon_heart.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -607,6 +609,21 @@
                 <rect>74,74,149,148</rect>
                 <key>scale9Paddings</key>
                 <rect>74,74,149,148</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/bullet_lightpoint.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>12,12,23,23</rect>
+                <key>scale9Paddings</key>
+                <rect>12,12,23,23</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -779,6 +796,36 @@
                 <rect>21,21,43,43</rect>
                 <key>scale9Paddings</key>
                 <rect>21,21,43,43</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/icon_arrows.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>32,31,64,63</rect>
+                <key>scale9Paddings</key>
+                <rect>32,31,64,63</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/icon_sword.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>32,30,64,61</rect>
+                <key>scale9Paddings</key>
+                <rect>32,30,64,61</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
