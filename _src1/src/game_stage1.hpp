@@ -9,12 +9,13 @@ namespace Game {
 		});
 
 		static constexpr float imgBtnSize{ 64.f / 1080.f * Cfg::height };
+		uiHUD.Emplace()->Init();
 		// make pause button
-		ui->MakeChildren<xx::ImageButton>()->Init(1, Cfg::xy9m, Cfg::xy9a, imgBtnSize, gLooper.res.ui_pause).onClicked = [&]() {
+		uiHUD->MakeChildren<xx::ImageButton>()->Init(1, Cfg::xy9m, Cfg::xy9a, imgBtnSize, gLooper.res.ui_pause).onClicked = [&]() {
 			uiPausePanel.Popup();
 		};
 		// make shop button
-		ui->MakeChildren<xx::ImageButton>()->Init(1, Cfg::xy8m, Cfg::xy8a, imgBtnSize, gLooper.res.ui_money).onClicked = [&]() {
+		uiHUD->MakeChildren<xx::ImageButton>()->Init(1, Cfg::xy8m, Cfg::xy8a, imgBtnSize, gLooper.res.ui_money).onClicked = [&]() {
 			uiShopPanel.Popup();
 		};
 
@@ -169,6 +170,8 @@ namespace Game {
 	}
 
 	inline void Stage1::DrawCustomUI() {
+		gLooper.DrawNode(uiHUD);
+
 		// draw game uis
 		if (ui1) gLooper.DrawNode(ui1);
 		if (ui2) gLooper.DrawNode(ui2);

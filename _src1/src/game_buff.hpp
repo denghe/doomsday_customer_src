@@ -286,7 +286,7 @@ namespace Game {
 		FillRanks();
 		auto& rnd = owner->stage->rnd;
 		std::array<std::pair<BuffTypes, Stat_t>, numBuffers> steps;			// tmp container
-		steps[0] = { BuffTypes::__Default__, 0 };
+		steps[0] = { BuffTypes::__Default__, (Stat_t)0 };
 		auto ns = nums;								// copy for calc
 		int32_t rtv{};														// filled len
 		for (int j = 0; j < buffLen; j++) {

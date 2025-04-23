@@ -3,6 +3,7 @@
 namespace Game {
 
 	struct Stage1 : Stage {
+		xx::Shared<xx::Node> uiHUD;
 		UI_HPBar uiHPBar;
 		UI_CoinBar uiCoinBar;
 		UI_PausePanel uiPausePanel;
