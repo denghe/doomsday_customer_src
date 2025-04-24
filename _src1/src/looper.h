@@ -46,6 +46,7 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 #include "game_monster_laptop.h"
 #include "game_monster_roastduck.h"
 #include "game_monster_sofa.h"
+#include "game_monster_house.h"
 #include "game_spawner.h"
 // more include here ...
 #include "_test1.h"
