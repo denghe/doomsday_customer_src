@@ -26,7 +26,7 @@ namespace Game {
 
 	// 范围+10，幸运-5
 	template<> void BuffAddTo<BuffTypes::眼镜>(BuffContainer& bc) {
-		bc.sp.cameraZoom += 0.1f;
+		bc.sp.fieldOfVision += 10;
 		bc.sp.luckyPoint -= 5;
 	}
 

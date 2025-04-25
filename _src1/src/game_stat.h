@@ -17,7 +17,7 @@ namespace Game {
 		attackSpeedRatio,
 		luckyPoint,
 		harvestRatio,
-		cameraScale,
+		fieldOfVision,
 		__MAX_VALUE__
 	};
 
@@ -36,7 +36,7 @@ namespace Game {
 		"attackSpeedRatio",
 		"luckyPoint",
 		"harvestRatio",
-		"cameraZoom",
+		"fieldOfVision",
 	};
 
 	using Stat_t = float;
@@ -61,7 +61,7 @@ namespace Game {
 		Stat_t attackSpeedRatio;
 		Stat_t luckyPoint;
 		Stat_t harvestRatio;
-		Stat_t cameraZoom;
+		Stat_t fieldOfVision;
 		void Clear() {
 			memset(this, 0, sizeof(StatPanel));
 		}
@@ -99,7 +99,7 @@ namespace Game {
 			.attackSpeedRatio = 1,
 			.luckyPoint = 0,
 			.harvestRatio = 0,
-			.cameraZoom = 1,
+			.fieldOfVision = 1,
 		};
 		static constexpr StatPanel rangeTo{		// max val
 			.healthPoint = 999999,
@@ -116,7 +116,7 @@ namespace Game {
 			.attackSpeedRatio = 999999,
 			.luckyPoint = 1000,
 			.harvestRatio = 999999,
-			.cameraZoom = 10,
+			.fieldOfVision = 10,
 		};
 		StatPanel init{							// init val
 			.healthPoint = 10,
@@ -133,7 +133,7 @@ namespace Game {
 			.attackSpeedRatio = 1,
 			.luckyPoint = 10,
 			.harvestRatio = 0,
-			.cameraZoom = 1,
+			.fieldOfVision = 1,
 		};
 	};
 

@@ -8,7 +8,7 @@ namespace Game {
 		static constexpr auto s = Cfg::height / gLooper.res._size_ui_paper.x;	// x: rotated 90'
 		ui->MakeChildren<xx::Image>()->Init(1, 0, s, 0.5, gLooper.res.ui_paper, xx::ImageRadians::PiDiv2);
 
-		ui->MakeChildren<xx::Button>()->Init(2, Cfg::xy5m + XY{ 0, 280 }, Cfg::xy5a, gLooper.btnCfg4, U"new game 4.22.15.58").onClicked = [&]() {
+		ui->MakeChildren<xx::Button>()->Init(2, Cfg::xy5m + XY{ 0, 280 }, Cfg::xy5a, gLooper.btnCfg4, U"new game 4.25.21.56").onClicked = [&]() {
 			gLooper.DelaySwitchTo<Game::Stage1>();
 		};
 
@@ -30,6 +30,10 @@ namespace Game {
 
 		ui->MakeChildren<xx::Button>()->Init(2, Cfg::xy7m + XY{ 10, -190 }, Cfg::xy7a, gLooper.btnCfg, U"test4").onClicked = [&]() {
 			gLooper.DelaySwitchTo<Game::Test4>();
+		};
+
+		ui->MakeChildren<xx::Button>()->Init(2, Cfg::xy7m + XY{ 10, -250 }, Cfg::xy7a, gLooper.btnCfg, U"test5").onClicked = [&]() {
+			gLooper.DelaySwitchTo<Game::Test5>();
 		};
 
 		camera.SetMaxFrameSize(Cfg::unitSize);
