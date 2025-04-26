@@ -554,6 +554,71 @@ namespace Game {
 	}
 
 
+
+
+
+
+
+
+	// todo: support mouse over show info
+	struct SVContentBag : xx::Node {
+		static constexpr XY cItemSize{ 128, 128 };
+		static constexpr XY cItemMargin{ 10, 10 };
+		float itemMarginX{ cItemMargin.x };
+
+		xx::ScrollView* sv{};
+		int32_t numCols{}, numRows{};
+		xx::Listi32<BuffTypes> items;
+
+		void Init(xx::ScrollView* sv_) {
+			Node::Init(sv_->z + 1, {}, { 1,1 }, {}, sv_->size);
+			sv = sv_;
+
+			// sim
+			for (int32_t i = 1; i < (int32_t)BuffTypes::__MaxValue__; ++i) {
+				items.Emplace((BuffTypes)i);
+			}
+
+			UpdateSize();
+		}
+
+		void UpdateSize() {
+			// calc bag grid size
+			numCols = int32_t(sv->size.x + cItemMargin.x) / int32_t(cItemSize.x + cItemMargin.x);
+			itemMarginX = (sv->size.x - cItemSize.x * numCols) / (numCols - 1);
+			numRows = items.len / numCols;
+			if (numRows * numCols < items.len) ++numRows;
+			size = { numCols * cItemSize.x + (numCols - 1) * itemMarginX, numRows * cItemSize.y + (numRows - 1) * cItemMargin.y };
+			sv->InitContentSize<false>(size); 
+		}
+
+		virtual void Draw() override {
+			// calculate row cut range
+			auto rowIdxBegin = int32_t(size.y + parent->position.y - sv->size.y) / int32_t(cItemSize.y + cItemMargin.y);
+			auto rowIdxEnd = rowIdxBegin + int32_t(sv->size.y) / int32_t(cItemSize.y + cItemMargin.y) + 1;
+
+			xx::Quad q;
+			auto basePos = worldMinXY;
+			for (int32_t rowIdx = rowIdxBegin; rowIdx <= rowIdxEnd; ++rowIdx) {
+				for (int32_t colIdx = 0; colIdx < numCols; ++colIdx) {
+					auto itemIndex = rowIdx * numCols + colIdx;
+					if (itemIndex >= items.len) return;
+					auto& frame = gLooper.res.buff_[(int32_t)items[itemIndex]];
+					XY pos{ colIdx * (cItemSize.x + itemMarginX) + cItemSize.x / 2, size.y - rowIdx * (cItemSize.y + cItemMargin.y) - cItemSize.y / 2 };
+					//XY scale{ cItemSize.x / frame->textureRect.w, cItemSize.y / frame->textureRect.h };
+					q.SetFrame(frame)/*.SetScale(scale)*/.SetPosition(basePos + pos).Draw();
+				}
+			}
+		}
+	};
+
+
+
+
+
+
+
+
 	inline void Test5::Init() {
 		ui.Emplace()->Init();
 
@@ -564,16 +629,16 @@ namespace Game {
 
 
 		sv = ui->MakeChildren<xx::ScrollView>();
-		sv->Init(2, { 50, 50 }, { 1, 1 }, {}, { 200, 200 }, { 50, 50 });
-		sv->MakeChildren<xx::Scale9Sprite>()->Init(1, {}, { 1,1 }, {}, sv->size, gLooper.btnCfg1);
-		//sv->MakeChildren<SVContent>()->Init(3, {}, { 1,1 }, {}, sv->size);
+		sv->Init(2, { -400, -300 }, { 1, 1 }, {}, { 800, 600 }, 1);
+		static constexpr XY cMargin{ 30, 30 };
+		sv->MakeChildren<xx::Scale9Sprite>()->Init(1, -cMargin, { 1,1 }, {}, sv->size + cMargin * 2, gLooper.btnCfg1);
 
-		auto&& rl = sv->MakeContent<xx::RichLabel>();
-		rl->Init(4, {}, { 1,1 }, {}, sv->size.x)
-			.AddText(U" asdfasdfasd f sdf sadf sdf sd fs adf asdf sf sdf sadf sdf sd fs adf asdf sa fds df s df.\n");
-		rl->Commit();
-
-		sv->InitContentSize(rl->size);
+		sv->MakeContent<SVContentBag>()->Init(sv);
+		//auto&& rl = sv->MakeContent<xx::RichLabel>();
+		//rl->Init(4, {}, { 1,1 }, {}, sv->size.x)
+		//	.AddText(U" asdfasdfasd f sdf sadf sdf sd fs adf asdf sf sdf sadf sdf sd fs adf asdf sa fds df s df.\n");
+		//rl->Commit();
+		//sv->InitContentSize(rl->size);
 
 
 		gridSize = { 60, 60 };

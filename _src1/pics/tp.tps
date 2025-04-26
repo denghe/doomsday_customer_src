@@ -179,7 +179,24 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">pngs/buff_996.png</key>
+            <key type="filename">pngs/buff_0.png</key>
+            <key type="filename">pngs/buff_26.png</key>
+            <key type="filename">pngs/buff_37.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>32,29,64,59</rect>
+                <key>scale9Paddings</key>
+                <rect>32,29,64,59</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/buff_1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -194,13 +211,44 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">pngs/buff_angry.png</key>
-            <key type="filename">pngs/buff_chair.png</key>
-            <key type="filename">pngs/buff_fengshui_master.png</key>
-            <key type="filename">pngs/buff_plastic_friendship.png</key>
-            <key type="filename">pngs/buff_shanghai.png</key>
-            <key type="filename">pngs/buff_sudo_rm_rf.png</key>
+            <key type="filename">pngs/buff_10.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>32,28,64,55</rect>
+                <key>scale9Paddings</key>
+                <rect>32,28,64,55</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/buff_11.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>32,22,64,45</rect>
+                <key>scale9Paddings</key>
+                <rect>32,22,64,45</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/buff_12.png</key>
+            <key type="filename">pngs/buff_16.png</key>
+            <key type="filename">pngs/buff_30.png</key>
+            <key type="filename">pngs/buff_33.png</key>
+            <key type="filename">pngs/buff_8.png</key>
+            <key type="filename">pngs/buff_9.png</key>
             <key type="filename">pngs/ground_cell2.png</key>
+            <key type="filename">pngs/icon_harvest.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -215,7 +263,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">pngs/buff_aniki.png</key>
+            <key type="filename">pngs/buff_13.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -224,212 +272,13 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>32,27,64,53</rect>
+                <rect>26,32,51,64</rect>
                 <key>scale9Paddings</key>
-                <rect>32,27,64,53</rect>
+                <rect>26,32,51,64</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">pngs/buff_anime_master.png</key>
-            <key type="filename">pngs/buff_social_fear.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>30,32,61,64</rect>
-                <key>scale9Paddings</key>
-                <rect>30,32,61,64</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">pngs/buff_brother.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>32,28,64,57</rect>
-                <key>scale9Paddings</key>
-                <rect>32,28,64,57</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">pngs/buff_chinese_medicine.png</key>
-            <key type="filename">pngs/buff_cut_artery.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>32,26,64,53</rect>
-                <key>scale9Paddings</key>
-                <rect>32,26,64,53</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">pngs/buff_crud_master.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>32,27,64,54</rect>
-                <key>scale9Paddings</key>
-                <rect>32,27,64,54</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">pngs/buff_elbow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>29,32,59,64</rect>
-                <key>scale9Paddings</key>
-                <rect>29,32,59,64</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">pngs/buff_fubao.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>30,32,59,64</rect>
-                <key>scale9Paddings</key>
-                <rect>30,32,59,64</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">pngs/buff_gatlin_god.png</key>
-            <key type="filename">pngs/buff_leader.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>32,32,63,64</rect>
-                <key>scale9Paddings</key>
-                <rect>32,32,63,64</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">pngs/buff_glasses.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>32,20,64,39</rect>
-                <key>scale9Paddings</key>
-                <rect>32,20,64,39</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">pngs/buff_god.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>27,32,53,64</rect>
-                <key>scale9Paddings</key>
-                <rect>27,32,53,64</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">pngs/buff_haidilao.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>32,22,64,45</rect>
-                <key>scale9Paddings</key>
-                <rect>32,22,64,45</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">pngs/buff_invest.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>26,32,53,64</rect>
-                <key>scale9Paddings</key>
-                <rect>26,32,53,64</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">pngs/buff_lottery_researcher.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>32,22,64,43</rect>
-                <key>scale9Paddings</key>
-                <rect>32,22,64,43</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">pngs/buff_meat_eater.png</key>
-            <key type="filename">pngs/buff_work_meal.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>32,24,64,48</rect>
-                <key>scale9Paddings</key>
-                <rect>32,24,64,48</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">pngs/buff_relax.png</key>
+            <key type="filename">pngs/buff_14.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -444,8 +293,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">pngs/buff_return_home.png</key>
-            <key type="filename">pngs/buff_social.png</key>
+            <key type="filename">pngs/buff_15.png</key>
+            <key type="filename">pngs/buff_21.png</key>
             <key type="filename">pngs/icon_clover.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -461,7 +310,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">pngs/buff_running_shoes.png</key>
+            <key type="filename">pngs/buff_17.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -470,13 +319,29 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>32,22,64,44</rect>
+                <rect>32,27,64,54</rect>
                 <key>scale9Paddings</key>
-                <rect>32,22,64,44</rect>
+                <rect>32,27,64,54</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">pngs/buff_shit_mountain.png</key>
+            <key type="filename">pngs/buff_18.png</key>
+            <key type="filename">pngs/buff_24.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>30,32,61,64</rect>
+                <key>scale9Paddings</key>
+                <rect>30,32,61,64</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/buff_19.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -491,7 +356,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">pngs/buff_steel_plate.png</key>
+            <key type="filename">pngs/buff_2.png</key>
+            <key type="filename">pngs/buff_34.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -500,13 +366,13 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>32,28,64,55</rect>
+                <rect>32,26,64,53</rect>
                 <key>scale9Paddings</key>
-                <rect>32,28,64,55</rect>
+                <rect>32,26,64,53</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">pngs/buff_takeout.png</key>
+            <key type="filename">pngs/buff_20.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -515,13 +381,59 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>26,32,51,64</rect>
+                <rect>30,32,59,64</rect>
                 <key>scale9Paddings</key>
-                <rect>26,32,51,64</rect>
+                <rect>30,32,59,64</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">pngs/buff_techinical_debt.png</key>
+            <key type="filename">pngs/buff_22.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>24,32,47,64</rect>
+                <key>scale9Paddings</key>
+                <rect>24,32,47,64</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/buff_23.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>32,22,64,43</rect>
+                <key>scale9Paddings</key>
+                <rect>32,22,64,43</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/buff_25.png</key>
+            <key type="filename">pngs/buff_6.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>32,24,64,48</rect>
+                <key>scale9Paddings</key>
+                <rect>32,24,64,48</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/buff_27.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -536,7 +448,38 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">pngs/buff_treadmill.png</key>
+            <key type="filename">pngs/buff_28.png</key>
+            <key type="filename">pngs/buff_32.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>32,32,63,64</rect>
+                <key>scale9Paddings</key>
+                <rect>32,32,63,64</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/buff_29.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>27,32,53,64</rect>
+                <key>scale9Paddings</key>
+                <rect>27,32,53,64</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/buff_3.png</key>
             <key type="filename">pngs/icon_heart.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -552,7 +495,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">pngs/buff_wish_shanghai.png</key>
+            <key type="filename">pngs/buff_31.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -561,9 +504,84 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>24,32,47,64</rect>
+                <rect>32,28,64,57</rect>
                 <key>scale9Paddings</key>
-                <rect>24,32,47,64</rect>
+                <rect>32,28,64,57</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/buff_35.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>32,27,64,53</rect>
+                <key>scale9Paddings</key>
+                <rect>32,27,64,53</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/buff_36.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>26,32,53,64</rect>
+                <key>scale9Paddings</key>
+                <rect>26,32,53,64</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/buff_4.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>32,20,64,39</rect>
+                <key>scale9Paddings</key>
+                <rect>32,20,64,39</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/buff_5.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>29,32,59,64</rect>
+                <key>scale9Paddings</key>
+                <rect>29,32,59,64</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/buff_7.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>32,22,64,44</rect>
+                <key>scale9Paddings</key>
+                <rect>32,22,64,44</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -811,6 +829,51 @@
                 <rect>32,31,64,63</rect>
                 <key>scale9Paddings</key>
                 <rect>32,31,64,63</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/icon_dodge.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>27,32,54,64</rect>
+                <key>scale9Paddings</key>
+                <rect>27,32,54,64</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/icon_shield.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>28,32,55,64</rect>
+                <key>scale9Paddings</key>
+                <rect>28,32,55,64</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/icon_speed.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>32,28,64,56</rect>
+                <key>scale9Paddings</key>
+                <rect>32,28,64,56</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -1084,21 +1147,6 @@
                 <rect>2,2,3,3</rect>
                 <key>scale9Paddings</key>
                 <rect>2,2,3,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">pngs/warning1.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.471429,0.398438</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>35,32,70,64</rect>
-                <key>scale9Paddings</key>
-                <rect>35,32,70,64</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
