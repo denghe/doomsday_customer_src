@@ -61,7 +61,7 @@ struct Looper : xx::Engine<Looper>, Cfg {
 #endif
 
 	ResTpFrames res;
-	xx::Scale9SpriteConfig btnCfg, btnCfg1, btnCfg2, btnCfg2i, btnCfg3, btnCfg3i, btnCfg4;
+	xx::Scale9SpriteConfig btnCfg, btnCfg1, btnCfg2, btnCfg2i, btnCfg3, btnCfg3i, btnCfg4, buffInfoPanelCfg;
 	xx::SpaceGridRingDiffuseData rdd;
 	xx::Listi32<std::pair<float, Game::Drawable*>> yDraws;
 };

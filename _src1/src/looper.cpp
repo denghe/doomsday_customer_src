@@ -124,6 +124,12 @@ xx::Task<> Looper::MainTask() {
 	btnCfg4.txtPaddingRightBottom = { 40, 20 };
 	btnCfg4.txtScale = 4;
 
+
+	
+	buffInfoPanelCfg.frame = res.warning2;
+	buffInfoPanelCfg.center = { 2, 2, 2, 2 };
+
+
 	clearColor = { 0xdf, 0xc1, 0x98, 255 };
 
 	scene.Emplace<Game::MainMenu>()->Init();
