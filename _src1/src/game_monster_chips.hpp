@@ -28,6 +28,7 @@ namespace Game {
 
 	int32_t Monster_Chips::Update() {
 		// auto use skill
+		tagPos = { pos.x - frame->spriteSize.x * .1f, pos.y + frame->spriteSize.y * 0.1f };
 		for (auto i = skills.len - 1; i >= 0; --i) {
 			auto& skill = skills[i];
 			if (skill->Update()) {
@@ -40,12 +41,22 @@ namespace Game {
 		return destroyTime <= stage->time;
 	}
 
-	void Monster_Chips::ExitKnockback() {
-		knockback = false;
-		state = State::Idle;
+	void Monster_Chips::Draw() {
+		Monster::Draw();
+		DrawTag();
 	}
 
-	void Monster_Chips::ExitDash() {
-		state = State::Idle;
+	void Monster_Chips::DrawTag() {
+		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(gLooper.res.ef_atkdmg->tex, 1);
+		XY s{ scale * stage->camera.scale };
+		if (needFlipX) s.x = -s.x;
+		// body
+		q[0].pos = stage->camera.ToGLPos(tagPos);
+		q[0].anchor = frame->anchor.has_value() ? *frame->anchor : XY{ 0.5f, 0.5f };
+		q[0].scale = s * 2.f;
+		q[0].radians = 0;
+		q[0].colorplus = whiteColorEndTime >= stage->time ? 10000.f : 1.f;
+		q[0].color = color;
+		q[0].texRect.data = gLooper.res._uvrect_ef_atkdmg.data;
 	}
 }

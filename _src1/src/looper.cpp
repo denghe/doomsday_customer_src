@@ -34,6 +34,7 @@
 #include "game_monster_laptop.hpp"
 #include "game_monster_roastduck.hpp"
 #include "game_monster_sofa.hpp"
+#include "game_monster_house.hpp"
 #include "game_spawner.hpp"
 #include "game_ui_hpbar.hpp"
 #include "game_ui_coinbar.hpp"
