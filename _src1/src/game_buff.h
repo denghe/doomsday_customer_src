@@ -217,6 +217,7 @@ namespace Game {
 		xx::Weak<Creature> owner;
 		std::array<int32_t, numBuffers> nums;
 		std::array<Stat_t, numBuffers> ranks;
+		std::vector<BuffTypes> logs;
 		StatPanel sp;								// sum
 		bool _跑步机_used{};
 		bool _筋肉兄贵_used{};
