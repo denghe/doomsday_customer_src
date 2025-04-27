@@ -761,7 +761,7 @@ namespace Game {
 	inline void Test5::Init() {
 		ui.Emplace()->Init();
 
-		ui->MakeChildren<xx::Button>()->Init(1, Cfg::xy7m + XY{ 10, -10 }
+		ui->MakeChildren<xx::Button>()->Init(10, Cfg::xy7m + XY{ 10, -10 }
 			, Cfg::xy7a, gLooper.btnCfg, U"exit", [&]() {
 				gLooper.DelaySwitchTo<Game::MainMenu>();
 		});
