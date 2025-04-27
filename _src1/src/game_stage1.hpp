@@ -81,14 +81,14 @@ namespace Game {
 				, 0, 15, 3, Cfg::unitRadius * 2, 1, 5);
 			monsterGenerators.Emplace().Emplace<MonsterGen_Group<Monster_Hamburger>>()->Init(this
 				, 6, 25, 2, Cfg::unitRadius * 2, 1, 6);
-			monsterGenerators.Emplace().Emplace<MonsterGen_Group3<Monster_Cola, Monster_Roastduck, Monster_Chips>>()->Init(this
-				, 10, 30, 1, 1, 4,Cfg::unitRadius * 3, 2, 6);
+			monsterGenerators.Emplace().Emplace<MonsterGen_Group3<Monster_Roastduck, Monster_Cola, Monster_Chips>>()->Init(this
+				, 10, 30, 1, 1, 4,Cfg::unitRadius * 3, 2, 4);
 		}
 		break;
 		case 4:
 		{
 			monsterGenerators.Emplace().Emplace<MonsterGen_Group<Monster_Chips>>()->Init(this
-				, 0, 12, 3, Cfg::unitRadius * 2, 1, 5);
+				, 0, 12, 15, Cfg::unitRadius * 2, 1, 2);
 			monsterGenerators.Emplace().Emplace<MonsterGen_Group2<Monster_Roastduck, Monster_Chips>>()->Init(this
 				, 8, 24, 1,3, Cfg::unitRadius * 2, 1.5, 4);
 			monsterGenerators.Emplace().Emplace<MonsterGen_Group<Monster_Cola>>()->Init(this
@@ -110,7 +110,7 @@ namespace Game {
 		case 6:
 		{
 			monsterGenerators.Emplace().Emplace<MonsterGen_Group<Monster_Chips>>()->Init(this
-				, 0, 14, 3, Cfg::unitRadius * 2, 1, 3);
+				, 0, 14, 3, Cfg::unitRadius * 2, 1, 6);
 			monsterGenerators.Emplace().Emplace<MonsterGen_Group2<Monster_Hamburger, Monster_Chips>>()->Init(this
 				, 5, 24, 4, 1, Cfg::unitRadius * 3, 2, 5);
 			monsterGenerators.Emplace().Emplace<MonsterGen_Group<Monster_Cola>>()->Init(this
@@ -122,7 +122,7 @@ namespace Game {
 		case 7:
 		{
 			monsterGenerators.Emplace().Emplace<MonsterGen_Group<Monster_Chips>>()->Init(this
-				, 0, 14, 15, Cfg::unitRadius * 2, 4, 4);
+				, 0, 16, 15, Cfg::unitRadius * 2, 4, 2);
 			monsterGenerators.Emplace().Emplace<MonsterGen_Group2<Monster_Roastduck, Monster_Chips>>()->Init(this
 				, 6, 26, 1, 3, Cfg::unitRadius * 2, 1.5, 5);
 			monsterGenerators.Emplace().Emplace<MonsterGen_Group2<Monster_Sofa, Monster_Chips>>()->Init(this
@@ -136,7 +136,7 @@ namespace Game {
 			monsterGenerators.Emplace().Emplace<MonsterGen_Group<Monster_Hamburger>>()->Init(this
 				, 0, 16, 6, Cfg::unitRadius * 3, 2, 4);
 			monsterGenerators.Emplace().Emplace<MonsterGen_Group<Monster_Cola>>()->Init(this
-				, 6, 25, 3, Cfg::unitRadius * 2, 1.5, 3);
+				, 6, 25, 3, Cfg::unitRadius * 2, 1.5, 5);
 			monsterGenerators.Emplace().Emplace<MonsterGen_Group2<Monster_Roastduck, Monster_Cola>>()->Init(this
 				, 18, 35, 3, 2, Cfg::unitRadius * 3, 2, 4);
 			monsterGenerators.Emplace().Emplace<MonsterGen_Group<Monster_Laptop>>()->Init(this
@@ -147,7 +147,7 @@ namespace Game {
 		{
 			monsterGenerators.Emplace().Emplace<MonsterGen_Group<Monster_Chips>>()->Init(this
 				, 0, 15, 20, Cfg::unitRadius * 4, 5, 1);
-			monsterGenerators.Emplace().Emplace<MonsterGen_Group<Monster_Chips>>()->Init(this
+			monsterGenerators.Emplace().Emplace<MonsterGen_Group<Monster_Cola>>()->Init(this
 				, 6, 28, 5, Cfg::unitRadius * 3, 2, 4);
 			monsterGenerators.Emplace().Emplace<MonsterGen_Group2<Monster_Laptop, Monster_Roastduck>>()->Init(this
 				, 18, 38, 1,2, Cfg::unitRadius * 3, 2, 3);
@@ -158,7 +158,7 @@ namespace Game {
 		case 10:
 		{
 			monsterGenerators.Emplace().Emplace<MonsterGen_Group2<Monster_Roastduck, Monster_Cola>>()->Init(this
-				, 1, 16, 3, 2, Cfg::unitRadius * 3, 2, 3);
+				, 0, 16, 3, 2, Cfg::unitRadius * 3, 2, 3);
 			monsterGenerators.Emplace().Emplace<MonsterGen_Group<Monster_Hamburger>>()->Init(this
 				, 6, 30, 6, Cfg::unitRadius * 3, 2, 4);
 			monsterGenerators.Emplace().Emplace<MonsterGen_Group2<Monster_Sofa, Monster_Chips>>()->Init(this
@@ -178,7 +178,7 @@ namespace Game {
 			monsterGenerators.Emplace().Emplace<MonsterGen_Group<Monster_Sofa>>()->Init(this
 				, 10, 47, 1, Cfg::unitRadius * 2, 2, 3);
 			monsterGenerators.Emplace().Emplace<MonsterGen_Group<Monster_Laptop>>()->Init(this
-				, 10, 47, 1, Cfg::unitRadius * 2, 1, 3);
+				, 10, 50, 1, Cfg::unitRadius * 2, 1, 3);
 			monsterGenerators.Emplace().Emplace<MonsterGen_Group<Monster_Chips>>()->Init(this
 				, 30, 50, 20, Cfg::unitRadius * 4, 5, 2);
 		}
@@ -234,7 +234,7 @@ namespace Game {
 			monsterGenerators.Emplace().Emplace<MonsterGen_Group<Monster_Cola>>()->Init(this
 				, 1, 80, 3, Cfg::unitRadius * 2, 1.5, 10);
 			// todo 4 hamburger 1 cola
-			// todo 4 chips 1 cola
+			// todo sofa 2 chips
 			monsterGenerators.Emplace().Emplace<MonsterGen_Group<Monster_Laptop>>()->Init(this
 				, 10, 80, 1, Cfg::unitRadius * 2, 1, 15);
 			monsterGenerators.Emplace().Emplace<MonsterGen_Group<Monster_Hamburger>>()->Init(this
