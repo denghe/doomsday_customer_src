@@ -6,7 +6,7 @@ namespace Game {
 		creature = creature_;
 		stage = creature->stage;
 		aimRange = aimRange_;
-		radius = ResTpFrames::_size_monster_hamburger.x;
+		radius = ResTpFrames::_size_bullet_lightpoint.x;
 		damage = 5;
 		moveSpeed = 800.f / Cfg::fps;
 		life = 3 * (int32_t)Cfg::fps;

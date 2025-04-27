@@ -180,12 +180,14 @@ namespace Game {
 		XY tarOffset{};
 		float tarOffsetRadius{};
 		// todo
+		XY tagPos{};
 
 		int32_t Hurt(float dmg, XY const& txtD, XY const& knockbackD, bool isCrit = false);		// return !0 mean dead
 		void Knockback(float speed, XY const& d);
 		int32_t Update() override;
 		int32_t MoveToPosition(xx::XY targetPos, float targetRadius);
 		int32_t MoveToPlayer(float keepDistance = 0);
+		virtual void DrawTag() {};
 	};
 
 	// monster generator's base

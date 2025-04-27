@@ -48,14 +48,14 @@ namespace Game {
 
 	void Bullet_2::Draw() {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
-			.Draw(gLooper.res._texid_monster_hamburger, 1);
+			.Draw(gLooper.res._texid_bullet_lightpoint, 1);
 		q->pos = stage->camera.ToGLPos(pos);
-		q->anchor = ResTpFrames::_anchor_monster_hamburger;
+		q->anchor = ResTpFrames::_anchor_bullet_lightpoint;
 		q->scale = scale * stage->camera.scale;
 		q->radians = radians;
 		q->colorplus = 1;
 		q->color = xx::RGBA8_White;
-		q->texRect.data = ResTpFrames::_uvrect_monster_hamburger.data;
+		q->texRect.data = ResTpFrames::_uvrect_bullet_lightpoint.data;
 	}
 
 }
