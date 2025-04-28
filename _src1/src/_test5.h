@@ -113,6 +113,8 @@ namespace Game {
 
 
 	struct UI_BuffInfo : xx::Node {
+		static constexpr float cFieldNameWidth{ 280 };
+		static constexpr float cValueWidth{ 70 };
 		static constexpr XY cInfoMargin{ 10, 10 };
 		void Init();
 		void Set(BuffTypes bt, XY pos);
@@ -127,13 +129,13 @@ namespace Game {
 	// UI_BuffShop's children
 	struct UI_BuffShopGoodsList : xx::Node {
 		Stage* stage{};
-		void Init(Stage* stage_);
+		void Init(Stage* stage_, int32_t z_, XY pos_, XY size_);
 		void Refresh();
 	};
 
 	struct UI_PlayerStat : xx::Node {
 		Stage* stage{};
-		void Init(Stage* stage_);
+		void Init(Stage* stage_, int32_t z_, XY pos_);
 		void Refresh();
 	};
 

@@ -141,7 +141,7 @@ namespace Game {
 		StatPanel sp;
 		Stat_t healthPointMax{};
 		Stat_t healthPoint{};				// left / current
-		Stat_t defenseRatio{};
+		Stat_t damageReduce{};
 		Stat_t dodgeChance{};
 		Stat_t movementSpeed{};
 		Stat_t movementSpeedPerFrame{};

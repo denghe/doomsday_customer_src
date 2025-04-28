@@ -7,6 +7,7 @@ namespace Game {
 		healthRatio,
 		healthRegeneration,
 		defensePoint,
+		defenseRatio,
 		dodgePoint,
 		dodgeRatio,
 		movementSpeedPoint,
@@ -26,13 +27,13 @@ namespace Game {
 		"healthRatio",
 		"healthRegeneration",
 		"defensePoint",
+		"defenseRatio",
 		"dodgePoint",
 		"dodgeRatio",
 		"movementSpeedPoint",
 		"damageRatio",
 		"criticalChance",
 		"criticalBonusRatio",
-		"attackSpeed",
 		"attackSpeedRatio",
 		"luckyPoint",
 		"harvestRatio",
@@ -51,13 +52,13 @@ namespace Game {
 		Stat_t healthRatio;
 		Stat_t healthRegeneration;
 		Stat_t defensePoint;
+		Stat_t defenseRatio;
 		Stat_t dodgePoint;
 		Stat_t dodgeRatio;
 		Stat_t movementSpeedPoint;
 		Stat_t damageRatio;
 		Stat_t criticalChance;
 		Stat_t criticalBonusRatio;
-		Stat_t attackSpeed;		// times per seconds
 		Stat_t attackSpeedRatio;
 		Stat_t luckyPoint;
 		Stat_t harvestRatio;
@@ -86,54 +87,54 @@ namespace Game {
 
 		static constexpr StatPanel rangeFrom{	// min val
 			.healthPoint = 1,
-			.healthRatio = 1,
+			.healthRatio = 0,
 			.healthRegeneration = 0,
 			.defensePoint = 0,
+			.defenseRatio = 0,
 			.dodgePoint = 0,
 			.dodgeRatio = 0,
 			.movementSpeedPoint = 0,
 			.damageRatio = 0,
 			.criticalChance = 0,
 			.criticalBonusRatio = 0,
-			.attackSpeed = 0,
-			.attackSpeedRatio = 1,
+			.attackSpeedRatio = 0,
 			.luckyPoint = 0,
 			.harvestRatio = 0,
-			.fieldOfVision = 1,
+			.fieldOfVision = 0,
 		};
 		static constexpr StatPanel rangeTo{		// max val
 			.healthPoint = 999999,
 			.healthRatio = 999999,
 			.healthRegeneration = 999999,
 			.defensePoint = 999999,
+			.defenseRatio = 999999,
 			.dodgePoint = 65,
 			.dodgeRatio = 1,
 			.movementSpeedPoint = 25,
 			.damageRatio = 999999,
 			.criticalChance = 1,
 			.criticalBonusRatio = 1.5,
-			.attackSpeed = 999999,
 			.attackSpeedRatio = 999999,
 			.luckyPoint = 1000,
 			.harvestRatio = 999999,
-			.fieldOfVision = 10,
+			.fieldOfVision = 500,
 		};
 		StatPanel init{							// init val
 			.healthPoint = 10,
 			.healthRatio = 1,
 			.healthRegeneration = 5,
 			.defensePoint = 0,
+			.defenseRatio = 1,
 			.dodgePoint = 0,
-			.dodgeRatio = 0,
+			.dodgeRatio = 1,
 			.movementSpeedPoint = 5,
 			.damageRatio = 1,
 			.criticalChance = 0.2,
 			.criticalBonusRatio = 1.5,
-			.attackSpeed = 1,
 			.attackSpeedRatio = 1,
 			.luckyPoint = 10,
-			.harvestRatio = 0,
-			.fieldOfVision = 1,
+			.harvestRatio = 1,
+			.fieldOfVision = 0,
 		};
 	};
 

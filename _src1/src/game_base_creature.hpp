@@ -23,7 +23,7 @@ namespace Game {
 
 		// fill some final result
 		healthPointMax = sp.healthPoint * sp.healthRatio;
-		defenseRatio = statCfg.defenseFactor / (statCfg.defenseFactor + sp.defensePoint);
+		damageReduce = statCfg.defenseFactor / (statCfg.defenseFactor + sp.defensePoint);
 		dodgeChance = sp.dodgePoint / (sp.dodgePoint + statCfg.dodgeFactor);
 		movementSpeed = statCfg.baseMovementSpeed * sp.movementSpeedPoint;
 		movementSpeedPerFrame = movementSpeed * Cfg::frameDelay;
@@ -66,7 +66,7 @@ namespace Game {
 		else {
 			healthPointMax = sp.healthPoint * sp.healthRatio;
 		}
-		defenseRatio = statCfg.defenseFactor / (statCfg.defenseFactor + sp.defensePoint);
+		damageReduce = statCfg.defenseFactor / (statCfg.defenseFactor + sp.defensePoint);
 		dodgeChance = sp.dodgePoint / (sp.dodgePoint + statCfg.dodgeFactor);
 		movementSpeed = statCfg.baseMovementSpeed * sp.movementSpeedPoint;
 		movementSpeedPerFrame = movementSpeed * Cfg::frameDelay;

@@ -70,7 +70,7 @@ namespace Game {
 			// todo: show miss txt?
 			return 0;
 		}
-		dmg = std::ceilf(dmg * defenseRatio);
+		dmg = std::ceilf(dmg * damageReduce);
 		if (healthPoint <= dmg) {
 			// dead
 			stage->effectTexts.Add(pos + frame->spriteSize * XY{ 0, -0.5f }, txtD, xx::RGBA8_Red, 6, healthPoint);

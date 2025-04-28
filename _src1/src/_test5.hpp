@@ -3,13 +3,14 @@
 namespace Game {
 
 	struct BuffRichLabelFiller {
-		static constexpr float cFieldNameWidth{ 250 };
-		static constexpr float cValueWidth{ 70 };
-		// todo: more cfg
-
 		xx::RichLabel* rl{};
 		BuffTypes bt{};
+		xx::RGBA8 titleColor{ xx::RGBA8_White };
+		xx::RGBA8 nameColor{ xx::RGBA8_White };
+		xx::RGBA8 zeroValueColor{ xx::RGBA8_White };
+		float nameWidth{}, valueWidth{};
 		std::u32string name, desc;
+		std::function<void(xx::RichLabel*)> descFiller;
 
 		std::optional<Stat_t> healthPoint;
 		std::optional<Stat_t> healthRatio;
@@ -17,6 +18,7 @@ namespace Game {
 		std::optional<Stat_t> healthRegeneration;
 		std::optional<Stat_t> defensePoint;
 		std::optional<Stat_t> defenseRatio;
+		std::optional<Stat_t> damageReduce;
 		std::optional<Stat_t> dodgePoint;
 		std::optional<Stat_t> dodgeRatio;
 		std::optional<Stat_t> dodgeChance;
@@ -26,39 +28,50 @@ namespace Game {
 		std::optional<Stat_t> damageRatio;
 		std::optional<Stat_t> criticalChance;
 		std::optional<Stat_t> criticalBonusRatio;
-		std::optional<Stat_t> attackSpeed;
 		std::optional<Stat_t> attackSpeedRatio;
 		std::optional<Stat_t> luckyPoint;
 		std::optional<Stat_t> harvestRatio;
 		std::optional<Stat_t> fieldOfVision;
 
-		BuffRichLabelFiller(xx::Node* parent_) {
+		BuffRichLabelFiller(xx::Node* parent_, float nameWidth_ = 280, float valueWidth_ = 70, XY pos_ = {}, XY anchor_ = {}) {
+			nameWidth = nameWidth_;
+			valueWidth = valueWidth_;
 			auto&& rl_ = parent_->MakeChildren<xx::RichLabel>();
-			rl_->Init(parent_->z + 1, {}, { 1,1 }, {}, cFieldNameWidth + cValueWidth);
+			rl_->Init(parent_->z + 1, pos_, { 1,1 }, anchor_, nameWidth_ + valueWidth_);
 			rl = rl_.pointer;
 		}
+
+		XX_INLINE BuffRichLabelFiller& Set_TitleColor(xx::RGBA8 titleColor_) { titleColor = titleColor_; return *this; }
+		XX_INLINE BuffRichLabelFiller& Set_NameColor(xx::RGBA8 nameColor_) { nameColor = nameColor_; return *this; }
+		XX_INLINE BuffRichLabelFiller& Set_ZeroValueColor(xx::RGBA8 zeroValueColor_) { zeroValueColor = zeroValueColor_; return *this; }
 
 		XX_INLINE BuffRichLabelFiller& Set_BuffType(BuffTypes bt_) { bt = bt_; return *this; }
 		XX_INLINE BuffRichLabelFiller& Set_Name(std::u32string name_) { name = std::move(name_); return *this; }
 		XX_INLINE BuffRichLabelFiller& Set_Desc(std::u32string desc_) { desc = std::move(desc_); return *this; }
+		XX_INLINE BuffRichLabelFiller& Set_Desc(std::function<void(xx::RichLabel*)> descFiller_) { descFiller = std::move(descFiller_); return *this; }
 
 		XX_INLINE BuffRichLabelFiller& Set_HealthPoint(Stat_t v) { healthPoint = v; return *this; }
 		XX_INLINE BuffRichLabelFiller& Set_HealthRatio(Stat_t v) { healthRatio = v; return *this; }
 		XX_INLINE BuffRichLabelFiller& Set_HealthPointMax(Stat_t v) { healthPointMax = v; return *this; }
 		XX_INLINE BuffRichLabelFiller& Set_HealthRegeneration(Stat_t v) { healthRegeneration = v; return *this; }
+
 		XX_INLINE BuffRichLabelFiller& Set_DefensePoint(Stat_t v) { defensePoint = v; return *this; }
 		XX_INLINE BuffRichLabelFiller& Set_DefenseRatio(Stat_t v) { defenseRatio = v; return *this; }
+		XX_INLINE BuffRichLabelFiller& Set_DamageReduce(Stat_t v) { damageReduce = v; return *this; }
+
 		XX_INLINE BuffRichLabelFiller& Set_DodgePoint(Stat_t v) { dodgePoint = v; return *this; }
 		XX_INLINE BuffRichLabelFiller& Set_DodgeRatio(Stat_t v) { dodgeRatio = v; return *this; }
 		XX_INLINE BuffRichLabelFiller& Set_DodgeChance(Stat_t v) { dodgeChance = v; return *this; }
+
 		XX_INLINE BuffRichLabelFiller& Set_MovementSpeedPoint(Stat_t v) { movementSpeedPoint = v; return *this; }
 		XX_INLINE BuffRichLabelFiller& Set_MovementSpeed(Stat_t v) { movementSpeed = v; return *this; }
 		XX_INLINE BuffRichLabelFiller& Set_MovementSpeedPerFrame(Stat_t v) { movementSpeedPerFrame = v; return *this; }
+
 		XX_INLINE BuffRichLabelFiller& Set_DamageRatio(Stat_t v) { damageRatio = v; return *this; }
 		XX_INLINE BuffRichLabelFiller& Set_CriticalChance(Stat_t v) { criticalChance = v; return *this; }
 		XX_INLINE BuffRichLabelFiller& Set_CriticalBonusRatio(Stat_t v) { criticalBonusRatio = v; return *this; }
-		XX_INLINE BuffRichLabelFiller& Set_AttackSpeed(Stat_t v) { attackSpeed = v; return *this; }
 		XX_INLINE BuffRichLabelFiller& Set_AttackSpeedRatio(Stat_t v) { attackSpeedRatio = v; return *this; }
+
 		XX_INLINE BuffRichLabelFiller& Set_LuckyPoint(Stat_t v) { luckyPoint = v; return *this; }
 		XX_INLINE BuffRichLabelFiller& Set_HarvestRatio(Stat_t v) { harvestRatio = v; return *this; }
 		XX_INLINE BuffRichLabelFiller& Set_FieldOfVision(Stat_t v) { fieldOfVision = v; return *this; }
@@ -66,31 +79,35 @@ namespace Game {
 		template<bool isPercentage = false>
 		XX_INLINE void TryAppend(std::u32string_view fieldName, std::optional<Stat_t>& v) {
 			if (v.has_value()) {
-				// todo: posstive set color blue? negative set color red?
-				rl->AddLimitedWidthText(fieldName, cFieldNameWidth);
+				rl->AddLimitedWidthText(fieldName, nameWidth, 1, nameColor);
 
 				std::string s;
 				if constexpr (isPercentage) {
-					s = xx::ToString(*v * 100);
+					s = xx::ToString(int32_t(*v * 100));
 					s.push_back(U'%');
 				}
 				else {
-					s = xx::ToString(*v);
+					s = xx::ToString(int32_t(*v));
 				}
 
-				auto c = xx::RGBA8_Green;
+				xx::RGBA8 c;
 				if (*v < 0) {
 					c = xx::RGBA8_Red;
 				}
+				else if (*v > 0) {
+					c = xx::RGBA8_Green;
+				}
+				else {
+					c = zeroValueColor;
+				}
 				rl->AddRightText(s, 1, c);
-
-				rl->AddText(U"\n");
 			}
 		}
 
 		inline xx::RichLabel* Commit() {
-			// todo: fill icon
-			rl->AddLimitedWidthText(name, cFieldNameWidth + cValueWidth - 1, 2).AddText(U"\n");
+			if (name.size()) {
+				rl->AddLimitedWidthText(name, nameWidth + valueWidth - 1, 2, titleColor).AddText(U"\n");
+			}
 			TryAppend(U"基础血量", healthPoint);
 			TryAppend<true>(U"血量倍率", healthRatio);
 			TryAppend(U"最大血量", healthPointMax);
@@ -106,13 +123,17 @@ namespace Game {
 			TryAppend<true>(U"伤害倍率", damageRatio);
 			TryAppend<true>(U"暴击概率", criticalChance);
 			TryAppend<true>(U"暴击倍率", criticalBonusRatio);
-			TryAppend(U"攻速", attackSpeed);
 			TryAppend<true>(U"攻速倍率", attackSpeedRatio);
 			TryAppend(U"幸运值", luckyPoint);
-			TryAppend(U"收获值", harvestRatio);
+			TryAppend<true>(U"收获倍率", harvestRatio);
 			TryAppend(U"视野", fieldOfVision);
-			// todo: analysis color control char?
-			rl->AddText(desc);
+			if (desc.size()) {
+				rl->AddText(desc);
+				assert(!descFiller);
+			}
+			else if (descFiller) {
+				descFiller(rl);
+			}
 			rl->Commit();
 			return rl;
 		}
@@ -151,7 +172,11 @@ namespace Game {
 		return BuffRichLabelFiller{ parent_ }
 			.Set_BuffType(BuffTypes::跑步机)
 			.Set_Name(U"跑步机")
-			.Set_Desc(U"下一回合以30%血量起步")
+			.Set_Desc([](xx::RichLabel* rl) {
+				rl->AddText(U"下一回合以")
+					.AddText(U"30%", 1, xx::RGBA8_Red)
+					.AddText(U"血量起步");
+			})
 			.Set_HealthRatio(0.15)
 			.Commit();
 	}
@@ -258,7 +283,18 @@ namespace Game {
 		return BuffRichLabelFiller{ parent_ }
 			.Set_BuffType(BuffTypes::国潮外卖)
 			.Set_Name(U"国潮外卖")
-			.Set_Desc(U"杀死小怪时有70%概率+30HP，30%概率-30HP")
+			.Set_Desc([](xx::RichLabel* rl) {
+			rl->AddText(U"杀死小怪时有")
+				.AddText(U"70%", 1, xx::RGBA8_Yellow)
+				.AddText(U"概率")
+				.AddText(U"+30", 1, xx::RGBA8_Green)
+				.AddText(U"血量, ")
+				.AddText(U"30%", 1, xx::RGBA8_Yellow)
+				.AddText(U"概率")
+				.AddText(U"-30", 1, xx::RGBA8_Red)
+				.AddText(U"血量")
+				;
+				})
 			.Commit();
 	}
 
@@ -279,7 +315,14 @@ namespace Game {
 		return BuffRichLabelFiller{ parent_ }
 			.Set_BuffType(BuffTypes::社交牛逼症)
 			.Set_Name(U"社交牛逼症")
-			.Set_Desc(U"每5秒不受控制的固定向前方冲刺0.5秒")
+			.Set_Desc([](xx::RichLabel* rl) {
+			rl->AddText(U"每")
+				.AddText(U"5", 1, xx::RGBA8_Red)
+				.AddText(U"秒不受控制的固定向前方冲刺")
+				.AddText(U"0.5", 1, xx::RGBA8_Red)
+				.AddText(U"秒")
+				;
+				})
 			.Set_DamageRatio(0.3)
 			.Set_AttackSpeedRatio(0.1)
 			.Commit();
@@ -387,7 +430,14 @@ namespace Game {
 		return BuffRichLabelFiller{ parent_ }
 			.Set_BuffType(BuffTypes::社恐)
 			.Set_Name(U"社恐")
-			.Set_Desc(U"每3秒强制向后方冲刺0.5秒")
+			.Set_Desc([](xx::RichLabel* rl) {
+			rl->AddText(U"每")
+				.AddText(U"3", 1, xx::RGBA8_Red)
+				.AddText(U"秒强制向后方冲刺")
+				.AddText(U"0.5", 1, xx::RGBA8_Red)
+				.AddText(U"秒")
+				;
+				})
 			.Set_DodgeRatio(0.15)
 			.Set_AttackSpeedRatio(-0.1)
 			.Commit();
@@ -398,7 +448,12 @@ namespace Game {
 		return BuffRichLabelFiller{ parent_ }
 			.Set_BuffType(BuffTypes::肉食主义)
 			.Set_Name(U"肉食主义")
-			.Set_Desc(U"杀死小怪时攻击+3%（一局内）")
+			.Set_Desc([](xx::RichLabel* rl) {
+			rl->AddText(U"杀死小怪时伤害倍率")
+				.AddText(U"+3%", 1, xx::RGBA8_Green)
+				.AddText(U"（一局内无限叠加）")
+				;
+				})
 			.Commit();
 	}
 
@@ -407,7 +462,16 @@ namespace Game {
 		return BuffRichLabelFiller{ parent_ }
 			.Set_BuffType(BuffTypes::请假)
 			.Set_Name(U"请假")
-			.Set_Desc(U"按下特殊键F进入10秒无敌状态，但是不能行动。一局一次")
+			.Set_Desc([](xx::RichLabel* rl) {
+			rl->AddText(U"按")
+				.AddText(U" F ", 1, xx::RGBA8_Yellow)
+				.AddText(U"键进入")
+				.AddText(U"10秒无敌状态", 1, xx::RGBA8_Green)
+				.AddText(U"，但是")
+				.AddText(U"不能行动", 1, xx::RGBA8_Red)
+				.AddText(U"（一局一次）")
+				;
+				})
 			.Commit();
 	}
 
@@ -416,7 +480,15 @@ namespace Game {
 		return BuffRichLabelFiller{ parent_ }
 			.Set_BuffType(BuffTypes::技术债)
 			.Set_Name(U"技术债")
-			.Set_Desc(U"每回合最大HP-10%，收获-10%")
+			.Set_Desc([](xx::RichLabel* rl) {
+			rl->AddText(U"每回合")
+				.AddText(U"最大血量")
+				.AddText(U"-10%", 1, xx::RGBA8_Red)
+				.AddText(U"，")
+				.AddText(U"收获倍率")
+				.AddText(U"-10%", 1, xx::RGBA8_Red)
+				;
+				})
 			.Set_DamageRatio(0.4)
 			.Set_AttackSpeedRatio(0.2)
 			.Commit();
@@ -427,7 +499,12 @@ namespace Game {
 		return BuffRichLabelFiller{ parent_ }
 			.Set_BuffType(BuffTypes::南无加特林机枪菩萨)
 			.Set_Name(U"南无加特林机枪菩萨")
-			.Set_Desc(U"攻击射出的子弹额外附加30%幸运值倍率的伤害")
+			.Set_Desc([](xx::RichLabel* rl) {
+			rl->AddText(U"玩家子弹额外附加")
+				.AddText(U"30%", 1, xx::RGBA8_Green)
+				.AddText(U"幸运值倍率的伤害值")
+				;
+				})
 			.Commit();
 	}
 
@@ -436,7 +513,12 @@ namespace Game {
 		return BuffRichLabelFiller{ parent_ }
 			.Set_BuffType(BuffTypes::南无阿弥陀佛)
 			.Set_Name(U"南无阿弥陀佛")
-			.Set_Desc(U"最大血量提升，提升值为300%幸运值")
+			.Set_Desc([](xx::RichLabel* rl) {
+			rl->AddText(U"最大血量提升，提升值为")
+				.AddText(U"300%", 1, xx::RGBA8_Green)
+				.AddText(U"幸运值")
+				;
+				})
 			.Commit();
 	}
 
@@ -462,7 +544,16 @@ namespace Game {
 		return BuffRichLabelFiller{ parent_ }
 			.Set_BuffType(BuffTypes::坐在后面的好兄弟)
 			.Set_Name(U"坐在后面的好兄弟")
-			.Set_Desc(U"按F生成一个好兄弟，好兄弟会进入15秒无敌状态，和玩家拥有相同的攻击力，怪物会优先攻击好兄弟。15秒后结束。一局一次")
+			.Set_Desc([](xx::RichLabel* rl) {
+			rl->AddText(U"按")
+				.AddText(U" F ", 1, xx::RGBA8_Yellow)
+				.AddText(U"键生成一个好兄弟，好兄弟会进入")
+				.AddText(U"15秒无敌", 1, xx::RGBA8_Green)
+				.AddText(U"状态，和玩家拥有相同的攻击力，怪物会优先攻击好兄弟。")
+				.AddText(U"15秒后结束", 1, xx::RGBA8_Red)
+				.AddText(U"（一局一次）")
+				;
+				})
 			.Commit();
 	}
 
@@ -471,7 +562,16 @@ namespace Game {
 		return BuffRichLabelFiller{ parent_ }
 			.Set_BuffType(BuffTypes::团队Leader)
 			.Set_Name(U"团队Leader")
-			.Set_Desc(U"生成3个好兄弟，拥有玩家50%攻击力和100%血量")
+			.Set_Desc([](xx::RichLabel* rl) {
+			rl->AddText(U"生成")
+				.AddText(U"3", 1, xx::RGBA8_Green)
+				.AddText(U"个好兄弟，拥有玩家")
+				.AddText(U"50%", 1, xx::RGBA8_Green)
+				.AddText(U"攻击力和")
+				.AddText(U"100%", 1, xx::RGBA8_Red)
+				.AddText(U"血量（每局开始时）")
+				;
+				})
 			.Set_DamageRatio(-0.25)
 			.Set_MovementSpeedPoint(-1)
 			.Commit();
@@ -494,7 +594,16 @@ namespace Game {
 		return BuffRichLabelFiller{ parent_ }
 			.Set_BuffType(BuffTypes::裁员大动脉)
 			.Set_Name(U"裁员大动脉")
-			.Set_Desc(U"死亡时回复20%HP保证不死，一局一次。触发时对全体怪物造成100%幸运值+300%倍率的伤害。")
+			.Set_Desc([](xx::RichLabel* rl) {
+			rl->AddText(U"死亡时回复")
+				.AddText(U"20%", 1, xx::RGBA8_Green)
+				.AddText(U"血量保证不死。触发时对全体怪物造成")
+				.AddText(U"100%", 1, xx::RGBA8_Green)
+				.AddText(U"幸运值+")
+				.AddText(U"300%", 1, xx::RGBA8_Green)
+				.AddText(U"倍率的伤害（一局一次）")
+				;
+				})
 			.Commit();
 	}
 
@@ -503,7 +612,12 @@ namespace Game {
 		return BuffRichLabelFiller{ parent_ }
 			.Set_BuffType(BuffTypes::筋肉兄贵)
 			.Set_Name(U"筋肉兄贵")
-			.Set_Desc(U"下一回合以1%血量起步")
+			.Set_Desc([](xx::RichLabel* rl) {
+			rl->AddText(U"下一回合以")
+				.AddText(U"1%", 1, xx::RGBA8_Red)
+				.AddText(U"血量起步")
+				;
+				})
 			.Set_HealthRatio(0.5)
 			.Set_DamageRatio(0.5)
 			.Commit();
@@ -514,7 +628,14 @@ namespace Game {
 		return BuffRichLabelFiller{ parent_ }
 			.Set_BuffType(BuffTypes::投资)
 			.Set_Name(U"投资")
-			.Set_Desc(U"每回合结束时-50%~+100%代币")
+			.Set_Desc([](xx::RichLabel* rl) {
+			rl->AddText(U"每回合结束时")
+				.AddText(U"-50%", 1, xx::RGBA8_Red)
+				.AddText(U"~")
+				.AddText(U"+100%", 1, xx::RGBA8_Green)
+				.AddText(U"代币")
+				;
+				})
 			.Commit();
 	}
 
@@ -619,7 +740,7 @@ namespace Game {
 		FillTransRecursive();
 		auto rl = MakeBuffRichLabels[(int32_t)bt](this);
 		auto bg = (xx::Scale9Sprite*)children[0].pointer;
-		bg->size = { BuffRichLabelFiller::cFieldNameWidth + BuffRichLabelFiller::cValueWidth + cInfoMargin.x * 2, rl->size.y + cInfoMargin.y * 2 };
+		bg->size = { cFieldNameWidth + cValueWidth + cInfoMargin.x * 2, rl->size.y + cInfoMargin.y * 2 };
 	}
 
 
@@ -631,8 +752,12 @@ namespace Game {
 	}
 
 
-	inline void UI_BuffShopGoodsList::Init(Stage* stage_) {
+
+
+	inline void UI_BuffShopGoodsList::Init(Stage* stage_, int32_t z_, XY pos_, XY size_) {
 		stage = stage_;
+		Node::Init(z_, pos_);
+		MakeChildren<xx::Scale9Sprite>()->Init(z_+1, 0, { 1,1 }, {0, 1}, size_, gLooper.btnCfg);
 	}
 
 	inline void UI_BuffShopGoodsList::Refresh() {
@@ -688,14 +813,39 @@ namespace Game {
 	}
 
 
-	inline void UI_PlayerStat::Init(Stage* stage_) {
+	inline void UI_PlayerStat::Init(Stage* stage_, int32_t z_, XY pos_) {
 		stage = stage_;
+		Node::Init(z_, pos_);
+		Refresh();
 	}
 
 	inline void UI_PlayerStat::Refresh() {
 		children.Clear();
+		BuffRichLabelFiller{ this, 150, 70, 0, 1 }
+			.Set_TitleColor(xx::RGBA8_Black)
+			.Set_NameColor(xx::RGBA8_Black)
+			.Set_ZeroValueColor(xx::RGBA8_Black)
+			//.Set_Name(U"玩家面板")
+			.Set_HealthPoint(stage->player->sp.healthPoint)
+			.Set_HealthRatio(stage->player->sp.healthRatio)
+			.Set_HealthPointMax(stage->player->healthPointMax)	// calc result
+			.Set_HealthRegeneration(stage->player->sp.healthRegeneration)
+			.Set_DefensePoint(stage->player->sp.defensePoint)
+			.Set_DefenseRatio(stage->player->sp.defenseRatio)
+			.Set_DamageReduce(stage->player->damageReduce)	// calc result
+			.Set_DodgePoint(stage->player->sp.dodgePoint)
+			.Set_DodgeRatio(stage->player->sp.dodgeRatio)
+			.Set_DodgeChance(stage->player->dodgeChance)	// calc result
+			.Set_MovementSpeedPoint(stage->player->sp.movementSpeedPoint)
+			.Set_DamageRatio(stage->player->sp.damageRatio)
+			.Set_CriticalChance(stage->player->sp.criticalChance)
+			.Set_CriticalBonusRatio(stage->player->sp.criticalBonusRatio)
+			.Set_AttackSpeedRatio(stage->player->sp.attackSpeedRatio)
+			.Set_LuckyPoint(stage->player->sp.luckyPoint)
+			.Set_HarvestRatio(stage->player->sp.harvestRatio)
+			.Set_FieldOfVision(stage->player->sp.fieldOfVision)
+			.Commit();
 		// todo
-
 	}
 
 
@@ -710,10 +860,10 @@ namespace Game {
 		static constexpr auto bgScale = 1080.f * 0.95f / gLooper.res._size_ui_paper.x;
 		static constexpr float buffBagHeight{ 200 };
 		static constexpr XY moneyIconSize{ 50, 50 };
-		static constexpr float moneyIconTextMargin{ 30 };
+		static constexpr float globalMargin{ 30 };
 		static constexpr float moneyIconScale{ moneyIconSize.x / gLooper.res._size_ui_money.x };
-		static constexpr XY moneyIconPos{ leftPos + moneyIconSize.x, topPos - moneyIconSize.y / 2 };
-		static constexpr XY moneyTextPos{ moneyIconPos.x + moneyIconTextMargin, topPos - moneyIconSize.y / 2 };
+		static constexpr XY moneyIconPos{ leftPos + moneyIconSize.x, topPos - moneyIconSize.y / 2 - globalMargin };
+		static constexpr XY moneyTextPos{ moneyIconPos.x + globalMargin, topPos - moneyIconSize.y / 2 - globalMargin };
 
 		// avoid user click other buttons
 		MakeChildren<xx::SwallowButton>()->Init(1).onClicked = [] {};
@@ -726,20 +876,17 @@ namespace Game {
 		MakeChildren<xx::Label>()->Init(3, moneyTextPos, 2.f, { 0, 0.5f }, xx::RGBA8_Black, U"123456");
 
 		// shop title
-		MakeChildren<xx::Label>()->Init(3, { 0, topPos }, 4.f, { 0.5f, 1 }, xx::RGBA8_Black, U"商店");
+		auto& titleLabel = MakeChildren<xx::Label>()->Init(3, { 0, topPos }, 4.f, { 0.5f, 1 }, xx::RGBA8_Black, U"商店");
 
 		// button: refresh goodsList
-		MakeChildren<xx::IconButton>()->Init(3, { rightPos, topPos }, 1, gLooper.btnCfg3i, gLooper.res.ui_refresh, U"$123", {}, xx::RGBA8_Black).onClicked = [&]() {
+		auto&& refreshBtn = MakeChildren<xx::IconButton>();
+		refreshBtn->Init(3, { rightPos, topPos }, 1, gLooper.btnCfg3i, gLooper.res.ui_refresh, U"$123", {}, xx::RGBA8_Black).onClicked = [&]() {
 			// todo
 		};
 
-		// goodsList list
-		goodsList = MakeChildren<UI_BuffShopGoodsList>();
-		goodsList->Init(stage_);
-
 		// player stat panel
 		playerStat = MakeChildren<UI_PlayerStat>();
-		playerStat->Init(stage_);
+		playerStat->Init(stage_, 3, { rightPos, topPos - refreshBtn->size.y - globalMargin });
 
 		// button: next round
 		auto& btnNextRound = MakeChildren<xx::Button>()->Init(3, { rightPos, bottomPos }, { 1, 0 }, gLooper.btnCfg3, U"下一关");
@@ -748,10 +895,14 @@ namespace Game {
 		};
 
 		// player buff bag
-		XY buffBagSize{ rightPos - leftPos - btnNextRound.size.x - moneyIconTextMargin - UI_BuffBag::cMargin.x * 2, buffBagHeight };
+		XY buffBagSize{ rightPos - leftPos - btnNextRound.size.x - globalMargin - UI_BuffBag::cMargin.x * 2, buffBagHeight };
 		XY buffBagPos{ leftPos + UI_BuffBag::cMargin.x, bottomPos + UI_BuffBag::cMargin.y };
 		buffBag = MakeChildren<UI_BuffBag>();
 		buffBag->Init(stage_, 3, buffBagPos, 1, 0, buffBagSize);
+
+		// goodsList list
+		goodsList = MakeChildren<UI_BuffShopGoodsList>();
+		goodsList->Init(stage_, 3, { leftPos, topPos - titleLabel.size.y - globalMargin }, { buffBagSize.x + UI_BuffBag::cMargin.x * 2, topPos - bottomPos - titleLabel.size.y - globalMargin * 2 - buffBagSize.y - UI_BuffBag::cMargin.y * 2});
 	}
 
 
