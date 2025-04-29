@@ -1043,6 +1043,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">pngs/ui_buffbg.png</key>
             <key type="filename">pngs/ui_button.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>

@@ -127,8 +127,8 @@ xx::Task<> Looper::MainTask() {
 
 
 	
-	buffInfoPanelCfg.frame = res.warning2;
-	buffInfoPanelCfg.center = { 2, 2, 2, 2 };
+	buffInfoPanelCfg.frame = res.ui_buffbg;
+	buffInfoPanelCfg.center = { 30, 30, (uint16_t)ResTpFrames::_size_ui_buffbg.x - 30 * 2, (uint16_t)ResTpFrames::_size_ui_buffbg.y - 30 * 2 };
 
 
 	clearColor = { 0xdf, 0xc1, 0x98, 255 };

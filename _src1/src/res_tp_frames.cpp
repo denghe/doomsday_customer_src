@@ -506,6 +506,9 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 		this->player2 = map["player2"sv];
 		this->_tex_player2 = this->player2->tex;
 		this->_texid_player2 = this->_tex_player2->GetValue();
+		this->ui_buffbg = map["ui_buffbg"sv];
+		this->_tex_ui_buffbg = this->ui_buffbg->tex;
+		this->_texid_ui_buffbg = this->_tex_ui_buffbg->GetValue();
 		this->ui_button = map["ui_button"sv];
 		this->_tex_ui_button = this->ui_button->tex;
 		this->_texid_ui_button = this->_tex_ui_button->GetValue();

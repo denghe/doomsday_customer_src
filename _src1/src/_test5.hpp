@@ -33,7 +33,7 @@ namespace Game {
 		std::optional<Stat_t> harvestRatio;
 		std::optional<Stat_t> fieldOfVision;
 
-		BuffRichLabelFiller(xx::Node* parent_, float nameWidth_ = 280, float valueWidth_ = 70, XY pos_ = {}, XY anchor_ = {}) {
+		BuffRichLabelFiller(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
 			nameWidth = nameWidth_;
 			valueWidth = valueWidth_;
 			auto&& rl_ = parent_->MakeChildren<xx::RichLabel>();
@@ -106,7 +106,9 @@ namespace Game {
 
 		inline xx::RichLabel* Commit() {
 			if (name.size()) {
-				rl->AddLimitedWidthText(name, nameWidth + valueWidth - 1, 2, titleColor).AddText(U"\n");
+				rl->SetHAlign(xx::HAligns::Center);
+				rl->AddLimitedWidthText(name, nameWidth + valueWidth - 1, 1.5, titleColor).AddText(U"\n");
+				rl->SetHAlign(xx::HAligns::Left);
 			}
 			TryAppend(U"基础血量", healthPoint);
 			TryAppend<true>(U"血量倍率", healthRatio);
@@ -140,14 +142,14 @@ namespace Game {
 	};
 
 
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::__Default__>(xx::Node* parent_) {
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::__Default__>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
 		assert(false);
 		return {};
 	}
 
 	// 攻击+20%，攻速-5%，最大血量-5%
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::_996>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::_996>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::_996)
 			.Set_Name(U"996")
 			.Set_Desc(U"996's desc")
@@ -158,8 +160,8 @@ namespace Game {
 	}
 
 	// 血量回复+10/s
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::中药调理>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::中药调理>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::中药调理)
 			.Set_Name(U"中药调理")
 			.Set_Desc(U"中药调理's desc")
@@ -168,8 +170,8 @@ namespace Game {
 	}
 
 	// 最大血量+15%，下一回合以30%血量起步
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::跑步机>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::跑步机>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::跑步机)
 			.Set_Name(U"跑步机")
 			.Set_Desc([](xx::RichLabel* rl) {
@@ -182,8 +184,8 @@ namespace Game {
 	}
 
 	// 范围+10，幸运-5
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::眼镜>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::眼镜>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::眼镜)
 			.Set_Name(U"眼镜")
 			.Set_Desc(U"眼镜's desc")
@@ -193,8 +195,8 @@ namespace Game {
 	}
 
 	// 射速+5%
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::肘击>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::肘击>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::肘击)
 			.Set_Name(U"肘击")
 			.Set_Desc(U"肘击's desc")
@@ -203,8 +205,8 @@ namespace Game {
 	}
 
 	// 攻击+15%，血量回复-5/s
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::加班餐>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::加班餐>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::加班餐)
 			.Set_Name(U"加班餐")
 			.Set_Desc(U"加班餐's desc")
@@ -214,8 +216,8 @@ namespace Game {
 	}
 
 	// 移速+1
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::冲刺鞋子>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::冲刺鞋子>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::冲刺鞋子)
 			.Set_Name(U"冲刺鞋子")
 			.Set_Desc(U"冲刺鞋子's desc")
@@ -224,8 +226,8 @@ namespace Game {
 	}
 
 	// 攻速+20%，移速-1
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::旋转办公椅>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::旋转办公椅>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::旋转办公椅)
 			.Set_Name(U"旋转办公椅")
 			.Set_Desc(U"旋转办公椅's desc")
@@ -235,8 +237,8 @@ namespace Game {
 	}
 
 	// 攻速+10%，幸运-5，收获+5%
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::塑料友情>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::塑料友情>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::塑料友情)
 			.Set_Name(U"塑料友情")
 			.Set_Desc(U"塑料友情's desc")
@@ -247,8 +249,8 @@ namespace Game {
 	}
 
 	// 护甲+5
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::钢板>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::钢板>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::钢板)
 			.Set_Name(U"钢板")
 			.Set_Desc(U"钢板's desc")
@@ -257,8 +259,8 @@ namespace Game {
 	}
 
 	// 最大血量+5%，血量回复+10，伤害-5%
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::海底捞>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::海底捞>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::海底捞)
 			.Set_Name(U"海底捞")
 			.Set_Desc(U"海底捞's desc")
@@ -269,8 +271,8 @@ namespace Game {
 	}
 
 	// 暴击伤害+15%
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::义愤填膺>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::义愤填膺>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::义愤填膺)
 			.Set_Name(U"义愤填膺")
 			.Set_Desc(U"义愤填膺's desc")
@@ -279,8 +281,8 @@ namespace Game {
 	}
 
 	// 杀死小怪时有70%概率+30HP，30%概率-30HP
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::国潮外卖>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::国潮外卖>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::国潮外卖)
 			.Set_Name(U"国潮外卖")
 			.Set_Desc([](xx::RichLabel* rl) {
@@ -299,8 +301,8 @@ namespace Game {
 	}
 
 	// 攻击-20%，幸运+30，血量回复+15/s
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::躺平>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::躺平>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::躺平)
 			.Set_Name(U"躺平")
 			.Set_Desc(U"躺平's desc")
@@ -311,8 +313,8 @@ namespace Game {
 	}
 
 	// 攻击+30%，攻速+10%，每5秒不受控制的固定向前方冲刺0.5秒
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::社交牛逼症>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::社交牛逼症>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::社交牛逼症)
 			.Set_Name(U"社交牛逼症")
 			.Set_Desc([](xx::RichLabel* rl) {
@@ -329,8 +331,8 @@ namespace Game {
 	}
 
 	// 幸运+40，攻击-5%
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::风水大师>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::风水大师>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::风水大师)
 			.Set_Name(U"风水大师")
 			.Set_Desc(U"风水大师's desc")
@@ -340,8 +342,8 @@ namespace Game {
 	}
 
 	// 攻击-5%，攻速+30%
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::CRUD糕手>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::CRUD糕手>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::CRUD糕手)
 			.Set_Name(U"CRUD糕手")
 			.Set_Desc(U"CRUD糕手's desc")
@@ -351,8 +353,8 @@ namespace Game {
 	}
 
 	// 幸运+20，移速-1，血量回复+15/s
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::动漫达人>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::动漫达人>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::动漫达人)
 			.Set_Name(U"动漫达人")
 			.Set_Desc(U"动漫达人's desc")
@@ -363,8 +365,8 @@ namespace Game {
 	}
 
 	// 攻击+15%，攻速+30%，血量回复-20/s
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::屎山代码>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::屎山代码>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::屎山代码)
 			.Set_Name(U"屎山代码")
 			.Set_Desc(U"屎山代码's desc")
@@ -375,8 +377,8 @@ namespace Game {
 	}
 
 	// 最大血量-50%，攻速+100%，攻击-20%
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::福报>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::福报>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::福报)
 			.Set_Name(U"福报")
 			.Set_Desc(U"福报's desc")
@@ -387,8 +389,8 @@ namespace Game {
 	}
 
 	// 移速+2，闪避+3%
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::归宅部>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::归宅部>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::归宅部)
 			.Set_Name(U"归宅部")
 			.Set_Desc(U"归宅部's desc")
@@ -398,8 +400,8 @@ namespace Game {
 	}
 
 	// 攻击+3%，幸运+5，血量回复+5/s，攻速+5%，最大血量+5%，暴击率+3%，爆伤+5%
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::为什么我不是沪爷>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::为什么我不是沪爷>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::为什么我不是沪爷)
 			.Set_Name(U"为什么我不是沪爷")
 			.Set_Desc(U"为什么我不是沪爷's desc")
@@ -414,8 +416,8 @@ namespace Game {
 	}
 
 	// 幸运 +60，攻击 -10%，血量回复 -5/s
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::彩票研究者>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::彩票研究者>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::彩票研究者)
 			.Set_Name(U"彩票研究者")
 			.Set_Desc(U"彩票研究者's desc")
@@ -426,8 +428,8 @@ namespace Game {
 	}
 
 	// 闪避+15%，攻速 -10%，每3秒强制向后方冲刺0.5秒
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::社恐>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::社恐>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::社恐)
 			.Set_Name(U"社恐")
 			.Set_Desc([](xx::RichLabel* rl) {
@@ -444,8 +446,8 @@ namespace Game {
 	}
 
 	// 杀死小怪时攻击+3%（一局内）
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::肉食主义>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::肉食主义>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::肉食主义)
 			.Set_Name(U"肉食主义")
 			.Set_Desc([](xx::RichLabel* rl) {
@@ -458,8 +460,8 @@ namespace Game {
 	}
 
 	// 按下特殊键F进入10秒无敌状态，但是不能行动。一局一次
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::请假>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::请假>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::请假)
 			.Set_Name(U"请假")
 			.Set_Desc([](xx::RichLabel* rl) {
@@ -476,8 +478,8 @@ namespace Game {
 	}
 
 	// 攻击+40%，攻速+20%，每回合最大HP-10%，收获-10%
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::技术债>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::技术债>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::技术债)
 			.Set_Name(U"技术债")
 			.Set_Desc([](xx::RichLabel* rl) {
@@ -495,8 +497,8 @@ namespace Game {
 	}
 
 	// 攻击射出的子弹额外附加30%幸运值倍率的伤害
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::南无加特林机枪菩萨>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::南无加特林机枪菩萨>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::南无加特林机枪菩萨)
 			.Set_Name(U"南无加特林机枪菩萨")
 			.Set_Desc([](xx::RichLabel* rl) {
@@ -509,8 +511,8 @@ namespace Game {
 	}
 
 	// 最大血量提升，提升值为300%幸运值
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::南无阿弥陀佛>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::南无阿弥陀佛>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::南无阿弥陀佛)
 			.Set_Name(U"南无阿弥陀佛")
 			.Set_Desc([](xx::RichLabel* rl) {
@@ -523,8 +525,8 @@ namespace Game {
 	}
 
 	// 攻击-3%，幸运-5，血量回复-5/s，攻速-5%，最大血量-5%，暴击率-3%，爆伤-5%，收获+200
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::沪爷>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::沪爷>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::沪爷)
 			.Set_Name(U"沪爷")
 			.Set_Desc(U"沪爷's desc")
@@ -540,8 +542,8 @@ namespace Game {
 	}
 
 	// 按F生成一个好兄弟，好兄弟会进入15秒无敌状态，和玩家拥有相同的攻击力，怪物会优先攻击好兄弟。15秒后结束。一局一次
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::坐在后面的好兄弟>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::坐在后面的好兄弟>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::坐在后面的好兄弟)
 			.Set_Name(U"坐在后面的好兄弟")
 			.Set_Desc([](xx::RichLabel* rl) {
@@ -558,8 +560,8 @@ namespace Game {
 	}
 
 	// 生成3个好兄弟，拥有玩家50%攻击力和100%血量。自身攻击-25%，移速-1
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::团队Leader>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::团队Leader>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::团队Leader)
 			.Set_Name(U"团队Leader")
 			.Set_Desc([](xx::RichLabel* rl) {
@@ -578,8 +580,8 @@ namespace Game {
 	}
 
 	// 移速+5，护甲+30，攻击-100%
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::sudo_rm_rf>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::sudo_rm_rf>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::sudo_rm_rf)
 			.Set_Name(U"sudo_rm_rf")
 			.Set_Desc(U"sudo_rm_rf's desc")
@@ -590,8 +592,8 @@ namespace Game {
 	}
 
 	// 死亡时回复20%HP保证不死，一局一次。触发时对全体怪物造成100%幸运值+300%倍率的伤害。
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::裁员大动脉>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::裁员大动脉>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::裁员大动脉)
 			.Set_Name(U"裁员大动脉")
 			.Set_Desc([](xx::RichLabel* rl) {
@@ -608,8 +610,8 @@ namespace Game {
 	}
 
 	// 最大血量+50%，伤害+50%，下一回合以1%血量起步
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::筋肉兄贵>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::筋肉兄贵>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::筋肉兄贵)
 			.Set_Name(U"筋肉兄贵")
 			.Set_Desc([](xx::RichLabel* rl) {
@@ -624,8 +626,8 @@ namespace Game {
 	}
 
 	// 每回合结束时-50%~+100%代币
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::投资>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::投资>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::投资)
 			.Set_Name(U"投资")
 			.Set_Desc([](xx::RichLabel* rl) {
@@ -640,8 +642,8 @@ namespace Game {
 	}
 
 	// 无作用
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::劳动法>(xx::Node* parent_) {
-		return BuffRichLabelFiller{ parent_ }
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::劳动法>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_) {
+		return BuffRichLabelFiller{ parent_, nameWidth_, valueWidth_, pos_, anchor_ }
 			.Set_BuffType(BuffTypes::劳动法)
 			.Set_Name(U"劳动法")
 			.Set_Desc(U"无作用")
@@ -729,7 +731,7 @@ namespace Game {
 
 	inline void UI_BuffInfo::Init() {
 		this->Node::Init();
-		MakeChildren<xx::Scale9Sprite>()->Init(1, -cInfoMargin, { 1,1 }, {}, 100, gLooper.btnCfg);
+		MakeChildren<xx::Scale9Sprite>()->Init(1, -cInfoMargin, { 1,1 }, {}, 100, gLooper.buffInfoPanelCfg);
 	}
 
 	inline void UI_BuffInfo::Set(BuffTypes bt, XY pos) {
@@ -738,7 +740,7 @@ namespace Game {
 		}
 		position = pos;
 		FillTransRecursive();
-		auto rl = MakeBuffRichLabels[(int32_t)bt](this);
+		auto rl = MakeBuffRichLabels[(int32_t)bt](this, cFieldNameWidth, cValueWidth, 0, 0);
 		auto bg = (xx::Scale9Sprite*)children[0].pointer;
 		bg->size = { cFieldNameWidth + cValueWidth + cInfoMargin.x * 2, rl->size.y + cInfoMargin.y * 2 };
 	}
@@ -747,8 +749,19 @@ namespace Game {
 
 
 	
-	inline void UI_BuffShopGoodsItem::Init(Stage* stage_, XY pos, BuffTypes bt) {
+	inline void UI_BuffShopGoodsItem::Init(Stage* stage_, BuffTypes bt, int z_, XY const& pos_, XY const& anchor_, XY const& size_) {
 		stage = stage_;
+		auto& eb = EmptyButton::Init(z_, pos_, anchor_, gLooper.buffInfoPanelCfg, size_);
+		eb.onClicked = [this, bt] {
+			SwapRemoveFromParent();
+		};
+		auto y = size_.y;
+		y -= 20;	// margin
+		auto&& frame = gLooper.res.buff_[(int32_t)bt];
+		eb.MakeChildren<xx::Image>()->Init(z_ + 1, { size_.x / 2, y }, 1, { 0.5, 1 }, frame);
+		y -= 128;
+		auto rl = MakeBuffRichLabels[(int32_t)bt](&eb, UI_BuffInfo::cFieldNameWidth, UI_BuffInfo::cValueWidth, {20, y}, {0, 1});
+		// todo: Limit, Price
 	}
 
 
@@ -756,61 +769,24 @@ namespace Game {
 
 	inline void UI_BuffShopGoodsList::Init(Stage* stage_, int32_t z_, XY pos_, XY size_) {
 		stage = stage_;
-		Node::Init(z_, pos_);
-		MakeChildren<xx::Scale9Sprite>()->Init(z_+1, 0, { 1,1 }, {0, 1}, size_, gLooper.btnCfg);
+		Node::Init(z_, pos_, 1, { 0, 1 }, size_);
+		Refresh();
 	}
 
 	inline void UI_BuffShopGoodsList::Refresh() {
-		children.Clear();
 		// todo: getlist from player buffs
-		// make UI_BuffShopGoodsItem
 
-		//static constexpr XY goodsBtnSize{ 300, 450 };
-		//static constexpr float goodsNameWidth{ 150 };
-		//static constexpr float goodsBtnMargin{ 20 };
-		//static constexpr XY goodsBtnOffset{ leftPos + (goodsBtnSize.x * 3 + goodsBtnMargin * 2) / 2, 0 };
-		//static constexpr XY goodsBtnPoss[3] = { { goodsBtnOffset + XY{ -goodsBtnSize.x * 1.f - goodsBtnMargin, 0 } }, { goodsBtnOffset + XY{ 0, 0 } }, { goodsBtnOffset + XY{ goodsBtnSize.x * 1.f + goodsBtnMargin, 0 } } };
-		//static constexpr XY goodsBtnContentPoss[3] = { goodsBtnPoss[0] + XY{ 0, 200 }, goodsBtnPoss[1] + XY{ 0, 200 }, goodsBtnPoss[2] + XY{ 0, 200 } };
+		static constexpr float cMargin{ 30 };
+		float totalWidth = size.x - cMargin * 2;
+		float goodsWidth = totalWidth / 3;
+		float w = goodsWidth + cMargin;
 
-
-		//MakeChildren<xx::EmptyButton>()->Init(3, goodsBtnPoss[0], 0.5f, gLooper.btnCfg4, goodsBtnSize);
-		//MakeChildren<xx::EmptyButton>()->Init(3, goodsBtnPoss[1], 0.5f, gLooper.btnCfg4, goodsBtnSize);
-		//MakeChildren<xx::EmptyButton>()->Init(3, goodsBtnPoss[2], 0.5f, gLooper.btnCfg4, goodsBtnSize);
-
-		//static constexpr float goodsBtnContentWidth{ goodsBtnSize.x - goodsBtnMargin * 2 };
-		//auto goodsBtnIconFrame = gLooper.res.ui_money;
-		//static constexpr float goodsBtnIconDrawHeight{ 100 };
-		//auto goodsBtnIconScale = goodsBtnIconDrawHeight / goodsBtnIconFrame->spriteSize.y;
-		//auto goodsBtnIconDrawWidth = goodsBtnIconFrame->spriteSize.x * goodsBtnIconScale;
-		//{
-		//	// goods1
-		//	auto& rich = MakeChildren<xx::RichLabel>()->Init(4, goodsBtnContentPoss[0], 1, { 0.5f, 1 }, goodsBtnContentWidth);
-		//	rich.SetOffset(goodsBtnContentWidth / 2 - goodsBtnIconDrawWidth / 2).AddPicture(gLooper.res.ui_money, goodsBtnIconScale)
-		//		.AddLimitedWidthText(U"\n攻击倍率", goodsNameWidth, 2, xx::RGBA8_Black).AddRightText(U"+20%", 2, xx::RGBA8_Red)
-		//		.AddLimitedWidthText(U"\n每秒回血", goodsNameWidth, 2, xx::RGBA8_Black).AddRightText(U"-5%", 2, xx::RGBA8_Green)
-		//		.AddLimitedWidthText(U"\n最大血量", goodsNameWidth, 2, xx::RGBA8_Black).AddRightText(U"-5%", 2, xx::RGBA8_Green)
-		//		.Commit();
-		//}
-		//{
-		//	// goods2
-		//	auto& rich = MakeChildren<xx::RichLabel>()->Init(4, goodsBtnContentPoss[1], 1, { 0.5f, 1 }, goodsBtnContentWidth);
-		//	rich.SetOffset(goodsBtnContentWidth / 2 - goodsBtnIconDrawWidth / 2).AddPicture(gLooper.res.ui_money, goodsBtnIconScale)
-		//		.AddLimitedWidthText(U"\n攻击倍率", goodsNameWidth, 2, xx::RGBA8_Black).AddRightText(U"+20%", 2, xx::RGBA8_Red)
-		//		.AddLimitedWidthText(U"\n每秒回血", goodsNameWidth, 2, xx::RGBA8_Black).AddRightText(U"-5%", 2, xx::RGBA8_Green)
-		//		.AddLimitedWidthText(U"\n最大血量", goodsNameWidth, 2, xx::RGBA8_Black).AddRightText(U"-5%", 2, xx::RGBA8_Green)
-		//		.Commit();
-		//}
-		//{
-		//	// goods3
-		//	auto& rich = MakeChildren<xx::RichLabel>()->Init(4, goodsBtnContentPoss[2], 1, { 0.5f, 1 }, goodsBtnContentWidth);
-		//	rich.SetOffset(goodsBtnContentWidth / 2 - goodsBtnIconDrawWidth / 2).AddPicture(gLooper.res.ui_money, goodsBtnIconScale)
-		//		.AddLimitedWidthText(U"\n攻击倍率", goodsNameWidth, 2, xx::RGBA8_Black).AddRightText(U"+20%", 2, xx::RGBA8_Red)
-		//		.AddLimitedWidthText(U"\n每秒回血", goodsNameWidth, 2, xx::RGBA8_Black).AddRightText(U"-5%", 2, xx::RGBA8_Green)
-		//		.AddLimitedWidthText(U"\n最大血量", goodsNameWidth, 2, xx::RGBA8_Black).AddRightText(U"-5%", 2, xx::RGBA8_Green)
-		//		.Commit();
-		//}
-
+		MakeChildren<UI_BuffShopGoodsItem>()->Init(stage, BuffTypes::中药调理, z + 2, { w * 0, 0 }, 0, { goodsWidth, size.y });
+		MakeChildren<UI_BuffShopGoodsItem>()->Init(stage, BuffTypes::为什么我不是沪爷, z + 2, { w * 1, 0 }, 0, { goodsWidth, size.y });
+		MakeChildren<UI_BuffShopGoodsItem>()->Init(stage, BuffTypes::南无加特林机枪菩萨, z + 2, { w * 2, 0 }, 0, { goodsWidth, size.y });
 	}
+
+
 
 
 	inline void UI_PlayerStat::Init(Stage* stage_, int32_t z_, XY pos_) {
@@ -858,7 +834,7 @@ namespace Game {
 		static constexpr float topPos{ 440 };
 		static constexpr float bottomPos{ -440 };
 		static constexpr auto bgScale = 1080.f * 0.95f / gLooper.res._size_ui_paper.x;
-		static constexpr float buffBagHeight{ 200 };
+		static constexpr float buffBagHeight{ 100 };
 		static constexpr XY moneyIconSize{ 50, 50 };
 		static constexpr float globalMargin{ 30 };
 		static constexpr float moneyIconScale{ moneyIconSize.x / gLooper.res._size_ui_money.x };

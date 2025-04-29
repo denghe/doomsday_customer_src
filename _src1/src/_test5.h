@@ -2,47 +2,47 @@
 
 namespace Game {
 	
-	template<BuffTypes bt> xx::RichLabel* MakeBuffRichLabel(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::__Default__>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::_996>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::中药调理>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::跑步机>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::眼镜>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::肘击>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::加班餐>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::冲刺鞋子>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::旋转办公椅>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::塑料友情>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::钢板>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::海底捞>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::义愤填膺>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::国潮外卖>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::躺平>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::社交牛逼症>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::风水大师>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::CRUD糕手>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::动漫达人>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::屎山代码>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::福报>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::归宅部>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::为什么我不是沪爷>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::彩票研究者>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::社恐>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::肉食主义>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::请假>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::技术债>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::南无加特林机枪菩萨>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::南无阿弥陀佛>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::沪爷>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::坐在后面的好兄弟>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::团队Leader>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::sudo_rm_rf>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::裁员大动脉>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::筋肉兄贵>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::投资>(xx::Node* parent_);
-	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::劳动法>(xx::Node* parent_);
+	template<BuffTypes bt> xx::RichLabel* MakeBuffRichLabel(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::__Default__>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::_996>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::中药调理>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::跑步机>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::眼镜>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::肘击>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::加班餐>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::冲刺鞋子>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::旋转办公椅>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::塑料友情>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::钢板>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::海底捞>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::义愤填膺>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::国潮外卖>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::躺平>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::社交牛逼症>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::风水大师>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::CRUD糕手>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::动漫达人>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::屎山代码>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::福报>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::归宅部>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::为什么我不是沪爷>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::彩票研究者>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::社恐>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::肉食主义>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::请假>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::技术债>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::南无加特林机枪菩萨>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::南无阿弥陀佛>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::沪爷>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::坐在后面的好兄弟>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::团队Leader>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::sudo_rm_rf>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::裁员大动脉>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::筋肉兄贵>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::投资>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
+	template<> xx::RichLabel* MakeBuffRichLabel<BuffTypes::劳动法>(xx::Node* parent_, float nameWidth_, float valueWidth_, XY pos_, XY anchor_);
 
-	typedef xx::RichLabel*(*Func_MakeBuffRichLabel)(xx::Node*);
+	typedef xx::RichLabel*(*Func_MakeBuffRichLabel)(xx::Node*, float, float, XY, XY);
 	static constexpr Func_MakeBuffRichLabel MakeBuffRichLabels[(int32_t)BuffTypes::__MaxValue__] = {
 		MakeBuffRichLabel<BuffTypes::__Default__>,
 		MakeBuffRichLabel<BuffTypes::_996>,
@@ -113,9 +113,9 @@ namespace Game {
 
 
 	struct UI_BuffInfo : xx::Node {
-		static constexpr float cFieldNameWidth{ 280 };
+		static constexpr float cFieldNameWidth{ 200 };
 		static constexpr float cValueWidth{ 70 };
-		static constexpr XY cInfoMargin{ 10, 10 };
+		static constexpr XY cInfoMargin{ 20, 20 };
 		void Init();
 		void Set(BuffTypes bt, XY pos);
 	};
@@ -123,7 +123,7 @@ namespace Game {
 	// UI_BuffShopGoodsList's children
 	struct UI_BuffShopGoodsItem : xx::EmptyButton {
 		Stage* stage{};
-		void Init(Stage* stage_, XY pos, BuffTypes bt);
+		void Init(Stage* stage_, BuffTypes bt, int z_, XY const& pos_, XY const& anchor_, XY const& size_);
 	};
 
 	// UI_BuffShop's children
