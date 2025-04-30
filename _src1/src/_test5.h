@@ -106,7 +106,7 @@ namespace Game {
 		int32_t numCols{}, numRows{};
 
 		UI_BuffsContent* Init(Stage* stage_, UI_BuffBag* buffBag_);
-		void UpdateSize();
+		void Refresh();
 		BuffTypes* TryGetMousePosItem();	// for show info
 		void Draw() override;
 	};

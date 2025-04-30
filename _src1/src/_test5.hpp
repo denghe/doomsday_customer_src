@@ -668,11 +668,11 @@ namespace Game {
 		buffBag = buffBag_;
 		Node::Init(buffBag_->z + 1, {}, { 1,1 }, {}, buffBag_->size);
 
-		UpdateSize();
+		Refresh();
 		return this;
 	}
 
-	inline void UI_BuffsContent::UpdateSize() {
+	inline void UI_BuffsContent::Refresh() {
 		auto& items = stage->player->buffs.logs;
 		// calc bag grid size
 		numCols = int32_t(buffBag->size.x + cItemMargin.x) / int32_t(cItemSize.x + cItemMargin.x);
@@ -753,13 +753,18 @@ namespace Game {
 		stage = stage_;
 		auto& eb = EmptyButton::Init(z_, pos_, anchor_, gLooper.buffInfoPanelCfg, size_);
 		eb.onClicked = [this, bt] {
-			SwapRemoveFromParent();
+			if (stage->player->buffs.TryAdd(bt)) {
+				auto shop = (UI_BuffShop*)parent->parent.GetPointer();
+				shop->buffBag->content->Refresh();
+				SwapRemoveFromParent();
+			}
+			// todo: else show error?
 		};
 		auto y = size_.y;
-		y -= 20;	// margin
+		y = y - 20 - 64;
 		auto&& frame = gLooper.res.buff_[(int32_t)bt];
-		eb.MakeChildren<xx::Image>()->Init(z_ + 1, { size_.x / 2, y }, 1, { 0.5, 1 }, frame);
-		y -= 128;
+		eb.MakeChildren<xx::Image>()->Init(z_ + 1, { size_.x / 2, y }, 1, { 0.5, 0.5 }, frame);
+		y = y - 64 - 10;
 		auto rl = MakeBuffRichLabels[(int32_t)bt](&eb, UI_BuffInfo::cFieldNameWidth, UI_BuffInfo::cValueWidth, {20, y}, {0, 1});
 		// todo: Limit, Price
 	}
@@ -774,16 +779,18 @@ namespace Game {
 	}
 
 	inline void UI_BuffShopGoodsList::Refresh() {
-		// todo: getlist from player buffs
-
 		static constexpr float cMargin{ 30 };
 		float totalWidth = size.x - cMargin * 2;
 		float goodsWidth = totalWidth / 3;
 		float w = goodsWidth + cMargin;
 
-		MakeChildren<UI_BuffShopGoodsItem>()->Init(stage, BuffTypes::中药调理, z + 2, { w * 0, 0 }, 0, { goodsWidth, size.y });
-		MakeChildren<UI_BuffShopGoodsItem>()->Init(stage, BuffTypes::为什么我不是沪爷, z + 2, { w * 1, 0 }, 0, { goodsWidth, size.y });
-		MakeChildren<UI_BuffShopGoodsItem>()->Init(stage, BuffTypes::南无加特林机枪菩萨, z + 2, { w * 2, 0 }, 0, { goodsWidth, size.y });
+		children.Clear();
+
+		std::array<BuffTypes, 3> buffs;
+		auto len = stage->player->buffs.GetShopBuffs(buffs.data(), 3);
+		for (int32_t i = 0; i < len; ++i) {
+			MakeChildren<UI_BuffShopGoodsItem>()->Init(stage, buffs[i], z + 2, {w * i, 0}, 0, {goodsWidth, size.y});
+		}
 	}
 
 
@@ -857,7 +864,8 @@ namespace Game {
 		// button: refresh goodsList
 		auto&& refreshBtn = MakeChildren<xx::IconButton>();
 		refreshBtn->Init(3, { rightPos, topPos }, 1, gLooper.btnCfg3i, gLooper.res.ui_refresh, U"$123", {}, xx::RGBA8_Black).onClicked = [&]() {
-			// todo
+			// todo: - money. when money is not enough ? show tips ?
+			goodsList->Refresh();
 		};
 
 		// player stat panel
@@ -899,15 +907,9 @@ namespace Game {
 		ground.Emplace()->Init(this, mapSize, gLooper.res.ground_cell2);
 		player.Emplace<Player_1>()->Init(this);
 
-		// fill player buff for test
-		for (int32_t i = 1; i < (int32_t)BuffTypes::__MaxValue__; ++i) {
-			player->buffs.logs.emplace_back((BuffTypes)i);
-		}
-
+		// requires: after player init. need read player's STAT
 		buffInfo.Emplace()->Init();
-
 		buffShop.Emplace()->Init(this);
-
 
 		camera.scale = 1.f;
 		camera.mapSize = mapSize;

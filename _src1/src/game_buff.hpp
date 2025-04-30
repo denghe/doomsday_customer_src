@@ -258,6 +258,7 @@ namespace Game {
 		if (nums[i] < BuffLimits[i]) {
 			++nums[i];
 			BuffAddTos[i](*this);
+			logs.emplace_back(bt);
 			return true;
 		}
 		return false;
@@ -285,7 +286,7 @@ namespace Game {
 		assert(buff && buffLen > 0);
 		FillRanks();
 		auto& rnd = owner->stage->rnd;
-		std::array<std::pair<BuffTypes, Stat_t>, numBuffers> steps;			// tmp container
+		std::array<std::pair<BuffTypes, Stat_t>, numBuffers + 1> steps;		// tmp container
 		steps[0] = { BuffTypes::__Default__, (Stat_t)0 };
 		auto ns = nums;								// copy for calc
 		int32_t rtv{};														// filled len
