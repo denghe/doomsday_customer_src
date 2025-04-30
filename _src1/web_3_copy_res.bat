@@ -1,1 +1,1 @@
-xcopy build2\res\*.* ..\docs\res\ /y
+xcopy res\*.* ..\docs\res\ /y
