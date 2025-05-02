@@ -149,7 +149,7 @@ namespace Game {
 
 		BuffContainer buffs;
 		StatCfg statCfg;
-		void StatCalc();
+		void StatCalc(StatPanel cfg);
 		void OnRoundBegin();
 		void OnRoundEnd();
 		void OnKilled(Creature* tar);
@@ -172,7 +172,13 @@ namespace Game {
 
 	// player's base
 	struct Player : Creature {
-		// todo
+		static constexpr int32_t cProtectFrameCount{ int32_t(Cfg::fps * 1) };	// invincibility frame
+		int32_t ProtectFrame{};
+
+		void Knockback(float speed, XY const& d);
+		int32_t Hurt();
+		int32_t MoveToPosition(xx::XY targetPos, float targetRadius);
+
 	};
 
 	// monster's base

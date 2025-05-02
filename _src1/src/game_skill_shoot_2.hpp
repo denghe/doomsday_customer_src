@@ -38,7 +38,6 @@ namespace Game {
 		}
 
 		while (i > stage->time) {
-			xx::CoutN("ShootDelay");
 			XX_YIELD_I(n);
 		}
 		i = stage->time + cCastDelayFrames;

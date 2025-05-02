@@ -12,7 +12,8 @@ namespace Game {
 		radians = 0;
 
 		statCfg = statCfg_;
-		StatCalc();
+		sp = statCfg.init;
+		StatCalc(sp);
 		healthPoint = healthPointMax;
 
 		whiteColorEndTime = 0;

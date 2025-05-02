@@ -14,12 +14,13 @@ namespace Game {
 
 		// todo:
 		// statCfg.init.xxxxxx = ?????
-		StatCalc();
+		sp = statCfg.init;
+		StatCalc(sp);
 		healthPoint = healthPointMax;
 
 		// add init skill
 		skills.Emplace().Emplace<Skill_Control>()->Init(this);
-		skills.Emplace().Emplace<Skill_Shoot_1>()->Init(this);
+		//skills.Emplace().Emplace<Skill_Shoot_1>()->Init(this);
 	}
 
 	inline int32_t Player_3::Update() {

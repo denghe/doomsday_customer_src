@@ -11,8 +11,8 @@ namespace Game {
 		radius = frame->spriteSize.x * 0.5f;
 		radians = 0;
 
-		// todo: fill statCfg
-		StatCalc();
+		sp = statCfg.init;
+		StatCalc(sp);
 		healthPoint = healthPointMax;
 
 		whiteColorEndTime = 0;

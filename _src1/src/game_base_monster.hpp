@@ -59,7 +59,7 @@ namespace Game {
 			Idle();	// always play this anim
 		}
 
-		StatCalc();
+		StatCalc(sp);
 
 		// todo
 		return destroyTime <= stage->time;

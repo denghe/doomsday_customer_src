@@ -83,7 +83,7 @@ namespace Game {
 		static constexpr Stat_t defenseFactor{ 66 };
 		static constexpr Stat_t luckyToHealthRegenerationRatio{ 0.01 };
 		static constexpr Stat_t luckyToDamageRatio{ 0.01 };
-		static constexpr Stat_t luckyTocriticalChanceRatio{ 0.001 };
+		static constexpr Stat_t luckyToCriticalChanceRatio{ 0.001 };
 
 		static constexpr StatPanel rangeFrom{	// min val
 			.healthPoint = 1,

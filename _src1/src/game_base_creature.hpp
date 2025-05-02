@@ -2,9 +2,9 @@
 
 namespace Game {
 
-	inline void Creature::StatCalc() {
+	inline void Creature::StatCalc(StatPanel cfg) {
 		// gather points & results from buffs
-		sp = statCfg.init;
+		//sp = statCfg.init;
 		//for (int32_t i = 0; i < StatPanel::numFields; ++i) {
 		//	sp[i] += buffs.sp[i];
 		//}
@@ -12,7 +12,7 @@ namespace Game {
 		// calculate
 		sp.healthRegeneration += sp.luckyPoint * statCfg.luckyToHealthRegenerationRatio;
 		sp.damageRatio += sp.luckyPoint * statCfg.luckyToDamageRatio;
-		sp.criticalChance += sp.luckyPoint * statCfg.luckyTocriticalChanceRatio;
+		sp.criticalChance += sp.luckyPoint * statCfg.luckyToCriticalChanceRatio;
 
 		// apply limit rules
 		for (int32_t i = 0; i < StatPanel::numFields; ++i) {
@@ -50,7 +50,7 @@ namespace Game {
 		else {
 			sp.damageRatio += sp.luckyPoint * statCfg.luckyToDamageRatio;
 		}
-		sp.criticalChance += sp.luckyPoint * statCfg.luckyTocriticalChanceRatio;
+		sp.criticalChance += sp.luckyPoint * statCfg.luckyToCriticalChanceRatio;
 
 		// apply limit rules
 		for (int32_t i = 0; i < StatPanel::numFields; ++i) {

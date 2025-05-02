@@ -2,7 +2,7 @@
 
 namespace Game {
 	struct Skill_DashAttack : Skill {
-		static constexpr float cCastDelaySeconds{ 10.f };
+		static constexpr float cCastDelaySeconds{ 5.f };
 		static constexpr int32_t cCastDelayFrames{ int32_t(cCastDelaySeconds * Cfg::fps) };
 		static constexpr float cDashDelaySeconds{ 1.f };
 		static constexpr int32_t cDashDelayFrames{ int32_t(cDashDelaySeconds * Cfg::fps) };

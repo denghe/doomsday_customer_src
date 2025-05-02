@@ -14,7 +14,8 @@ namespace Game {
 
 		// todo:
 		// statCfg.init.xxxxxx = ?????
-		StatCalc();
+		
+		StatCalc(sp);
 		healthPoint = healthPointMax;
 
 		// add init skill

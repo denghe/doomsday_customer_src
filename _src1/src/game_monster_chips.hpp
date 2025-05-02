@@ -13,7 +13,9 @@ namespace Game {
 		radians = 0;
 
 		// todo: fill init stat
-		StatCalc();
+		sp = statCfg.init;
+		sp.healthPoint = 15 + 5 * stage->roundId;
+		StatCalc(sp);
 		healthPoint = healthPointMax;
 
 		whiteColorEndTime = 0;
@@ -23,7 +25,7 @@ namespace Game {
 		tarOffset = stage->GetRndPosDoughnut(tarOffsetRadius, 0.1f);
 
 		skills.Emplace().Emplace<Skill_MoveToPlayer>()->Init(this);
-		skills.Emplace().Emplace<Skill_DashAttack>()->Init(this);
+		skills.Emplace().Emplace<Skill_Attack>()->Init(this);
 	}
 
 	int32_t Monster_Chips::Update() {
