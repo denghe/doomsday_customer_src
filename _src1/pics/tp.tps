@@ -248,6 +248,7 @@
             <key type="filename">pngs/buff_8.png</key>
             <key type="filename">pngs/buff_9.png</key>
             <key type="filename">pngs/ground_cell2.png</key>
+            <key type="filename">pngs/ground_cell3.png</key>
             <key type="filename">pngs/icon_harvest.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -690,6 +691,51 @@
                 <rect>8,8,16,16</rect>
                 <key>scale9Paddings</key>
                 <rect>8,8,16,16</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass_1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.509804,0.983871</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>13,16,25,31</rect>
+                <key>scale9Paddings</key>
+                <rect>13,16,25,31</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass_2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.71875,0.98913</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>16,23,32,46</rect>
+                <key>scale9Paddings</key>
+                <rect>16,23,32,46</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass_3.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.486111,0.95</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>18,15,36,30</rect>
+                <key>scale9Paddings</key>
+                <rect>18,15,36,30</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

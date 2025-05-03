@@ -11,28 +11,28 @@ struct ResTpFrames {
 	GLuint _texid_buff_0{};	// unsafe
 	static constexpr xx::XY _size_buff_0{ 128, 117 };
 	static constexpr xx::XY _anchor_buff_0{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_0{ 400, 766, 128, 117 };
+	static constexpr xx::UVRect _uvrect_buff_0{ 400, 767, 128, 117 };
 
 	xx::Ref<xx::Frame> buff_1;
 	xx::Ref<xx::GLTexture> _tex_buff_1;
 	GLuint _texid_buff_1{};	// unsafe
 	static constexpr xx::XY _size_buff_1{ 128, 66 };
 	static constexpr xx::XY _anchor_buff_1{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_1{ 523, 1208, 128, 66 };
+	static constexpr xx::UVRect _uvrect_buff_1{ 389, 1115, 128, 66 };
 
 	xx::Ref<xx::Frame> buff_10;
 	xx::Ref<xx::GLTexture> _tex_buff_10;
 	GLuint _texid_buff_10{};	// unsafe
 	static constexpr xx::XY _size_buff_10{ 128, 111 };
 	static constexpr xx::XY _anchor_buff_10{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_10{ 264, 885, 128, 111 };
+	static constexpr xx::UVRect _uvrect_buff_10{ 855, 890, 128, 111 };
 
 	xx::Ref<xx::Frame> buff_11;
 	xx::Ref<xx::GLTexture> _tex_buff_11;
 	GLuint _texid_buff_11{};	// unsafe
 	static constexpr xx::XY _size_buff_11{ 128, 89 };
 	static constexpr xx::XY _anchor_buff_11{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_11{ 769, 1075, 128, 89 };
+	static constexpr xx::UVRect _uvrect_buff_11{ 5, 1235, 128, 89 };
 
 	xx::Ref<xx::Frame> buff_12;
 	xx::Ref<xx::GLTexture> _tex_buff_12;
@@ -53,14 +53,14 @@ struct ResTpFrames {
 	GLuint _texid_buff_14{};	// unsafe
 	static constexpr xx::XY _size_buff_14{ 128, 109 };
 	static constexpr xx::XY _anchor_buff_14{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_14{ 5, 998, 128, 109 };
+	static constexpr xx::UVRect _uvrect_buff_14{ 534, 880, 128, 109 };
 
 	xx::Ref<xx::Frame> buff_15;
 	xx::Ref<xx::GLTexture> _tex_buff_15;
 	GLuint _texid_buff_15{};	// unsafe
 	static constexpr xx::XY _size_buff_15{ 128, 126 };
 	static constexpr xx::XY _anchor_buff_15{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_15{ 776, 841, 128, 126 };
+	static constexpr xx::UVRect _uvrect_buff_15{ 5, 498, 128, 126 };
 
 	xx::Ref<xx::Frame> buff_16;
 	xx::Ref<xx::GLTexture> _tex_buff_16;
@@ -74,7 +74,7 @@ struct ResTpFrames {
 	GLuint _texid_buff_17{};	// unsafe
 	static constexpr xx::XY _size_buff_17{ 128, 108 };
 	static constexpr xx::XY _anchor_buff_17{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_17{ 398, 889, 128, 108 };
+	static constexpr xx::UVRect _uvrect_buff_17{ 398, 890, 128, 108 };
 
 	xx::Ref<xx::Frame> buff_18;
 	xx::Ref<xx::GLTexture> _tex_buff_18;
@@ -88,14 +88,14 @@ struct ResTpFrames {
 	GLuint _texid_buff_19{};	// unsafe
 	static constexpr xx::XY _size_buff_19{ 128, 116 };
 	static constexpr xx::XY _anchor_buff_19{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_19{ 534, 887, 128, 116 };
+	static constexpr xx::UVRect _uvrect_buff_19{ 264, 771, 128, 116 };
 
 	xx::Ref<xx::Frame> buff_2;
 	xx::Ref<xx::GLTexture> _tex_buff_2;
 	GLuint _texid_buff_2{};	// unsafe
 	static constexpr xx::XY _size_buff_2{ 128, 105 };
 	static constexpr xx::XY _anchor_buff_2{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_2{ 5, 1113, 128, 105 };
+	static constexpr xx::UVRect _uvrect_buff_2{ 532, 995, 128, 105 };
 
 	xx::Ref<xx::Frame> buff_20;
 	xx::Ref<xx::GLTexture> _tex_buff_20;
@@ -109,21 +109,21 @@ struct ResTpFrames {
 	GLuint _texid_buff_21{};	// unsafe
 	static constexpr xx::XY _size_buff_21{ 128, 126 };
 	static constexpr xx::XY _anchor_buff_21{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_21{ 5, 498, 128, 126 };
+	static constexpr xx::UVRect _uvrect_buff_21{ 5, 630, 128, 126 };
 
 	xx::Ref<xx::Frame> buff_22;
 	xx::Ref<xx::GLTexture> _tex_buff_22;
 	GLuint _texid_buff_22{};	// unsafe
 	static constexpr xx::XY _size_buff_22{ 95, 128 };
 	static constexpr xx::XY _anchor_buff_22{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_22{ 668, 952, 95, 128 };
+	static constexpr xx::UVRect _uvrect_buff_22{ 630, 1273, 95, 128 };
 
 	xx::Ref<xx::Frame> buff_23;
 	xx::Ref<xx::GLTexture> _tex_buff_23;
 	GLuint _texid_buff_23{};	// unsafe
 	static constexpr xx::XY _size_buff_23{ 128, 87 };
 	static constexpr xx::XY _anchor_buff_23{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_23{ 389, 1116, 128, 87 };
+	static constexpr xx::UVRect _uvrect_buff_23{ 666, 1072, 128, 87 };
 
 	xx::Ref<xx::Frame> buff_24;
 	xx::Ref<xx::GLTexture> _tex_buff_24;
@@ -137,28 +137,28 @@ struct ResTpFrames {
 	GLuint _texid_buff_25{};	// unsafe
 	static constexpr xx::XY _size_buff_25{ 128, 96 };
 	static constexpr xx::XY _anchor_buff_25{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_25{ 5, 1224, 128, 96 };
+	static constexpr xx::UVRect _uvrect_buff_25{ 255, 1111, 128, 96 };
 
 	xx::Ref<xx::Frame> buff_26;
 	xx::Ref<xx::GLTexture> _tex_buff_26;
 	GLuint _texid_buff_26{};	// unsafe
 	static constexpr xx::XY _size_buff_26{ 128, 112 };
 	static constexpr xx::XY _anchor_buff_26{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_26{ 5, 880, 128, 112 };
+	static constexpr xx::UVRect _uvrect_buff_26{ 587, 762, 128, 112 };
 
 	xx::Ref<xx::Frame> buff_27;
 	xx::Ref<xx::GLTexture> _tex_buff_27;
 	GLuint _texid_buff_27{};	// unsafe
 	static constexpr xx::XY _size_buff_27{ 123, 128 };
 	static constexpr xx::XY _anchor_buff_27{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_27{ 657, 1255, 123, 128 };
+	static constexpr xx::UVRect _uvrect_buff_27{ 5, 1330, 123, 128 };
 
 	xx::Ref<xx::Frame> buff_28;
 	xx::Ref<xx::GLTexture> _tex_buff_28;
 	GLuint _texid_buff_28{};	// unsafe
 	static constexpr xx::XY _size_buff_28{ 127, 128 };
 	static constexpr xx::XY _anchor_buff_28{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_28{ 389, 1209, 127, 128 };
+	static constexpr xx::UVRect _uvrect_buff_28{ 389, 1187, 127, 128 };
 
 	xx::Ref<xx::Frame> buff_29;
 	xx::Ref<xx::GLTexture> _tex_buff_29;
@@ -172,7 +172,7 @@ struct ResTpFrames {
 	GLuint _texid_buff_3{};	// unsafe
 	static constexpr xx::XY _size_buff_3{ 128, 120 };
 	static constexpr xx::XY _anchor_buff_3{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_3{ 534, 761, 128, 120 };
+	static constexpr xx::UVRect _uvrect_buff_3{ 5, 762, 128, 120 };
 
 	xx::Ref<xx::Frame> buff_30;
 	xx::Ref<xx::GLTexture> _tex_buff_30;
@@ -186,14 +186,14 @@ struct ResTpFrames {
 	GLuint _texid_buff_31{};	// unsafe
 	static constexpr xx::XY _size_buff_31{ 128, 113 };
 	static constexpr xx::XY _anchor_buff_31{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_31{ 5, 761, 128, 113 };
+	static constexpr xx::UVRect _uvrect_buff_31{ 5, 1014, 128, 113 };
 
 	xx::Ref<xx::Frame> buff_32;
 	xx::Ref<xx::GLTexture> _tex_buff_32;
 	GLuint _texid_buff_32{};	// unsafe
 	static constexpr xx::XY _size_buff_32{ 126, 128 };
 	static constexpr xx::XY _anchor_buff_32{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_32{ 798, 1170, 126, 128 };
+	static constexpr xx::UVRect _uvrect_buff_32{ 253, 1213, 126, 128 };
 
 	xx::Ref<xx::Frame> buff_33;
 	xx::Ref<xx::GLTexture> _tex_buff_33;
@@ -207,35 +207,35 @@ struct ResTpFrames {
 	GLuint _texid_buff_34{};	// unsafe
 	static constexpr xx::XY _size_buff_34{ 128, 105 };
 	static constexpr xx::XY _anchor_buff_34{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_34{ 255, 1115, 128, 105 };
+	static constexpr xx::UVRect _uvrect_buff_34{ 396, 1004, 128, 105 };
 
 	xx::Ref<xx::Frame> buff_35;
 	xx::Ref<xx::GLTexture> _tex_buff_35;
 	GLuint _texid_buff_35{};	// unsafe
 	static constexpr xx::XY _size_buff_35{ 128, 107 };
 	static constexpr xx::XY _anchor_buff_35{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_35{ 262, 1002, 128, 107 };
+	static constexpr xx::UVRect _uvrect_buff_35{ 262, 893, 128, 107 };
 
 	xx::Ref<xx::Frame> buff_36;
 	xx::Ref<xx::GLTexture> _tex_buff_36;
 	GLuint _texid_buff_36{};	// unsafe
 	static constexpr xx::XY _size_buff_36{ 105, 128 };
 	static constexpr xx::XY _anchor_buff_36{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_36{ 910, 891, 105, 128 };
+	static constexpr xx::UVRect _uvrect_buff_36{ 139, 1291, 105, 128 };
 
 	xx::Ref<xx::Frame> buff_37;
 	xx::Ref<xx::GLTexture> _tex_buff_37;
 	GLuint _texid_buff_37{};	// unsafe
 	static constexpr xx::XY _size_buff_37{ 123, 128 };
 	static constexpr xx::XY _anchor_buff_37{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_37{ 522, 1280, 123, 128 };
+	static constexpr xx::UVRect _uvrect_buff_37{ 800, 1101, 123, 128 };
 
 	xx::Ref<xx::Frame> buff_4;
 	xx::Ref<xx::GLTexture> _tex_buff_4;
 	GLuint _texid_buff_4{};	// unsafe
 	static constexpr xx::XY _size_buff_4{ 128, 79 };
 	static constexpr xx::XY _anchor_buff_4{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_4{ 664, 1170, 128, 79 };
+	static constexpr xx::UVRect _uvrect_buff_4{ 530, 1106, 128, 79 };
 
 	xx::Ref<xx::Frame> buff_5;
 	xx::Ref<xx::GLTexture> _tex_buff_5;
@@ -249,14 +249,14 @@ struct ResTpFrames {
 	GLuint _texid_buff_6{};	// unsafe
 	static constexpr xx::XY _size_buff_6{ 128, 96 };
 	static constexpr xx::XY _anchor_buff_6{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_6{ 769, 973, 128, 96 };
+	static constexpr xx::UVRect _uvrect_buff_6{ 5, 1133, 128, 96 };
 
 	xx::Ref<xx::Frame> buff_7;
 	xx::Ref<xx::GLTexture> _tex_buff_7;
 	GLuint _texid_buff_7{};	// unsafe
 	static constexpr xx::XY _size_buff_7{ 128, 88 };
 	static constexpr xx::XY _anchor_buff_7{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_7{ 530, 1114, 128, 88 };
+	static constexpr xx::UVRect _uvrect_buff_7{ 802, 1007, 128, 88 };
 
 	xx::Ref<xx::Frame> buff_8;
 	xx::Ref<xx::GLTexture> _tex_buff_8;
@@ -284,7 +284,7 @@ struct ResTpFrames {
 	GLuint _texid_bullet_coin10{};	// unsafe
 	static constexpr xx::XY _size_bullet_coin10{ 128, 127 };
 	static constexpr xx::XY _anchor_bullet_coin10{ 0.507813, 0.062992 };
-	static constexpr xx::UVRect _uvrect_bullet_coin10{ 534, 628, 128, 127 };
+	static constexpr xx::UVRect _uvrect_bullet_coin10{ 738, 708, 128, 127 };
 
 	xx::Ref<xx::Frame> bullet_coin5;
 	xx::Ref<xx::GLTexture> _tex_bullet_coin5;
@@ -298,7 +298,7 @@ struct ResTpFrames {
 	GLuint _texid_bullet_lightpoint{};	// unsafe
 	static constexpr xx::XY _size_bullet_lightpoint{ 47, 47 };
 	static constexpr xx::XY _anchor_bullet_lightpoint{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_bullet_lightpoint{ 534, 510, 47, 47 };
+	static constexpr xx::UVRect _uvrect_bullet_lightpoint{ 534, 742, 47, 47 };
 
 	xx::Ref<xx::Frame> button;
 	xx::Ref<xx::GLTexture> _tex_button;
@@ -319,21 +319,21 @@ struct ResTpFrames {
 	GLuint _texid_ef_atkspd{};	// unsafe
 	static constexpr xx::XY _size_ef_atkspd{ 102, 102 };
 	static constexpr xx::XY _anchor_ef_atkspd{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_ef_atkspd{ 668, 628, 102, 102 };
+	static constexpr xx::UVRect _uvrect_ef_atkspd{ 664, 1165, 102, 102 };
 
 	xx::Ref<xx::Frame> ef_heal;
 	xx::Ref<xx::GLTexture> _tex_ef_heal;
 	GLuint _texid_ef_heal{};	// unsafe
 	static constexpr xx::XY _size_ef_heal{ 102, 102 };
 	static constexpr xx::XY _anchor_ef_heal{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_ef_heal{ 668, 736, 102, 102 };
+	static constexpr xx::UVRect _uvrect_ef_heal{ 522, 1191, 102, 102 };
 
 	xx::Ref<xx::Frame> ef_money;
 	xx::Ref<xx::GLTexture> _tex_ef_money;
 	GLuint _texid_ef_money{};	// unsafe
 	static constexpr xx::XY _size_ef_money{ 102, 102 };
 	static constexpr xx::XY _anchor_ef_money{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_ef_money{ 668, 844, 102, 102 };
+	static constexpr xx::UVRect _uvrect_ef_money{ 772, 1235, 102, 102 };
 
 	xx::Ref<xx::Frame> ef_starlight;
 	xx::Ref<xx::GLTexture> _tex_ef_starlight;
@@ -341,6 +341,27 @@ struct ResTpFrames {
 	static constexpr xx::XY _size_ef_starlight{ 32, 32 };
 	static constexpr xx::XY _anchor_ef_starlight{ 0.5, 0.5 };
 	static constexpr xx::UVRect _uvrect_ef_starlight{ 588, 225, 32, 32 };
+
+	xx::Ref<xx::Frame> env_grass_1;
+	xx::Ref<xx::GLTexture> _tex_env_grass_1;
+	GLuint _texid_env_grass_1{};	// unsafe
+	static constexpr xx::XY _size_env_grass_1{ 51, 62 };
+	static constexpr xx::XY _anchor_env_grass_1{ 0.509804, 0.016129 };
+	static constexpr xx::UVRect _uvrect_env_grass_1{ 534, 674, 51, 62 };
+
+	xx::Ref<xx::Frame> env_grass_2;
+	xx::Ref<xx::GLTexture> _tex_env_grass_2;
+	GLuint _texid_env_grass_2{};	// unsafe
+	static constexpr xx::XY _size_env_grass_2{ 64, 92 };
+	static constexpr xx::XY _anchor_env_grass_2{ 0.71875, 0.01087 };
+	static constexpr xx::UVRect _uvrect_env_grass_2{ 534, 576, 64, 92 };
+
+	xx::Ref<xx::Frame> env_grass_3;
+	xx::Ref<xx::GLTexture> _tex_env_grass_3;
+	GLuint _texid_env_grass_3{};	// unsafe
+	static constexpr xx::XY _size_env_grass_3{ 72, 60 };
+	static constexpr xx::XY _anchor_env_grass_3{ 0.486111, 0.05 };
+	static constexpr xx::UVRect _uvrect_env_grass_3{ 534, 510, 72, 60 };
 
 	xx::Ref<xx::Frame> font_outline_100;
 	xx::Ref<xx::GLTexture> _tex_font_outline_100;
@@ -1021,40 +1042,47 @@ struct ResTpFrames {
 	static constexpr xx::XY _anchor_ground_cell2{ 0.5, 0.5 };
 	static constexpr xx::UVRect _uvrect_ground_cell2{ 5, 364, 128, 128 };
 
+	xx::Ref<xx::Frame> ground_cell3;
+	xx::Ref<xx::GLTexture> _tex_ground_cell3;
+	GLuint _texid_ground_cell3{};	// unsafe
+	static constexpr xx::XY _size_ground_cell3{ 128, 128 };
+	static constexpr xx::XY _anchor_ground_cell3{ 0.5, 0.5 };
+	static constexpr xx::UVRect _uvrect_ground_cell3{ 266, 379, 128, 128 };
+
 	xx::Ref<xx::Frame> icon_arrows;
 	xx::Ref<xx::GLTexture> _tex_icon_arrows;
 	GLuint _texid_icon_arrows{};	// unsafe
 	static constexpr xx::XY _size_icon_arrows{ 128, 125 };
 	static constexpr xx::XY _anchor_icon_arrows{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_icon_arrows{ 5, 630, 128, 125 };
+	static constexpr xx::UVRect _uvrect_icon_arrows{ 266, 513, 128, 125 };
 
 	xx::Ref<xx::Frame> icon_clover;
 	xx::Ref<xx::GLTexture> _tex_icon_clover;
 	GLuint _texid_icon_clover{};	// unsafe
 	static constexpr xx::XY _size_icon_clover{ 128, 127 };
 	static constexpr xx::XY _anchor_icon_clover{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_icon_clover{ 776, 708, 128, 127 };
+	static constexpr xx::UVRect _uvrect_icon_clover{ 872, 757, 128, 127 };
 
 	xx::Ref<xx::Frame> icon_dodge;
 	xx::Ref<xx::GLTexture> _tex_icon_dodge;
 	GLuint _texid_icon_dodge{};	// unsafe
 	static constexpr xx::XY _size_icon_dodge{ 108, 128 };
 	static constexpr xx::XY _anchor_icon_dodge{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_icon_dodge{ 910, 757, 108, 128 };
+	static constexpr xx::UVRect _uvrect_icon_dodge{ 139, 1157, 108, 128 };
 
 	xx::Ref<xx::Frame> icon_harvest;
 	xx::Ref<xx::GLTexture> _tex_icon_harvest;
 	GLuint _texid_icon_harvest{};	// unsafe
 	static constexpr xx::XY _size_icon_harvest{ 128, 128 };
 	static constexpr xx::XY _anchor_icon_harvest{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_icon_harvest{ 266, 379, 128, 128 };
+	static constexpr xx::UVRect _uvrect_icon_harvest{ 400, 505, 128, 128 };
 
 	xx::Ref<xx::Frame> icon_heart;
 	xx::Ref<xx::GLTexture> _tex_icon_heart;
 	GLuint _texid_icon_heart{};	// unsafe
 	static constexpr xx::XY _size_icon_heart{ 128, 120 };
 	static constexpr xx::XY _anchor_icon_heart{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_icon_heart{ 266, 641, 128, 120 };
+	static constexpr xx::UVRect _uvrect_icon_heart{ 5, 888, 128, 120 };
 
 	xx::Ref<xx::Frame> icon_shield;
 	xx::Ref<xx::GLTexture> _tex_icon_shield;
@@ -1068,14 +1096,14 @@ struct ResTpFrames {
 	GLuint _texid_icon_speed{};	// unsafe
 	static constexpr xx::XY _size_icon_speed{ 128, 112 };
 	static constexpr xx::XY _anchor_icon_speed{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_icon_speed{ 264, 767, 128, 112 };
+	static constexpr xx::UVRect _uvrect_icon_speed{ 721, 841, 128, 112 };
 
 	xx::Ref<xx::Frame> icon_sword;
 	xx::Ref<xx::GLTexture> _tex_icon_sword;
 	GLuint _texid_icon_sword{};	// unsafe
 	static constexpr xx::XY _size_icon_sword{ 128, 121 };
 	static constexpr xx::XY _anchor_icon_sword{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_icon_sword{ 400, 639, 128, 121 };
+	static constexpr xx::UVRect _uvrect_icon_sword{ 266, 644, 128, 121 };
 
 	xx::Ref<xx::Frame> monster_chips;
 	xx::Ref<xx::GLTexture> _tex_monster_chips;
@@ -1096,14 +1124,14 @@ struct ResTpFrames {
 	GLuint _texid_monster_hamburger{};	// unsafe
 	static constexpr xx::XY _size_monster_hamburger{ 128, 122 };
 	static constexpr xx::XY _anchor_monster_hamburger{ 0.5, 0.065574 };
-	static constexpr xx::UVRect _uvrect_monster_hamburger{ 266, 513, 128, 122 };
+	static constexpr xx::UVRect _uvrect_monster_hamburger{ 400, 639, 128, 122 };
 
 	xx::Ref<xx::Frame> monster_house;
 	xx::Ref<xx::GLTexture> _tex_monster_house;
 	GLuint _texid_monster_house{};	// unsafe
 	static constexpr xx::XY _size_monster_house{ 128, 99 };
 	static constexpr xx::XY _anchor_monster_house{ 0.5, 0.1 };
-	static constexpr xx::UVRect _uvrect_monster_house{ 530, 1009, 128, 99 };
+	static constexpr xx::UVRect _uvrect_monster_house{ 262, 1006, 128, 99 };
 
 	xx::Ref<xx::Frame> monster_instantnoodles;
 	xx::Ref<xx::GLTexture> _tex_monster_instantnoodles;
@@ -1117,7 +1145,7 @@ struct ResTpFrames {
 	GLuint _texid_monster_laptop{};	// unsafe
 	static constexpr xx::XY _size_monster_laptop{ 128, 107 };
 	static constexpr xx::XY _anchor_monster_laptop{ 0.5, 0.100775 };
-	static constexpr xx::UVRect _uvrect_monster_laptop{ 396, 1003, 128, 107 };
+	static constexpr xx::UVRect _uvrect_monster_laptop{ 668, 959, 128, 107 };
 
 	xx::Ref<xx::Frame> monster_roastduck;
 	xx::Ref<xx::GLTexture> _tex_monster_roastduck;
@@ -1152,7 +1180,7 @@ struct ResTpFrames {
 	GLuint _texid_player2{};	// unsafe
 	static constexpr xx::XY _size_player2{ 128, 128 };
 	static constexpr xx::XY _anchor_player2{ 0.5, 0.05 };
-	static constexpr xx::UVRect _uvrect_player2{ 400, 505, 128, 128 };
+	static constexpr xx::UVRect _uvrect_player2{ 604, 628, 128, 128 };
 
 	xx::Ref<xx::Frame> ui_buffbg;
 	xx::Ref<xx::GLTexture> _tex_ui_buffbg;
@@ -1248,6 +1276,8 @@ struct ResTpFrames {
 
 	xx::Listi32<xx::Ref<xx::Frame>> buff_;
 	static constexpr int32_t _countof_buff_{ 38 };
+	xx::Listi32<xx::Ref<xx::Frame>> env_grass_;
+	static constexpr int32_t _countof_env_grass_{ 3 };
 	xx::Listi32<xx::Ref<xx::Frame>> font_outline_;
 	static constexpr int32_t _countof_font_outline_{ 95 };
 };

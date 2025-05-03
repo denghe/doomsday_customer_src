@@ -158,6 +158,15 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 		this->ef_starlight = map["ef_starlight"sv];
 		this->_tex_ef_starlight = this->ef_starlight->tex;
 		this->_texid_ef_starlight = this->_tex_ef_starlight->GetValue();
+		this->env_grass_1 = map["env_grass_1"sv];
+		this->_tex_env_grass_1 = this->env_grass_1->tex;
+		this->_texid_env_grass_1 = this->_tex_env_grass_1->GetValue();
+		this->env_grass_2 = map["env_grass_2"sv];
+		this->_tex_env_grass_2 = this->env_grass_2->tex;
+		this->_texid_env_grass_2 = this->_tex_env_grass_2->GetValue();
+		this->env_grass_3 = map["env_grass_3"sv];
+		this->_tex_env_grass_3 = this->env_grass_3->tex;
+		this->_texid_env_grass_3 = this->_tex_env_grass_3->GetValue();
 		this->font_outline_32 = map["font_outline_32"sv];
 		this->_tex_font_outline_32 = this->font_outline_32->tex;
 		this->_texid_font_outline_32 = this->_tex_font_outline_32->GetValue();
@@ -449,6 +458,9 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 		this->ground_cell2 = map["ground_cell2"sv];
 		this->_tex_ground_cell2 = this->ground_cell2->tex;
 		this->_texid_ground_cell2 = this->_tex_ground_cell2->GetValue();
+		this->ground_cell3 = map["ground_cell3"sv];
+		this->_tex_ground_cell3 = this->ground_cell3->tex;
+		this->_texid_ground_cell3 = this->_tex_ground_cell3->GetValue();
 		this->icon_arrows = map["icon_arrows"sv];
 		this->_tex_icon_arrows = this->icon_arrows->tex;
 		this->_texid_icon_arrows = this->_tex_icon_arrows->GetValue();
@@ -587,6 +599,9 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 	buff_.Add(buff_35);
 	buff_.Add(buff_36);
 	buff_.Add(buff_37);
+	env_grass_.Add(env_grass_1);
+	env_grass_.Add(env_grass_2);
+	env_grass_.Add(env_grass_3);
 	font_outline_.Add(font_outline_32);
 	font_outline_.Add(font_outline_33);
 	font_outline_.Add(font_outline_34);

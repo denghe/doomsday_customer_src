@@ -212,7 +212,9 @@ namespace Game {
 		gLooper.ctcDefault.Draw({ 0, gLooper.windowSize_2.y - 5 }
 			, xx::ToString("zoom: ZX  move: ASDW  m = ", monsters.items.len
 				, " b = ", playerBullets.len
-				, " e = ", effectTexts.ens.Count()), xx::RGBA8_Green, { 0.5f, 1 });
+				, " e = ", effects.len
+				, " et = ", effectTexts.ens.Count()
+			), xx::RGBA8_Green, { 0.5f, 1 });
 	}
 
 }
