@@ -128,6 +128,10 @@ namespace Game {
 	}
 
 	inline void Stage::Draw() {
+		// smooth display for some game content
+		gLooper.res.buff_0->tex->SetGLTexParm<GL_LINEAR>();
+
+
 		// draw floor
 		ground->Draw();
 
@@ -201,6 +205,11 @@ namespace Game {
 
 		// clean up
 		yd.Clear();
+
+		// sharp display for UI
+		gLooper.ShaderEnd();
+		gLooper.res.buff_0->tex->SetGLTexParm();
+
 
 		// custom ui here
 		DrawCustomUI();

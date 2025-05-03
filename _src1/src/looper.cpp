@@ -132,5 +132,6 @@ xx::Task<> Looper::MainTask() {
 
 	clearColor = { 0xdf, 0xc1, 0x98, 255 };
 
+
 	scene.Emplace<Game::MainMenu>()->Init();
 }

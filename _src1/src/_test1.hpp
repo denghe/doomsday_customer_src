@@ -203,9 +203,9 @@ namespace Game {
 	inline void Grass::Init(Stage* stage_) {
 		stage = stage_;
 		auto& rnd = stage->rnd;
-		if (rnd.Next<float>() > 0.7f) {
+		if (rnd.Next<float>() > 0.2f) {
 			frame = gLooper.res.env_grass_[2];
-			scale = 1;
+			scale = 1;//rnd.Next<float>(scaleRange.from, scaleRange.to) * 2;
 		}
 		else {
 			frame = gLooper.res.env_grass_[rnd.Next<uint32_t>(2)];
