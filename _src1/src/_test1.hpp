@@ -199,57 +199,6 @@ namespace Game {
 
 
 
-
-	inline void Grass::Init(Stage* stage_) {
-		stage = stage_;
-		auto& rnd = stage->rnd;
-		if (rnd.Next<float>() > 0.2f) {
-			frame = gLooper.res.env_grass_[2];
-			scale = 1;//rnd.Next<float>(scaleRange.from, scaleRange.to) * 2;
-		}
-		else {
-			frame = gLooper.res.env_grass_[rnd.Next<uint32_t>(2)];
-			scale.x = rnd.Next<float>(scaleRange.from, scaleRange.to);
-			scale.y = rnd.Next<float>(scaleRange.from, scaleRange.to);
-		}
-		pos.x = rnd.Next<float>(0, stage_->mapSize.x);
-		pos.y = rnd.Next<float>(0, stage_->mapSize.y);
-		// offsetRatio
-		needFlipX = rnd.Next<bool>();
-		// radius
-		radians = rnd.Next<float>(swingRange.from, swingRange.to);
-		// whiteColorEndTime destroyTime
-		// color  todo: rnd?
-		swingStep = (swingRange.to - swingRange.from) / Cfg::fps;
-		if (rnd.Next<bool>()) swingStep = -swingStep;
-	}
-
-	inline int32_t Grass::Update() {
-		// todo: anim
-		radians += swingStep;
-		if (swingStep > 0) {
-			if (radians > swingRange.to) {
-				radians = swingRange.to;
-				swingStep = -swingStep;
-			}
-		}
-		else {
-			if (radians < swingRange.from) {
-				radians = swingRange.from;
-				swingStep = -swingStep;
-			}
-		}
-		// todo: player & monster neighbor check & change radians
-		return 0;
-	}
-
-
-	inline void Test1::GenGrass() {
-		for (int i = 0; i < gridSize.x * gridSize.y * 5; ++i) {
-			effects.Emplace().Emplace<Grass>()->Init(this);
-		}
-	}
-
 	inline void Test1::Init() {
 		ui.Emplace()->Init();
 
@@ -260,7 +209,7 @@ namespace Game {
 
 		ui->MakeChildren<xx::Button>()->Init(1, Cfg::xy8m + XY{ 0, -10 }
 			, Cfg::xy8a, gLooper.btnCfg, U"Add More Grass", [this]() {
-				GenGrass();
+				EnvGrass::GenGrass(this, 5);
 			});
 
 		gridSize = {60, 60};
@@ -269,15 +218,12 @@ namespace Game {
 		ground.Emplace()->Init(this, mapSize, gLooper.res.ground_cell3);
 		player.Emplace<Player_1>()->Init(this);
 
-		GenGrass();
+		EnvGrass::GenGrass(this, 5);
 
 		camera.scale = Cfg::defaultScale;
 		camera.mapSize = mapSize;
 		camera.newOriginal = camera.original = mapSize * 0.5f;
 	}
 
-	inline void Test1::Update() {
-		UpdateItems();
-	}
 
 }

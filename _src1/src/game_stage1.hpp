@@ -34,10 +34,11 @@ namespace Game {
 
 		effectTexts.Init(this, 10000);
 
-		// maybe these init can move to RoundInit()
-		ground.Emplace()->Init(this, mapSize, gLooper.res.ground_cell2);
-		monsters.Init(&gLooper.rdd, gridSize.y, gridSize.x, (int32_t)Cfg::unitSize);
+		ground.Emplace()->Init(this, mapSize, gLooper.res.ground_cell3);
+		grasses.Reserve(100000);
+		EnvGrass::GenGrass(this, 15);
 
+		monsters.Init(&gLooper.rdd, gridSize.y, gridSize.x, (int32_t)Cfg::unitSize);
 	}
 
 	inline void Stage1::RoundInit() {
@@ -309,7 +310,7 @@ namespace Game {
 			}
 
 			// cleanup without player
-			ClearItems<false>();
+			ClearItems<false, false>();
 
 			// handle round end event
 			player->OnRoundEnd();

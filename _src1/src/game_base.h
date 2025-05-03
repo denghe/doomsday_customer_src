@@ -40,6 +40,7 @@ namespace Game {
 	struct Drawable;
 	struct Spawner;
 	struct Creature;
+	struct EnvGrass;
 
 	enum class State : uint32_t {
 		Unknown = 0,
@@ -74,11 +75,12 @@ namespace Game {
 		Space<Monster> monsters;
 		xx::Listi32<xx::Shared<Spawner>> spawners;
 		xx::Shared<Ground> ground;
+		xx::Listi32<xx::Shared<EnvGrass>> grasses;
 		xx::Listi32<xx::Shared<MonsterGen>> monsterGenerators;
 		xx::Listi32<xx::Shared<Drawable>> effects;
 		EffectTextManager effectTexts;
 		void UpdateItems();
-		template<bool clearPlayer>
+		template<bool clearPlayer, bool clearGrass>
 		void ClearItems();						// for round finished
 		// todo
 

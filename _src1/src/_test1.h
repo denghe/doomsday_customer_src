@@ -102,23 +102,8 @@ namespace Game {
 
 
 
-
-
-
-
-	struct Grass : Drawable {
-		static constexpr xx::FromTo<float> scaleRange{ 0.3f, 1.f };
-		static constexpr xx::FromTo<float> swingRange{ -0.1f, 0.1f };
-		float swingStep{};
-
-		void Init(Stage* stage_);
-		int32_t Update() override;
-	};
-
 	struct Test1 : Stage {
-		void GenGrass();
 		void Init() override;
-		void Update() override;
 	};
 
 }

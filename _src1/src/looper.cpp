@@ -36,6 +36,7 @@
 #include "game_monster_sofa.hpp"
 #include "game_monster_house.hpp"
 #include "game_spawner.hpp"
+#include "game_env_grass.hpp"
 #include "game_ui_hpbar.hpp"
 #include "game_ui_coinbar.hpp"
 #include "game_ui_pause.hpp"

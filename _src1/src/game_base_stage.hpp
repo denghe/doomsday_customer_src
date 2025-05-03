@@ -28,7 +28,7 @@ namespace Game {
 		return { std::cosf(radians) * radius, std::sinf(radians) * radius };
 	}
 
-	template<bool clearPlayer>
+	template<bool clearPlayer, bool clearGrass>
 	inline void Stage::ClearItems() {
 		playerBullets.Clear();
 		monsterBullets.Clear();
@@ -40,6 +40,9 @@ namespace Game {
 		monsterGenerators.Clear();
 		effects.Clear();
 		effectTexts.Clear();
+		if constexpr (clearGrass) {
+			grasses.Clear();
+		}
 		// todo: rnd reset?
 		time = 0;
 	}
@@ -111,6 +114,12 @@ namespace Game {
 				effects.SwapRemoveAt(i);
 			}
 		}
+		for (auto i = grasses.len - 1; i >= 0; --i) {
+			auto& o = grasses[i];
+			if (o->Update()) {
+				grasses.SwapRemoveAt(i);
+			}
+		}
 
 		// ... more updates
 
@@ -138,13 +147,6 @@ namespace Game {
 		// calculate display cut area
 		auto areaMin = camera.ToLogicPos({ -gLooper.width_2 - Cfg::unitSize * 2, gLooper.height_2 + Cfg::unitSize * 2 });
 		auto areaMax = camera.ToLogicPos({ gLooper.width_2 + Cfg::unitSize * 2, -gLooper.height_2 - Cfg::unitSize * 2 });
-
-		// draw spawners
-		for (auto e = spawners.len, i = 0; i < e; ++i) {
-			auto& o = spawners[i];
-			if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
-			o->Draw();
-		}
 
 		// draw game items ( order by y )
 		// 
@@ -174,6 +176,12 @@ namespace Game {
 			yd.Emplace(o->pos.y, o.pointer);
 		}
 
+		for (auto e = grasses.len, i = 0; i < e; ++i) {
+			auto& o = grasses[i];
+			if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
+			yd.Emplace(o->pos.y, o.pointer);
+		}
+
 		for (auto e = effects.len, i = 0; i < e; ++i) {
 			auto& o = effects[i];
 			if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
@@ -186,6 +194,13 @@ namespace Game {
 		// draw
 		for (auto e = yd.len, i = 0; i < e; ++i) {
 			yd[i].second->Draw();
+		}
+
+		// draw spawners
+		for (auto e = spawners.len, i = 0; i < e; ++i) {
+			auto& o = spawners[i];
+			if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
+			o->Draw();
 		}
 
 		// draw effect texts
@@ -221,6 +236,7 @@ namespace Game {
 		gLooper.ctcDefault.Draw({ 0, gLooper.windowSize_2.y - 5 }
 			, xx::ToString("zoom: ZX  move: ASDW  m = ", monsters.items.len
 				, " b = ", playerBullets.len
+				, " g = ", grasses.len
 				, " e = ", effects.len
 				, " et = ", effectTexts.ens.Count()
 			), xx::RGBA8_Green, { 0.5f, 1 });
