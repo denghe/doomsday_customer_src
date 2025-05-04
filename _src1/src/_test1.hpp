@@ -197,20 +197,26 @@ namespace Game {
 
 
 
+	inline void Test1::MakeUI() {
+		ui->Clear();
+		ui->MakeChildren<xx::Button>()->Init(1, gLooper.pos7 + XY{ 10, -10 }
+			, gLooper.anchor7, gLooper.btnCfg, U"exit", [&]() {
+				gLooper.DelaySwitchTo<Game::MainMenu>();
+			});
 
+		ui->MakeChildren<xx::Button>()->Init(1, gLooper.pos8 + XY{ 0, -10 }
+			, gLooper.anchor8, gLooper.btnCfg, U"Add More Grass", [this]() {
+				EnvGrass::GenGrass(this, 5);
+			});
+	}
+
+	inline void Test1::OnWindowSizeChanged() {
+		MakeUI();
+	}
 
 	inline void Test1::Init() {
 		ui.Emplace()->Init();
-
-		ui->MakeChildren<xx::Button>()->Init(1, Cfg::xy7m + XY{ 10, -10 }
-			, Cfg::xy7a, gLooper.btnCfg, U"exit", [&]() {
-				gLooper.DelaySwitchTo<Game::MainMenu>();
-		});
-
-		ui->MakeChildren<xx::Button>()->Init(1, Cfg::xy8m + XY{ 0, -10 }
-			, Cfg::xy8a, gLooper.btnCfg, U"Add More Grass", [this]() {
-				EnvGrass::GenGrass(this, 5);
-			});
+		MakeUI();
 
 		gridSize = {60, 60};
 		mapSize = 128 * gridSize;
@@ -224,6 +230,5 @@ namespace Game {
 		camera.mapSize = mapSize;
 		camera.newOriginal = camera.original = mapSize * 0.5f;
 	}
-
 
 }

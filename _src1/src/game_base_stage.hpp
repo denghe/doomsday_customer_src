@@ -137,6 +137,11 @@ namespace Game {
 	}
 
 	inline void Stage::Draw() {
+		if (lastWindowSize != gLooper.windowSize) {
+			OnWindowSizeChanged();
+			lastWindowSize = gLooper.windowSize;
+		}
+
 		// smooth display for some game content
 		gLooper.res.buff_0->tex->SetGLTexParm<GL_LINEAR>();
 
@@ -145,8 +150,8 @@ namespace Game {
 		ground->Draw();
 
 		// calculate display cut area
-		auto areaMin = camera.ToLogicPos({ -gLooper.width_2 - Cfg::unitSize * 2, gLooper.height_2 + Cfg::unitSize * 2 });
-		auto areaMax = camera.ToLogicPos({ gLooper.width_2 + Cfg::unitSize * 2, -gLooper.height_2 - Cfg::unitSize * 2 });
+		auto areaMin = camera.ToLogicPos({ -gLooper.windowSize_2.x - Cfg::unitSize * 2, gLooper.windowSize_2.y + Cfg::unitSize * 2 });
+		auto areaMax = camera.ToLogicPos({ gLooper.windowSize_2.x + Cfg::unitSize * 2, -gLooper.windowSize_2.y - Cfg::unitSize * 2 });
 
 		// draw game items ( order by y )
 		// 

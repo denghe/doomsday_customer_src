@@ -61,6 +61,7 @@ namespace Game {
 
 		XYi gridSize{};							// grid's num cols rows
 		XY mapSize{};							// cellSize * gridSize( grid pixel size )
+		XY lastWindowSize{};					// for OnWindowSizeChanged
 
 		xx::Rnd rnd;							// for game logic only
 		int32_t time{};							// for game logic only
@@ -90,6 +91,7 @@ namespace Game {
 		XY GetRndPosDoughnut(float maxRadius, float safeRadius);
 		void Update() override { UpdateItems(); };
 		virtual void DrawCustomUI() {};
+		virtual void OnWindowSizeChanged() {};
 		void Draw() override;
 	};
 
