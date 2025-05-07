@@ -23,7 +23,8 @@ namespace Game {
 		tarOffset = stage->GetRndPosDoughnut(tarOffsetRadius, 0.1f);
 
 		skills.Emplace().Emplace<Skill_MoveToPlayer>()->Init(this);
-		skills.Emplace().Emplace<Skill_DashAttack>()->Init(this);
+		//skills.Emplace().Emplace<Skill_DashAttack>()->Init(this);
+		skills.Emplace().Emplace<Skill_Attack>()->Init(this);
 	}
 
 	int32_t Monster_Chips::Update() {
