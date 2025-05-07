@@ -12,10 +12,6 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 };
 
 #include "xx2d_camera_ex.h"
-#include "game_ui_hpbar.h"
-#include "game_ui_coinbar.h"
-#include "game_ui_pause.h"
-#include "game_ui_shop.h"
 #include "game_space.h"
 #include "game_effect_text.h"
 #include "game_stat.h"
@@ -37,6 +33,10 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 #include "game_player_3.h"
 #include "game_monster.h"
 #include "game_monstergen_generic.h"
+#include "game_ui_hpbar.h"
+#include "game_ui_coinbar.h"
+#include "game_ui_shop.h"
+#include "game_ui_pause.h"
 #include "game_stage1.h"
 #include "game_stage_dash.h"
 #include "game_monster_chips.h"

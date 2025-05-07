@@ -12,17 +12,15 @@ namespace Game {
 		uiHUD.Emplace()->Init();
 		// make pause button
 		uiHUD->MakeChildren<xx::ImageButton>()->Init(1, Cfg::xy9m, Cfg::xy9a, imgBtnSize, gLooper.res.ui_pause).onClicked = [&]() {
-			uiPausePanel.Popup();
+			uiPausePanel.Init(player);
 			};
 		// make shop button
 		uiHUD->MakeChildren<xx::ImageButton>()->Init(1, Cfg::xy8m, Cfg::xy8a, imgBtnSize, gLooper.res.ui_money).onClicked = [&]() {
-			uiShopPanel.Popup();
+			uiShopPanel.Init(player);
 			};
 
 		uiHPBar.Init(this);
 		uiCoinBar.Init(this);
-		uiPausePanel.Init(this);
-		uiShopPanel.Init(this);
 		// ...
 
 		gridSize = { 30, 20 };
@@ -285,7 +283,7 @@ namespace Game {
 
 			while (!(monsterGenerators.Empty() && spawners.Empty() && monsters.items.Empty())) {
 				// maybe button pause game
-				if (!paused) {
+				if (!uiPausePanel) {
 					UpdateItems();
 				}
 				XX_YIELD(n);
@@ -317,8 +315,8 @@ namespace Game {
 
 			// popup shop?
 			if (roundId < roundIdMax) {
-				uiShopPanel.Popup();
-				while (paused) {
+				uiShopPanel.Init(player);
+				while (uiShopPanel) {
 					XX_YIELD(n);
 				}
 			}

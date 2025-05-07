@@ -1,12 +1,14 @@
 ﻿#pragma once
 
 namespace Game {
-	void UI_PausePanel::Init(Stage* stage_) {
-		stage = stage_;
+
+	UI_PausePanel::operator bool() const {
+		return ui;
 	}
 
-	void UI_PausePanel::Popup() {
-		stage->paused = true;								// pause
+	void UI_PausePanel::Init(Creature* creature_) {
+
+		// todo: draw player stat & buffs
 
 		ui.Emplace()->Init();
 		ui->MakeChildren<xx::SwallowButton>()->Init(1).onClicked = [] {};		// avoid user click other buttons
@@ -25,7 +27,6 @@ namespace Game {
 		};
 
 		img->MakeChildren<xx::Button>()->Init(3, { x, h * 1.f / 4.f }, 0.5f, gLooper.btnCfg2, U"继续").onClicked = [this] {
-			stage->paused = false;							// resume
 			ui.Reset();										// close popup panel
 		};
 	}

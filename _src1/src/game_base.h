@@ -68,7 +68,6 @@ namespace Game {
 		int32_t roundId{};						// for round coroutine
 		int32_t n{};							// for round coroutine
 		int32_t sleepCounter{};					// for round coroutine
-		bool paused{};							// for ui stop logic
 
 		xx::Listi32<xx::Shared<Bullet>> playerBullets;
 		xx::Listi32<xx::Shared<Bullet>> monsterBullets;
