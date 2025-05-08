@@ -13,6 +13,7 @@ namespace Game {
 		radians = 0;
 
 		// todo: fill statCfg
+		healthPointMax = stage->roundId * 10 + 100;
 		StatCalc();
 		healthPoint = healthPointMax;
 
@@ -36,5 +37,9 @@ namespace Game {
 		}
 		Idle();
 		return 0;
+	}
+
+	void Monster_Roastduck::Rewards(Creature* target) {
+		target->coin += 10;
 	}
 }

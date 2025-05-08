@@ -12,6 +12,7 @@ namespace Game {
 		radians = 0;
 
 		// todo: fill statCfg
+		healthPointMax = stage->roundId * 10 + 100;
 		StatCalc();
 		healthPoint = healthPointMax;
 
@@ -22,4 +23,9 @@ namespace Game {
 		tarOffset = stage->GetRndPosDoughnut(tarOffsetRadius, 0.1f);
 	}
 
+	void Monster_Sofa::Rewards(Creature* target) {
+		target->coin += 15;
+		healthPointMax += 100;
+		//todo healthPointMax
+	}
 }

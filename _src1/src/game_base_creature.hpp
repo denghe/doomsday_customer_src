@@ -135,7 +135,7 @@ namespace Game {
 
 	}
 
-	bool Creature::OnDie() {
+	XX_INLINE bool Creature::OnDie() {
 		if (auto num = buffs.At(BuffTypes::裁员大动脉)) {
 			if (buffs._裁员大动脉_usedCount < num) {
 				++buffs._裁员大动脉_usedCount;

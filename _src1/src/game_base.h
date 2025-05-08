@@ -194,6 +194,7 @@ namespace Game {
 		int32_t MoveToPosition(xx::XY targetPos, float targetRadius);
 		int32_t MoveToPlayer(float keepDistance = 0);
 		virtual void DrawTag() {};
+		virtual void Rewards(Creature* target) {};		// drop coins or items
 	};
 
 	// monster generator's base

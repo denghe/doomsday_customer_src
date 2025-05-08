@@ -13,6 +13,7 @@ namespace Game {
 		radians = 0;
 
 		// todo: fill statCfg
+		healthPointMax = stage->roundId * 8 + 30;
 		StatCalc();
 		healthPoint = healthPointMax;
 
@@ -40,5 +41,13 @@ namespace Game {
 		}
 		Idle();
 		return destroyTime <= stage->time;
+	}
+
+	void Monster_Cola::Rewards(Creature* target) {
+		target->coin += 5;
+		healthPoint += 10;
+		if (healthPoint > healthPointMax) {
+			healthPoint = healthPointMax;
+		}
 	}
 }
