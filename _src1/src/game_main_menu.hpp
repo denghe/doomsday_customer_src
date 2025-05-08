@@ -36,6 +36,10 @@ namespace Game {
 			gLooper.DelaySwitchTo<Game::Test5>();
 		};
 
+		ui->MakeChildren<xx::Button>()->Init(2, Cfg::xy7m + XY{ 10, -310 }, Cfg::xy7a, gLooper.btnCfg, U"test6").onClicked = [&]() {
+			gLooper.DelaySwitchTo<Game::Test6>();
+		};
+
 		camera.SetMaxFrameSize(Cfg::unitSize);
 		camera.SetScale(Cfg::defaultScale);
 	}

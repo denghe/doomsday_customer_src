@@ -47,6 +47,7 @@
 #include "_test3.hpp"
 #include "_test4.hpp"
 #include "_test5.hpp"
+#include "_test6.hpp"
 
 Looper gLooper;
 
@@ -70,6 +71,8 @@ int32_t main() {
 #endif
 
 xx::Task<> Looper::MainTask() {
+	shaderVertexs.Init();
+
 	co_await res.AsyncLoad("res/");
 
 	rdd.Init(50, 128);

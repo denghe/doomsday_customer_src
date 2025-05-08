@@ -55,6 +55,7 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 #include "_test3.h"
 #include "_test4.h"
 #include "_test5.h"
+#include "_test6.h"
 
 struct Looper : xx::Engine<Looper>, Cfg {
 	xx::Task<> MainTask();
