@@ -12,6 +12,7 @@ namespace Game {
 		radians = 0;
 
 		// todo: fill statCfg
+		healthPointMax = 100 * stage->roundId + 1500;
 		StatCalc();
 		healthPoint = healthPointMax;
 
@@ -22,4 +23,13 @@ namespace Game {
 		tarOffset = stage->GetRndPosDoughnut(tarOffsetRadius, 0.1f);
 	}
 
+	void Monster_Instantnoodles::Rewards(Creature* target) {
+		target->coin += 50;
+		healthPoint += 400;
+		if (healthPoint > healthPointMax) {
+			healthPoint = healthPointMax;
+		}
+
+		// todo attackSpeed damage
+	}
 }

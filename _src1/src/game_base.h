@@ -175,7 +175,10 @@ namespace Game {
 
 	// player's base
 	struct Player : Creature {
-		// todo
+		static constexpr int32_t cProtectFrameCount{ int32_t(Cfg::fps * 1) };
+		int32_t protectFrame{};
+
+		int32_t Hurt();
 	};
 
 	// monster's base
@@ -191,6 +194,7 @@ namespace Game {
 		int32_t MoveToPosition(xx::XY targetPos, float targetRadius);
 		int32_t MoveToPlayer(float keepDistance = 0);
 		virtual void DrawTag() {};
+		virtual void Rewards(Creature* target) {};		// drop coins or items
 	};
 
 	// monster generator's base
