@@ -12,6 +12,7 @@ namespace Game {
 		radians = 0;
 
 		// todo: fill statCfg
+		healthPointMax = stage->roundId * 20 + 100;
 		StatCalc();
 		healthPoint = healthPointMax;
 
@@ -22,4 +23,11 @@ namespace Game {
 		tarOffset = stage->GetRndPosDoughnut(tarOffsetRadius, 0.1f);
 	}
 
+	void Monster_Laptop::Rewards(Creature* target) {
+		target->coin += 5;
+		healthPoint += 10;
+		if (healthPoint > healthPointMax) {
+			healthPoint = healthPointMax;
+		}
+	}
 }
