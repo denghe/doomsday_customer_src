@@ -13,7 +13,7 @@ namespace Game {
 		radians = 0;
 
 		// todo: fill init stat
-		healthPointMax = stage->roundId * 6 + 20;
+		healthPointMax = Stat_t(stage->roundId * 6 + 20);
 		StatCalc();
 		healthPoint = healthPointMax;
 
