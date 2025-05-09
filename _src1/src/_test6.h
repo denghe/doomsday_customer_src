@@ -17,13 +17,13 @@ namespace Game {
 	};
 
 	struct Test6 : Stage {
-		xx::Listi32<Trail<64>> trails;
+		xx::Listi32<Trail<(int32_t)Cfg::fps>> trails;
 
 		void MakeUI();
 		void Init() override;
 		void OnWindowSizeChanged() override;
 		void Update() override;
-		void Draw() override;
+		void DrawCustomUI() override;
 	};
 
 }

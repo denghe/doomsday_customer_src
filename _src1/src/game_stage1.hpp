@@ -3,6 +3,8 @@
 namespace Game {
 
 	inline void Stage1::Init() {
+		fb.Init();
+
 		ui.Emplace()->Init();
 		ui->MakeChildren<xx::Button>()->Init(1, Cfg::xy1m, Cfg::xy1a, gLooper.btnCfg, U"exit", [&]() {
 			gLooper.DelaySwitchTo<Game::MainMenu>();

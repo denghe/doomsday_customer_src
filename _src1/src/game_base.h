@@ -57,6 +57,7 @@ namespace Game {
 	struct Stage : xx::SceneBase {
 		//xx::Camera camera;
 		xx::CameraEx camera;
+		xx::FrameBuffer fb;
 		xx::Shared<xx::Node> ui;
 
 		XYi gridSize{};							// grid's num cols rows

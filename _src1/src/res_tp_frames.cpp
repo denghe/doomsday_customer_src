@@ -152,6 +152,9 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 		this->ef_heal = map["ef_heal"sv];
 		this->_tex_ef_heal = this->ef_heal->tex;
 		this->_texid_ef_heal = this->_tex_ef_heal->GetValue();
+		this->ef_light = map["ef_light"sv];
+		this->_tex_ef_light = this->ef_light->tex;
+		this->_texid_ef_light = this->_tex_ef_light->GetValue();
 		this->ef_money = map["ef_money"sv];
 		this->_tex_ef_money = this->ef_money->tex;
 		this->_texid_ef_money = this->_tex_ef_money->GetValue();

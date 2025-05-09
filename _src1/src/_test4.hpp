@@ -46,6 +46,7 @@ namespace Game {
 
 
 	inline void Test4::Init() {
+		fb.Init();
 		ui.Emplace()->Init();
 
 		ui->MakeChildren<xx::Button>()->Init(1, Cfg::xy7m + XY{ 10, -10 }

@@ -142,64 +142,108 @@ namespace Game {
 			lastWindowSize = gLooper.windowSize;
 		}
 
-		// smooth display for some game content
-		gLooper.res.buff_0->tex->SetGLTexParm<GL_LINEAR>();
-
-
-		// draw floor
-		ground->Draw();
-
 		// calculate display cut area
 		auto areaMin = camera.ToLogicPos({ -gLooper.windowSize_2.x - Cfg::unitSize * 2, gLooper.windowSize_2.y + Cfg::unitSize * 2 });
 		auto areaMax = camera.ToLogicPos({ gLooper.windowSize_2.x + Cfg::unitSize * 2, -gLooper.windowSize_2.y - Cfg::unitSize * 2 });
 
-		// draw game items ( order by y )
-		// 
-		// prepare
-		auto& yd = gLooper.yDraws;
+		// game logic content
+		auto t = fb.Draw(gLooper.windowSize, true, xx::RGBA8{ 0,0,0,0 }, [&]() {
 
-		if (player) {
-			yd.Emplace(player->pos.y, player.pointer);
-		}
+			// smooth display for some game content
+			gLooper.res.buff_0->tex->SetGLTexParm<GL_LINEAR>();
 
-		for (auto e = playerBullets.len, i = 0; i < e; ++i) {
-			auto& o = playerBullets[i];
-			if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
-			yd.Emplace(o->pos.y, o.pointer);
-		}
+			// draw floor
+			ground->Draw();
 
-		for (auto e = monsterBullets.len, i = 0; i < e; ++i) {
-			auto& o = monsterBullets[i];
-			if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
-			yd.Emplace(o->pos.y, o.pointer);
-		}
+			// draw game items ( order by y )
+			// 
+			// prepare
+			auto& yd = gLooper.yDraws;
 
-		// maybe can thread pool optimize?
-		for (auto e = monsters.items.len, i = 0; i < e; ++i) {
-			auto& o = monsters.items[i];
-			if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
-			yd.Emplace(o->pos.y, o.pointer);
-		}
+			if (player) {
+				yd.Emplace(player->pos.y, player.pointer);
+			}
 
-		for (auto e = grasses.len, i = 0; i < e; ++i) {
-			auto& o = grasses[i];
-			if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
-			yd.Emplace(o->pos.y, o.pointer);
-		}
+			for (auto e = playerBullets.len, i = 0; i < e; ++i) {
+				auto& o = playerBullets[i];
+				if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
+				yd.Emplace(o->pos.y, o.pointer);
+			}
 
-		for (auto e = effects.len, i = 0; i < e; ++i) {
-			auto& o = effects[i];
-			if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
-			yd.Emplace(o->pos.y, o.pointer);
-		}
+			for (auto e = monsterBullets.len, i = 0; i < e; ++i) {
+				auto& o = monsterBullets[i];
+				if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
+				yd.Emplace(o->pos.y, o.pointer);
+			}
 
-		// sort
-		std::sort(yd.buf, yd.buf + yd.len, [](auto& a, auto& b) { return a.first < b.first; });
+			// maybe can thread pool optimize?
+			for (auto e = monsters.items.len, i = 0; i < e; ++i) {
+				auto& o = monsters.items[i];
+				if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
+				yd.Emplace(o->pos.y, o.pointer);
+			}
 
-		// draw
-		for (auto e = yd.len, i = 0; i < e; ++i) {
-			yd[i].second->Draw();
-		}
+			for (auto e = grasses.len, i = 0; i < e; ++i) {
+				auto& o = grasses[i];
+				if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
+				yd.Emplace(o->pos.y, o.pointer);
+			}
+
+			for (auto e = effects.len, i = 0; i < e; ++i) {
+				auto& o = effects[i];
+				if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
+				yd.Emplace(o->pos.y, o.pointer);
+			}
+
+			// sort
+			std::sort(yd.buf, yd.buf + yd.len, [](auto& a, auto& b) { return a.first < b.first; });
+
+			// draw
+			for (auto e = yd.len, i = 0; i < e; ++i) {
+				yd[i].second->Draw();
+			}
+
+			// clean up
+			yd.Clear();
+		});
+
+		// light tex
+		auto t2 = fb.Draw(gLooper.windowSize, true, xx::RGBA8{ 0,0,0,0 }, [this] {
+			gLooper.GLBlendFunc({ GL_SRC_COLOR, GL_ONE, GL_FUNC_ADD });
+			if (player) {
+				auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(gLooper.res._texid_ef_light, 2);
+				auto pos = camera.ToGLPos(player->pos);
+				q->pos = pos;
+				q->anchor = 0.5f;
+				q->scale = camera.scale * 15;
+				q->radians = 0;
+				q->colorplus = 1.f;
+				q->color = xx::RGBA8_White;
+				q->texRect.data = gLooper.res._uvrect_ef_light.data;
+				++q;
+				q->pos = pos;
+				q->anchor = 0.5f;
+				q->scale = camera.scale * 5;
+				q->radians = 0;
+				q->colorplus = 1.f;
+				q->color = xx::RGBA8_Green;//xx::RGBA8_White;RGBA8_Green
+				q->texRect.data = gLooper.res._uvrect_ef_light.data;
+			}
+			for (auto& m : monsters.items) {
+				auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(gLooper.res._texid_ef_light, 1);
+				q->pos = camera.ToGLPos(m->pos);
+				q->anchor = 0.5f;
+				q->scale = camera.scale * 5;
+				q->radians = 0;
+				q->colorplus = 1.f;
+				q->color = xx::RGBA8_Red;//xx::RGBA8_Red;RGBA8_White
+				q->texRect.data = gLooper.res._uvrect_ef_light.data;
+			}
+		});
+
+		// combine content & light
+		gLooper.ShaderBegin(gLooper.shaderQuadInstanceLight).Draw(t, t2);
+
 
 		// draw spawners
 		for (auto e = spawners.len, i = 0; i < e; ++i) {
@@ -223,8 +267,6 @@ namespace Game {
 		//	yd[i].second->DrawName();
 		//}
 
-		// clean up
-		yd.Clear();
 
 		// sharp display for UI
 		gLooper.ShaderEnd();

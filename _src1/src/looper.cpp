@@ -136,7 +136,7 @@ xx::Task<> Looper::MainTask() {
 	buffInfoPanelCfg.center = { 2, 2, (uint16_t)ResTpFrames::_size_ui_buffbg3.x - 2 * 2, (uint16_t)ResTpFrames::_size_ui_buffbg3.y - 2 * 2 };
 
 
-	clearColor = { 0xdf, 0xc1, 0x98, 255 };
+	//clearColor = { 0xdf, 0xc1, 0x98, 255 };	// known issue: bad light
 
 
 	scene.Emplace<Game::MainMenu>()->Init();

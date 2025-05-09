@@ -11,1218 +11,1225 @@ struct ResTpFrames {
 	GLuint _texid_buff_0{};	// unsafe
 	static constexpr xx::XY _size_buff_0{ 128, 117 };
 	static constexpr xx::XY _anchor_buff_0{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_0{ 400, 767, 128, 117 };
+	static constexpr xx::UVRect _uvrect_buff_0{ 5, 1017, 128, 117 };
 
 	xx::Ref<xx::Frame> buff_1;
 	xx::Ref<xx::GLTexture> _tex_buff_1;
 	GLuint _texid_buff_1{};	// unsafe
 	static constexpr xx::XY _size_buff_1{ 128, 66 };
 	static constexpr xx::XY _anchor_buff_1{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_1{ 389, 1115, 128, 66 };
+	static constexpr xx::UVRect _uvrect_buff_1{ 750, 1338, 128, 66 };
 
 	xx::Ref<xx::Frame> buff_10;
 	xx::Ref<xx::GLTexture> _tex_buff_10;
 	GLuint _texid_buff_10{};	// unsafe
 	static constexpr xx::XY _size_buff_10{ 128, 111 };
 	static constexpr xx::XY _anchor_buff_10{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_10{ 855, 890, 128, 111 };
+	static constexpr xx::UVRect _uvrect_buff_10{ 490, 1026, 128, 111 };
 
 	xx::Ref<xx::Frame> buff_11;
 	xx::Ref<xx::GLTexture> _tex_buff_11;
 	GLuint _texid_buff_11{};	// unsafe
 	static constexpr xx::XY _size_buff_11{ 128, 89 };
 	static constexpr xx::XY _anchor_buff_11{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_11{ 5, 1235, 128, 89 };
+	static constexpr xx::UVRect _uvrect_buff_11{ 616, 1155, 128, 89 };
 
 	xx::Ref<xx::Frame> buff_12;
 	xx::Ref<xx::GLTexture> _tex_buff_12;
 	GLuint _texid_buff_12{};	// unsafe
 	static constexpr xx::XY _size_buff_12{ 128, 128 };
 	static constexpr xx::XY _anchor_buff_12{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_12{ 450, 371, 128, 128 };
+	static constexpr xx::UVRect _uvrect_buff_12{ 5, 364, 128, 128 };
 
 	xx::Ref<xx::Frame> buff_13;
 	xx::Ref<xx::GLTexture> _tex_buff_13;
 	GLuint _texid_buff_13{};	// unsafe
 	static constexpr xx::XY _size_buff_13{ 103, 128 };
 	static constexpr xx::XY _anchor_buff_13{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_13{ 916, 381, 103, 128 };
+	static constexpr xx::UVRect _uvrect_buff_13{ 139, 900, 103, 128 };
 
 	xx::Ref<xx::Frame> buff_14;
 	xx::Ref<xx::GLTexture> _tex_buff_14;
 	GLuint _texid_buff_14{};	// unsafe
 	static constexpr xx::XY _size_buff_14{ 128, 109 };
 	static constexpr xx::XY _anchor_buff_14{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_14{ 534, 880, 128, 109 };
+	static constexpr xx::UVRect _uvrect_buff_14{ 247, 1043, 128, 109 };
 
 	xx::Ref<xx::Frame> buff_15;
 	xx::Ref<xx::GLTexture> _tex_buff_15;
 	GLuint _texid_buff_15{};	// unsafe
 	static constexpr xx::XY _size_buff_15{ 128, 126 };
 	static constexpr xx::XY _anchor_buff_15{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_15{ 5, 498, 128, 126 };
+	static constexpr xx::UVRect _uvrect_buff_15{ 646, 800, 128, 126 };
 
 	xx::Ref<xx::Frame> buff_16;
 	xx::Ref<xx::GLTexture> _tex_buff_16;
 	GLuint _texid_buff_16{};	// unsafe
 	static constexpr xx::XY _size_buff_16{ 128, 128 };
 	static constexpr xx::XY _anchor_buff_16{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_16{ 633, 360, 128, 128 };
+	static constexpr xx::UVRect _uvrect_buff_16{ 266, 401, 128, 128 };
 
 	xx::Ref<xx::Frame> buff_17;
 	xx::Ref<xx::GLTexture> _tex_buff_17;
 	GLuint _texid_buff_17{};	// unsafe
 	static constexpr xx::XY _size_buff_17{ 128, 108 };
 	static constexpr xx::XY _anchor_buff_17{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_17{ 398, 890, 128, 108 };
+	static constexpr xx::UVRect _uvrect_buff_17{ 247, 1158, 128, 108 };
 
 	xx::Ref<xx::Frame> buff_18;
 	xx::Ref<xx::GLTexture> _tex_buff_18;
 	GLuint _texid_buff_18{};	// unsafe
 	static constexpr xx::XY _size_buff_18{ 121, 128 };
 	static constexpr xx::XY _anchor_buff_18{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_18{ 139, 364, 121, 128 };
+	static constexpr xx::UVRect _uvrect_buff_18{ 401, 267, 121, 128 };
 
 	xx::Ref<xx::Frame> buff_19;
 	xx::Ref<xx::GLTexture> _tex_buff_19;
 	GLuint _texid_buff_19{};	// unsafe
 	static constexpr xx::XY _size_buff_19{ 128, 116 };
 	static constexpr xx::XY _anchor_buff_19{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_19{ 264, 771, 128, 116 };
+	static constexpr xx::UVRect _uvrect_buff_19{ 248, 921, 128, 116 };
 
 	xx::Ref<xx::Frame> buff_2;
 	xx::Ref<xx::GLTexture> _tex_buff_2;
 	GLuint _texid_buff_2{};	// unsafe
 	static constexpr xx::XY _size_buff_2{ 128, 105 };
 	static constexpr xx::XY _anchor_buff_2{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_2{ 532, 995, 128, 105 };
+	static constexpr xx::UVRect _uvrect_buff_2{ 5, 1372, 128, 105 };
 
 	xx::Ref<xx::Frame> buff_20;
 	xx::Ref<xx::GLTexture> _tex_buff_20;
 	GLuint _texid_buff_20{};	// unsafe
 	static constexpr xx::XY _size_buff_20{ 119, 128 };
 	static constexpr xx::XY _anchor_buff_20{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_20{ 139, 755, 119, 128 };
+	static constexpr xx::UVRect _uvrect_buff_20{ 400, 524, 119, 128 };
 
 	xx::Ref<xx::Frame> buff_21;
 	xx::Ref<xx::GLTexture> _tex_buff_21;
 	GLuint _texid_buff_21{};	// unsafe
 	static constexpr xx::XY _size_buff_21{ 128, 126 };
 	static constexpr xx::XY _anchor_buff_21{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_21{ 5, 630, 128, 126 };
+	static constexpr xx::UVRect _uvrect_buff_21{ 833, 908, 128, 126 };
 
 	xx::Ref<xx::Frame> buff_22;
 	xx::Ref<xx::GLTexture> _tex_buff_22;
 	GLuint _texid_buff_22{};	// unsafe
 	static constexpr xx::XY _size_buff_22{ 95, 128 };
 	static constexpr xx::XY _anchor_buff_22{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_22{ 630, 1273, 95, 128 };
+	static constexpr xx::UVRect _uvrect_buff_22{ 381, 1142, 95, 128 };
 
 	xx::Ref<xx::Frame> buff_23;
 	xx::Ref<xx::GLTexture> _tex_buff_23;
 	GLuint _texid_buff_23{};	// unsafe
 	static constexpr xx::XY _size_buff_23{ 128, 87 };
 	static constexpr xx::XY _anchor_buff_23{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_23{ 666, 1072, 128, 87 };
+	static constexpr xx::UVRect _uvrect_buff_23{ 616, 1250, 128, 87 };
 
 	xx::Ref<xx::Frame> buff_24;
 	xx::Ref<xx::GLTexture> _tex_buff_24;
 	GLuint _texid_buff_24{};	// unsafe
 	static constexpr xx::XY _size_buff_24{ 121, 128 };
 	static constexpr xx::XY _anchor_buff_24{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_24{ 139, 498, 121, 128 };
+	static constexpr xx::UVRect _uvrect_buff_24{ 139, 364, 121, 128 };
 
 	xx::Ref<xx::Frame> buff_25;
 	xx::Ref<xx::GLTexture> _tex_buff_25;
 	GLuint _texid_buff_25{};	// unsafe
 	static constexpr xx::XY _size_buff_25{ 128, 96 };
 	static constexpr xx::XY _anchor_buff_25{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_25{ 255, 1111, 128, 96 };
+	static constexpr xx::UVRect _uvrect_buff_25{ 758, 1151, 128, 96 };
 
 	xx::Ref<xx::Frame> buff_26;
 	xx::Ref<xx::GLTexture> _tex_buff_26;
 	GLuint _texid_buff_26{};	// unsafe
 	static constexpr xx::XY _size_buff_26{ 128, 112 };
 	static constexpr xx::XY _anchor_buff_26{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_26{ 587, 762, 128, 112 };
+	static constexpr xx::UVRect _uvrect_buff_26{ 498, 908, 128, 112 };
 
 	xx::Ref<xx::Frame> buff_27;
 	xx::Ref<xx::GLTexture> _tex_buff_27;
 	GLuint _texid_buff_27{};	// unsafe
 	static constexpr xx::XY _size_buff_27{ 123, 128 };
 	static constexpr xx::XY _anchor_buff_27{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_27{ 5, 1330, 123, 128 };
+	static constexpr xx::UVRect _uvrect_buff_27{ 895, 5, 123, 128 };
 
 	xx::Ref<xx::Frame> buff_28;
 	xx::Ref<xx::GLTexture> _tex_buff_28;
 	GLuint _texid_buff_28{};	// unsafe
 	static constexpr xx::XY _size_buff_28{ 127, 128 };
 	static constexpr xx::XY _anchor_buff_28{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_28{ 389, 1187, 127, 128 };
+	static constexpr xx::UVRect _uvrect_buff_28{ 892, 1230, 127, 128 };
 
 	xx::Ref<xx::Frame> buff_29;
 	xx::Ref<xx::GLTexture> _tex_buff_29;
 	GLuint _texid_buff_29{};	// unsafe
 	static constexpr xx::XY _size_buff_29{ 106, 128 };
 	static constexpr xx::XY _anchor_buff_29{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_29{ 912, 623, 106, 128 };
+	static constexpr xx::UVRect _uvrect_buff_29{ 139, 766, 106, 128 };
 
 	xx::Ref<xx::Frame> buff_3;
 	xx::Ref<xx::GLTexture> _tex_buff_3;
 	GLuint _texid_buff_3{};	// unsafe
 	static constexpr xx::XY _size_buff_3{ 128, 120 };
 	static constexpr xx::XY _anchor_buff_3{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_3{ 5, 762, 128, 120 };
+	static constexpr xx::UVRect _uvrect_buff_3{ 5, 891, 128, 120 };
 
 	xx::Ref<xx::Frame> buff_30;
 	xx::Ref<xx::GLTexture> _tex_buff_30;
 	GLuint _texid_buff_30{};	// unsafe
 	static constexpr xx::XY _size_buff_30{ 128, 128 };
 	static constexpr xx::XY _anchor_buff_30{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_30{ 782, 440, 128, 128 };
+	static constexpr xx::UVRect _uvrect_buff_30{ 527, 507, 128, 128 };
 
 	xx::Ref<xx::Frame> buff_31;
 	xx::Ref<xx::GLTexture> _tex_buff_31;
 	GLuint _texid_buff_31{};	// unsafe
 	static constexpr xx::XY _size_buff_31{ 128, 113 };
 	static constexpr xx::XY _anchor_buff_31{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_31{ 5, 1014, 128, 113 };
+	static constexpr xx::UVRect _uvrect_buff_31{ 5, 1140, 128, 113 };
 
 	xx::Ref<xx::Frame> buff_32;
 	xx::Ref<xx::GLTexture> _tex_buff_32;
 	GLuint _texid_buff_32{};	// unsafe
 	static constexpr xx::XY _size_buff_32{ 126, 128 };
 	static constexpr xx::XY _anchor_buff_32{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_32{ 253, 1213, 126, 128 };
+	static constexpr xx::UVRect _uvrect_buff_32{ 884, 1364, 126, 128 };
 
 	xx::Ref<xx::Frame> buff_33;
 	xx::Ref<xx::GLTexture> _tex_buff_33;
 	GLuint _texid_buff_33{};	// unsafe
 	static constexpr xx::XY _size_buff_33{ 128, 128 };
 	static constexpr xx::XY _anchor_buff_33{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_33{ 629, 494, 128, 128 };
+	static constexpr xx::UVRect _uvrect_buff_33{ 706, 532, 128, 128 };
 
 	xx::Ref<xx::Frame> buff_34;
 	xx::Ref<xx::GLTexture> _tex_buff_34;
 	GLuint _texid_buff_34{};	// unsafe
 	static constexpr xx::XY _size_buff_34{ 128, 105 };
 	static constexpr xx::XY _anchor_buff_34{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_34{ 396, 1004, 128, 105 };
+	static constexpr xx::UVRect _uvrect_buff_34{ 766, 1040, 128, 105 };
 
 	xx::Ref<xx::Frame> buff_35;
 	xx::Ref<xx::GLTexture> _tex_buff_35;
 	GLuint _texid_buff_35{};	// unsafe
 	static constexpr xx::XY _size_buff_35{ 128, 107 };
 	static constexpr xx::XY _anchor_buff_35{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_35{ 262, 893, 128, 107 };
+	static constexpr xx::UVRect _uvrect_buff_35{ 5, 1259, 128, 107 };
 
 	xx::Ref<xx::Frame> buff_36;
 	xx::Ref<xx::GLTexture> _tex_buff_36;
 	GLuint _texid_buff_36{};	// unsafe
 	static constexpr xx::XY _size_buff_36{ 105, 128 };
 	static constexpr xx::XY _anchor_buff_36{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_36{ 139, 1291, 105, 128 };
+	static constexpr xx::UVRect _uvrect_buff_36{ 387, 792, 105, 128 };
 
 	xx::Ref<xx::Frame> buff_37;
 	xx::Ref<xx::GLTexture> _tex_buff_37;
 	GLuint _texid_buff_37{};	// unsafe
 	static constexpr xx::XY _size_buff_37{ 123, 128 };
 	static constexpr xx::XY _anchor_buff_37{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_37{ 800, 1101, 123, 128 };
+	static constexpr xx::UVRect _uvrect_buff_37{ 895, 139, 123, 128 };
 
 	xx::Ref<xx::Frame> buff_4;
 	xx::Ref<xx::GLTexture> _tex_buff_4;
 	GLuint _texid_buff_4{};	// unsafe
 	static constexpr xx::XY _size_buff_4{ 128, 79 };
 	static constexpr xx::XY _anchor_buff_4{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_4{ 530, 1106, 128, 79 };
+	static constexpr xx::UVRect _uvrect_buff_4{ 750, 1253, 128, 79 };
 
 	xx::Ref<xx::Frame> buff_5;
 	xx::Ref<xx::GLTexture> _tex_buff_5;
 	GLuint _texid_buff_5{};	// unsafe
 	static constexpr xx::XY _size_buff_5{ 117, 128 };
 	static constexpr xx::XY _anchor_buff_5{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_5{ 139, 889, 117, 128 };
+	static constexpr xx::UVRect _uvrect_buff_5{ 139, 498, 117, 128 };
 
 	xx::Ref<xx::Frame> buff_6;
 	xx::Ref<xx::GLTexture> _tex_buff_6;
 	GLuint _texid_buff_6{};	// unsafe
 	static constexpr xx::XY _size_buff_6{ 128, 96 };
 	static constexpr xx::XY _anchor_buff_6{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_6{ 5, 1133, 128, 96 };
+	static constexpr xx::UVRect _uvrect_buff_6{ 482, 1143, 128, 96 };
 
 	xx::Ref<xx::Frame> buff_7;
 	xx::Ref<xx::GLTexture> _tex_buff_7;
 	GLuint _texid_buff_7{};	// unsafe
 	static constexpr xx::XY _size_buff_7{ 128, 88 };
 	static constexpr xx::XY _anchor_buff_7{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_7{ 802, 1007, 128, 88 };
+	static constexpr xx::UVRect _uvrect_buff_7{ 482, 1245, 128, 88 };
 
 	xx::Ref<xx::Frame> buff_8;
 	xx::Ref<xx::GLTexture> _tex_buff_8;
 	GLuint _texid_buff_8{};	// unsafe
 	static constexpr xx::XY _size_buff_8{ 128, 128 };
 	static constexpr xx::XY _anchor_buff_8{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_8{ 633, 226, 128, 128 };
+	static constexpr xx::UVRect _uvrect_buff_8{ 267, 267, 128, 128 };
 
 	xx::Ref<xx::Frame> buff_9;
 	xx::Ref<xx::GLTexture> _tex_buff_9;
 	GLuint _texid_buff_9{};	// unsafe
 	static constexpr xx::XY _size_buff_9{ 128, 128 };
 	static constexpr xx::XY _anchor_buff_9{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_buff_9{ 782, 306, 128, 128 };
+	static constexpr xx::UVRect _uvrect_buff_9{ 528, 373, 128, 128 };
 
 	xx::Ref<xx::Frame> bullet_cash;
 	xx::Ref<xx::GLTexture> _tex_bullet_cash;
 	GLuint _texid_bullet_cash{};	// unsafe
 	static constexpr xx::XY _size_bullet_cash{ 132, 60 };
 	static constexpr xx::XY _anchor_bullet_cash{ 0.492424, 0.116667 };
-	static constexpr xx::UVRect _uvrect_bullet_cash{ 267, 313, 132, 60 };
+	static constexpr xx::UVRect _uvrect_bullet_cash{ 880, 437, 132, 60 };
 
 	xx::Ref<xx::Frame> bullet_coin10;
 	xx::Ref<xx::GLTexture> _tex_bullet_coin10;
 	GLuint _texid_bullet_coin10{};	// unsafe
 	static constexpr xx::XY _size_bullet_coin10{ 128, 127 };
 	static constexpr xx::XY _anchor_bullet_coin10{ 0.507813, 0.062992 };
-	static constexpr xx::UVRect _uvrect_bullet_coin10{ 738, 708, 128, 127 };
+	static constexpr xx::UVRect _uvrect_bullet_coin10{ 262, 535, 128, 127 };
 
 	xx::Ref<xx::Frame> bullet_coin5;
 	xx::Ref<xx::GLTexture> _tex_bullet_coin5;
 	GLuint _texid_bullet_coin5{};	// unsafe
 	static constexpr xx::XY _size_bullet_coin5{ 128, 128 };
 	static constexpr xx::XY _anchor_bullet_coin5{ 0.5, 0.0625 };
-	static constexpr xx::UVRect _uvrect_bullet_coin5{ 778, 574, 128, 128 };
+	static constexpr xx::UVRect _uvrect_bullet_coin5{ 870, 640, 128, 128 };
 
 	xx::Ref<xx::Frame> bullet_lightpoint;
 	xx::Ref<xx::GLTexture> _tex_bullet_lightpoint;
 	GLuint _texid_bullet_lightpoint{};	// unsafe
 	static constexpr xx::XY _size_bullet_lightpoint{ 47, 47 };
 	static constexpr xx::XY _anchor_bullet_lightpoint{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_bullet_lightpoint{ 534, 742, 47, 47 };
+	static constexpr xx::UVRect _uvrect_bullet_lightpoint{ 780, 898, 47, 47 };
 
 	xx::Ref<xx::Frame> button;
 	xx::Ref<xx::GLTexture> _tex_button;
 	GLuint _texid_button{};	// unsafe
 	static constexpr xx::XY _size_button{ 6, 8 };
 	static constexpr xx::XY _anchor_button{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_button{ 437, 143, 6, 8 };
+	static constexpr xx::UVRect _uvrect_button{ 661, 550, 6, 8 };
 
 	xx::Ref<xx::Frame> ef_atkdmg;
 	xx::Ref<xx::GLTexture> _tex_ef_atkdmg;
 	GLuint _texid_ef_atkdmg{};	// unsafe
 	static constexpr xx::XY _size_ef_atkdmg{ 102, 102 };
 	static constexpr xx::XY _anchor_ef_atkdmg{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_ef_atkdmg{ 916, 515, 102, 102 };
+	static constexpr xx::UVRect _uvrect_ef_atkdmg{ 139, 1034, 102, 102 };
 
 	xx::Ref<xx::Frame> ef_atkspd;
 	xx::Ref<xx::GLTexture> _tex_ef_atkspd;
 	GLuint _texid_ef_atkspd{};	// unsafe
 	static constexpr xx::XY _size_ef_atkspd{ 102, 102 };
 	static constexpr xx::XY _anchor_ef_atkspd{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_ef_atkspd{ 664, 1165, 102, 102 };
+	static constexpr xx::UVRect _uvrect_ef_atkspd{ 382, 926, 102, 102 };
 
 	xx::Ref<xx::Frame> ef_heal;
 	xx::Ref<xx::GLTexture> _tex_ef_heal;
 	GLuint _texid_ef_heal{};	// unsafe
 	static constexpr xx::XY _size_ef_heal{ 102, 102 };
 	static constexpr xx::XY _anchor_ef_heal{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_ef_heal{ 522, 1191, 102, 102 };
+	static constexpr xx::UVRect _uvrect_ef_heal{ 382, 1034, 102, 102 };
+
+	xx::Ref<xx::Frame> ef_light;
+	xx::Ref<xx::GLTexture> _tex_ef_light;
+	GLuint _texid_ef_light{};	// unsafe
+	static constexpr xx::XY _size_ef_light{ 256, 256 };
+	static constexpr xx::XY _anchor_ef_light{ 0.5, 0.5 };
+	static constexpr xx::UVRect _uvrect_ef_light{ 267, 5, 256, 256 };
 
 	xx::Ref<xx::Frame> ef_money;
 	xx::Ref<xx::GLTexture> _tex_ef_money;
 	GLuint _texid_ef_money{};	// unsafe
 	static constexpr xx::XY _size_ef_money{ 102, 102 };
 	static constexpr xx::XY _anchor_ef_money{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_ef_money{ 772, 1235, 102, 102 };
+	static constexpr xx::UVRect _uvrect_ef_money{ 139, 1142, 102, 102 };
 
 	xx::Ref<xx::Frame> ef_starlight;
 	xx::Ref<xx::GLTexture> _tex_ef_starlight;
 	GLuint _texid_ef_starlight{};	// unsafe
 	static constexpr xx::XY _size_ef_starlight{ 32, 32 };
 	static constexpr xx::XY _anchor_ef_starlight{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_ef_starlight{ 588, 225, 32, 32 };
+	static constexpr xx::UVRect _uvrect_ef_starlight{ 667, 227, 32, 32 };
 
 	xx::Ref<xx::Frame> env_grass_1;
 	xx::Ref<xx::GLTexture> _tex_env_grass_1;
 	GLuint _texid_env_grass_1{};	// unsafe
 	static constexpr xx::XY _size_env_grass_1{ 51, 62 };
 	static constexpr xx::XY _anchor_env_grass_1{ 0.509804, 0.016129 };
-	static constexpr xx::UVRect _uvrect_env_grass_1{ 534, 674, 51, 62 };
+	static constexpr xx::UVRect _uvrect_env_grass_1{ 793, 666, 51, 62 };
 
 	xx::Ref<xx::Frame> env_grass_2;
 	xx::Ref<xx::GLTexture> _tex_env_grass_2;
 	GLuint _texid_env_grass_2{};	// unsafe
 	static constexpr xx::XY _size_env_grass_2{ 64, 92 };
 	static constexpr xx::XY _anchor_env_grass_2{ 0.71875, 0.01087 };
-	static constexpr xx::UVRect _uvrect_env_grass_2{ 534, 576, 64, 92 };
+	static constexpr xx::UVRect _uvrect_env_grass_2{ 793, 734, 64, 92 };
 
 	xx::Ref<xx::Frame> env_grass_3;
 	xx::Ref<xx::GLTexture> _tex_env_grass_3;
 	GLuint _texid_env_grass_3{};	// unsafe
 	static constexpr xx::XY _size_env_grass_3{ 72, 60 };
 	static constexpr xx::XY _anchor_env_grass_3{ 0.486111, 0.05 };
-	static constexpr xx::UVRect _uvrect_env_grass_3{ 534, 510, 72, 60 };
+	static constexpr xx::UVRect _uvrect_env_grass_3{ 780, 832, 72, 60 };
 
 	xx::Ref<xx::Frame> font_outline_100;
 	xx::Ref<xx::GLTexture> _tex_font_outline_100;
 	GLuint _texid_font_outline_100{};	// unsafe
 	static constexpr xx::XY _size_font_outline_100{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_100{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_100{ 767, 473, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_100{ 661, 512, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_101;
 	xx::Ref<xx::GLTexture> _tex_font_outline_101;
 	GLuint _texid_font_outline_101{};	// unsafe
 	static constexpr xx::XY _size_font_outline_101{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_101{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_101{ 767, 492, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_101{ 676, 512, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_102;
 	xx::Ref<xx::GLTexture> _tex_font_outline_102;
 	GLuint _texid_font_outline_102{};	// unsafe
 	static constexpr xx::XY _size_font_outline_102{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_102{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_102{ 584, 377, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_102{ 691, 512, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_103;
 	xx::Ref<xx::GLTexture> _tex_font_outline_103;
 	GLuint _texid_font_outline_103{};	// unsafe
 	static constexpr xx::XY _size_font_outline_103{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_103{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_103{ 599, 377, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_103{ 661, 531, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_104;
 	xx::Ref<xx::GLTexture> _tex_font_outline_104;
 	GLuint _texid_font_outline_104{};	// unsafe
 	static constexpr xx::XY _size_font_outline_104{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_104{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_104{ 614, 377, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_104{ 676, 531, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_105;
 	xx::Ref<xx::GLTexture> _tex_font_outline_105;
 	GLuint _texid_font_outline_105{};	// unsafe
 	static constexpr xx::XY _size_font_outline_105{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_105{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_105{ 584, 396, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_105{ 691, 531, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_106;
 	xx::Ref<xx::GLTexture> _tex_font_outline_106;
 	GLuint _texid_font_outline_106{};	// unsafe
 	static constexpr xx::XY _size_font_outline_106{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_106{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_106{ 599, 396, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_106{ 840, 533, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_107;
 	xx::Ref<xx::GLTexture> _tex_font_outline_107;
 	GLuint _texid_font_outline_107{};	// unsafe
 	static constexpr xx::XY _size_font_outline_107{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_107{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_107{ 614, 396, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_107{ 855, 538, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_108;
 	xx::Ref<xx::GLTexture> _tex_font_outline_108;
 	GLuint _texid_font_outline_108{};	// unsafe
 	static constexpr xx::XY _size_font_outline_108{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_108{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_108{ 584, 415, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_108{ 840, 552, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_109;
 	xx::Ref<xx::GLTexture> _tex_font_outline_109;
 	GLuint _texid_font_outline_109{};	// unsafe
 	static constexpr xx::XY _size_font_outline_109{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_109{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_109{ 599, 415, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_109{ 855, 557, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_110;
 	xx::Ref<xx::GLTexture> _tex_font_outline_110;
 	GLuint _texid_font_outline_110{};	// unsafe
 	static constexpr xx::XY _size_font_outline_110{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_110{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_110{ 614, 415, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_110{ 840, 571, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_111;
 	xx::Ref<xx::GLTexture> _tex_font_outline_111;
 	GLuint _texid_font_outline_111{};	// unsafe
 	static constexpr xx::XY _size_font_outline_111{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_111{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_111{ 584, 434, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_111{ 855, 576, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_112;
 	xx::Ref<xx::GLTexture> _tex_font_outline_112;
 	GLuint _texid_font_outline_112{};	// unsafe
 	static constexpr xx::XY _size_font_outline_112{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_112{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_112{ 599, 434, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_112{ 840, 590, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_113;
 	xx::Ref<xx::GLTexture> _tex_font_outline_113;
 	GLuint _texid_font_outline_113{};	// unsafe
 	static constexpr xx::XY _size_font_outline_113{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_113{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_113{ 614, 434, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_113{ 855, 595, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_114;
 	xx::Ref<xx::GLTexture> _tex_font_outline_114;
 	GLuint _texid_font_outline_114{};	// unsafe
 	static constexpr xx::XY _size_font_outline_114{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_114{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_114{ 584, 453, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_114{ 840, 609, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_115;
 	xx::Ref<xx::GLTexture> _tex_font_outline_115;
 	GLuint _texid_font_outline_115{};	// unsafe
 	static constexpr xx::XY _size_font_outline_115{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_115{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_115{ 599, 453, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_115{ 855, 614, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_116;
 	xx::Ref<xx::GLTexture> _tex_font_outline_116;
 	GLuint _texid_font_outline_116{};	// unsafe
 	static constexpr xx::XY _size_font_outline_116{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_116{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_116{ 614, 453, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_116{ 840, 628, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_117;
 	xx::Ref<xx::GLTexture> _tex_font_outline_117;
 	GLuint _texid_font_outline_117{};	// unsafe
 	static constexpr xx::XY _size_font_outline_117{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_117{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_117{ 584, 472, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_117{ 855, 633, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_118;
 	xx::Ref<xx::GLTexture> _tex_font_outline_118;
 	GLuint _texid_font_outline_118{};	// unsafe
 	static constexpr xx::XY _size_font_outline_118{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_118{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_118{ 599, 472, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_118{ 840, 647, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_119;
 	xx::Ref<xx::GLTexture> _tex_font_outline_119;
 	GLuint _texid_font_outline_119{};	// unsafe
 	static constexpr xx::XY _size_font_outline_119{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_119{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_119{ 614, 472, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_119{ 855, 652, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_120;
 	xx::Ref<xx::GLTexture> _tex_font_outline_120;
 	GLuint _texid_font_outline_120{};	// unsafe
 	static constexpr xx::XY _size_font_outline_120{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_120{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_120{ 584, 491, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_120{ 1004, 640, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_121;
 	xx::Ref<xx::GLTexture> _tex_font_outline_121;
 	GLuint _texid_font_outline_121{};	// unsafe
 	static constexpr xx::XY _size_font_outline_121{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_121{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_121{ 599, 491, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_121{ 1004, 659, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_122;
 	xx::Ref<xx::GLTexture> _tex_font_outline_122;
 	GLuint _texid_font_outline_122{};	// unsafe
 	static constexpr xx::XY _size_font_outline_122{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_122{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_122{ 614, 491, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_122{ 1004, 678, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_123;
 	xx::Ref<xx::GLTexture> _tex_font_outline_123;
 	GLuint _texid_font_outline_123{};	// unsafe
 	static constexpr xx::XY _size_font_outline_123{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_123{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_123{ 763, 511, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_123{ 1004, 697, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_124;
 	xx::Ref<xx::GLTexture> _tex_font_outline_124;
 	GLuint _texid_font_outline_124{};	// unsafe
 	static constexpr xx::XY _size_font_outline_124{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_124{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_124{ 763, 530, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_124{ 1004, 716, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_125;
 	xx::Ref<xx::GLTexture> _tex_font_outline_125;
 	GLuint _texid_font_outline_125{};	// unsafe
 	static constexpr xx::XY _size_font_outline_125{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_125{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_125{ 763, 549, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_125{ 1004, 735, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_126;
 	xx::Ref<xx::GLTexture> _tex_font_outline_126;
 	GLuint _texid_font_outline_126{};	// unsafe
 	static constexpr xx::XY _size_font_outline_126{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_126{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_126{ 763, 568, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_126{ 1004, 754, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_32;
 	xx::Ref<xx::GLTexture> _tex_font_outline_32;
 	GLuint _texid_font_outline_32{};	// unsafe
 	static constexpr xx::XY _size_font_outline_32{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_32{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_32{ 422, 143, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_32{ 873, 158, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_33;
 	xx::Ref<xx::GLTexture> _tex_font_outline_33;
 	GLuint _texid_font_outline_33{};	// unsafe
 	static constexpr xx::XY _size_font_outline_33{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_33{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_33{ 405, 160, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_33{ 873, 177, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_34;
 	xx::Ref<xx::GLTexture> _tex_font_outline_34;
 	GLuint _texid_font_outline_34{};	// unsafe
 	static constexpr xx::XY _size_font_outline_34{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_34{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_34{ 420, 162, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_34{ 873, 196, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_35;
 	xx::Ref<xx::GLTexture> _tex_font_outline_35;
 	GLuint _texid_font_outline_35{};	// unsafe
 	static constexpr xx::XY _size_font_outline_35{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_35{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_35{ 405, 179, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_35{ 873, 215, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_36;
 	xx::Ref<xx::GLTexture> _tex_font_outline_36;
 	GLuint _texid_font_outline_36{};	// unsafe
 	static constexpr xx::XY _size_font_outline_36{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_36{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_36{ 435, 169, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_36{ 873, 234, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_37;
 	xx::Ref<xx::GLTexture> _tex_font_outline_37;
 	GLuint _texid_font_outline_37{};	// unsafe
 	static constexpr xx::XY _size_font_outline_37{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_37{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_37{ 420, 181, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_37{ 873, 253, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_38;
 	xx::Ref<xx::GLTexture> _tex_font_outline_38;
 	GLuint _texid_font_outline_38{};	// unsafe
 	static constexpr xx::XY _size_font_outline_38{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_38{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_38{ 405, 198, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_38{ 873, 272, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_39;
 	xx::Ref<xx::GLTexture> _tex_font_outline_39;
 	GLuint _texid_font_outline_39{};	// unsafe
 	static constexpr xx::XY _size_font_outline_39{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_39{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_39{ 435, 188, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_39{ 873, 291, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_40;
 	xx::Ref<xx::GLTexture> _tex_font_outline_40;
 	GLuint _texid_font_outline_40{};	// unsafe
 	static constexpr xx::XY _size_font_outline_40{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_40{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_40{ 420, 200, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_40{ 873, 310, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_41;
 	xx::Ref<xx::GLTexture> _tex_font_outline_41;
 	GLuint _texid_font_outline_41{};	// unsafe
 	static constexpr xx::XY _size_font_outline_41{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_41{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_41{ 405, 217, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_41{ 873, 329, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_42;
 	xx::Ref<xx::GLTexture> _tex_font_outline_42;
 	GLuint _texid_font_outline_42{};	// unsafe
 	static constexpr xx::XY _size_font_outline_42{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_42{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_42{ 435, 207, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_42{ 873, 348, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_43;
 	xx::Ref<xx::GLTexture> _tex_font_outline_43;
 	GLuint _texid_font_outline_43{};	// unsafe
 	static constexpr xx::XY _size_font_outline_43{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_43{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_43{ 420, 219, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_43{ 667, 265, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_44;
 	xx::Ref<xx::GLTexture> _tex_font_outline_44;
 	GLuint _texid_font_outline_44{};	// unsafe
 	static constexpr xx::XY _size_font_outline_44{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_44{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_44{ 405, 236, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_44{ 682, 265, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_45;
 	xx::Ref<xx::GLTexture> _tex_font_outline_45;
 	GLuint _texid_font_outline_45{};	// unsafe
 	static constexpr xx::XY _size_font_outline_45{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_45{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_45{ 435, 226, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_45{ 697, 265, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_46;
 	xx::Ref<xx::GLTexture> _tex_font_outline_46;
 	GLuint _texid_font_outline_46{};	// unsafe
 	static constexpr xx::XY _size_font_outline_46{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_46{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_46{ 420, 238, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_46{ 667, 284, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_47;
 	xx::Ref<xx::GLTexture> _tex_font_outline_47;
 	GLuint _texid_font_outline_47{};	// unsafe
 	static constexpr xx::XY _size_font_outline_47{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_47{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_47{ 405, 255, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_47{ 682, 284, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_48;
 	xx::Ref<xx::GLTexture> _tex_font_outline_48;
 	GLuint _texid_font_outline_48{};	// unsafe
 	static constexpr xx::XY _size_font_outline_48{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_48{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_48{ 435, 245, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_48{ 697, 284, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_49;
 	xx::Ref<xx::GLTexture> _tex_font_outline_49;
 	GLuint _texid_font_outline_49{};	// unsafe
 	static constexpr xx::XY _size_font_outline_49{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_49{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_49{ 420, 257, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_49{ 667, 303, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_50;
 	xx::Ref<xx::GLTexture> _tex_font_outline_50;
 	GLuint _texid_font_outline_50{};	// unsafe
 	static constexpr xx::XY _size_font_outline_50{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_50{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_50{ 405, 274, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_50{ 682, 303, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_51;
 	xx::Ref<xx::GLTexture> _tex_font_outline_51;
 	GLuint _texid_font_outline_51{};	// unsafe
 	static constexpr xx::XY _size_font_outline_51{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_51{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_51{ 435, 264, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_51{ 697, 303, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_52;
 	xx::Ref<xx::GLTexture> _tex_font_outline_52;
 	GLuint _texid_font_outline_52{};	// unsafe
 	static constexpr xx::XY _size_font_outline_52{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_52{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_52{ 420, 276, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_52{ 667, 322, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_53;
 	xx::Ref<xx::GLTexture> _tex_font_outline_53;
 	GLuint _texid_font_outline_53{};	// unsafe
 	static constexpr xx::XY _size_font_outline_53{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_53{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_53{ 405, 293, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_53{ 682, 322, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_54;
 	xx::Ref<xx::GLTexture> _tex_font_outline_54;
 	GLuint _texid_font_outline_54{};	// unsafe
 	static constexpr xx::XY _size_font_outline_54{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_54{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_54{ 435, 283, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_54{ 697, 322, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_55;
 	xx::Ref<xx::GLTexture> _tex_font_outline_55;
 	GLuint _texid_font_outline_55{};	// unsafe
 	static constexpr xx::XY _size_font_outline_55{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_55{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_55{ 420, 295, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_55{ 667, 341, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_56;
 	xx::Ref<xx::GLTexture> _tex_font_outline_56;
 	GLuint _texid_font_outline_56{};	// unsafe
 	static constexpr xx::XY _size_font_outline_56{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_56{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_56{ 405, 312, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_56{ 682, 341, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_57;
 	xx::Ref<xx::GLTexture> _tex_font_outline_57;
 	GLuint _texid_font_outline_57{};	// unsafe
 	static constexpr xx::XY _size_font_outline_57{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_57{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_57{ 435, 302, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_57{ 697, 341, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_58;
 	xx::Ref<xx::GLTexture> _tex_font_outline_58;
 	GLuint _texid_font_outline_58{};	// unsafe
 	static constexpr xx::XY _size_font_outline_58{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_58{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_58{ 420, 314, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_58{ 667, 360, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_59;
 	xx::Ref<xx::GLTexture> _tex_font_outline_59;
 	GLuint _texid_font_outline_59{};	// unsafe
 	static constexpr xx::XY _size_font_outline_59{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_59{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_59{ 405, 331, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_59{ 682, 360, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_60;
 	xx::Ref<xx::GLTexture> _tex_font_outline_60;
 	GLuint _texid_font_outline_60{};	// unsafe
 	static constexpr xx::XY _size_font_outline_60{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_60{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_60{ 435, 321, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_60{ 697, 360, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_61;
 	xx::Ref<xx::GLTexture> _tex_font_outline_61;
 	GLuint _texid_font_outline_61{};	// unsafe
 	static constexpr xx::XY _size_font_outline_61{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_61{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_61{ 420, 333, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_61{ 850, 362, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_62;
 	xx::Ref<xx::GLTexture> _tex_font_outline_62;
 	GLuint _texid_font_outline_62{};	// unsafe
 	static constexpr xx::XY _size_font_outline_62{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_62{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_62{ 405, 350, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_62{ 865, 367, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_63;
 	xx::Ref<xx::GLTexture> _tex_font_outline_63;
 	GLuint _texid_font_outline_63{};	// unsafe
 	static constexpr xx::XY _size_font_outline_63{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_63{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_63{ 435, 340, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_63{ 850, 381, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_64;
 	xx::Ref<xx::GLTexture> _tex_font_outline_64;
 	GLuint _texid_font_outline_64{};	// unsafe
 	static constexpr xx::XY _size_font_outline_64{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_64{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_64{ 420, 352, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_64{ 865, 386, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_65;
 	xx::Ref<xx::GLTexture> _tex_font_outline_65;
 	GLuint _texid_font_outline_65{};	// unsafe
 	static constexpr xx::XY _size_font_outline_65{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_65{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_65{ 405, 369, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_65{ 850, 400, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_66;
 	xx::Ref<xx::GLTexture> _tex_font_outline_66;
 	GLuint _texid_font_outline_66{};	// unsafe
 	static constexpr xx::XY _size_font_outline_66{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_66{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_66{ 435, 359, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_66{ 865, 405, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_67;
 	xx::Ref<xx::GLTexture> _tex_font_outline_67;
 	GLuint _texid_font_outline_67{};	// unsafe
 	static constexpr xx::XY _size_font_outline_67{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_67{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_67{ 420, 371, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_67{ 850, 419, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_68;
 	xx::Ref<xx::GLTexture> _tex_font_outline_68;
 	GLuint _texid_font_outline_68{};	// unsafe
 	static constexpr xx::XY _size_font_outline_68{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_68{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_68{ 767, 226, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_68{ 865, 424, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_69;
 	xx::Ref<xx::GLTexture> _tex_font_outline_69;
 	GLuint _texid_font_outline_69{};	// unsafe
 	static constexpr xx::XY _size_font_outline_69{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_69{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_69{ 767, 245, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_69{ 850, 438, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_70;
 	xx::Ref<xx::GLTexture> _tex_font_outline_70;
 	GLuint _texid_font_outline_70{};	// unsafe
 	static constexpr xx::XY _size_font_outline_70{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_70{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_70{ 767, 264, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_70{ 865, 443, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_71;
 	xx::Ref<xx::GLTexture> _tex_font_outline_71;
 	GLuint _texid_font_outline_71{};	// unsafe
 	static constexpr xx::XY _size_font_outline_71{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_71{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_71{ 767, 283, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_71{ 850, 457, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_72;
 	xx::Ref<xx::GLTexture> _tex_font_outline_72;
 	GLuint _texid_font_outline_72{};	// unsafe
 	static constexpr xx::XY _size_font_outline_72{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_72{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_72{ 767, 302, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_72{ 865, 462, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_73;
 	xx::Ref<xx::GLTexture> _tex_font_outline_73;
 	GLuint _texid_font_outline_73{};	// unsafe
 	static constexpr xx::XY _size_font_outline_73{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_73{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_73{ 767, 321, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_73{ 850, 476, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_74;
 	xx::Ref<xx::GLTexture> _tex_font_outline_74;
 	GLuint _texid_font_outline_74{};	// unsafe
 	static constexpr xx::XY _size_font_outline_74{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_74{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_74{ 767, 340, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_74{ 865, 481, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_75;
 	xx::Ref<xx::GLTexture> _tex_font_outline_75;
 	GLuint _texid_font_outline_75{};	// unsafe
 	static constexpr xx::XY _size_font_outline_75{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_75{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_75{ 767, 359, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_75{ 850, 495, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_76;
 	xx::Ref<xx::GLTexture> _tex_font_outline_76;
 	GLuint _texid_font_outline_76{};	// unsafe
 	static constexpr xx::XY _size_font_outline_76{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_76{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_76{ 588, 263, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_76{ 865, 500, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_77;
 	xx::Ref<xx::GLTexture> _tex_font_outline_77;
 	GLuint _texid_font_outline_77{};	// unsafe
 	static constexpr xx::XY _size_font_outline_77{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_77{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_77{ 603, 263, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_77{ 850, 514, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_78;
 	xx::Ref<xx::GLTexture> _tex_font_outline_78;
 	GLuint _texid_font_outline_78{};	// unsafe
 	static constexpr xx::XY _size_font_outline_78{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_78{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_78{ 618, 263, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_78{ 865, 519, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_79;
 	xx::Ref<xx::GLTexture> _tex_font_outline_79;
 	GLuint _texid_font_outline_79{};	// unsafe
 	static constexpr xx::XY _size_font_outline_79{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_79{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_79{ 588, 282, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_79{ 662, 379, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_80;
 	xx::Ref<xx::GLTexture> _tex_font_outline_80;
 	GLuint _texid_font_outline_80{};	// unsafe
 	static constexpr xx::XY _size_font_outline_80{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_80{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_80{ 603, 282, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_80{ 677, 379, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_81;
 	xx::Ref<xx::GLTexture> _tex_font_outline_81;
 	GLuint _texid_font_outline_81{};	// unsafe
 	static constexpr xx::XY _size_font_outline_81{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_81{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_81{ 618, 282, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_81{ 692, 379, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_82;
 	xx::Ref<xx::GLTexture> _tex_font_outline_82;
 	GLuint _texid_font_outline_82{};	// unsafe
 	static constexpr xx::XY _size_font_outline_82{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_82{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_82{ 588, 301, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_82{ 662, 398, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_83;
 	xx::Ref<xx::GLTexture> _tex_font_outline_83;
 	GLuint _texid_font_outline_83{};	// unsafe
 	static constexpr xx::XY _size_font_outline_83{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_83{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_83{ 603, 301, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_83{ 677, 398, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_84;
 	xx::Ref<xx::GLTexture> _tex_font_outline_84;
 	GLuint _texid_font_outline_84{};	// unsafe
 	static constexpr xx::XY _size_font_outline_84{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_84{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_84{ 618, 301, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_84{ 692, 398, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_85;
 	xx::Ref<xx::GLTexture> _tex_font_outline_85;
 	GLuint _texid_font_outline_85{};	// unsafe
 	static constexpr xx::XY _size_font_outline_85{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_85{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_85{ 588, 320, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_85{ 662, 417, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_86;
 	xx::Ref<xx::GLTexture> _tex_font_outline_86;
 	GLuint _texid_font_outline_86{};	// unsafe
 	static constexpr xx::XY _size_font_outline_86{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_86{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_86{ 603, 320, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_86{ 677, 417, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_87;
 	xx::Ref<xx::GLTexture> _tex_font_outline_87;
 	GLuint _texid_font_outline_87{};	// unsafe
 	static constexpr xx::XY _size_font_outline_87{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_87{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_87{ 618, 320, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_87{ 692, 417, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_88;
 	xx::Ref<xx::GLTexture> _tex_font_outline_88;
 	GLuint _texid_font_outline_88{};	// unsafe
 	static constexpr xx::XY _size_font_outline_88{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_88{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_88{ 588, 339, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_88{ 662, 436, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_89;
 	xx::Ref<xx::GLTexture> _tex_font_outline_89;
 	GLuint _texid_font_outline_89{};	// unsafe
 	static constexpr xx::XY _size_font_outline_89{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_89{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_89{ 603, 339, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_89{ 677, 436, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_90;
 	xx::Ref<xx::GLTexture> _tex_font_outline_90;
 	GLuint _texid_font_outline_90{};	// unsafe
 	static constexpr xx::XY _size_font_outline_90{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_90{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_90{ 618, 339, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_90{ 692, 436, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_91;
 	xx::Ref<xx::GLTexture> _tex_font_outline_91;
 	GLuint _texid_font_outline_91{};	// unsafe
 	static constexpr xx::XY _size_font_outline_91{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_91{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_91{ 588, 358, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_91{ 662, 455, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_92;
 	xx::Ref<xx::GLTexture> _tex_font_outline_92;
 	GLuint _texid_font_outline_92{};	// unsafe
 	static constexpr xx::XY _size_font_outline_92{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_92{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_92{ 435, 378, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_92{ 677, 455, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_93;
 	xx::Ref<xx::GLTexture> _tex_font_outline_93;
 	GLuint _texid_font_outline_93{};	// unsafe
 	static constexpr xx::XY _size_font_outline_93{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_93{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_93{ 603, 358, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_93{ 692, 455, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_94;
 	xx::Ref<xx::GLTexture> _tex_font_outline_94;
 	GLuint _texid_font_outline_94{};	// unsafe
 	static constexpr xx::XY _size_font_outline_94{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_94{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_94{ 618, 358, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_94{ 662, 474, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_95;
 	xx::Ref<xx::GLTexture> _tex_font_outline_95;
 	GLuint _texid_font_outline_95{};	// unsafe
 	static constexpr xx::XY _size_font_outline_95{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_95{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_95{ 767, 378, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_95{ 677, 474, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_96;
 	xx::Ref<xx::GLTexture> _tex_font_outline_96;
 	GLuint _texid_font_outline_96{};	// unsafe
 	static constexpr xx::XY _size_font_outline_96{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_96{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_96{ 767, 397, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_96{ 692, 474, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_97;
 	xx::Ref<xx::GLTexture> _tex_font_outline_97;
 	GLuint _texid_font_outline_97{};	// unsafe
 	static constexpr xx::XY _size_font_outline_97{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_97{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_97{ 767, 416, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_97{ 662, 493, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_98;
 	xx::Ref<xx::GLTexture> _tex_font_outline_98;
 	GLuint _texid_font_outline_98{};	// unsafe
 	static constexpr xx::XY _size_font_outline_98{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_98{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_98{ 767, 435, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_98{ 677, 493, 9, 13 };
 
 	xx::Ref<xx::Frame> font_outline_99;
 	xx::Ref<xx::GLTexture> _tex_font_outline_99;
 	GLuint _texid_font_outline_99{};	// unsafe
 	static constexpr xx::XY _size_font_outline_99{ 9, 13 };
 	static constexpr xx::XY _anchor_font_outline_99{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_font_outline_99{ 767, 454, 9, 13 };
+	static constexpr xx::UVRect _uvrect_font_outline_99{ 692, 493, 9, 13 };
 
 	xx::Ref<xx::Frame> ground_cell;
 	xx::Ref<xx::GLTexture> _tex_ground_cell;
 	GLuint _texid_ground_cell{};	// unsafe
 	static constexpr xx::XY _size_ground_cell{ 85, 85 };
 	static constexpr xx::XY _anchor_ground_cell{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_ground_cell{ 930, 5, 85, 85 };
+	static constexpr xx::UVRect _uvrect_ground_cell{ 139, 1250, 85, 85 };
 
 	xx::Ref<xx::Frame> ground_cell2;
 	xx::Ref<xx::GLTexture> _tex_ground_cell2;
 	GLuint _texid_ground_cell2{};	// unsafe
 	static constexpr xx::XY _size_ground_cell2{ 128, 128 };
 	static constexpr xx::XY _anchor_ground_cell2{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_ground_cell2{ 5, 364, 128, 128 };
+	static constexpr xx::UVRect _uvrect_ground_cell2{ 525, 641, 128, 128 };
 
 	xx::Ref<xx::Frame> ground_cell3;
 	xx::Ref<xx::GLTexture> _tex_ground_cell3;
 	GLuint _texid_ground_cell3{};	// unsafe
 	static constexpr xx::XY _size_ground_cell3{ 128, 128 };
 	static constexpr xx::XY _anchor_ground_cell3{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_ground_cell3{ 266, 379, 128, 128 };
+	static constexpr xx::UVRect _uvrect_ground_cell3{ 659, 666, 128, 128 };
 
 	xx::Ref<xx::Frame> icon_arrows;
 	xx::Ref<xx::GLTexture> _tex_icon_arrows;
 	GLuint _texid_icon_arrows{};	// unsafe
 	static constexpr xx::XY _size_icon_arrows{ 128, 125 };
 	static constexpr xx::XY _anchor_icon_arrows{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_icon_arrows{ 266, 513, 128, 125 };
+	static constexpr xx::UVRect _uvrect_icon_arrows{ 5, 632, 128, 125 };
 
 	xx::Ref<xx::Frame> icon_clover;
 	xx::Ref<xx::GLTexture> _tex_icon_clover;
 	GLuint _texid_icon_clover{};	// unsafe
 	static constexpr xx::XY _size_icon_clover{ 128, 127 };
 	static constexpr xx::XY _anchor_icon_clover{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_icon_clover{ 872, 757, 128, 127 };
+	static constexpr xx::UVRect _uvrect_icon_clover{ 512, 775, 128, 127 };
 
 	xx::Ref<xx::Frame> icon_dodge;
 	xx::Ref<xx::GLTexture> _tex_icon_dodge;
 	GLuint _texid_icon_dodge{};	// unsafe
 	static constexpr xx::XY _size_icon_dodge{ 108, 128 };
 	static constexpr xx::XY _anchor_icon_dodge{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_icon_dodge{ 139, 1157, 108, 128 };
+	static constexpr xx::UVRect _uvrect_icon_dodge{ 139, 632, 108, 128 };
 
 	xx::Ref<xx::Frame> icon_harvest;
 	xx::Ref<xx::GLTexture> _tex_icon_harvest;
 	GLuint _texid_icon_harvest{};	// unsafe
 	static constexpr xx::XY _size_icon_harvest{ 128, 128 };
 	static constexpr xx::XY _anchor_icon_harvest{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_icon_harvest{ 400, 505, 128, 128 };
+	static constexpr xx::UVRect _uvrect_icon_harvest{ 863, 774, 128, 128 };
 
 	xx::Ref<xx::Frame> icon_heart;
 	xx::Ref<xx::GLTexture> _tex_icon_heart;
 	GLuint _texid_icon_heart{};	// unsafe
 	static constexpr xx::XY _size_icon_heart{ 128, 120 };
 	static constexpr xx::XY _anchor_icon_heart{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_icon_heart{ 5, 888, 128, 120 };
+	static constexpr xx::UVRect _uvrect_icon_heart{ 251, 795, 128, 120 };
 
 	xx::Ref<xx::Frame> icon_shield;
 	xx::Ref<xx::GLTexture> _tex_icon_shield;
 	GLuint _texid_icon_shield{};	// unsafe
 	static constexpr xx::XY _size_icon_shield{ 110, 128 };
 	static constexpr xx::XY _anchor_icon_shield{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_icon_shield{ 139, 1023, 110, 128 };
+	static constexpr xx::UVRect _uvrect_icon_shield{ 396, 658, 110, 128 };
 
 	xx::Ref<xx::Frame> icon_speed;
 	xx::Ref<xx::GLTexture> _tex_icon_speed;
 	GLuint _texid_icon_speed{};	// unsafe
 	static constexpr xx::XY _size_icon_speed{ 128, 112 };
 	static constexpr xx::XY _anchor_icon_speed{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_icon_speed{ 721, 841, 128, 112 };
+	static constexpr xx::UVRect _uvrect_icon_speed{ 632, 932, 128, 112 };
 
 	xx::Ref<xx::Frame> icon_sword;
 	xx::Ref<xx::GLTexture> _tex_icon_sword;
 	GLuint _texid_icon_sword{};	// unsafe
 	static constexpr xx::XY _size_icon_sword{ 128, 121 };
 	static constexpr xx::XY _anchor_icon_sword{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_icon_sword{ 266, 644, 128, 121 };
+	static constexpr xx::UVRect _uvrect_icon_sword{ 253, 668, 128, 121 };
 
 	xx::Ref<xx::Frame> monster_chips;
 	xx::Ref<xx::GLTexture> _tex_monster_chips;
 	GLuint _texid_monster_chips{};	// unsafe
 	static constexpr xx::XY _size_monster_chips{ 130, 158 };
 	static constexpr xx::XY _anchor_monster_chips{ 0.461538, 0.056962 };
-	static constexpr xx::UVRect _uvrect_monster_chips{ 794, 5, 130, 158 };
+	static constexpr xx::UVRect _uvrect_monster_chips{ 888, 273, 130, 158 };
 
 	xx::Ref<xx::Frame> monster_cola;
 	xx::Ref<xx::GLTexture> _tex_monster_cola;
 	GLuint _texid_monster_cola{};	// unsafe
 	static constexpr xx::XY _size_monster_cola{ 132, 224 };
 	static constexpr xx::XY _anchor_monster_cola{ 0.530303, 0.044643 };
-	static constexpr xx::UVRect _uvrect_monster_cola{ 450, 141, 132, 224 };
+	static constexpr xx::UVRect _uvrect_monster_cola{ 529, 143, 132, 224 };
 
 	xx::Ref<xx::Frame> monster_hamburger;
 	xx::Ref<xx::GLTexture> _tex_monster_hamburger;
 	GLuint _texid_monster_hamburger{};	// unsafe
 	static constexpr xx::XY _size_monster_hamburger{ 128, 122 };
 	static constexpr xx::XY _anchor_monster_hamburger{ 0.5, 0.065574 };
-	static constexpr xx::UVRect _uvrect_monster_hamburger{ 400, 639, 128, 122 };
+	static constexpr xx::UVRect _uvrect_monster_hamburger{ 5, 763, 128, 122 };
 
 	xx::Ref<xx::Frame> monster_house;
 	xx::Ref<xx::GLTexture> _tex_monster_house;
 	GLuint _texid_monster_house{};	// unsafe
 	static constexpr xx::XY _size_monster_house{ 128, 99 };
 	static constexpr xx::XY _anchor_monster_house{ 0.5, 0.1 };
-	static constexpr xx::UVRect _uvrect_monster_house{ 262, 1006, 128, 99 };
+	static constexpr xx::UVRect _uvrect_monster_house{ 624, 1050, 128, 99 };
 
 	xx::Ref<xx::Frame> monster_instantnoodles;
 	xx::Ref<xx::GLTexture> _tex_monster_instantnoodles;
 	GLuint _texid_monster_instantnoodles{};	// unsafe
 	static constexpr xx::XY _size_monster_instantnoodles{ 132, 164 };
 	static constexpr xx::XY _anchor_monster_instantnoodles{ 0.5, 0.04878 };
-	static constexpr xx::UVRect _uvrect_monster_instantnoodles{ 267, 143, 132, 164 };
+	static constexpr xx::UVRect _uvrect_monster_instantnoodles{ 712, 362, 132, 164 };
 
 	xx::Ref<xx::Frame> monster_laptop;
 	xx::Ref<xx::GLTexture> _tex_monster_laptop;
 	GLuint _texid_monster_laptop{};	// unsafe
 	static constexpr xx::XY _size_monster_laptop{ 128, 107 };
 	static constexpr xx::XY _anchor_monster_laptop{ 0.5, 0.100775 };
-	static constexpr xx::UVRect _uvrect_monster_laptop{ 668, 959, 128, 107 };
+	static constexpr xx::UVRect _uvrect_monster_laptop{ 230, 1272, 128, 107 };
 
 	xx::Ref<xx::Frame> monster_roastduck;
 	xx::Ref<xx::GLTexture> _tex_monster_roastduck;
 	GLuint _texid_monster_roastduck{};	// unsafe
 	static constexpr xx::XY _size_monster_roastduck{ 177, 130 };
 	static constexpr xx::XY _anchor_monster_roastduck{ 0.5, 0.07 };
-	static constexpr xx::UVRect _uvrect_monster_roastduck{ 450, 5, 177, 130 };
+	static constexpr xx::UVRect _uvrect_monster_roastduck{ 712, 5, 177, 130 };
 
 	xx::Ref<xx::Frame> monster_sofa;
 	xx::Ref<xx::GLTexture> _tex_monster_sofa;
 	GLuint _texid_monster_sofa{};	// unsafe
 	static constexpr xx::XY _size_monster_sofa{ 177, 132 };
 	static constexpr xx::XY _anchor_monster_sofa{ 0.5, 0.1 };
-	static constexpr xx::UVRect _uvrect_monster_sofa{ 267, 5, 177, 132 };
+	static constexpr xx::UVRect _uvrect_monster_sofa{ 529, 5, 177, 132 };
 
 	xx::Ref<xx::Frame> pixel;
 	xx::Ref<xx::GLTexture> _tex_pixel;
 	GLuint _texid_pixel{};	// unsafe
 	static constexpr xx::XY _size_pixel{ 1, 1 };
 	static constexpr xx::XY _anchor_pixel{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_pixel{ 626, 225, 1, 1 };
+	static constexpr xx::UVRect _uvrect_pixel{ 888, 158, 1, 1 };
 
 	xx::Ref<xx::Frame> player1;
 	xx::Ref<xx::GLTexture> _tex_player1;
 	GLuint _texid_player1{};	// unsafe
 	static constexpr xx::XY _size_player1{ 121, 117 };
 	static constexpr xx::XY _anchor_player1{ 0.5, 0.05 };
-	static constexpr xx::UVRect _uvrect_player1{ 139, 632, 121, 117 };
+	static constexpr xx::UVRect _uvrect_player1{ 400, 401, 121, 117 };
 
 	xx::Ref<xx::Frame> player2;
 	xx::Ref<xx::GLTexture> _tex_player2;
 	GLuint _texid_player2{};	// unsafe
 	static constexpr xx::XY _size_player2{ 128, 128 };
 	static constexpr xx::XY _anchor_player2{ 0.5, 0.05 };
-	static constexpr xx::UVRect _uvrect_player2{ 604, 628, 128, 128 };
+	static constexpr xx::UVRect _uvrect_player2{ 5, 498, 128, 128 };
 
 	xx::Ref<xx::Frame> ui_buffbg;
 	xx::Ref<xx::GLTexture> _tex_ui_buffbg;
 	GLuint _texid_ui_buffbg{};	// unsafe
 	static constexpr xx::XY _size_ui_buffbg{ 81, 89 };
 	static constexpr xx::XY _anchor_ui_buffbg{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_ui_buffbg{ 930, 96, 81, 89 };
+	static constexpr xx::UVRect _uvrect_ui_buffbg{ 139, 1341, 81, 89 };
 
 	xx::Ref<xx::Frame> ui_buffbg2;
 	xx::Ref<xx::GLTexture> _tex_ui_buffbg2;
 	GLuint _texid_ui_buffbg2{};	// unsafe
 	static constexpr xx::XY _size_ui_buffbg2{ 81, 89 };
 	static constexpr xx::XY _anchor_ui_buffbg2{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_ui_buffbg2{ 928, 191, 81, 89 };
+	static constexpr xx::UVRect _uvrect_ui_buffbg2{ 900, 1040, 81, 89 };
 
 	xx::Ref<xx::Frame> ui_buffbg3;
 	xx::Ref<xx::GLTexture> _tex_ui_buffbg3;
 	GLuint _texid_ui_buffbg3{};	// unsafe
 	static constexpr xx::XY _size_ui_buffbg3{ 155, 215 };
 	static constexpr xx::XY _anchor_ui_buffbg3{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_ui_buffbg3{ 633, 5, 155, 215 };
+	static constexpr xx::UVRect _uvrect_ui_buffbg3{ 712, 141, 155, 215 };
 
 	xx::Ref<xx::Frame> ui_button;
 	xx::Ref<xx::GLTexture> _tex_ui_button;
 	GLuint _texid_ui_button{};	// unsafe
 	static constexpr xx::XY _size_ui_button{ 81, 89 };
 	static constexpr xx::XY _anchor_ui_button{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_ui_button{ 928, 286, 81, 89 };
+	static constexpr xx::UVRect _uvrect_ui_button{ 900, 1135, 81, 89 };
 
 	xx::Ref<xx::Frame> ui_hpbar;
 	xx::Ref<xx::GLTexture> _tex_ui_hpbar;
 	GLuint _texid_ui_hpbar{};	// unsafe
 	static constexpr xx::XY _size_ui_hpbar{ 8, 8 };
 	static constexpr xx::XY _anchor_ui_hpbar{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_ui_hpbar{ 763, 587, 8, 8 };
+	static constexpr xx::UVRect _uvrect_ui_hpbar{ 1004, 773, 8, 8 };
 
 	xx::Ref<xx::Frame> ui_money;
 	xx::Ref<xx::GLTexture> _tex_ui_money;
 	GLuint _texid_ui_money{};	// unsafe
 	static constexpr xx::XY _size_ui_money{ 11, 11 };
 	static constexpr xx::XY _anchor_ui_money{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_ui_money{ 405, 143, 11, 11 };
+	static constexpr xx::UVRect _uvrect_ui_money{ 873, 141, 11, 11 };
 
 	xx::Ref<xx::Frame> ui_paper;
 	xx::Ref<xx::GLTexture> _tex_ui_paper;
@@ -1236,42 +1243,42 @@ struct ResTpFrames {
 	GLuint _texid_ui_pause{};	// unsafe
 	static constexpr xx::XY _size_ui_pause{ 37, 36 };
 	static constexpr xx::XY _anchor_ui_pause{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_ui_pause{ 588, 141, 37, 36 };
+	static constexpr xx::UVRect _uvrect_ui_pause{ 667, 143, 37, 36 };
 
 	xx::Ref<xx::Frame> ui_refresh;
 	xx::Ref<xx::GLTexture> _tex_ui_refresh;
 	GLuint _texid_ui_refresh{};	// unsafe
 	static constexpr xx::XY _size_ui_refresh{ 36, 36 };
 	static constexpr xx::XY _anchor_ui_refresh{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_ui_refresh{ 588, 183, 36, 36 };
+	static constexpr xx::UVRect _uvrect_ui_refresh{ 667, 185, 36, 36 };
 
 	xx::Ref<xx::Frame> ui_scrollbar;
 	xx::Ref<xx::GLTexture> _tex_ui_scrollbar;
 	GLuint _texid_ui_scrollbar{};	// unsafe
 	static constexpr xx::XY _size_ui_scrollbar{ 6, 6 };
 	static constexpr xx::XY _anchor_ui_scrollbar{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_ui_scrollbar{ 437, 157, 6, 6 };
+	static constexpr xx::UVRect _uvrect_ui_scrollbar{ 673, 550, 6, 6 };
 
 	xx::Ref<xx::Frame> ui_scrollrect;
 	xx::Ref<xx::GLTexture> _tex_ui_scrollrect;
 	GLuint _texid_ui_scrollrect{};	// unsafe
 	static constexpr xx::XY _size_ui_scrollrect{ 6, 6 };
 	static constexpr xx::XY _anchor_ui_scrollrect{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_ui_scrollrect{ 782, 226, 6, 6 };
+	static constexpr xx::UVRect _uvrect_ui_scrollrect{ 685, 550, 6, 6 };
 
 	xx::Ref<xx::Frame> warning1a;
 	xx::Ref<xx::GLTexture> _tex_warning1a;
 	GLuint _texid_warning1a{};	// unsafe
 	static constexpr xx::XY _size_warning1a{ 128, 131 };
 	static constexpr xx::XY _anchor_warning1a{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_warning1a{ 794, 169, 128, 131 };
+	static constexpr xx::UVRect _uvrect_warning1a{ 880, 503, 128, 131 };
 
 	xx::Ref<xx::Frame> warning2;
 	xx::Ref<xx::GLTexture> _tex_warning2;
 	GLuint _texid_warning2{};	// unsafe
 	static constexpr xx::XY _size_warning2{ 6, 6 };
 	static constexpr xx::XY _anchor_warning2{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_warning2{ 782, 238, 6, 6 };
+	static constexpr xx::UVRect _uvrect_warning2{ 673, 562, 6, 6 };
 
 
 	xx::Listi32<xx::Ref<xx::Frame>> buff_;

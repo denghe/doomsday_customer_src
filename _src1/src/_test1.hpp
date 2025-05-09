@@ -215,6 +215,7 @@ namespace Game {
 	}
 
 	inline void Test1::Init() {
+		fb.Init();
 		ui.Emplace()->Init();
 		MakeUI();
 

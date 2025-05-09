@@ -3,6 +3,8 @@
 namespace Game {
 
 	inline void Stage_Dash::Init() {
+		fb.Init();
+
 		ui.Emplace()->Init();
 		ui->MakeChildren<xx::Button>()->Init(1, Cfg::xy7m + XY{ 10, -10 }
 			, Cfg::xy7a, gLooper.btnCfg, U"exit", [&]() {
