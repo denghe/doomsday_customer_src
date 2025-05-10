@@ -208,6 +208,20 @@ namespace Game {
 			, gLooper.anchor8, gLooper.btnCfg, U"Add More Grass", [this]() {
 				EnvGrass::GenGrass(this, 5);
 			});
+
+		ui->MakeChildren<xx::Button>()->Init(1, gLooper.pos8 + XY{ 0, -60 }
+			, gLooper.anchor8, gLooper.btnCfg, U"Add More Monsters", [this]() {
+
+				for (int i = 0; i < 100; i++) {
+					auto x = rnd.Next<float>(0, mapSize.x);
+					auto y = rnd.Next<float>(0, mapSize.y);
+					spawners.Emplace().Emplace()->Init(this, { x, y }, 1.f, 1.5f, [](Stage* stage_, XY const& pos_) {
+						auto m = xx::MakeShared<Monster_Chips>();
+						m->Init(stage_, pos_);
+						stage_->monsters.Add(std::move(m));
+						});
+				}
+			});
 	}
 
 	inline void Test1::OnWindowSizeChanged() {
@@ -219,17 +233,21 @@ namespace Game {
 		ui.Emplace()->Init();
 		MakeUI();
 
-		gridSize = {60, 60};
-		mapSize = 128 * gridSize;
-
-		ground.Emplace()->Init(this, mapSize, gLooper.res.ground_cell3);
-		player.Emplace<Player_1>()->Init(this);
-
-		EnvGrass::GenGrass(this, 5);
+		gridSize = { 30, 20 };
+		mapSize = Cfg::unitSize * gridSize;
 
 		camera.scale = Cfg::defaultScale;
 		camera.mapSize = mapSize;
 		camera.newOriginal = camera.original = mapSize * 0.5f;
+
+		effectTexts.Init(this, 10000);
+
+		ground.Emplace()->Init(this, mapSize, gLooper.res.ground_cell3);
+		player.Emplace<Player_1>()->Init(this);
+		EnvGrass::GenGrass(this, 5);
+
+		monsters.Init(&gLooper.rdd, gridSize.y, gridSize.x, (int32_t)Cfg::unitSize);
+
 	}
 
 }
