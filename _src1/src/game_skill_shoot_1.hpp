@@ -11,9 +11,11 @@ namespace Game {
 		moveSpeed = 800.f / Cfg::fps;
 		shootSpeed = 3 / Cfg::fps;
 		life = 3 * (int32_t)Cfg::fps;
+		projectileCount = 1;
 		pierceCount = 0;
 		pierceDelay = 0;
 	}
+
 
 	inline int32_t Skill_Shoot_1::Update() {
 		shootCountPool += shootSpeed;
@@ -24,14 +26,20 @@ namespace Game {
 			// shoot nearest one
 			if (auto o = stage->monsters.FindNearestByRange(pp.x, pp.y, aimRange)) {
 				auto speedStep = moveSpeed / count;
+				auto offsetRadian = (projectileCount - 1) * cOffsetRadian;
 				for (int i = 0; i < count; ++i) {
 					auto d = o->pos - pp;
-					auto a = std::atan2f(d.y, d.x);
-					auto cos = std::cosf(a);
-					auto sin = std::sinf(a);
+					auto mid = std::atan2f(d.y, d.x);
+					auto begin = mid - offsetRadian;
+
 					auto r = (creature->frame->spriteSize.x * 0.5f - speedStep * i) * creature->scale.x;
-					auto pos = pp + XY{ cos * r, sin * r };
-					stage->playerBullets.Emplace().Emplace<Bullet_1>()->Init(this, pos, 0, 3, cos, sin);
+					for (int i = 0; i < projectileCount; i++) {
+						auto a = begin + cProjectileRadian * i;
+						auto cos = std::cosf(a);
+						auto sin = std::sinf(a);
+						auto pos = pp + XY{ cos * r, sin * r };
+						stage->playerBullets.Emplace().Emplace<Bullet_1>()->Init(this, pos, 0, 3, cos, sin);
+					}
 				}
 			}
 		}

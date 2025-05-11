@@ -19,7 +19,7 @@ namespace Game {
 
 		// add init skill
 		skills.Emplace().Emplace<Skill_Control>()->Init(this);
-		//skills.Emplace().Emplace<Skill_Shoot_1>()->Init(this);
+		skills.Emplace().Emplace<Skill_Shoot_1>()->Init(this);
 
 		// init buffs
 		buffs.Init(this);
