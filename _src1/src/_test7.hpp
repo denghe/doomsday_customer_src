@@ -28,7 +28,9 @@ namespace Game {
 		camera.mapSize = mapSize;
 		camera.newOriginal = camera.original = mapSize * 0.5f;
 
-
+		outlines.Emplace(std::make_pair(gLooper.res.player1, XY{ 200, -200 }));
+		outlines.Emplace(std::make_pair(gLooper.res.bullet_coin5, XY{ 200, 0 }));
+		outlines.Emplace(std::make_pair(gLooper.res.monster_hamburger, XY{ 200, 200 }));
 	}
 
 
@@ -42,8 +44,8 @@ namespace Game {
 			});
 
 		ui->MakeChildren<xx::Button>()->Init(1, gLooper.pos8 + XY{ 0, -10 }
-			, gLooper.anchor8, gLooper.btnCfg, U"Add More Grass", [this]() {
-				EnvGrass::GenGrass(this, 5);
+			, gLooper.anchor8, gLooper.btnCfg, U"Add More Outline", [this]() {
+				AddMoreOutline();
 			});
 	}
 
@@ -66,9 +68,19 @@ namespace Game {
 			q->tiling = 5.f;
 			q->offset = offsetX;
 		}
-
-		gLooper.ShaderBegin(gLooper.shaderQuadInstanceOutline).Draw(gLooper.res.player1, 1, xx::RGBA8_Red)->pos = {200, -200};
-		gLooper.ShaderBegin(gLooper.shaderQuadInstanceOutline).Draw(gLooper.res.bullet_coin5, 1, xx::RGBA8_Red)->pos = {200, 0};
-		gLooper.ShaderBegin(gLooper.shaderQuadInstanceOutline).Draw(gLooper.res.monster_hamburger, 1, xx::RGBA8_Red)->pos = {200, 200};
+		
+		for (auto len = outlines.len, i = 0; i < len; ++i) {
+			auto& o = outlines[i];
+			gLooper.ShaderBegin(gLooper.shaderQuadInstanceOutline).Draw(o.first, 1, xx::RGBA8_Red)->pos = o.second;
+		}
 	}
+
+	void Test7::AddMoreOutline() {
+		for (int32_t i = 0; i < 10000; ++i) {
+			XY pos{ rnd.Next<float>(0, Cfg::width) - Cfg::width_2, rnd.Next<float>(0, Cfg::height) - Cfg::height_2 };
+			auto idx = rnd.Next<int32_t>(0, gLooper.res._countof_font_outline_);
+			outlines.Emplace(std::make_pair(gLooper.res.font_outline_[idx], pos));
+		}
+	}
+
 }
