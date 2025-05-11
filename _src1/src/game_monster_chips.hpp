@@ -3,6 +3,7 @@
 namespace Game {
 
 	void Monster_Chips::Init(Stage* stage_, XY const& pos_) {
+		creatureType = CreatureTypes::Monster_Chip;
 		stage = stage_;
 		frame = gLooper.res.monster_chips;
 		state = State::Idle;

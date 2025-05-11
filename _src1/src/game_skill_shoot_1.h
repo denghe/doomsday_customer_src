@@ -9,7 +9,7 @@ namespace Game {
 		float damage{};
 		float moveSpeed{};          // ??? / fps
 		float shootSpeed{};         // times per seconds / fps
-		static constexpr float cProjectileRadian{ 15 * M_PI / 180.f };	// the space between trajectory
+		static constexpr float cProjectileRadian{ 15.f * M_PI / 180.f };	// the space between trajectory
 		static constexpr float cOffsetRadian{ cProjectileRadian / 2.f};
 		int32_t projectileCount{};	// times per seconds / fps
 		int32_t life{};             // seconds * fps

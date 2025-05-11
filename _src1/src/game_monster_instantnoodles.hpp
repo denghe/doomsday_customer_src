@@ -3,6 +3,7 @@
 namespace Game {
 
 	void Monster_Instantnoodles::Init(Stage* stage_, XY const& pos_) {
+		creatureType = CreatureTypes::Monster_InstantNoodles;
 		stage = stage_;
 		frame = gLooper.res.monster_instantnoodles;
 

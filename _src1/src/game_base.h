@@ -53,6 +53,19 @@ namespace Game {
 		Hurt,
 	};
 
+	enum class CreatureTypes : uint32_t {
+		Monster_Chip,
+		Monster_Hamburger,
+		Monster_Cola,
+		Monster_House,
+		Monster_RoastDuck,
+		Monster_Laptop,
+		Monster_Sofa,
+		Monster_InstantNoodles,
+		Player_Programer,
+		Player_Boss,
+	};
+
 	// stage's base
 	struct Stage : xx::SceneBase {
 		//xx::Camera camera;
@@ -141,7 +154,7 @@ namespace Game {
 
 	// stage creature's base
 	struct Creature : StageItem {
-
+		CreatureTypes creatureType{};
 		StatPanel sp;
 		Stat_t healthPointMax{};
 		Stat_t healthPoint{};				// left / current
