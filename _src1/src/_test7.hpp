@@ -54,15 +54,21 @@ namespace Game {
 
 
 	inline void Test7::DrawCustomUI() {
-		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstanceTilingOffset).Draw(gLooper.res.player1->tex, 1);
-		q->pos = {};
-		q->anchor = 0.5f;
-		q->scale = 5;
-		q->radians = 0;
-		q->colorplus = 1.f;
-		q->color = xx::RGBA8_White;
-		q->texRect.data = gLooper.res.player1->textureRect.data;
-		q->tiling = 5.f;
-		q->offset = offsetX;
+		{
+			auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstanceTilingOffset).Draw(gLooper.res.player1->tex);
+			q->pos = {-200, 0};
+			q->anchor = 0.5f;
+			q->scale = 5;
+			q->radians = 0;
+			q->colorplus = 1.f;
+			q->color = xx::RGBA8_White;
+			q->texRect.data = gLooper.res.player1->textureRect.data;
+			q->tiling = 5.f;
+			q->offset = offsetX;
+		}
+
+		gLooper.ShaderBegin(gLooper.shaderQuadInstanceOutline).Draw(gLooper.res.player1, 1, xx::RGBA8_Red)->pos = {200, -200};
+		gLooper.ShaderBegin(gLooper.shaderQuadInstanceOutline).Draw(gLooper.res.bullet_coin5, 1, xx::RGBA8_Red)->pos = {200, 0};
+		gLooper.ShaderBegin(gLooper.shaderQuadInstanceOutline).Draw(gLooper.res.monster_hamburger, 1, xx::RGBA8_Red)->pos = {200, 200};
 	}
 }
