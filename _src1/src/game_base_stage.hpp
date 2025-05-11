@@ -208,7 +208,7 @@ namespace Game {
 		});
 
 		// light tex
-		auto t2 = fb.Draw(gLooper.windowSize, true, xx::RGBA8{ 0,0,0,0 }, [this] {
+		auto t2 = fb.Draw(gLooper.windowSize, true, xx::RGBA8{ 0,0,0,0 }, [&] {
 			gLooper.GLBlendFunc({ GL_SRC_COLOR, GL_ONE, GL_FUNC_ADD });
 			if (player) {
 				auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(gLooper.res._texid_ef_light, 2);
@@ -229,9 +229,12 @@ namespace Game {
 				q->color = xx::RGBA8_Green;//xx::RGBA8_White;RGBA8_Green
 				q->texRect.data = gLooper.res._uvrect_ef_light.data;
 			}
-			for (auto& m : monsters.items) {
+
+			for (auto e = monsters.items.len, i = 0; i < e; ++i) {
+				auto& o = monsters.items[i];
+				if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
 				auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(gLooper.res._texid_ef_light, 1);
-				q->pos = camera.ToGLPos(m->pos);
+				q->pos = camera.ToGLPos(o->pos);
 				q->anchor = 0.5f;
 				q->scale = camera.scale * 5;
 				q->radians = 0;
