@@ -3,6 +3,7 @@
 namespace Game {
 
 	void Monster_Cola::Init(Stage* stage_, XY const& pos_) {
+		creatureType = CreatureTypes::Monster_Cola;
 		stage = stage_;
 		frame = gLooper.res.monster_cola;
 		state = State::Idle;

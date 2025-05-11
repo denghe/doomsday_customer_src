@@ -3,6 +3,7 @@
 namespace Game {
 
 	inline void Player_2::Init(Stage* stage_) {
+		creatureType = CreatureTypes::Player_Boss;
 		stage = stage_;
 		frame = gLooper.res.player2;
 

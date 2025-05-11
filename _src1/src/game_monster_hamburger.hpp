@@ -3,6 +3,7 @@
 namespace Game {
 
 	void Monster_Hamburger::Init(Stage* stage_, XY const& pos_) {
+		creatureType = CreatureTypes::Monster_Hamburger;
 		stage = stage_;
 		frame = gLooper.res.monster_hamburger;
 

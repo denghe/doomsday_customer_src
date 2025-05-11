@@ -3,6 +3,7 @@
 namespace Game {
 
 	void Monster_House::Init(Stage* stage_, XY const& pos_) {
+		creatureType = CreatureTypes::Monster_House;
 		stage = stage_;
 		frame = gLooper.res.monster_house;
 
