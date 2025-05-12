@@ -17,12 +17,11 @@ namespace Game {
 	};
 
 	struct Test3 : Stage {
-		xx::Shared<xx::Node> ui;
 		xx::Listi32<xx::Shared<CreatureGroup>> cgs;
 
 		void Init() override;
 		void Update() override;
-		void Draw() override;
+		void DrawCustomOrderYItem(xx::Listi32<std::pair<float, Game::Drawable*>>& yd, XY areaMin, XY areaMax) override;
 	};
 
 }

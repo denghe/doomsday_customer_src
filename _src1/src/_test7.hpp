@@ -5,28 +5,18 @@ namespace Game {
 	void Test7::Update() {
 		Stage::Update();
 
-		offsetX++;
+		uvOffset += 0.1f;
 	}
 
 
 
 
 	inline void Test7::Init() {
-		fb.Init();
-		ui.Emplace()->Init();
-		MakeUI();
-
-		gridSize = { 60, 60 };
-		mapSize = 128 * gridSize;
-
-		ground.Emplace()->Init(this, mapSize, gLooper.res.ground_cell3);
+		StageInit({ 60, 60 });
 		player.Emplace<Player_1>()->Init(this);
 
-		EnvGrass::GenGrass(this, 5);
-
-		camera.scale = Cfg::defaultScale;
-		camera.mapSize = mapSize;
-		camera.newOriginal = camera.original = mapSize * 0.5f;
+		ui.Emplace()->Init();
+		MakeUI();
 
 		outlines.Emplace(std::make_pair(gLooper.res.player1, XY{ 200, -200 }));
 		outlines.Emplace(std::make_pair(gLooper.res.bullet_coin5, XY{ 200, 0 }));
@@ -65,8 +55,8 @@ namespace Game {
 			q->colorplus = 1.f;
 			q->color = xx::RGBA8_White;
 			q->texRect.data = gLooper.res.player1->textureRect.data;
-			q->tiling = 5.f;
-			q->offset = offsetX;
+			q->tiling = 25.f;
+			q->offset = uvOffset;
 		}
 		
 		for (auto len = outlines.len, i = 0; i < len; ++i) {

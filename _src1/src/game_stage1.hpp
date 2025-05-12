@@ -286,7 +286,7 @@ namespace Game {
 			while (!(monsterGenerators.Empty() && spawners.Empty() && monsters.items.Empty())) {
 				// maybe button pause game
 				if (!uiPausePanel) {
-					UpdateItems();
+					StageUpdate();
 				}
 				XX_YIELD(n);
 			}
@@ -295,7 +295,7 @@ namespace Game {
 			// wait 2 seconds
 			// todo: absorb all stuff?
 			for (sleepCounter = gLooper.frameNumber + int32_t(Cfg::fps * 2.f); sleepCounter > gLooper.frameNumber;) {
-				UpdateItems();
+				StageUpdate();
 				XX_YIELD(n);
 			}
 

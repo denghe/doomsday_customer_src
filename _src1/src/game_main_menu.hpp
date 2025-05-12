@@ -16,32 +16,37 @@ namespace Game {
 			gLooper.DelaySwitchTo<Game::Stage_Dash>();
 		};
 
-		ui->MakeChildren<xx::Button>()->Init(2, Cfg::xy7m + XY{ 10, -10 }, Cfg::xy7a, gLooper.btnCfg, U"test1").onClicked = [&]() {
+		float y = -10;
+		ui->MakeChildren<xx::Button>()->Init(2, Cfg::xy7m + XY{ 10, y }, Cfg::xy7a, gLooper.btnCfg, U"test1").onClicked = [&]() {
 			gLooper.DelaySwitchTo<Game::Test1>();
 		};
-
-		ui->MakeChildren<xx::Button>()->Init(2, Cfg::xy7m + XY{ 10, -70 }, Cfg::xy7a, gLooper.btnCfg, U"test2").onClicked = [&]() {
+		y -= 60;
+		ui->MakeChildren<xx::Button>()->Init(2, Cfg::xy7m + XY{ 10, y }, Cfg::xy7a, gLooper.btnCfg, U"test2").onClicked = [&]() {
 			gLooper.DelaySwitchTo<Game::Test2>();
 		};
-
-		ui->MakeChildren<xx::Button>()->Init(2, Cfg::xy7m + XY{ 10, -130 }, Cfg::xy7a, gLooper.btnCfg, U"test3").onClicked = [&]() {
+		y -= 60;
+		ui->MakeChildren<xx::Button>()->Init(2, Cfg::xy7m + XY{ 10, y }, Cfg::xy7a, gLooper.btnCfg, U"test3").onClicked = [&]() {
 			gLooper.DelaySwitchTo<Game::Test3>();
 		};
-
-		ui->MakeChildren<xx::Button>()->Init(2, Cfg::xy7m + XY{ 10, -190 }, Cfg::xy7a, gLooper.btnCfg, U"test4").onClicked = [&]() {
+		y -= 60;
+		ui->MakeChildren<xx::Button>()->Init(2, Cfg::xy7m + XY{ 10, y }, Cfg::xy7a, gLooper.btnCfg, U"test4").onClicked = [&]() {
 			gLooper.DelaySwitchTo<Game::Test4>();
 		};
-
-		ui->MakeChildren<xx::Button>()->Init(2, Cfg::xy7m + XY{ 10, -250 }, Cfg::xy7a, gLooper.btnCfg, U"test5").onClicked = [&]() {
+		y -= 60;
+		ui->MakeChildren<xx::Button>()->Init(2, Cfg::xy7m + XY{ 10, y }, Cfg::xy7a, gLooper.btnCfg, U"test5").onClicked = [&]() {
 			gLooper.DelaySwitchTo<Game::Test5>();
 		};
-
-		ui->MakeChildren<xx::Button>()->Init(2, Cfg::xy7m + XY{ 10, -310 }, Cfg::xy7a, gLooper.btnCfg, U"test6").onClicked = [&]() {
+		y -= 60;
+		ui->MakeChildren<xx::Button>()->Init(2, Cfg::xy7m + XY{ 10, y }, Cfg::xy7a, gLooper.btnCfg, U"test6").onClicked = [&]() {
 			gLooper.DelaySwitchTo<Game::Test6>();
 		};
-
-		ui->MakeChildren<xx::Button>()->Init(2, Cfg::xy7m + XY{ 10, -370 }, Cfg::xy7a, gLooper.btnCfg, U"test7").onClicked = [&]() {
+		y -= 60;
+		ui->MakeChildren<xx::Button>()->Init(2, Cfg::xy7m + XY{ 10, y }, Cfg::xy7a, gLooper.btnCfg, U"test7").onClicked = [&]() {
 			gLooper.DelaySwitchTo<Game::Test7>();
+		};
+		y -= 60;
+		ui->MakeChildren<xx::Button>()->Init(2, Cfg::xy7m + XY{ 10, y }, Cfg::xy7a, gLooper.btnCfg, U"test8").onClicked = [&]() {
+			gLooper.DelaySwitchTo<Game::Test8>();
 		};
 
 		camera.SetMaxFrameSize(Cfg::unitSize);

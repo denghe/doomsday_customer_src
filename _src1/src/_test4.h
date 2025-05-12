@@ -15,13 +15,12 @@ namespace Game {
 	};
 
 	struct Test4 : Stage {
-		xx::Shared<xx::Node> ui;
 		xx::Listi32<FlashPoint> flashPoints;
 		xx::Listi32<xx::UV> flashPosIndexs;
 
 		void Init() override;
 		void Update() override;
-		void Draw() override;
+		void DrawCustomUI() override;
 	};
 
 }

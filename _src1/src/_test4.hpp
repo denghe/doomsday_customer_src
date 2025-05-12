@@ -46,23 +46,15 @@ namespace Game {
 
 
 	inline void Test4::Init() {
-		fb.Init();
+		StageInit({60, 60});
+		player.Emplace<Player_1>()->Init(this);
+
 		ui.Emplace()->Init();
 
 		ui->MakeChildren<xx::Button>()->Init(1, Cfg::xy7m + XY{ 10, -10 }
 			, Cfg::xy7a, gLooper.btnCfg, U"exit", [&]() {
 				gLooper.DelaySwitchTo<Game::MainMenu>();
 			});
-
-		gridSize = { 60, 60 };
-		mapSize = 128 * gridSize;
-
-		ground.Emplace()->Init(this, mapSize, gLooper.res.ground_cell2);
-		player.Emplace<Player_1>()->Init(this);
-
-		camera.scale = 3.f;
-		camera.mapSize = mapSize;
-		camera.newOriginal = camera.original = mapSize * 0.5f;
 
 
 		// fill flash area data
@@ -85,82 +77,32 @@ namespace Game {
 				}
 			}
 		}
+
+		camera.scale = 3;
 	}
 
 	inline void Test4::Update() {
-		// scale control
-		if (gLooper.KeyDownDelay(xx::KeyboardKeys::Z, 0.02f)) {
-			camera.IncreaseScale(0.01f, 5);
-		}
-		else if (gLooper.KeyDownDelay(xx::KeyboardKeys::X, 0.02f)) {
-			camera.DecreaseScale(0.01f, 0.1f);
-		}
+		StageUpdate();
 
-		player->Update();
-		camera.SetOriginal<true>(player->pos, camera.ToLogicPos(gLooper.mouse.pos));
-		camera.Update();
-
-
+		// update flash points
 		for (auto i = flashPoints.len - 1; i >= 0; --i) {
 			if (flashPoints[i].Update()) {
 				flashPoints.SwapRemoveAt(i);
 			}
 		}
 
-
 		// make some flash point
 		for (auto i = 0; i < 10; ++i) {
 			auto uv = flashPosIndexs[rnd.Next<int32_t>(flashPosIndexs.len)];
 			flashPoints.Emplace().Init(this, player->pos + XY{ uv.u, uv.v });
 		}
-
-		++time;
 	}
 
-	inline void Test4::Draw() {
-		// draw floor
-		ground->Draw();
-
-		// calculate display cut area
-		auto areaMin = camera.ToLogicPos({ -gLooper.width_2 - Cfg::unitSize * 2, gLooper.height_2 + Cfg::unitSize * 2 });
-		auto areaMax = camera.ToLogicPos({ gLooper.width_2 + Cfg::unitSize * 2, -gLooper.height_2 - Cfg::unitSize * 2 });
-
-		// draw game items ( order by y )
-		// 
-		// prepare
-		auto& yd = gLooper.yDraws;
-
-		yd.Emplace(player->pos.y, player.pointer);
-
-		//for (auto e = cgs.len, i = 0; i < e; ++i) {
-		//	auto& o = cgs[i];
-		//	if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
-		//	yd.Emplace(o->pos.y, o.pointer);
-		//}
-
-		// sort
-		std::sort(yd.buf, yd.buf + yd.len, [](auto& a, auto& b) { return a.first < b.first; });
-
-		// draw
-		for (auto e = yd.len, i = 0; i < e; ++i) {
-			yd[i].second->Draw();
-		}
-
-		// clean up
-		yd.Clear();
-
+	inline void Test4::DrawCustomUI() {
 
 		for (auto e = flashPoints.len, i = 0; i < e; ++i) {
 			flashPoints[i].Draw();
 		}
 
-
-		// draw tips
-		gLooper.ctcDefault.Draw({ 0, gLooper.windowSize_2.y - 5 }
-			, xx::ToString("zoom: ZX  move: ASDW  flashPoints.len = ", flashPoints.len)
-			, xx::RGBA8_Green, { 0.5f, 1 });
-
-
-		gLooper.DrawNode(ui);
 	}
 }

@@ -2,6 +2,26 @@
 
 namespace Game {
 
+	inline void Stage::StageInit(XYi gridSize_) {
+		fb.Init();
+
+		gridSize = gridSize_;
+		mapSize = Cfg::unitSize * gridSize;
+
+		camera.scale = Cfg::defaultScale;
+		camera.mapSize = mapSize;
+		camera.newOriginal = camera.original = mapSize * 0.5f;
+
+		effectTexts.Init(this, 10000);
+
+		ground.Emplace()->Init(this, mapSize, gLooper.res.ground_cell3);
+		grasses.Reserve(100000);
+		EnvGrass::GenGrass(this, 15);
+
+		monsters.Init(&gLooper.rdd, gridSize.y, gridSize.x, (int32_t)Cfg::unitSize);
+		loots.Init(&gLooper.rdd, gridSize.y, gridSize.x, (int32_t)Cfg::unitSize);
+	}
+
 	inline XY Stage::GetPlayerBornPos() {
 		return mapSize * 0.5f;
 	}
@@ -47,7 +67,8 @@ namespace Game {
 		time = 0;
 	}
 
-	inline void Stage::UpdateItems() {
+	template<bool updateTime>
+	inline void Stage::StageUpdate() {
 		//if (paused) return;
 
 		// scale control
@@ -128,7 +149,9 @@ namespace Game {
 		camera.Update();
 
 		// update time
-		++time;
+		if constexpr (updateTime) {
+			++time;
+		}
 
 		//// finish check
 		//if (monsterGenerators.Empty() && spawners.Empty() && monsters.items.Empty()) {
@@ -194,6 +217,8 @@ namespace Game {
 				if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
 				yd.Emplace(o->pos.y, o.pointer);
 			}
+
+			DrawCustomOrderYItem(yd, areaMin, areaMax);
 
 			// sort
 			std::sort(yd.buf, yd.buf + yd.len, [](auto& a, auto& b) { return a.first < b.first; });
@@ -280,7 +305,9 @@ namespace Game {
 		DrawCustomUI();
 
 		// draw ui
-		gLooper.DrawNode(ui);
+		if (ui) {
+			gLooper.DrawNode(ui);
+		}
 
 		// draw tips
 		gLooper.ctcDefault.Draw({ 0, gLooper.windowSize_2.y - 5 }

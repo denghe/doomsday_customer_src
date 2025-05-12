@@ -41,6 +41,7 @@ namespace Game {
 	struct Spawner;
 	struct Creature;
 	struct EnvGrass;
+	struct Loot;
 
 	enum class State : uint32_t {
 		Unknown = 0,
@@ -66,6 +67,19 @@ namespace Game {
 		Player_Boss,
 	};
 
+	enum class LootTypes : uint32_t {
+		Unknown = 0,
+		Coin,
+		Chip,
+		Hamburger,
+		Cola,
+		House,
+		RoastDuck,
+		Laptop,
+		Sofa,
+		InstantNoodles,
+	};
+
 	// stage's base
 	struct Stage : xx::SceneBase {
 		//xx::Camera camera;
@@ -86,6 +100,7 @@ namespace Game {
 		xx::Listi32<xx::Shared<Bullet>> playerBullets;
 		xx::Listi32<xx::Shared<Bullet>> monsterBullets;
 		xx::Shared<Player> player;
+		Space<Loot> loots;
 		Space<Monster> monsters;
 		xx::Listi32<xx::Shared<Spawner>> spawners;
 		xx::Shared<Ground> ground;
@@ -93,16 +108,19 @@ namespace Game {
 		xx::Listi32<xx::Shared<MonsterGen>> monsterGenerators;
 		xx::Listi32<xx::Shared<Drawable>> effects;
 		EffectTextManager effectTexts;
-		void UpdateItems();
+		template<bool updateTime = true>
+		void StageUpdate();
 		template<bool clearPlayer, bool clearGrass>
 		void ClearItems();						// for round finished
 		// todo
 
+		void StageInit(XYi gridSize_);
 		virtual XY GetPlayerBornPos();
 		void ForceLimit(XY& pos);
 		bool IsOutOfMap(XY const& pos);
 		XY GetRndPosDoughnut(float maxRadius, float safeRadius);
-		void Update() override { UpdateItems(); };
+		void Update() override { StageUpdate(); };
+		virtual void DrawCustomOrderYItem(xx::Listi32<std::pair<float, Game::Drawable*>>& yd, XY areaMin, XY areaMax) {};
 		virtual void DrawCustomUI() {};
 		virtual void OnWindowSizeChanged() {};
 		void Draw() override;
@@ -150,6 +168,12 @@ namespace Game {
 		void FillNameFrames(std::u32string_view const& name_);
 		void DrawNameBG();
 		void DrawName();
+	};
+
+	// stage monster dead drop objects
+	struct Loot : StageItem {
+		LootTypes lootType{};
+		virtual void Collect(Creature* owner) {};
 	};
 
 	// stage creature's base

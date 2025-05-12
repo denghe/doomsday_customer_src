@@ -3,28 +3,15 @@
 namespace Game {
 
 	inline void Test2::Init() {
-		fb.Init();
+		StageInit({ 30, 20 });
+		player.Emplace<Player_1>()->Init(this);
+
 		ui.Emplace()->Init();
 
 		ui->MakeChildren<xx::Button>()->Init(1, Cfg::xy7m + XY{ 10, -10 }
 			, Cfg::xy7a, gLooper.btnCfg, U"exit", [&]() {
 				gLooper.DelaySwitchTo<Game::MainMenu>();
 		});
-
-		ui->MakeChildren<xx::Button>()->Init(1, Cfg::xy8m + XY{ 0, -10 }
-			, Cfg::xy8a, gLooper.btnCfg, U"test2", [&]() {
-		});
-
-		gridSize = {60, 60};
-		mapSize = 128 * gridSize;
-
-		ground.Emplace()->Init(this, mapSize, gLooper.res.ground_cell2);
-		player.Emplace<Player_1>()->Init(this);
-
-		camera.scale = Cfg::defaultScale;
-		camera.mapSize = mapSize;
-		camera.newOriginal = camera.original = mapSize * 0.5f;
-
 
 		s9.frame = gLooper.res.warning2;
 		s9.centerOffset = { 0, -(80 - 8) / 2 };
@@ -34,6 +21,8 @@ namespace Game {
 		s9.center = {2,2,2,2};
 		s9.size = { 100, 80 };
 		s9.anchor = { 0, 0.5f };
+
+		camera.scale = 1;
 	}
 
 	void Test2::Update1() {
@@ -74,33 +63,18 @@ namespace Game {
 	}
 
 	inline void Test2::Update() {
-		// scale control
-		if (gLooper.KeyDownDelay(xx::KeyboardKeys::Z, 0.02f)) {
-			camera.IncreaseScale(0.01f, 5);
-		}
-		else if (gLooper.KeyDownDelay(xx::KeyboardKeys::X, 0.02f)) {
-			camera.DecreaseScale(0.01f, 0.1f);
-		}
-
-		player->Update();
-		camera.SetOriginal<true>(player->pos, camera.ToLogicPos(gLooper.mouse.pos));
-		camera.Update();
+		StageUpdate();
 
 		Update1();
 		Update2();
 		Update3();
-
-		++time;
 	}
 
-	inline void Test2::Draw() {
-		ground->Draw();
-		player->Draw();
+	inline void Test2::DrawCustomUI() {
 
 		s9.pos = camera.ToGLPos(player->pos);
 		s9.scale = camera.scale;
 		s9.Draw();
 
-		gLooper.DrawNode(ui);
 	}
 }

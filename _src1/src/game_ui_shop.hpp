@@ -894,6 +894,9 @@ namespace Game {
 		goodsList = MakeChildren<UI_BuffShopGoodsList>();
 		goodsList->Init(creature, 3, { leftPos, topPos - titleLabel.size.y - globalMargin }, { buffBagSize.x + UI_BuffBag::cMargin.x * 2, topPos - bottomPos - titleLabel.size.y - globalMargin * 2 - buffBagSize.y - UI_BuffBag::cMargin.y * 2 });
 
+		// set default value for easy test
+		OnNextBtnPressed = [] {};
+
 		return *this;
 	}
 

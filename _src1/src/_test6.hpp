@@ -94,22 +94,11 @@ namespace Game {
 
 
 	inline void Test6::Init() {
-		fb.Init();
-		ui.Emplace()->Init();
-		MakeUI();
-
-		gridSize = { 60, 60 };
-		mapSize = 128 * gridSize;
-
-		ground.Emplace()->Init(this, mapSize, gLooper.res.ground_cell3);
+		StageInit({60, 60});
 		player.Emplace<Player_1>()->Init(this);
 
-		EnvGrass::GenGrass(this, 5);
-
-		camera.scale = Cfg::defaultScale;
-		camera.mapSize = mapSize;
-		camera.newOriginal = camera.original = mapSize * 0.5f;
-
+		ui.Emplace()->Init();
+		MakeUI();
 
 		// trail logic
 		trails.Resize(1);// 10000

@@ -51,6 +51,7 @@
 #include "_test5.hpp"
 #include "_test6.hpp"
 #include "_test7.hpp"
+#include "_test8.hpp"
 
 Looper gLooper;
 
