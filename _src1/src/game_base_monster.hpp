@@ -72,7 +72,10 @@ namespace Game {
 		}
 		dmg = std::ceilf(dmg * damageReduce);
 		if (healthPoint <= dmg) {
-			// dead
+			if (OnDie()) {
+				stage->player->OnKilled(this);
+				Rewards(stage->player);
+			}
 			stage->effectTexts.Add(pos + frame->spriteSize * XY{ 0, -0.5f }, txtD, xx::RGBA8_Red, 6, healthPoint);
 			stage->effects.Emplace().Emplace<EffectDeath>()->Init(stage, frame, pos);
 			stage->monsters.Remove(this);
