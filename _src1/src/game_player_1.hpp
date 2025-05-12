@@ -19,21 +19,30 @@ namespace Game {
 		healthPoint = healthPointMax;
 
 		// add init skill
-		skills.Emplace().Emplace<Skill_Control>()->Init(this);
-		skills.Emplace().Emplace<Skill_Shoot_1>()->Init(this);
+		shoot = skills.Emplace().Emplace<Skill_Shoot_1>();
+		shoot->Init(this);
+
+		control = skills.Emplace().Emplace<Skill_Control>();
+		control->Init(this);
 
 		// init buffs
 		buffs.Init(this);
 	}
 
-	inline int32_t Player_1::Update() {
-		for (auto i = skills.len - 1; i >= 0; --i) {
-			auto& skill = skills[i];
-			if (skill->Update()) {
-				skills.SwapRemoveAt(i);
-			}
+	inline void Player_1::UpdateDamage(float damage) {
+		shoot->damage += damage;
+		if (shoot->damage < 0.f) {
+			shoot->damage = 0.f;
 		}
+	}
 
+	inline void Player_1::UpdateAttackSpeed(float attackSpeed) {
+		shoot->shootSpeed *= (1.f + attackSpeed);
+	}
+
+	inline int32_t Player_1::Update() {
+		shoot->Update();
+		control->Update();
 		// if reutrn !0 mean player is dead
 		return 0;
 	}

@@ -64,10 +64,22 @@ namespace Game {
 	}
 
 	void Monster_Chips::Rewards(Creature* target) {
+		auto rewardIdx = gLooper.rnd.Next<int>(0, 3);
 		target->coin += 5;
-		healthPoint += 10;
-		if (healthPoint > healthPointMax) {
-			healthPoint = healthPointMax;
+
+		switch (rewardIdx)
+		{
+		case 0:
+			target->UpdateHealthPoint(10);
+			break;
+		case 1:
+			target->UpdateDamage(5);
+			break;
+		case 2:
+			target->UpdateAttackSpeed(.5f);
+			break;
+		default:
+			break;
 		}
 	}
 }
