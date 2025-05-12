@@ -74,7 +74,7 @@ namespace Game {
 		if (healthPoint <= dmg) {
 			if (OnDie()) {
 				stage->player->OnKilled(this);
-				Rewards(stage->player);
+				Rewards();
 			}
 			stage->effectTexts.Add(pos + frame->spriteSize * XY{ 0, -0.5f }, txtD, xx::RGBA8_Red, 6, healthPoint);
 			stage->effects.Emplace().Emplace<EffectDeath>()->Init(stage, frame, pos);

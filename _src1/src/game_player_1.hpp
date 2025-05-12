@@ -43,6 +43,11 @@ namespace Game {
 	inline int32_t Player_1::Update() {
 		shoot->Update();
 		control->Update();
+
+		if (auto o = stage->loots.FindNearestByRange(pos.x,pos.y,collectRange)) {
+			// todo loot move to Player
+		}
+
 		// if reutrn !0 mean player is dead
 		return 0;
 	}
