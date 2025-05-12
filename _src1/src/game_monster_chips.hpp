@@ -63,11 +63,51 @@ namespace Game {
 		q[0].texRect.data = gLooper.res._uvrect_ef_atkdmg.data;
 	}
 
-	void Monster_Chips::Rewards(Creature* target) {
-		target->coin += 5;
-		healthPoint += 10;
-		if (healthPoint > healthPointMax) {
-			healthPoint = healthPointMax;
+	void Monster_Chips::Rewards() {
+		auto rewardIdx = gLooper.rnd.Next<int>(0, 3);
+		auto loot = xx::MakeShared<Chip_Loot>();
+		loot->Init(stage);
+		loot->pos = pos;
+		loot->coin = 5;
+
+		switch (rewardIdx)
+		{
+		case 0:
+			loot->healthPoint = 10.f;
+			break;
+		case 1:
+			loot->damage = 1.f;
+			break;
+		case 2:
+			loot->attackSpeed = .5f;
+			break;
+		default:
+			break;
+		}
+
+		stage->loots.Add(std::move(loot));
+	}
+
+	void Chip_Loot::Init(Stage* stage_) {
+		stage = stage_;
+		type = LootTypes::Chip;
+	}
+
+	void Chip_Loot::Collect(Creature* owner) {
+		if (coin != 0) {
+			owner->coin += coin;
+		}
+
+		if (damage != 0) {
+			owner->UpdateDamage(damage);
+		}
+
+		if (attackSpeed != 0) {
+			owner->UpdateAttackSpeed(attackSpeed);
+		}
+
+		if (healthPoint != 0) {
+			owner->UpdateHealthPoint(healthPoint);
 		}
 	}
 }

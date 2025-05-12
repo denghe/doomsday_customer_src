@@ -195,6 +195,9 @@ namespace Game {
 		void OnRoundEnd();
 		void OnKilled(Creature* tar);
 		bool OnDie();		// return false: no die
+		virtual void UpdateHealthPoint(float hp) {};
+		virtual void UpdateDamage(float damage) {}
+		virtual void UpdateAttackSpeed(float attackSpeed) {}
 		std::pair<Stat_t, bool> GetFinalDamageOnce(Stat_t skillDamage);	// second = true: critical
 
 		xx::Listi32<xx::Shared<Skill>> skills;
@@ -215,7 +218,7 @@ namespace Game {
 	struct Player : Creature {
 		static constexpr int32_t cProtectFrameCount{ int32_t(Cfg::fps * 1) };
 		int32_t protectFrame{};
-
+		float collectRange{};
 		int32_t Hurt();
 	};
 
@@ -232,7 +235,7 @@ namespace Game {
 		int32_t MoveToPosition(xx::XY targetPos, float targetRadius);
 		int32_t MoveToPlayer(float keepDistance = 0);
 		virtual void DrawTag() {};
-		virtual void Rewards(Creature* target) {};		// drop coins or items
+		virtual void Rewards() {};		// drop items
 	};
 
 	// monster generator's base
