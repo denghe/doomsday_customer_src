@@ -50,7 +50,7 @@
         <key>dxtCompressionMode</key>
         <enum type="SettingsBase::DxtCompressionMode">DXT_PERCEPTUAL</enum>
         <key>ditherType</key>
-        <enum type="SettingsBase::DitherType">PngQuantLow</enum>
+        <enum type="SettingsBase::DitherType">PngQuantHigh</enum>
         <key>backgroundColor</key>
         <uint>0</uint>
         <key>libGdx</key>
@@ -950,6 +950,45 @@
                 <rect>32,30,64,61</rect>
                 <key>scale9Paddings</key>
                 <rect>32,30,64,61</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/item_coin_0.png</key>
+            <key type="filename">pngs/item_coin_1.png</key>
+            <key type="filename">pngs/item_coin_10.png</key>
+            <key type="filename">pngs/item_coin_11.png</key>
+            <key type="filename">pngs/item_coin_12.png</key>
+            <key type="filename">pngs/item_coin_13.png</key>
+            <key type="filename">pngs/item_coin_14.png</key>
+            <key type="filename">pngs/item_coin_15.png</key>
+            <key type="filename">pngs/item_coin_16.png</key>
+            <key type="filename">pngs/item_coin_17.png</key>
+            <key type="filename">pngs/item_coin_18.png</key>
+            <key type="filename">pngs/item_coin_19.png</key>
+            <key type="filename">pngs/item_coin_2.png</key>
+            <key type="filename">pngs/item_coin_20.png</key>
+            <key type="filename">pngs/item_coin_21.png</key>
+            <key type="filename">pngs/item_coin_22.png</key>
+            <key type="filename">pngs/item_coin_23.png</key>
+            <key type="filename">pngs/item_coin_24.png</key>
+            <key type="filename">pngs/item_coin_3.png</key>
+            <key type="filename">pngs/item_coin_4.png</key>
+            <key type="filename">pngs/item_coin_5.png</key>
+            <key type="filename">pngs/item_coin_6.png</key>
+            <key type="filename">pngs/item_coin_7.png</key>
+            <key type="filename">pngs/item_coin_8.png</key>
+            <key type="filename">pngs/item_coin_9.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,1</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>16,16,32,32</rect>
+                <key>scale9Paddings</key>
+                <rect>16,16,32,32</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
