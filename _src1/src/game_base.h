@@ -195,7 +195,7 @@ namespace Game {
 		void OnRoundEnd();
 		void OnKilled(Creature* tar);
 		bool OnDie();		// return false: no die
-		virtual void UpdateHealthPoint(float hp) {};
+		virtual void UpdateHealthPoint(int32_t hp) {};
 		virtual void UpdateDamage(float damage) {}
 		virtual void UpdateAttackSpeed(float attackSpeed) {}
 		std::pair<Stat_t, bool> GetFinalDamageOnce(Stat_t skillDamage);	// second = true: critical

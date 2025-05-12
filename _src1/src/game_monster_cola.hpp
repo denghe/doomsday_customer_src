@@ -44,11 +44,4 @@ namespace Game {
 		return destroyTime <= stage->time;
 	}
 
-	void Monster_Cola::Rewards(Creature* target) {
-		target->coin += 5;
-		healthPoint += 10;
-		if (healthPoint > healthPointMax) {
-			healthPoint = healthPointMax;
-		}
-	}
 }

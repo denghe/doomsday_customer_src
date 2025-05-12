@@ -40,7 +40,4 @@ namespace Game {
 		return 0;
 	}
 
-	void Monster_Roastduck::Rewards(Creature* target) {
-		target->coin += 10;
-	}
 }

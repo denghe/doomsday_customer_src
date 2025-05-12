@@ -3,7 +3,7 @@
 namespace Game {
 
 	inline void Stage1::Init() {
-		fb.Init();
+		StageInit({ 30, 20 });
 
 		ui.Emplace()->Init();
 		ui->MakeChildren<xx::Button>()->Init(1, Cfg::xy1m, Cfg::xy1a, gLooper.btnCfg, U"exit", [&]() {
@@ -24,21 +24,6 @@ namespace Game {
 		uiHPBar.Init(this);
 		uiCoinBar.Init(this);
 		// ...
-
-		gridSize = { 30, 20 };
-		mapSize = Cfg::unitSize * gridSize;
-
-		camera.scale = Cfg::defaultScale;
-		camera.mapSize = mapSize;
-		camera.newOriginal = camera.original = mapSize * 0.5f;
-
-		effectTexts.Init(this, 10000);
-
-		ground.Emplace()->Init(this, mapSize, gLooper.res.ground_cell3);
-		grasses.Reserve(100000);
-		EnvGrass::GenGrass(this, 15);
-
-		monsters.Init(&gLooper.rdd, gridSize.y, gridSize.x, (int32_t)Cfg::unitSize);
 	}
 
 	inline void Stage1::RoundInit() {

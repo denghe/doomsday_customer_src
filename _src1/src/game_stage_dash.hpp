@@ -3,24 +3,13 @@
 namespace Game {
 
 	inline void Stage_Dash::Init() {
-		fb.Init();
+		StageInit(Cfg::gridSize);
 
 		ui.Emplace()->Init();
 		ui->MakeChildren<xx::Button>()->Init(1, Cfg::xy7m + XY{ 10, -10 }
 			, Cfg::xy7a, gLooper.btnCfg, U"exit", [&]() {
 			gLooper.DelaySwitchTo<Game::MainMenu>();
 		});
-
-		gridSize = Cfg::gridSize;
-		mapSize = Cfg::unitSize * gridSize;
-
-		camera.scale = Cfg::defaultScale;
-		camera.mapSize = mapSize;
-		camera.newOriginal = camera.original = mapSize * 0.5f;
-
-		ground.Emplace()->Init(this, mapSize, gLooper.res.ground_cell2);
-		monsters.Init(&gLooper.rdd, gridSize.y, gridSize.x, (int32_t)Cfg::unitSize);
-		effectTexts.Init(this, 10000);
 
 		//auto& sc = skillCfgs.Emplace().Emplace<SkillCfg_1>();
 		//sc->aimRange = Cfg::unitSize * 20;
