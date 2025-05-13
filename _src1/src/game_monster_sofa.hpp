@@ -24,9 +24,9 @@ namespace Game {
 		tarOffset = stage->GetRndPosDoughnut(tarOffsetRadius, 0.1f);
 	}
 
-	void Monster_Sofa::Rewards(Creature* target) {
-		target->coin += 15;
-		healthPointMax += 100;
+	void Monster_Sofa::Rewards() {
+		//target->coin += 15;
+		//healthPointMax += 100;
 		//todo healthPointMax
 	}
 }

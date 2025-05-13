@@ -7,7 +7,7 @@ namespace Game {
 
 		void Init(Stage* stage_, XY const& pos_);
 		int32_t Update() override;
-		void Rewards(Creature* target) override;
+		void Rewards() override;
 	};
 
 }

@@ -73,7 +73,7 @@ namespace Game {
 		switch (rewardIdx)
 		{
 		case 0:
-			loot->healthPoint = 10.f;
+			loot->healthPoint = 10;
 			break;
 		case 1:
 			loot->damage = 1.f;
