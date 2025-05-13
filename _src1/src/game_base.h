@@ -55,6 +55,7 @@ namespace Game {
 	};
 
 	enum class CreatureTypes : uint32_t {
+		Unknown = 0,
 		Monster_Chip,
 		Monster_Hamburger,
 		Monster_Cola,
@@ -65,19 +66,6 @@ namespace Game {
 		Monster_InstantNoodles,
 		Player_Programer,
 		Player_Boss,
-	};
-
-	enum class LootTypes : uint32_t {
-		Unknown = 0,
-		Coin,
-		Chip,
-		Hamburger,
-		Cola,
-		House,
-		RoastDuck,
-		Laptop,
-		Sofa,
-		InstantNoodles,
 	};
 
 	// stage's base
@@ -101,6 +89,7 @@ namespace Game {
 		xx::Listi32<xx::Shared<Bullet>> monsterBullets;
 		xx::Shared<Player> player;
 		Space<Loot> loots;
+		xx::Listi32<xx::Shared<Loot>> flyingLoots;
 		Space<Monster> monsters;
 		xx::Listi32<xx::Shared<Spawner>> spawners;
 		xx::Shared<Ground> ground;
@@ -172,8 +161,14 @@ namespace Game {
 
 	// stage monster dead drop objects
 	struct Loot : StageItem {
-		LootTypes lootType{};
-		virtual void Collect(Creature* owner) {};
+		CreatureTypes creatureType{};
+		int32_t coinValue{};
+		// ...
+		void Init(Creature* creature_, int32_t coinValue_);
+		void Collect(Creature* owner);
+		int32_t Update() override;
+		void Draw() override;
+		void DrawFlying();
 	};
 
 	// stage creature's base
@@ -220,6 +215,7 @@ namespace Game {
 		int32_t protectFrame{};
 		float collectRange{};
 		int32_t Hurt();
+		// todo: pick up loot logic when update
 	};
 
 	// monster's base

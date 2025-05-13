@@ -2,6 +2,7 @@
 #include "looper.h"
 
 #include "game_buff.hpp"
+#include "game_base_loot.hpp"
 #include "game_base_creature.hpp"
 #include "game_base_drawable.hpp"
 #include "game_base_stageitem.hpp"

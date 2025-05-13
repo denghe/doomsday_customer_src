@@ -142,6 +142,15 @@ namespace Game {
 			}
 		}
 
+
+		// update flying loots
+		for (auto i = flyingLoots.len - 1; i >= 0; --i) {
+			auto& o = flyingLoots[i];
+			if (o->Update()) {
+				flyingLoots.SwapRemoveAt(i);
+			}
+		}
+
 		// ... more updates
 
 		// sync cam
@@ -285,6 +294,20 @@ namespace Game {
 			auto& o = effectTexts.ens[i];
 			if (o.pos.x < areaMin.x || o.pos.x > areaMax.x || o.pos.y < areaMin.y || o.pos.y > areaMax.y) continue;
 			o.Draw(this);
+		}
+
+		// draw loot
+		for (int32_t i = 0, e = loots.items.Count(); i < e; ++i) {
+			auto& o = loots.items[i];
+			if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
+			o->Draw();
+		}
+
+		// draw flying loot
+		for (int32_t i = 0, e = flyingLoots.Count(); i < e; ++i) {
+			auto& o = flyingLoots[i];
+			if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
+			o->DrawFlying();
 		}
 
 		// draw name
