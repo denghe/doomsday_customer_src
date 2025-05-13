@@ -1,6 +1,7 @@
 ﻿#include "pch.h"
 #include "looper.h"
 
+#include "game_shader_numbers.hpp"
 #include "game_buff.hpp"
 #include "game_base_loot.hpp"
 #include "game_base_creature.hpp"
@@ -76,7 +77,7 @@ int32_t main() {
 #endif
 
 xx::Task<> Looper::MainTask() {
-	shaderVertexs.Init();
+	shaderNumbers.Init();
 
 	co_await res.AsyncLoad("res/");
 

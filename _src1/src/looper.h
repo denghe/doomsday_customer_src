@@ -12,6 +12,7 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 };
 
 #include "xx2d_camera_ex.h"
+#include "game_shader_numbers.h"
 #include "game_space.h"
 #include "game_effect_text.h"
 #include "game_stat.h"
@@ -60,11 +61,15 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 #include "_test7.h"
 #include "_test8.h"
 
+
+
 struct Looper : xx::Engine<Looper>, Cfg {
 	xx::Task<> MainTask();
 #ifndef __EMSCRIPTEN__
 	BS::thread_pool<> threadPool;
 #endif
+
+    Game::Shader_QuadInstanceNumbers shaderNumbers;
 
 	ResTpFrames res;
 	xx::Scale9SpriteConfig btnCfg, btnCfg1, btnCfg2, btnCfg2i, btnCfg3, btnCfg3i, btnCfg4, buffInfoPanelCfg;

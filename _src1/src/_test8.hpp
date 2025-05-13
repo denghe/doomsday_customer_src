@@ -44,7 +44,11 @@ namespace Game {
 
 
 	inline void Test8::DrawCustomUI() {
-
+		for (int i = 0; i < 500000; ++i) {
+			auto q = gLooper.ShaderBegin(gLooper.shaderNumbers).Draw(1234567890);
+			q->pos = { -500, 0 };
+			q->scale = 2;
+		}
 	}
 
 }
