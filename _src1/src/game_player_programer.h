@@ -3,6 +3,7 @@
 namespace Game {
 
 	struct Player_Programmer : Player {
+
 		xx::Shared<Skill_Shoot_1> shoot;
 		xx::Shared<Skill_Control> control;
 
