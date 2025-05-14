@@ -68,12 +68,6 @@ namespace Game {
 		Player_Boss,
 	};
 
-	enum class LootStates : uint32_t {
-		Unknown = 0,
-		Idle,
-		Flying,
-	};
-
 	// stage's base
 	struct Stage : xx::SceneBase {
 		//xx::Camera camera;
@@ -168,7 +162,6 @@ namespace Game {
 	// stage monster dead drop objects
 	struct Loot : StageItem {
 		CreatureTypes creatureType{};
-		LootStates state{};
 
 		int32_t coinValue{};
 		int32_t healthPoint{};

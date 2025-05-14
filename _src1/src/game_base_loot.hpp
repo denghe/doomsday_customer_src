@@ -9,7 +9,6 @@ namespace Game {
 		scale = creature_->scale;
 		needFlipX = creature_->needFlipX;
 		creatureType = creature_->creatureType;
-		state = LootStates::Idle;
 
 		coinValue = 5;
 		auto rewardIdx = gLooper.rnd.Next(0, 3);
@@ -32,31 +31,31 @@ namespace Game {
 	}
 
 	int32_t Loot::Update() {
-		auto p = stage->player;
-		auto pp = p->pos;
-		auto d = pp - pos;
-		auto dd = d.x * d.x + d.y * d.y;
-		auto r2 = p->radius + radius;
-		switch (state)
-		{
-		case Game::LootStates::Idle:
-			if (dd <= p->collectRange * p->collectRange) {
-				state = LootStates::Flying;
-				return 0;
-			}
-			break;
-		case Game::LootStates::Flying:
-			if (dd < r2 * r2) {
-				Collect(p);
-				return 1;
-			}
-			auto mag = std::sqrtf(dd);
-			auto norm = d / mag;
-			pos += norm * movementSpeedPerFrame;
-			stage->ForceLimit(pos);
-			stage->loots.Update(this);	// sync space index
-			break;
-		}
+		//auto p = stage->player;
+		//auto pp = p->pos;
+		//auto d = pp - pos;
+		//auto dd = d.x * d.x + d.y * d.y;
+		//auto r2 = p->radius + radius;
+		//switch (state)
+		//{
+		//case Game::LootStates::Idle:
+		//	if (dd <= p->collectRange * p->collectRange) {
+		//		state = LootStates::Flying;
+		//		return 0;
+		//	}
+		//	break;
+		//case Game::LootStates::Flying:
+		//	if (dd < r2 * r2) {
+		//		Collect(p);
+		//		return 1;
+		//	}
+		//	auto mag = std::sqrtf(dd);
+		//	auto norm = d / mag;
+		//	pos += norm * movementSpeedPerFrame;
+		//	stage->ForceLimit(pos);
+		//	stage->loots.Update(this);	// sync space index
+		//	break;
+		//}
 		return 0;
 	}
 
@@ -74,7 +73,7 @@ namespace Game {
 		default:
 			break;
 		}
-	
+
 	}
 
 	inline void Loot::Draw() {
@@ -87,6 +86,21 @@ namespace Game {
 
 	inline void Loot::DrawFlying() {
 		Draw();
-		// todo: trail ?
+
+		auto p = stage->player;
+		auto pp = p->pos;
+		auto d = pp - pos;
+		auto dd = d.x * d.x + d.y * d.y;
+		auto r2 = p->radius + radius;
+
+		if (dd < r2 * r2) {
+			Collect(p);
+			return;
+		}
+		auto mag = std::sqrtf(dd);
+		auto norm = d / mag;
+		pos += norm * movementSpeedPerFrame;
+		stage->ForceLimit(pos);
+		stage->loots.Update(this);	// sync space index
 	}
 }

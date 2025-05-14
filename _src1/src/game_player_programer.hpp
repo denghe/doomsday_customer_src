@@ -58,6 +58,12 @@ namespace Game {
 		shoot->Update();
 		control->Update();
 
+		if (auto o = stage->loots.FindNearestByRange(pos.x, pos.y, collectRange)) {
+			auto loot = xx::SharedFromThis(o);
+			stage->loots.Remove(o);
+			stage->flyingLoots.Add(loot);
+		}
+
 		return 0;
 	}
 }
