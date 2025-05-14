@@ -114,14 +114,6 @@ namespace Game {
 			}
 		}
 
-		// update loots
-		for (auto i = loots.items.len - 1; i >= 0; --i) {
-			auto& o = loots.items[i];
-			if (o->Update()) {
-				loots.Remove(o);
-			}
-		}
-
 		// update monster generators
 		for (auto i = monsterGenerators.len - 1; i >= 0; i--) {
 			auto& mg = monsterGenerators[i];

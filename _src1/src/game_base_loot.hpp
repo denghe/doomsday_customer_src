@@ -31,31 +31,20 @@ namespace Game {
 	}
 
 	int32_t Loot::Update() {
-		//auto p = stage->player;
-		//auto pp = p->pos;
-		//auto d = pp - pos;
-		//auto dd = d.x * d.x + d.y * d.y;
-		//auto r2 = p->radius + radius;
-		//switch (state)
-		//{
-		//case Game::LootStates::Idle:
-		//	if (dd <= p->collectRange * p->collectRange) {
-		//		state = LootStates::Flying;
-		//		return 0;
-		//	}
-		//	break;
-		//case Game::LootStates::Flying:
-		//	if (dd < r2 * r2) {
-		//		Collect(p);
-		//		return 1;
-		//	}
-		//	auto mag = std::sqrtf(dd);
-		//	auto norm = d / mag;
-		//	pos += norm * movementSpeedPerFrame;
-		//	stage->ForceLimit(pos);
-		//	stage->loots.Update(this);	// sync space index
-		//	break;
-		//}
+		auto p = stage->player;
+		auto pp = p->pos;
+		auto d = pp - pos;
+		auto dd = d.x * d.x + d.y * d.y;
+		auto r2 = p->radius + radius;
+		if (dd < r2 * r2) {
+			Collect(p);
+			return 1;
+		}
+
+		auto mag = std::sqrtf(dd);
+		auto norm = d / mag;
+		pos += norm * movementSpeedPerFrame;
+		stage->ForceLimit(pos);
 		return 0;
 	}
 
@@ -86,21 +75,5 @@ namespace Game {
 
 	inline void Loot::DrawFlying() {
 		Draw();
-
-		auto p = stage->player;
-		auto pp = p->pos;
-		auto d = pp - pos;
-		auto dd = d.x * d.x + d.y * d.y;
-		auto r2 = p->radius + radius;
-
-		if (dd < r2 * r2) {
-			Collect(p);
-			return;
-		}
-		auto mag = std::sqrtf(dd);
-		auto norm = d / mag;
-		pos += norm * movementSpeedPerFrame;
-		stage->ForceLimit(pos);
-		stage->loots.Update(this);	// sync space index
 	}
 }

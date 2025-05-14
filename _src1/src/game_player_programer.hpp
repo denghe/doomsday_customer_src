@@ -63,6 +63,6 @@ namespace Game {
 			stage->loots.Remove(o);
 			stage->flyingLoots.Add(loot);
 		}
-
+		return 0;
 	}
 }
