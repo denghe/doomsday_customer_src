@@ -71,6 +71,7 @@ struct Looper : xx::Engine<Looper>, Cfg {
 
     Game::Shader_QuadInstanceNumbers shaderNumbers;
 
+	xx::Ref<xx::GLTexture> nums1;	// res/nums1.png
 	ResTpFrames res;
 	xx::Scale9SpriteConfig btnCfg, btnCfg1, btnCfg2, btnCfg2i, btnCfg3, btnCfg3i, btnCfg4, buffInfoPanelCfg;
 	xx::SpaceGridRingDiffuseData rdd;

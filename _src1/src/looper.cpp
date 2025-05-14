@@ -77,6 +77,12 @@ int32_t main() {
 #endif
 
 xx::Task<> Looper::MainTask() {
+
+#ifdef __EMSCRIPTEN__
+	nums1 = co_await AsyncLoadTextureFromUrl("res/nums1.png");
+#else
+	nums1 = LoadTexture("res/nums1.png");
+#endif
 	shaderNumbers.Init();
 
 	co_await res.AsyncLoad("res/");
