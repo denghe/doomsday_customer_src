@@ -18,7 +18,7 @@
 #include "game_player_1.hpp"
 #include "game_player_2.hpp"
 #include "game_player_3.hpp"
-#include "game_player_programer.hpp"
+#include "game_player_programmer.hpp"
 #include "game_bullet_1.hpp"
 #include "game_bullet_2.hpp"
 #include "game_skill_shoot_1.hpp"

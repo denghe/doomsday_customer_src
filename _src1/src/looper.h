@@ -33,7 +33,7 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 #include "game_player_1.h"
 #include "game_player_2.h"
 #include "game_player_3.h"
-#include "game_player_programer.h"
+#include "game_player_programmer.h"
 #include "game_monster.h"
 #include "game_monstergen_generic.h"
 #include "game_ui_hpbar.h"
