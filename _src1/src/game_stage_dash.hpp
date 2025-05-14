@@ -48,6 +48,6 @@ namespace Game {
 		//	->Init(this, int32_t(Cfg::fps) * 40, int32_t(Cfg::fps) * 50, 10000);
 
 		//player.Emplace<Player_1>()->Init(this);
-		player.Emplace<Player_1>()->Init(this);
+		player.Emplace<Player_Programmer>()->Init(this);
 	}
 }

@@ -4,7 +4,7 @@ namespace Game {
 
 	inline void Player_1::Init(Stage* stage_) {
 		stage = stage_;
-		creatureType = CreatureTypes::Player_Programer;
+		creatureType = CreatureTypes::Player_Programmer;
 		frame = gLooper.res.player1;
 
 		pos = stage_->GetPlayerBornPos();

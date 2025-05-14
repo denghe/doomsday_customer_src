@@ -64,12 +64,11 @@ namespace Game {
 	}
 
 	void Monster_Chips::Rewards() {
+		xx::CoutN("Monster_Chips::Rewards");
+		auto loot = xx::MakeShared<Loot>();
+		loot->Init(this);
+		loot->coinValue = 5;
 		auto rewardIdx = gLooper.rnd.Next<int>(0, 3);
-		auto loot = xx::MakeShared<Chip_Loot>();
-		loot->Init(stage);
-		loot->pos = pos;
-		loot->coin = 5;
-
 		switch (rewardIdx)
 		{
 		case 0:
@@ -86,28 +85,5 @@ namespace Game {
 		}
 
 		stage->loots.Add(std::move(loot));
-	}
-
-	void Chip_Loot::Init(Stage* stage_) {
-		stage = stage_;
-		type = LootTypes::Chip;
-	}
-
-	void Chip_Loot::Collect(Creature* owner) {
-		if (coin != 0) {
-			owner->coin += coin;
-		}
-
-		if (damage != 0) {
-			owner->UpdateDamage(damage);
-		}
-
-		if (attackSpeed != 0) {
-			owner->UpdateAttackSpeed(attackSpeed);
-		}
-
-		if (healthPoint != 0) {
-			owner->UpdateHealthPoint(healthPoint);
-		}
 	}
 }
