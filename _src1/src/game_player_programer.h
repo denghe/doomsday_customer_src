@@ -10,6 +10,7 @@ namespace Game {
 		void UpdateDamage(float damage) override;
 		void UpdateAttackSpeed(float attackSpeed) override;
 		void UpdateHealthPoint(int32_t hp) override;
+
 		int32_t Update() override;
 	};
 

@@ -64,6 +64,5 @@ namespace Game {
 			stage->flyingLoots.Add(loot);
 		}
 
-		return 0;
 	}
 }
