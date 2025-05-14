@@ -11,23 +11,6 @@ namespace Game {
 		creatureType = creature_->creatureType;
 
 		coinValue = 5;
-		auto rewardIdx = gLooper.rnd.Next(0, 3);
-
-		switch (rewardIdx)
-		{
-		case 0:
-			healthPoint = 10;
-			break;
-		case 1:
-			damage = 1;
-			break;
-		case 2:
-			attackSpeed = .5f;
-			break;
-		default:
-			break;
-		}
-
 	}
 
 	int32_t Loot::Update() {

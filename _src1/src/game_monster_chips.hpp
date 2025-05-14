@@ -27,6 +27,27 @@ namespace Game {
 		skills.Emplace().Emplace<Skill_MoveToPlayer>()->Init(this);
 		//skills.Emplace().Emplace<Skill_DashAttack>()->Init(this);
 		skills.Emplace().Emplace<Skill_Attack>()->Init(this);
+
+		loot.Emplace()->Init(this);
+		loot->coinValue = 5;
+		auto rewardIdx = gLooper.rnd.Next<int>(0, 3);
+		switch (rewardIdx)
+		{
+		case 0:
+			loot->healthPoint = 10;
+			loot->frame = gLooper.res.ef_heal;
+			break;
+		case 1:
+			loot->damage = 1.f;
+			loot->frame = gLooper.res.ef_atkdmg;
+			break;
+		case 2:
+			loot->attackSpeed = .5f;
+			loot->frame = gLooper.res.ef_atkspd;
+			break;
+		default:
+			break;
+		}
 	}
 
 	int32_t Monster_Chips::Update() {
@@ -65,25 +86,6 @@ namespace Game {
 
 	void Monster_Chips::Rewards() {
 		xx::CoutN("Monster_Chips::Rewards");
-		auto loot = xx::MakeShared<Loot>();
-		loot->Init(this);
-		loot->coinValue = 5;
-		auto rewardIdx = gLooper.rnd.Next<int>(0, 3);
-		switch (rewardIdx)
-		{
-		case 0:
-			loot->healthPoint = 10;
-			break;
-		case 1:
-			loot->damage = 1.f;
-			break;
-		case 2:
-			loot->attackSpeed = .5f;
-			break;
-		default:
-			break;
-		}
-
 		stage->loots.Add(std::move(loot));
 	}
 }

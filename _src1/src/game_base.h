@@ -191,6 +191,8 @@ namespace Game {
 
 		BuffContainer buffs;
 		StatCfg statCfg;
+		xx::Shared<Loot> loot;
+
 		void StatCalc();
 		void OnRoundBegin();
 		void OnRoundEnd();
