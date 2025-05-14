@@ -64,8 +64,14 @@ namespace Game {
 		Monster_Laptop,
 		Monster_Sofa,
 		Monster_InstantNoodles,
-		Player_Programer,
+		Player_Programmer,
 		Player_Boss,
+	};
+
+	enum class LootStates : uint32_t {
+		Unknown = 0,
+		Idle,
+		Flying,
 	};
 
 	// stage's base
@@ -162,9 +168,16 @@ namespace Game {
 	// stage monster dead drop objects
 	struct Loot : StageItem {
 		CreatureTypes creatureType{};
+		LootStates state{};
+
 		int32_t coinValue{};
+		int32_t healthPoint{};
+		float damage{};
+		float attackSpeed{};
+		Stat_t movementSpeedPerFrame{10};
+
 		// ...
-		void Init(Creature* creature_, int32_t coinValue_);
+		void Init(Creature* creature_);
 		void Collect(Creature* owner);
 		int32_t Update() override;
 		void Draw() override;
@@ -213,7 +226,7 @@ namespace Game {
 	struct Player : Creature {
 		static constexpr int32_t cProtectFrameCount{ int32_t(Cfg::fps * 1) };
 		int32_t protectFrame{};
-		float collectRange{};
+		Stat_t collectRange{};
 		int32_t Hurt();
 		// todo: pick up loot logic when update
 	};
