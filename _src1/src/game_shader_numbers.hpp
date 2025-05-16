@@ -113,7 +113,7 @@ void main() {
         glBindBuffer(GL_ARRAY_BUFFER, vb);
         glBufferData(GL_ARRAY_BUFFER, sizeof(QuadInstanceNumbersData) * quadCount, quadInstanceNumbersDatas.get(), GL_STREAM_DRAW);
 
-        glBindTexture(GL_TEXTURE_2D, gLooper.nums1->GetValue());
+        glBindTexture(GL_TEXTURE_2D, gLooper.res_nums1->GetValue());
         glDrawArraysInstanced(GL_TRIANGLE_STRIP, 0, 4, quadCount);
 
         CheckGLError();

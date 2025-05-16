@@ -13,6 +13,7 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 
 #include "xx2d_camera_ex.h"
 #include "game_shader_numbers.h"
+#include "game_shader_hpbar.h"
 #include "game_space.h"
 #include "game_effect_text.h"
 #include "game_stat.h"
@@ -61,6 +62,7 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 #include "_test6.h"
 #include "_test7.h"
 #include "_test8.h"
+#include "_test9.h"
 
 
 
@@ -71,8 +73,10 @@ struct Looper : xx::Engine<Looper>, Cfg {
 #endif
 
     Game::Shader_QuadInstanceNumbers shaderNumbers;
+    Game::Shader_QuadInstanceHPBar shaderHPBar;
 
-	xx::Ref<xx::GLTexture> nums1;	// res/nums1.png
+	xx::Ref<xx::GLTexture> res_nums1;	// res/nums1.png
+	xx::Ref<xx::GLTexture> res_hpbar;	// res/hpbar.png
 	ResTpFrames res;
 	xx::Scale9SpriteConfig btnCfg, btnCfg1, btnCfg2, btnCfg2i, btnCfg3, btnCfg3i, btnCfg4, buffInfoPanelCfg;
 	xx::SpaceGridRingDiffuseData rdd;

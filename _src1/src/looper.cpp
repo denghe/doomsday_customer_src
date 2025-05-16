@@ -2,6 +2,7 @@
 #include "looper.h"
 
 #include "game_shader_numbers.hpp"
+#include "game_shader_hpbar.hpp"
 #include "game_buff.hpp"
 #include "game_base_loot.hpp"
 #include "game_base_creature.hpp"
@@ -55,6 +56,7 @@
 #include "_test6.hpp"
 #include "_test7.hpp"
 #include "_test8.hpp"
+#include "_test9.hpp"
 
 Looper gLooper;
 
@@ -80,11 +82,14 @@ int32_t main() {
 xx::Task<> Looper::MainTask() {
 
 #ifdef __EMSCRIPTEN__
-	nums1 = co_await AsyncLoadTextureFromUrl("res/nums1.png");
+	res_nums1 = co_await AsyncLoadTextureFromUrl("res/nums1.png");
+	res_hpbar = co_await AsyncLoadTextureFromUrl("res/hpbar.png");
 #else
-	nums1 = LoadTexture("res/nums1.png");
+	res_nums1 = LoadTexture("res/nums1.png");
+	res_hpbar = LoadTexture("res/hpbar.png");
 #endif
 	shaderNumbers.Init();
+	shaderHPBar.Init();
 
 	co_await res.AsyncLoad("res/");
 
