@@ -27,6 +27,22 @@ namespace Game {
 		skills.Emplace().Emplace<Skill_MoveToPlayer>()->Init(this);
 		//skills.Emplace().Emplace<Skill_DashAttack>()->Init(this);
 		skills.Emplace().Emplace<Skill_Attack>()->Init(this);
+
+		tagId = gLooper.rnd.Next<int>(1, 4);
+		switch (tagId)
+		{
+		case 1:
+			tagFrame = gLooper.res.ef_heal;
+			break;
+		case 2:
+			tagFrame = gLooper.res.ef_atkdmg;
+			break;
+		case 3:
+			tagFrame = gLooper.res.ef_atkspd;
+			break;
+		default:
+			break;
+		}
 	}
 
 	int32_t Monster_Chips::Update() {
@@ -46,11 +62,8 @@ namespace Game {
 
 	void Monster_Chips::Draw() {
 		Monster::Draw();
-		DrawTag();
-	}
 
-	void Monster_Chips::DrawTag() {
-		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(gLooper.res.ef_atkdmg->tex, 1);
+		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(tagFrame->tex, 1);
 		XY s{ scale * stage->camera.scale };
 		if (needFlipX) s.x = -s.x;
 		// body
@@ -60,58 +73,12 @@ namespace Game {
 		q[0].radians = 0;
 		q[0].colorplus = whiteColorEndTime >= stage->time ? 10000.f : 1.f;
 		q[0].color = color;
-		q[0].texRect.data = gLooper.res._uvrect_ef_atkdmg.data;
+		q[0].texRect.data = tagFrame->textureRect.data;
 	}
 
 	void Monster_Chips::Rewards() {
-		//auto rewardIdx = gLooper.rnd.Next<int>(0, 3);	//  ?????????????
-		//auto loot = xx::MakeShared<Chip_Loot>();
-		//loot->Init(stage);
-		//loot->pos = pos;
-		//loot->coin = 5;
-
-		//switch (rewardIdx)
-		//{
-		//case 0:
-		//	loot->healthPoint = 10;
-		//	break;
-		//case 1:
-		//	loot->damage = 1.f;
-		//	break;
-		//case 2:
-		//	loot->attackSpeed = .5f;
-		//	break;
-		//default:
-		//	break;
-		//}
-
-		//stage->loots.Add(std::move(loot));
-
 		auto loot = xx::MakeShared<Loot>();
-		loot->Init(this, 10);
+		loot->Init(this);
 		stage->loots.Add(std::move(loot));
 	}
-
-	//void Chip_Loot::Init(Stage* stage_) {
-	//	stage = stage_;
-	//	type = LootTypes::Chip;
-	//}
-
-	//void Chip_Loot::Collect(Creature* owner) {
-	//	if (coin != 0) {
-	//		owner->coin += coin;
-	//	}
-
-	//	if (damage != 0) {
-	//		owner->UpdateDamage(damage);
-	//	}
-
-	//	if (attackSpeed != 0) {
-	//		owner->UpdateAttackSpeed(attackSpeed);
-	//	}
-
-	//	if (healthPoint != 0) {
-	//		owner->UpdateHealthPoint(healthPoint);
-	//	}
-	//}
 }

@@ -40,4 +40,7 @@ namespace Game {
 		return 0;
 	}
 
+	void Monster_Roastduck::Rewards() {
+		//target->coin += 10;
+	}
 }

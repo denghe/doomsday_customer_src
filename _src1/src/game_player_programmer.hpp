@@ -2,10 +2,11 @@
 
 namespace Game {
 
-	inline void Player_1::Init(Stage* stage_) {
+	inline void Player_Programmer::Init(Stage* stage_) {
 		stage = stage_;
 		creatureType = CreatureTypes::Player_Programmer;
 		frame = gLooper.res.player1;
+		collectRange = 1000;
 
 		pos = stage_->GetPlayerBornPos();
 		scale = { 1,1 };
@@ -29,25 +30,39 @@ namespace Game {
 		buffs.Init(this);
 	}
 
-	inline void Player_1::UpdateDamage(float damage) {
+	inline void Player_Programmer::UpdateDamage(float damage) {
 		shoot->damage += damage;
 		if (shoot->damage < 0.f) {
 			shoot->damage = 0.f;
 		}
+		xx::CoutN("damage: ", shoot->damage);
 	}
 
-	inline void Player_1::UpdateAttackSpeed(float attackSpeed) {
+	inline void Player_Programmer::UpdateAttackSpeed(float attackSpeed) {
 		shoot->shootSpeed *= (1.f + attackSpeed);
+		xx::CoutN("attackSpeed: ", shoot->shootSpeed);
 	}
 
-	inline int32_t Player_1::Update() {
+	inline void Player_Programmer::UpdateHealthPoint(int32_t hp) {
+		healthPoint += hp;
+		if (healthPoint > healthPointMax) {
+			healthPoint = healthPointMax;
+		}
+		if (healthPoint < 0) {
+			healthPoint = 0;
+		}
+		xx::CoutN("healthPoint: ", healthPoint);
+	}
+
+	inline int32_t Player_Programmer::Update() {
 		shoot->Update();
 		control->Update();
 
-		if (auto o = stage->loots.FindNearestByRange(pos.x,pos.y,collectRange)) {
-			// todo loot move to Player
+		if (auto o = stage->loots.FindNearestByRange(pos.x, pos.y, collectRange)) {
+			auto loot = xx::SharedFromThis(o);
+			stage->loots.Remove(o);
+			stage->flyingLoots.Add(loot);
 		}
-		// if reutrn !0 mean player is dead
 		return 0;
 	}
 }
