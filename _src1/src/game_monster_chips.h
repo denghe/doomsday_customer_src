@@ -7,6 +7,5 @@ namespace Game {
 		int32_t Update() override;
 		void Rewards() override;
 		void Draw() override;
-		void DrawTag() override;
 	};
 }

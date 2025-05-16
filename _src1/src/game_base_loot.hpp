@@ -9,8 +9,7 @@ namespace Game {
 		scale = creature_->scale;
 		needFlipX = creature_->needFlipX;
 		creatureType = creature_->creatureType;
-
-		coinValue = 5;
+		tagId = creature_->tagId;
 	}
 
 	int32_t Loot::Update() {
@@ -32,20 +31,25 @@ namespace Game {
 	}
 
 	inline void Loot::Collect(Creature* owner) {
-		if (coinValue) {
-			owner->coin += coinValue;
-		}
-
-		switch (owner->creatureType)
+		switch (creatureType)
 		{
-		case CreatureTypes::Player_Programmer:
-			owner->UpdateHealthPoint(healthPoint);
-			owner->UpdateAttackSpeed(attackSpeed);
-			owner->UpdateDamage(damage);
-		default:
-			break;
+		case CreatureTypes::Monster_Chip:
+		case CreatureTypes::Monster_Hamburger:
+		case CreatureTypes::Monster_Cola:
+			owner->coin += 5;
+			switch (this->tagId)
+			{
+			case 1:
+				owner->UpdateHealthPoint(10);
+				break;
+			case 2:
+				owner->UpdateDamage(5);
+				break;
+			case 3:
+				owner->UpdateAttackSpeed(.5f);
+				break;
+			}
 		}
-
 	}
 
 	inline void Loot::Draw() {

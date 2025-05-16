@@ -162,11 +162,7 @@ namespace Game {
 	// stage monster dead drop objects
 	struct Loot : StageItem {
 		CreatureTypes creatureType{};
-
-		int32_t coinValue{};
-		int32_t healthPoint{};
-		float damage{};
-		float attackSpeed{};
+		int32_t tagId{};
 		Stat_t movementSpeedPerFrame{10};
 
 		// ...
@@ -180,6 +176,9 @@ namespace Game {
 	// stage creature's base
 	struct Creature : StageItem {
 		CreatureTypes creatureType{};
+		int32_t tagId{};
+		xx::Ref<xx::Frame> tagFrame;
+
 		StatPanel sp;
 		Stat_t healthPointMax{};
 		Stat_t healthPoint{};				// left / current
@@ -191,7 +190,6 @@ namespace Game {
 
 		BuffContainer buffs;
 		StatCfg statCfg;
-		xx::Shared<Loot> loot;
 
 		void StatCalc();
 		void OnRoundBegin();
@@ -238,7 +236,6 @@ namespace Game {
 		int32_t Update() override;
 		int32_t MoveToPosition(xx::XY targetPos, float targetRadius);
 		int32_t MoveToPlayer(float keepDistance = 0);
-		virtual void DrawTag() {};
 		virtual void Rewards() {};		// drop items
 	};
 

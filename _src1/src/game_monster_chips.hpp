@@ -28,22 +28,17 @@ namespace Game {
 		//skills.Emplace().Emplace<Skill_DashAttack>()->Init(this);
 		skills.Emplace().Emplace<Skill_Attack>()->Init(this);
 
-		loot.Emplace()->Init(this);
-		loot->coinValue = 5;
-		auto rewardIdx = gLooper.rnd.Next<int>(0, 3);
-		switch (rewardIdx)
+		tagId = gLooper.rnd.Next<int>(1, 4);
+		switch (tagId)
 		{
-		case 0:
-			loot->healthPoint = 10;
-			loot->frame = gLooper.res.ef_heal;
-			break;
 		case 1:
-			loot->damage = 1.f;
-			loot->frame = gLooper.res.ef_atkdmg;
+			tagFrame = gLooper.res.ef_heal;
 			break;
 		case 2:
-			loot->attackSpeed = .5f;
-			loot->frame = gLooper.res.ef_atkspd;
+			tagFrame = gLooper.res.ef_atkdmg;
+			break;
+		case 3:
+			tagFrame = gLooper.res.ef_atkspd;
 			break;
 		default:
 			break;
@@ -67,11 +62,8 @@ namespace Game {
 
 	void Monster_Chips::Draw() {
 		Monster::Draw();
-		DrawTag();
-	}
 
-	void Monster_Chips::DrawTag() {
-		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(gLooper.res.ef_atkdmg->tex, 1);
+		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(tagFrame->tex, 1);
 		XY s{ scale * stage->camera.scale };
 		if (needFlipX) s.x = -s.x;
 		// body
@@ -81,11 +73,12 @@ namespace Game {
 		q[0].radians = 0;
 		q[0].colorplus = whiteColorEndTime >= stage->time ? 10000.f : 1.f;
 		q[0].color = color;
-		q[0].texRect.data = gLooper.res._uvrect_ef_atkdmg.data;
+		q[0].texRect.data = tagFrame->textureRect.data;
 	}
 
 	void Monster_Chips::Rewards() {
-		xx::CoutN("Monster_Chips::Rewards");
+		auto loot = xx::MakeShared<Loot>();
+		loot->Init(this);
 		stage->loots.Add(std::move(loot));
 	}
 }
