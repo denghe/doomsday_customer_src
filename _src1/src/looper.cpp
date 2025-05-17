@@ -3,6 +3,7 @@
 
 #include "game_shader_numbers.hpp"
 #include "game_shader_hpbar.hpp"
+#include "game_shader_tiles.hpp"
 #include "game_buff.hpp"
 #include "game_base_loot.hpp"
 #include "game_base_creature.hpp"
@@ -57,6 +58,7 @@
 #include "_test7.hpp"
 #include "_test8.hpp"
 #include "_test9.hpp"
+#include "_test10.hpp"
 
 Looper gLooper;
 
@@ -90,6 +92,7 @@ xx::Task<> Looper::MainTask() {
 #endif
 	shaderNumbers.Init();
 	shaderHPBar.Init();
+	shaderTiles.Init();
 
 	co_await res.AsyncLoad("res/");
 

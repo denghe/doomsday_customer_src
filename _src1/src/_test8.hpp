@@ -13,10 +13,6 @@ namespace Game {
 
 		ui.Emplace()->Init();
 		MakeUI();
-
-		camera.scale = Cfg::defaultScale;
-		camera.mapSize = mapSize;
-		camera.newOriginal = camera.original = mapSize * 0.5f;
 	}
 
 	inline void Test8::MakeUI() {
