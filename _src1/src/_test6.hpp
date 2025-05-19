@@ -116,11 +116,6 @@ namespace Game {
 			, gLooper.anchor7, gLooper.btnCfg, U"exit", [&]() {
 				gLooper.DelaySwitchTo<Game::MainMenu>();
 			});
-
-		ui->MakeChildren<xx::Button>()->Init(1, gLooper.pos8 + XY{ 0, -10 }
-			, gLooper.anchor8, gLooper.btnCfg, U"Add More Grass", [this]() {
-				EnvGrass::GenGrass(this, 5);
-			});
 	}
 
 	inline void Test6::OnWindowSizeChanged() {

@@ -86,9 +86,11 @@ xx::Task<> Looper::MainTask() {
 #ifdef __EMSCRIPTEN__
 	res_nums1 = co_await AsyncLoadTextureFromUrl("res/nums1.png");
 	res_hpbar = co_await AsyncLoadTextureFromUrl("res/hpbar.png");
+	res_map_01 = co_await AsyncLoadTextureFromUrl("res/map_01.png");
 #else
 	res_nums1 = LoadTexture("res/nums1.png");
 	res_hpbar = LoadTexture("res/hpbar.png");
+	res_map_01 = LoadTexture("res/map_01.png");
 #endif
 	shaderNumbers.Init();
 	shaderHPBar.Init();

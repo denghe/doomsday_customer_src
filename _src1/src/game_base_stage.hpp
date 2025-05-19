@@ -2,6 +2,7 @@
 
 namespace Game {
 
+	template<bool initGround>
 	inline void Stage::StageInit(XYi gridSize_) {
 		fb.Init();
 
@@ -14,9 +15,9 @@ namespace Game {
 
 		effectTexts.Init(this, 10000);
 
-		ground.Emplace()->Init(this, mapSize, gLooper.res.ground_cell3);
-		grasses.Reserve(100000);
-		EnvGrass::GenGrass(this, 15);
+		if constexpr (initGround) {
+			ground.Emplace<Ground1>()->Init(this, gLooper.res.ground_cell3);
+		}
 
 		monsters.Init(&gLooper.rdd, gridSize.y, gridSize.x, (int32_t)Cfg::unitSize);
 		loots.Init(&gLooper.rdd, gridSize.y, gridSize.x, (int32_t)Cfg::unitSize);
@@ -61,7 +62,7 @@ namespace Game {
 		effects.Clear();
 		effectTexts.Clear();
 		if constexpr (clearGrass) {
-			grasses.Clear();
+			ground->Clear();
 		}
 		// todo: rnd reset?
 		time = 0;
@@ -135,13 +136,8 @@ namespace Game {
 				effects.SwapRemoveAt(i);
 			}
 		}
-		for (auto i = grasses.len - 1; i >= 0; --i) {
-			auto& o = grasses[i];
-			if (o->Update()) {
-				grasses.SwapRemoveAt(i);
-			}
-		}
 
+		ground->Update();
 
 		// update flying loots
 		for (auto i = flyingLoots.len - 1; i >= 0; --i) {
@@ -215,17 +211,14 @@ namespace Game {
 				yd.Emplace(o->pos.y, o.pointer);
 			}
 
-			for (auto e = grasses.len, i = 0; i < e; ++i) {
-				auto& o = grasses[i];
-				if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
-				yd.Emplace(o->pos.y, o.pointer);
-			}
-
 			for (auto e = effects.len, i = 0; i < e; ++i) {
 				auto& o = effects[i];
 				if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
 				yd.Emplace(o->pos.y, o.pointer);
 			}
+
+			// draw grass
+			ground->Draw(yd, areaMin, areaMax);
 
 			DrawCustomOrderYItem(yd, areaMin, areaMax);
 
@@ -336,7 +329,6 @@ namespace Game {
 		gLooper.ctcDefault.Draw({ 0, gLooper.windowSize_2.y - 5 }
 			, xx::ToString("zoom: ZX  move: ASDW  m = ", monsters.items.len
 				, " b = ", playerBullets.len
-				, " g = ", grasses.len
 				, " e = ", effects.len
 				, " et = ", effectTexts.ens.Count()
 			), xx::RGBA8_Green, { 0.5f, 1 });

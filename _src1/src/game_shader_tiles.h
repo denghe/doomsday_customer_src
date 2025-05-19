@@ -7,12 +7,13 @@ namespace Game {
         XY pos{}, scale{};                  // float * 4
         XY tileSize{}, mapSize{};           // float * 4
         XY tiling{}, offset{};              // float * 4
+        XYi miniMapSize{};                  // i32 * 2
         // todo: light / color tex ?
     };
 
     struct Shader_QuadInstanceTiles : xx::Shader {
         using xx::Shader::Shader;
-        GLint uTex0{ -1 }, uTex1{ -1 }, aVert{ -1 }, aPosScale{ -1 }, aTileSizeMapSize{ -1 }, aTilingOffset{ -1 };
+        GLint uTex0{ -1 }, uTex1{ -1 }, aVert{ -1 }, aPosScale{ -1 }, aTileSizeMapSize{ -1 }, aTilingOffset{ -1 }, aMiniMapSize{ -1 };
         xx::GLVertexArrays va;
         xx::GLBuffer vb, ib;
 

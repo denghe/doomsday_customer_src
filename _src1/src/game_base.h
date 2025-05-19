@@ -42,6 +42,7 @@ namespace Game {
 	struct Creature;
 	struct EnvGrass;
 	struct Loot;
+	struct Stage;
 
 	enum class State : uint32_t {
 		Unknown = 0,
@@ -66,6 +67,17 @@ namespace Game {
 		Monster_InstantNoodles,
 		Player_Programmer,
 		Player_Boss,
+	};
+
+	struct Ground {
+		Stage* stage{};
+		xx::Listi32<xx::Shared<EnvGrass>> grasses;
+
+		virtual void AddSomeGrass(float ratio, int32_t typeId) {};
+		virtual void Update() {};
+		virtual void Clear() {};
+		virtual void Draw() {};
+		virtual void Draw(xx::Listi32<std::pair<float, Game::Drawable*>>& yd, XY areaMin, XY areaMax);
 	};
 
 	// stage's base
@@ -93,7 +105,6 @@ namespace Game {
 		Space<Monster> monsters;
 		xx::Listi32<xx::Shared<Spawner>> spawners;
 		xx::Shared<Ground> ground;
-		xx::Listi32<xx::Shared<EnvGrass>> grasses;
 		xx::Listi32<xx::Shared<MonsterGen>> monsterGenerators;
 		xx::Listi32<xx::Shared<Drawable>> effects;
 		EffectTextManager effectTexts;
@@ -103,6 +114,7 @@ namespace Game {
 		void ClearItems();						// for round finished
 		// todo
 
+		template<bool initGround = true>
 		void StageInit(XYi gridSize_);
 		virtual XY GetPlayerBornPos();
 		void ForceLimit(XY& pos);

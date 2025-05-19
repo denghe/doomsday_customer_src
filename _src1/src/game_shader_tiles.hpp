@@ -12,14 +12,17 @@ in vec2 aVert;	// fans index { 0, 0 }, { 0, 1.f }, { 1.f, 0 }, { 1.f, 1.f }
 in vec4 aPosScale;
 in vec4 aTileSizeMapSize;
 in vec4 aTilingOffset;
+in vec2 aMiniMapSize;
 
 out vec2 vTexCoord;
 flat out vec4 vTileSizeOffset;
+flat out ivec2 vMiniMapSize;
 
 void main() {
     gl_Position = vec4((aPosScale.xy + aTileSizeMapSize.zw * aVert * aPosScale.zw) * uCxy, 0.f, 1.f);
     vTexCoord = vec2(aTileSizeMapSize.z * aVert.x, aTileSizeMapSize.w - aTileSizeMapSize.w * aVert.y) * aTilingOffset.xy;
     vTileSizeOffset = vec4( aTileSizeMapSize.xy, aTilingOffset.zw );
+    vMiniMapSize = ivec2(aMiniMapSize);
 })"sv });
 
         f = xx::LoadGLFragmentShader({ R"(#version 300 es
@@ -29,6 +32,7 @@ uniform sampler2D uTex1;        // minimap indexs[]     .xy: u  .zw: v
 
 in vec2 vTexCoord;
 flat in vec4 vTileSizeOffset;
+flat in ivec2 vMiniMapSize;
 
 out vec4 oColor;
 
@@ -38,12 +42,12 @@ void main() {
     vec2 tileSize = vTileSizeOffset.xy;
     vec2 offset = vTileSizeOffset.zw;
     vec2 p = vTexCoord + offset;
-    ivec2 miniIdx = ivec2(p / tileSize);
-    vec2 miniIdxF = vec2(miniIdx);
-    vec4 c = texture(uTex1, miniIdxF / miniTexSize);
+    ivec2 n = ivec2(p / tileSize);
+    vec2 miniIdx = vec2(n - (n / vMiniMapSize) * vMiniMapSize);
+    vec4 c = texture(uTex1, miniIdx / miniTexSize);
     ivec4 i = ivec4(c * 256.f);
-    vec2 uv = vec2(float(i.x + i.y * 256), float(i.z + i.w * 256)) * vTileSizeOffset.xy;
-    vec2 uvOffset = p - tileSize * miniIdxF;
+    vec2 uv = vec2(float(i.x + i.y * 256), float(i.z + i.w * 256)) * tileSize;
+    vec2 uvOffset = p - tileSize * miniIdx;
     oColor = texture(uTex0, (uv + uvOffset) / tileTexSize);
 })"sv });
 
@@ -57,6 +61,7 @@ void main() {
         aPosScale = glGetAttribLocation(p, "aPosScale");
         aTileSizeMapSize = glGetAttribLocation(p, "aTileSizeMapSize");
         aTilingOffset = glGetAttribLocation(p, "aTilingOffset");
+        aMiniMapSize = glGetAttribLocation(p, "aMiniMapSize");
         CheckGLError();
 
         glGenVertexArrays(1, va.GetValuePointer());
@@ -83,6 +88,10 @@ void main() {
         glVertexAttribPointer(aTilingOffset, 4, GL_FLOAT, GL_FALSE, sizeof(QuadInstanceTilesData), (GLvoid*)offsetof(QuadInstanceTilesData, tiling));
         glVertexAttribDivisor(aTilingOffset, 1);
         glEnableVertexAttribArray(aTilingOffset);
+
+        glVertexAttribPointer(aMiniMapSize, 2, GL_FLOAT, GL_FALSE, sizeof(QuadInstanceTilesData), (GLvoid*)offsetof(QuadInstanceTilesData, miniMapSize));
+        glVertexAttribDivisor(aMiniMapSize, 1);
+        glEnableVertexAttribArray(aMiniMapSize);
 
         glBindVertexArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);

@@ -709,6 +709,831 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">pngs/env_grass1_0.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.611111</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>126,63,251,126</rect>
+                <key>scale9Paddings</key>
+                <rect>126,63,251,126</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass1_1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.496016,0.543651</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>126,63,251,126</rect>
+                <key>scale9Paddings</key>
+                <rect>126,63,251,126</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass1_2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.492032,0.646825</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>126,63,251,126</rect>
+                <key>scale9Paddings</key>
+                <rect>126,63,251,126</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass1_3.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.505976,0.634921</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>126,63,251,126</rect>
+                <key>scale9Paddings</key>
+                <rect>126,63,251,126</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass1_4.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.486056,0.686508</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>126,63,251,126</rect>
+                <key>scale9Paddings</key>
+                <rect>126,63,251,126</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_0.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.32,0.95</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,10,13,20</rect>
+                <key>scale9Paddings</key>
+                <rect>6,10,13,20</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.45098,0.923077</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>13,7,25,13</rect>
+                <key>scale9Paddings</key>
+                <rect>13,7,25,13</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_10.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.489362,0.966102</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>12,15,23,29</rect>
+                <key>scale9Paddings</key>
+                <rect>12,15,23,29</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_11.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.864407</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>12,15,24,29</rect>
+                <key>scale9Paddings</key>
+                <rect>12,15,24,29</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_12.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.945946</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>13,9,26,19</rect>
+                <key>scale9Paddings</key>
+                <rect>13,9,26,19</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_13.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.489362,0.954545</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>12,17,23,33</rect>
+                <key>scale9Paddings</key>
+                <rect>12,17,23,33</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_14.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.547619,0.966667</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>11,15,21,30</rect>
+                <key>scale9Paddings</key>
+                <rect>11,15,21,30</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_15.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.578947,0.954545</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>10,11,19,22</rect>
+                <key>scale9Paddings</key>
+                <rect>10,11,19,22</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_16.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.6,0.957447</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>13,12,25,23</rect>
+                <key>scale9Paddings</key>
+                <rect>13,12,25,23</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_17.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.542857,0.963636</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>9,14,17,27</rect>
+                <key>scale9Paddings</key>
+                <rect>9,14,17,27</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_18.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.625,0.973684</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,19,16,38</rect>
+                <key>scale9Paddings</key>
+                <rect>8,19,16,38</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_19.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.548387,0.964286</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,14,15,28</rect>
+                <key>scale9Paddings</key>
+                <rect>8,14,15,28</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.886364</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,11,11,22</rect>
+                <key>scale9Paddings</key>
+                <rect>6,11,11,22</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_20.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.333333,0.971831</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>9,18,18,35</rect>
+                <key>scale9Paddings</key>
+                <rect>9,18,18,35</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_21.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.491228,0.911111</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>14,11,29,23</rect>
+                <key>scale9Paddings</key>
+                <rect>14,11,29,23</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_22.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.529412,0.901961</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>13,13,25,25</rect>
+                <key>scale9Paddings</key>
+                <rect>13,13,25,25</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_23.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.413043,0.971429</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>12,18,23,35</rect>
+                <key>scale9Paddings</key>
+                <rect>12,18,23,35</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_24.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.508475,0.844444</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>15,11,29,23</rect>
+                <key>scale9Paddings</key>
+                <rect>15,11,29,23</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_25.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.469388,0.971831</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>12,18,25,35</rect>
+                <key>scale9Paddings</key>
+                <rect>12,18,25,35</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_26.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.564103,0.976744</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>10,22,19,43</rect>
+                <key>scale9Paddings</key>
+                <rect>10,22,19,43</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_27.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.419355,0.960784</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>16,13,31,25</rect>
+                <key>scale9Paddings</key>
+                <rect>16,13,31,25</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_28.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.6,0.969697</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>14,17,27,33</rect>
+                <key>scale9Paddings</key>
+                <rect>14,17,27,33</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_29.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.489796,0.973333</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>12,19,25,37</rect>
+                <key>scale9Paddings</key>
+                <rect>12,19,25,37</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_3.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.304348,0.959184</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,12,11,25</rect>
+                <key>scale9Paddings</key>
+                <rect>6,12,11,25</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_30.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.494382,0.77551</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>22,12,45,25</rect>
+                <key>scale9Paddings</key>
+                <rect>22,12,45,25</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_31.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.442623,0.970588</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>15,17,31,34</rect>
+                <key>scale9Paddings</key>
+                <rect>15,17,31,34</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_32.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.634921,0.965517</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>16,15,31,29</rect>
+                <key>scale9Paddings</key>
+                <rect>16,15,31,29</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_33.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.32,0.964286</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>19,14,37,28</rect>
+                <key>scale9Paddings</key>
+                <rect>19,14,37,28</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_34.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.523256,0.927273</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>22,14,43,27</rect>
+                <key>scale9Paddings</key>
+                <rect>22,14,43,27</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_35.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.621212,0.895349</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>17,22,33,43</rect>
+                <key>scale9Paddings</key>
+                <rect>17,22,33,43</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_36.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.488889,0.885246</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>23,15,45,31</rect>
+                <key>scale9Paddings</key>
+                <rect>23,15,45,31</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_37.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.536232,0.977528</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>17,22,35,45</rect>
+                <key>scale9Paddings</key>
+                <rect>17,22,35,45</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_38.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.466667,0.975</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>19,20,37,40</rect>
+                <key>scale9Paddings</key>
+                <rect>19,20,37,40</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_39.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.425287,0.951807</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>22,21,43,41</rect>
+                <key>scale9Paddings</key>
+                <rect>22,21,43,41</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_4.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.425926,0.931034</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>14,7,27,15</rect>
+                <key>scale9Paddings</key>
+                <rect>14,7,27,15</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_40.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.557143,0.946237</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>18,23,35,47</rect>
+                <key>scale9Paddings</key>
+                <rect>18,23,35,47</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_41.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.55,0.976744</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>20,22,40,43</rect>
+                <key>scale9Paddings</key>
+                <rect>20,22,40,43</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_42.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.963855</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>24,21,48,41</rect>
+                <key>scale9Paddings</key>
+                <rect>24,21,48,41</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_43.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.569767,0.980583</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>22,26,43,51</rect>
+                <key>scale9Paddings</key>
+                <rect>22,26,43,51</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_44.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.535354,0.909091</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>25,17,49,33</rect>
+                <key>scale9Paddings</key>
+                <rect>25,17,49,33</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_45.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.574713,0.96</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>22,19,43,37</rect>
+                <key>scale9Paddings</key>
+                <rect>22,19,43,37</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_46.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.669725,0.980583</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>27,26,55,51</rect>
+                <key>scale9Paddings</key>
+                <rect>27,26,55,51</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_47.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.418919,0.816901</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>37,18,74,35</rect>
+                <key>scale9Paddings</key>
+                <rect>37,18,74,35</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_48.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.43609,0.991597</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>33,30,67,59</rect>
+                <key>scale9Paddings</key>
+                <rect>33,30,67,59</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_49.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.510791,0.980769</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>35,26,69,52</rect>
+                <key>scale9Paddings</key>
+                <rect>35,26,69,52</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_5.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.6,0.842105</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>9,14,17,29</rect>
+                <key>scale9Paddings</key>
+                <rect>9,14,17,29</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_6.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.46875,0.964286</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,14,16,28</rect>
+                <key>scale9Paddings</key>
+                <rect>8,14,16,28</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_7.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.295455,0.941176</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>11,9,22,17</rect>
+                <key>scale9Paddings</key>
+                <rect>11,9,22,17</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_8.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.4,0.952381</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>11,11,23,21</rect>
+                <key>scale9Paddings</key>
+                <rect>11,11,23,21</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">pngs/env_grass2_9.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.375,0.944444</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>14,9,28,18</rect>
+                <key>scale9Paddings</key>
+                <rect>14,9,28,18</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">pngs/env_grass_1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>

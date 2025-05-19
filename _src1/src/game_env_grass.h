@@ -2,17 +2,12 @@
 
 namespace Game {
 
-
 	struct EnvGrass : Drawable {
-		static constexpr xx::FromTo<float> scaleRange{ 0.3f, 1.f };
-		static constexpr xx::FromTo<float> swingRange{ -0.1f, 0.1f };
+		xx::FromTo<float> swingRange;
 		float swingStep{};
 
-		void Init(Stage* stage_);
+		void Init(Stage* stage_, xx::Ref<xx::Frame> frame_, XY pos_, XY scale_, xx::FromTo<float> swingRange_);
 		int32_t Update() override;
-
-		static void GenGrass(Stage* stage, int32_t ratio);
 	};
-
 
 }

@@ -78,9 +78,14 @@ struct Looper : xx::Engine<Looper>, Cfg {
     Game::Shader_QuadInstanceHPBar shaderHPBar;
     Game::Shader_QuadInstanceTiles shaderTiles;
 
-	xx::Ref<xx::GLTexture> res_nums1;	// res/nums1.png
-	xx::Ref<xx::GLTexture> res_hpbar;	// res/hpbar.png
+	// res/?????
+	xx::Ref<xx::GLTexture> res_nums1;
+	xx::Ref<xx::GLTexture> res_hpbar;
+	xx::Ref<xx::GLTexture> res_map_01;
+
+	// res/pngs.blist + png
 	ResTpFrames res;
+
 	xx::Scale9SpriteConfig btnCfg, btnCfg1, btnCfg2, btnCfg2i, btnCfg3, btnCfg3i, btnCfg4, buffInfoPanelCfg;
 	xx::SpaceGridRingDiffuseData rdd;
 	xx::Listi32<std::pair<float, Game::Drawable*>> yDraws;
