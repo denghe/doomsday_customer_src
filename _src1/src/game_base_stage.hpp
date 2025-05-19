@@ -253,7 +253,7 @@ namespace Game {
 				q->scale = camera.scale * 5;
 				q->radians = 0;
 				q->colorplus = 1.f;
-				q->color = xx::RGBA8_Green;//xx::RGBA8_White;RGBA8_Green
+				q->color = xx::RGBA8_White;//xx::RGBA8_White;RGBA8_Green
 				q->texRect.data = gLooper.res._uvrect_ef_light.data;
 			}
 
