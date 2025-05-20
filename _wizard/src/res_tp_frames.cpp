@@ -14,6 +14,18 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 		xx_assert(tp);
 		auto map = tp->GetMapSV();
 
+		this->char_body = map["char_body"sv];
+		this->_tex_char_body = this->char_body->tex;
+		this->_texid_char_body = this->_tex_char_body->GetValue();
+		this->char_bullet = map["char_bullet"sv];
+		this->_tex_char_bullet = this->char_bullet->tex;
+		this->_texid_char_bullet = this->_tex_char_bullet->GetValue();
+		this->char_head = map["char_head"sv];
+		this->_tex_char_head = this->char_head->tex;
+		this->_texid_char_head = this->_tex_char_head->GetValue();
+		this->char_weapon = map["char_weapon"sv];
+		this->_tex_char_weapon = this->char_weapon->tex;
+		this->_texid_char_weapon = this->_tex_char_weapon->GetValue();
 		this->ef_1 = map["ef_1"sv];
 		this->_tex_ef_1 = this->ef_1->tex;
 		this->_texid_ef_1 = this->_tex_ef_1->GetValue();
