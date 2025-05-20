@@ -4,4 +4,4 @@ cmake-build-*
 .vs
 build2
 *.exe
-/_src1/pics/pngs.plist
+*.plist

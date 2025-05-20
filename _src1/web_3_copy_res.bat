@@ -1,1 +1,1 @@
-xcopy res\*.* ..\docs\res\ /y
+xcopy res\*.* ..\docs\src1\res\ /y
