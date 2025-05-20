@@ -8,6 +8,8 @@ namespace Game {
 
 		void Init() override;
 		void Draw() override;
+		void MakeUI();
+		void OnWindowSizeChanged();
 	};
 
 }
