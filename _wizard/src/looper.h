@@ -8,31 +8,27 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 };
 
 #include "game_shader_numbers.h"
-#include "game_space_box.h"
-#include "game_space_circle.h"
-#include "game_effect_text.h"
+#include "game_space_index_box.h"
+#include "game_space_index_circle.h"
+#include "game_scene.h"
+#include "game_stage.h"
+#include "game_drawable.h"
+#include "game_effect_numbers.h"
 #include "game_main_menu.h"
-#include "game_base.h"
 // more include here ...
+#include "_test1.h"
 
 struct Looper : xx::Engine<Looper>, Cfg {
 	xx::Task<> MainTask();
 
-	xx::FrameBuffer fb;
-
-    Game::Shader_QuadInstanceNumbers shaderNumbers;
-
-	// res/?????
-	xx::Ref<xx::GLTexture> res_nums1;
-
-	// res/pngs.blist + png
-	ResTpFrames res;
+	xx::FrameBuffer fb;										// for light
+    Game::Shader_QuadInstanceNumbers shaderNumbers;			// for effect damage number
+	xx::Ref<xx::GLTexture> res_nums1;						// for effect damage number
+	ResTpFrames res;										// res/pngs.blist + png
 
 	xx::Scale9SpriteConfig btnCfg;
 	xx::SpaceGridRingDiffuseData rdd;
 	xx::Listi32<std::pair<float, Game::Drawable*>> yDraws;
-
-	float globalScale{};
 };
 
 extern Looper gLooper;

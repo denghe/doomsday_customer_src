@@ -12,6 +12,7 @@ namespace Game {
 
 	// stage's base
 	struct Stage : Scene {
+		xx::Camera camera;
 		xx::Rnd rnd;							// for game logic only
 		int32_t time{};							// for game logic only
 
@@ -43,55 +44,6 @@ namespace Game {
 		//virtual void DrawCustomUI() {};
 		//virtual void OnWindowSizeChanged() {};
 		//void Draw() override;
-	};
-
-	// stage item's base
-	struct alignas(8) Drawable {
-		Stage* stage{};										// stage's life > this
-		xx::Ref<xx::Frame> frame;
-
-		xx::XY pos{};										// pivot position
-		xx::XY scale{ 1.f, 1.f };							//
-		xx::XY offsetRatio{ 0.5f, 0.3f};					// pos + size * scale * offsetRatio == center pos
-		bool needFlipX{};
-		float radius{}, radians{};							// for logic
-		int32_t whiteColorEndTime{};						// for hurt effect
-		int32_t destroyTime{};								// max life cycle for bug issue
-		xx::RGBA8 color{xx::RGBA8_White};
-		// todo
-
-		virtual int32_t Update() { return 0; };				// return !0 mean need Release/Delete/Remove
-		virtual void Draw();
-		virtual ~Drawable() {};
-	};
-
-	// 
-	struct StageItem : Drawable {
-		int32_t indexAtItems{ -1 }, indexAtCells{ -1 };		// for space index
-		StageItem* prev{}, * next{};						// for space index
-	};
-
-	// stage creature's base
-	struct Creature : StageItem {
-	};
-
-	// player's base
-	struct Player : Creature {
-	};
-
-	// monster's base
-	struct Monster : Creature {
-	};
-
-	// bullet's base
-	struct Bullet : StageItem {
-		xx::Weak<Creature> owner;										// owner's life maybe <= this
-
-		float moveSpeed{};
-		float radius{};
-		float damage{};
-
-		virtual int32_t Update() { return 0; }
 	};
 
 }

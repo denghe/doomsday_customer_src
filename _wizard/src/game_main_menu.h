@@ -2,14 +2,13 @@
 
 namespace Game {
 
-	struct MainMenu : xx::SceneBase {
-		xx::Camera camera;
+	struct MainMenu : Scene {
 		xx::Shared<xx::Node> ui;
+		void MakeUI();
 
 		void Init() override;
 		void Draw() override;
-		void MakeUI();
-		void OnWindowSizeChanged();
+		void OnWindowSizeChanged() override;
 	};
 
 }

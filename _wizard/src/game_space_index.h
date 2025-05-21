@@ -1,32 +1,43 @@
 ﻿#pragma once
-#include "xx_math.h"
-#include "xx_list.h"
-#include "xx_ptr.h"
+#include "xx_space_.h"
 
-namespace xx {
+namespace Game {
 
-	// space index with size limited boxs
-	// requires T:: (XYi) pos size  (int32_t) indexAtItems indexAtCells
-	// requires T:: ( T* )prev next	      ( if enableDoubleLink == true )
+	// space index with size limited items
+	// requires:
+	/*
+		XY pos{};
+		???????????????????
+		int32_t indexAtItems{ -1 }, indexAtCells{ -1 };
+		Base *prev{}, *next{};		// if enableDoubleLink == true
+	*/
 	template<typename T, bool enableDoubleLink>
-	struct SpaceIndexBox {
-		XYi cellSize{}, gridSize{};					// gridSize = cellSize * numCR
+	struct SpaceIndex {
+		XYi gridSize{};								// gridSize = cellSize * numCR
+		int32_t cellSize{};
+		float _1_cellSize{};						// 1 / cellSize
 		int32_t numRows{}, numCols{};
 		xx::Listi32<xx::Shared<T>> items;
 		int32_t cellsLen{};
 		std::unique_ptr<T*[]> cells;
+		std::unique_ptr<int32_t[]> counts;
+		xx::SpaceGridRingDiffuseData const* rdd{};	// ref to requires data
 
-		void Init(int32_t numRows_, int32_t numCols_, XYi const& cellSize_, int32_t cap = 10000) {
+		void Init(xx::SpaceGridRingDiffuseData const* rdd_, int32_t numRows_, int32_t numCols_, int32_t cellSize_, int32_t cap = 10000) {
 			assert(!cells);
-			assert(numCols_ > 0 && numRows_ > 0 && cellSize_.x > 0 && cellSize_.y > 0);
+			assert(numCols_ > 0 && numRows_ > 0 && cellSize_ > 0);
+			rdd = rdd_;
 			numRows = numRows_;
 			numCols = numCols_;
 			cellSize = cellSize_;
-			gridSize = { cellSize_.x * numCols_, cellSize_.y * numRows_ };
+			gridSize = { cellSize_ * numCols_, cellSize_ * numRows_ };
+			_1_cellSize = 1.f / cellSize;
 
 			cellsLen = numRows * numCols;
 			cells = std::make_unique_for_overwrite<T*[]>(cellsLen);
 			memset(cells.get(), 0, sizeof(T*) * cellsLen);
+			counts = std::make_unique_for_overwrite<int32_t[]>(cellsLen);
+			memset(counts.get(), 0, sizeof(int32_t) * cellsLen);
 
 			items.Reserve(cap);
 		}
@@ -55,6 +66,7 @@ namespace xx {
 				c->indexAtCells = ci;
 				cells[ci] = c;
 			}
+			++counts[ci];
 
 			// store
 			c->indexAtItems = items.len;
@@ -81,7 +93,7 @@ namespace xx {
 					c->prev = {};
 				} else {
 					assert(cells[c->indexAtCells] == c);
-					cells[c->indexAtCells] = c->next;
+					cells[c->indexAtCells] = (T*)c->next;
 					if (c->next) {
 						c->next->prev = {};
 						c->next = {};
@@ -92,6 +104,7 @@ namespace xx {
 				assert(cells[c->indexAtCells] == c);
 				cells[c->indexAtCells] = nullptr;
 			}
+			--counts[c->indexAtCells];
 
 			// clear
 			auto ii = c->indexAtItems;
@@ -120,11 +133,12 @@ namespace xx {
 				}
 			} else {
 				assert(cells[c->indexAtCells] == c);
-				cells[c->indexAtCells] = c->next;
+				cells[c->indexAtCells] = (T*)c->next;
 				if (c->next) {
 					c->next->prev = {};
 				}
 			}
+			--counts[c->indexAtCells];
 			assert(cells[c->indexAtCells] != c);
 			assert(ci != c->indexAtCells);
 
@@ -136,6 +150,7 @@ namespace xx {
 			c->next = cells[ci];
 			cells[ci] = c;
 			c->indexAtCells = ci;
+			++counts[ci];
 			assert(!cells[ci]->prev);
 			assert(c->next != c);
 			assert(c->prev != c);
@@ -143,6 +158,12 @@ namespace xx {
 
 		XX_INLINE XYi PosToColRowIndex(XYi const& pos) const {
 			auto cri = pos / cellSize;
+			assert(!(cri.x < 0 || cri.x >= numCols || cri.y < 0 || cri.y >= numRows));
+			return cri;
+		}
+
+		XX_INLINE XYi PosToColRowIndex(XY const& pos) const {
+			auto cri = (pos * _1_cellSize).As<int32_t>();
 			assert(!(cri.x < 0 || cri.x >= numCols || cri.y < 0 || cri.y >= numRows));
 			return cri;
 		}
@@ -176,7 +197,12 @@ namespace xx {
 			return cells[ci];
 		}
 
-		// todo: more search funcs
+		void Clear() {
+			items.Clear();
+			memset(cells.get(), 0, sizeof(T*) * cellsLen);
+			memset(counts.get(), 0, sizeof(int32_t) * cellsLen);
+		}
+
 	};
 
 }
