@@ -22,25 +22,20 @@ include_directories(
 	../stb
 	../glfw/include
 	../3rd
-	../xx
 	../soloud/include
 	../thread-pool/include
+	../spine-cpp/include
+	../xx
 )
 
 file(GLOB sources
-	../xx/*.h
 	src/*.cpp
 	src/*.c
 	src/*.h
 	src/*.hpp
 )
 
-if (MSVC)
-	list(APPEND sources "../xx/xx.natvis")
-endif()
-
 add_executable(${name} ${sources})
-
 
 source_group("" FILES ${sources})
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/../ FILES ${sources})
@@ -57,6 +52,8 @@ add_subdirectory(../zstd/build/cmake zstd)
 
 add_subdirectory(../spine-cpp spine)
 target_link_libraries(${name} spine)
+
+add_subdirectory(../xx xx)
 
 if (EMSCRIPTEN)
 	target_link_libraries(${name} libzstd_static)
