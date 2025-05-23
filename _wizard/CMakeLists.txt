@@ -55,6 +55,9 @@ SET(ZSTD_MULTITHREAD_SUPPORT_DEFAULT OFF CACHE BOOL "ZSTD_MULTITHREAD_SUPPORT_DE
 SET(ZSTD_MULTITHREAD_SUPPORT OFF CACHE BOOL "ZSTD_MULTITHREAD_SUPPORT" FORCE)
 add_subdirectory(../zstd/build/cmake zstd)
 
+add_subdirectory(../spine-cpp spine)
+target_link_libraries(${name} spine)
+
 if (EMSCRIPTEN)
 	target_link_libraries(${name} libzstd_static)
 else()
