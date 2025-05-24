@@ -57,7 +57,7 @@ xx::Task<> Looper::MainTask() {
 		se.fileDatas.emplace(spineFileName_Json, co_await AsyncDownloadFromUrl(spineFileName_Json));
 		se.fileDatas.emplace(spineFileName_Skel, co_await AsyncDownloadFromUrl(spineFileName_Skel));
 		//res_skelSpineBoy = se.AddSkeletonData<true>(se.AddAtlas(atlasFN), jsonFN);
-		res_skelSpineBoy = se.AddSkeletonData<false>(se.AddAtlas(spineFileName_Atlas), spineFileName_Skel);
+		res_skelSpineBoy = se.AddSkeletonData<false>(se.AddAtlas(spineFileName_Atlas), spineFileName_Skel, 0.2f);
 		res_texSpineBoy = se.textures[spineFileName_Tex];
 	}
 
