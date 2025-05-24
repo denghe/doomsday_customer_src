@@ -202,7 +202,7 @@ public:
 		}
 	}
 
-private:
+//private:					// for easy use
 	mutable size_t _length;
 	mutable char *_buffer;
 };

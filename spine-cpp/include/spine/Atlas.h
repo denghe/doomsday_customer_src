@@ -74,7 +74,6 @@ public:
 	TextureWrap uWrap;
 	TextureWrap vWrap;
 	int width, height;
-	uint32_t textureId;	// added by xx. for store xx::GLTexture
 
 	explicit AtlasPage(const String &inName) : name(inName), format(Format_RGBA8888), minFilter(TextureFilter_Nearest),
 		magFilter(TextureFilter_Nearest), uWrap(TextureWrap_ClampToEdge),

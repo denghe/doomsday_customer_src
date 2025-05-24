@@ -362,7 +362,7 @@ SkeletonData *SkeletonBinary::readSkeletonDataFile(const String &path) {
 		return NULL;
 	}
 	skeletonData = readSkeletonData((unsigned char *) binary, length);
-	SpineExtension::free(binary, __FILE__, __LINE__);
+	//SpineExtension::free(binary, __FILE__, __LINE__);						// can't free. because readFile from cache
 	return skeletonData;
 }
 

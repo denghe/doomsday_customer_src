@@ -107,7 +107,7 @@ SkeletonData *SkeletonJson::readSkeletonDataFile(const String &path) {
 
 	skeletonData = readSkeletonData(json);
 
-	SpineExtension::free(json, __FILE__, __LINE__);
+	//SpineExtension::free(json, __FILE__, __LINE__);		// can't free. because readFile from cache
 
 	return skeletonData;
 }

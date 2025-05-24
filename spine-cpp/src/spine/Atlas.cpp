@@ -60,7 +60,7 @@ Atlas::Atlas(const String &path, TextureLoader *textureLoader, bool createTextur
 		load(data, length, dir, createTexture);
 	}
 
-	SpineExtension::free(data, __FILE__, __LINE__);
+	//SpineExtension::free(data, __FILE__, __LINE__);	// can't free. because readFile from cache
 	SpineExtension::free(dir, __FILE__, __LINE__);
 }
 

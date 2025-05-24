@@ -6,6 +6,8 @@ namespace Game {
 		xx::Shared<xx::Node> ui;
 		void MakeUI();
 
+		xx::Shared<xx::SpinePlayer> sp;
+
 		void Init() override;
 		void Update() override;
 		void Draw() override;

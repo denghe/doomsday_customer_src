@@ -41,6 +41,29 @@ xx::Task<> Looper::MainTask() {
 
 	co_await res.AsyncLoad("res/");
 
+
+	// load spine res & parse
+	{
+		auto& se = xx::gSpineEnv;
+		se.Init();
+
+		static constexpr auto spineFileName_Tex = "res/spineboy-pma.png";
+		static constexpr auto spineFileName_Atlas = "res/spineboy-pma.atlas";
+		static constexpr auto spineFileName_Json = "res/spineboy-pro.json";
+		static constexpr auto spineFileName_Skel = "res/spineboy-pro.skel";
+
+		se.textures.emplace(spineFileName_Tex, co_await AsyncLoadTextureFromUrl(spineFileName_Tex));
+		se.fileDatas.emplace(spineFileName_Atlas, co_await AsyncDownloadFromUrl(spineFileName_Atlas));
+		se.fileDatas.emplace(spineFileName_Json, co_await AsyncDownloadFromUrl(spineFileName_Json));
+		se.fileDatas.emplace(spineFileName_Skel, co_await AsyncDownloadFromUrl(spineFileName_Skel));
+		//res_skelSpineBoy = se.AddSkeletonData<true>(se.AddAtlas(atlasFN), jsonFN);
+		res_skelSpineBoy = se.AddSkeletonData<false>(se.AddAtlas(spineFileName_Atlas), spineFileName_Skel);
+		res_texSpineBoy = se.textures[spineFileName_Tex];
+	}
+
+
+
+
 	rdd.Init(50, 128);
 
 	fb.Init();

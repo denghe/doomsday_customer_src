@@ -21,6 +21,9 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 struct Looper : xx::Engine<Looper>, Cfg {
 	xx::Task<> MainTask();
 
+	xx::Ref<xx::GLTexture> res_texSpineBoy;
+	spine::SkeletonData* res_skelSpineBoy{};
+
 	xx::FrameBuffer fb;										// for light
     Game::Shader_QuadInstanceNumbers shaderNumbers;			// for effect damage number
 	xx::Ref<xx::GLTexture> res_nums1;						// for effect damage number
