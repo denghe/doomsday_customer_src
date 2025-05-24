@@ -14,7 +14,7 @@ namespace Game {
 		UpdateScale();
 		MakeUI();
 
-
+#if 0
 		for (int i = 0; i < 1000; ++i) {
 			auto& sp = sps.Emplace().Emplace(gLooper.res_skelSpineBoy);
 			sp->SetMix("walk", "jump", 0.2f)
@@ -24,6 +24,13 @@ namespace Game {
 				.AddAnimation(0, "walk", true, 0)
 				.AddAnimation(0, "jump", false, 3)
 				.AddAnimation(0, "run", true, 0);
+		}
+#endif
+
+		for (int i = 0; i < 5000; ++i) {
+			auto& sp = sps.Emplace().Emplace(gLooper.res_skelFrenchFries);
+			sp->SetPosition(gLooper.rnd.Next<float>(-700, 700), gLooper.rnd.Next<float>(-400, 100))
+				.AddAnimation(0, "walk", true, 0);
 		}
 	}
 

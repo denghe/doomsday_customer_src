@@ -24,6 +24,9 @@ struct Looper : xx::Engine<Looper>, Cfg {
 	xx::Ref<xx::GLTexture> res_texSpineBoy;
 	spine::SkeletonData* res_skelSpineBoy{};
 
+	xx::Ref<xx::GLTexture> res_texFrenchFries;
+	spine::SkeletonData* res_skelFrenchFries{};
+
 	xx::FrameBuffer fb;										// for light
     Game::Shader_QuadInstanceNumbers shaderNumbers;			// for effect damage number
 	xx::Ref<xx::GLTexture> res_nums1;						// for effect damage number
