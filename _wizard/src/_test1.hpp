@@ -89,7 +89,7 @@ namespace Game {
 		}
 		gLooper.GLBlendFunc(gLooper.blendDefault);
 
-		for (size_t i = 0; i < 50000; i++) {
+		for (size_t i = 0; i < 30000; i++) {
 			auto v = gLooper.ShaderBegin(gLooper.shaderTexVert)
 				//.Draw(gLooper.res_texFrenchFries, tex, 1);
 				.Draw(gLooper.res_texSpineBoy, tex, 1);
