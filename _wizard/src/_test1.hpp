@@ -2,6 +2,30 @@
 
 namespace Game {
 
+
+
+
+	inline void VertAnim::Update() {
+		frameIndex += 1.f;
+		if (frameIndex >= numFrames) {
+			frameIndex = 0;
+		}
+	}
+
+	inline void VertAnim::Draw() {
+		auto v = gLooper.ShaderBegin(gLooper.shaderTexVert).Draw(tex, vertTex, 1);
+		v->frameIndex = (int32_t)frameIndex;
+		v->pos = pos;
+		v->scale = scale;
+	}
+
+
+
+
+
+
+
+
 	inline void Test1::MakeUI() {
 		ui.Emplace()->Init(0, {}, scale);
 		ui->MakeChildren<xx::Button>()->Init(1, gLooper.pos7 + XY{ 10, -10 }
@@ -27,59 +51,39 @@ namespace Game {
 		}
 #endif
 
-		auto sp = xx::MakeShared<xx::SpinePlayer>(
-			//gLooper.res_skelFrenchFries);
-			gLooper.res_skelSpineBoy);
-		sp->SetPosition(0, 0).AddAnimation(0, "walk", true, 0);
-		gLooper.ShaderEnd();
-		sp->Draw();	// draw once for get vert size
-		auto&& shader = gLooper.ShaderBegin(gLooper.shaderSpine38);
-		auto vc = shader.vertsCount;
+		auto& rnd = gLooper.rnd;
 
-		auto rowByteSize = vc * 32;			// sizeof(float) * 8
-		auto texWidth = rowByteSize / 16;	// sizeof(RGBA32F)
-		texWidth = (texWidth + 7) & ~7u;
-		rowByteSize = texWidth * 16;
+		xx::Listi32<xx::Shared<xx::SpinePlayer>> sps;
+		xx::Listi32<xx::Ref<xx::GLTexture>> texs;
+		xx::Listi32<xx::Ref<xx::GLVertTexture>> vertTexs;
 
-		numFrames = 64;						// todo: calc anim length
-		auto texHeight = numFrames;
-		texHeight = (texHeight + 7) & ~7u;
+		sps.Emplace().Emplace(gLooper.res_skelFrenchFries);
+		sps.Emplace().Emplace(gLooper.res_skelSpineBoy);
 
-		auto d = std::make_unique<char[]>(rowByteSize * texHeight);
-		auto vs = shader.verts.get();
-		for (int i = 0; i < numFrames; ++i) {
-			auto bp = (xx::TexData*)(d.get() + rowByteSize * i);
-			for (int j = 0; j < vc; ++j) {
-				auto& p = bp[j];
-				auto& v = vs[j];
-				p.x = v.pos.x;
-				p.y = v.pos.y;
-				p.u = v.uv.x;
-				p.v = v.uv.y;
-				p.r = v.color.r * 0.003921568627451f;
-				p.g = v.color.g * 0.003921568627451f;
-				p.b = v.color.b * 0.003921568627451f;
-				p.a = v.color.a * 0.003921568627451f;
-			}
-			shader.vertsCount = 0;
-			shader.lastTextureId = 0;
-			sp->Update(Cfg::frameDelay);
-			sp->Draw();
+		texs.Emplace(gLooper.res_texFrenchFries);
+		texs.Emplace(gLooper.res_texSpineBoy);
+
+		for (auto& sp : sps) {
+			vertTexs.Emplace(xx::MakeRef<xx::GLVertTexture>(sp->AnimToTexture("walk", Cfg::frameDelay)));
 		}
-		shader.vertsCount = 0;
-		shader.lastTextureId = 0;
-		tex.Emplace(xx::LoadGLTexture_RGBA32F(d.get(), texWidth, texHeight, vc));
 
-		xx::CoutN("vertsCount = ", vc);
+		for (int i = 0; i < 10000; ++i) {
+			auto idx = rnd.Next<int32_t>(0, sps.len);
+			auto& va = vas.Emplace().Emplace();
+			va->tex = texs[idx];
+			va->vertTex = vertTexs[idx];
+			va->numFrames = va->vertTex->NumFrames();
+			va->pos = { rnd.Next<float>(-800, 800), rnd.Next<float>(-400, 400) };
+		}
 	}
 
 	inline void Test1::Update() {
 		for (auto& sp : sps) {
 			sp->Update(Cfg::frameDelay);
 		}
-		++frameIndex;
-		if (frameIndex >= numFrames) {
-			frameIndex = 0;
+
+		for (auto& va : vas) {
+			va->Update();
 		}
 	}
 
@@ -89,13 +93,8 @@ namespace Game {
 		}
 		gLooper.GLBlendFunc(gLooper.blendDefault);
 
-		for (size_t i = 0; i < 30000; i++) {
-			auto v = gLooper.ShaderBegin(gLooper.shaderTexVert)
-				//.Draw(gLooper.res_texFrenchFries, tex, 1);
-				.Draw(gLooper.res_texSpineBoy, tex, 1);
-			v->frameIndex = (int32_t)frameIndex;
-			v->pos = 0;
-			v->scale = 1.f;
+		for (auto& va : vas) {
+			va->Draw();
 		}
 
 		gLooper.DrawNode(ui);

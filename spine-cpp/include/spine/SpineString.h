@@ -35,6 +35,7 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <string_view>
 
 // Required for sprintf on MSVC
 #ifdef _MSC_VER
@@ -45,6 +46,22 @@ namespace spine {
 class SP_API String : public SpineObject {
 public:
 	String() : _length(0), _buffer(NULL) {
+	}
+
+	// for easy use
+	String(std::string_view sv, bool own = false) {
+		if (!sv.size()) {
+			_length = 0;
+			_buffer = NULL;
+		} else {
+			_length = sv.size();
+			if (!own) {
+				_buffer = SpineExtension::calloc<char>(_length + 1, __FILE__, __LINE__);
+				memcpy((void *) _buffer, sv.data(), _length + 1);
+			} else {
+				_buffer = (char *) sv.data();
+			}
+		}
 	}
 
 	String(const char *chars, bool own = false) {
