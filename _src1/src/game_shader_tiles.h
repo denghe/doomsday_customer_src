@@ -11,6 +11,8 @@ namespace Game {
         // todo: light / color tex ?
     };
 
+    // todo: change texture format to GL_R32I
+
     struct Shader_QuadInstanceTiles : xx::Shader {
         using xx::Shader::Shader;
         GLint uTex0{ -1 }, uTex1{ -1 }, aVert{ -1 }, aPosScale{ -1 }, aTileSizeMapSize{ -1 }, aTilingOffset{ -1 }, aMiniMapSize{ -1 };

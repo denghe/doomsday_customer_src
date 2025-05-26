@@ -7,6 +7,9 @@ namespace Game {
 		void MakeUI();
 
 		xx::Listi32<xx::Shared<xx::SpinePlayer>> sps;
+		xx::Ref<xx::GLTexture> tex;
+		int32_t numFrames{};
+		int32_t frameIndex{};
 
 		void Init() override;
 		void Update() override;
