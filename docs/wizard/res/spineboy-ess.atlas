@@ -1,0 +1,188 @@
+
+spineboy-ess.png
+size: 1024,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+eye-indifferent
+  rotate: false
+  xy: 518, 416
+  size: 93, 89
+  orig: 93, 89
+  offset: 0, 0
+  index: -1
+eye-surprised
+  rotate: false
+  xy: 611, 416
+  size: 93, 89
+  orig: 93, 89
+  offset: 0, 0
+  index: -1
+front-bracer
+  rotate: false
+  xy: 711, 277
+  size: 58, 80
+  orig: 58, 80
+  offset: 0, 0
+  index: -1
+front-fist-closed
+  rotate: false
+  xy: 704, 423
+  size: 75, 82
+  orig: 75, 82
+  offset: 0, 0
+  index: -1
+front-fist-open
+  rotate: false
+  xy: 570, 259
+  size: 86, 87
+  orig: 86, 87
+  offset: 0, 0
+  index: -1
+front-foot
+  rotate: false
+  xy: 504, 346
+  size: 126, 69
+  orig: 126, 69
+  offset: 0, 0
+  index: -1
+front-shin
+  rotate: false
+  xy: 471, 68
+  size: 82, 184
+  orig: 82, 184
+  offset: 0, 0
+  index: -1
+front-thigh
+  rotate: false
+  xy: 628, 88
+  size: 45, 112
+  orig: 45, 112
+  offset: 0, 0
+  index: -1
+front-upper-arm
+  rotate: false
+  xy: 673, 103
+  size: 46, 97
+  orig: 46, 97
+  offset: 0, 0
+  index: -1
+goggles
+  rotate: false
+  xy: 0, 41
+  size: 261, 166
+  orig: 261, 166
+  offset: 0, 0
+  index: -1
+gun
+  rotate: false
+  xy: 261, 4
+  size: 210, 203
+  orig: 210, 203
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 0, 207
+  size: 271, 298
+  orig: 271, 298
+  offset: 0, 0
+  index: -1
+mouth-grind
+  rotate: false
+  xy: 584, 15
+  size: 93, 59
+  orig: 93, 59
+  offset: 0, 0
+  index: -1
+mouth-oooo
+  rotate: false
+  xy: 630, 357
+  size: 93, 59
+  orig: 93, 59
+  offset: 0, 0
+  index: -1
+mouth-smile
+  rotate: false
+  xy: 628, 200
+  size: 93, 59
+  orig: 93, 59
+  offset: 0, 0
+  index: -1
+muzzle01
+  rotate: false
+  xy: 437, 252
+  size: 133, 79
+  orig: 133, 79
+  offset: 0, 0
+  index: -1
+muzzle02
+  rotate: false
+  xy: 369, 331
+  size: 135, 84
+  orig: 135, 84
+  offset: 0, 0
+  index: -1
+muzzle03
+  rotate: false
+  xy: 271, 219
+  size: 166, 106
+  orig: 166, 106
+  offset: 0, 0
+  index: -1
+muzzle04
+  rotate: false
+  xy: 369, 415
+  size: 149, 90
+  orig: 149, 90
+  offset: 0, 0
+  index: -1
+neck
+  rotate: false
+  xy: 0, 0
+  size: 36, 41
+  orig: 36, 41
+  offset: 0, 0
+  index: -1
+rear-bracer
+  rotate: false
+  xy: 677, 31
+  size: 56, 72
+  orig: 56, 72
+  offset: 0, 0
+  index: -1
+rear-foot
+  rotate: false
+  xy: 471, 8
+  size: 113, 60
+  orig: 113, 60
+  offset: 0, 0
+  index: -1
+rear-shin
+  rotate: false
+  xy: 553, 74
+  size: 75, 178
+  orig: 75, 178
+  offset: 0, 0
+  index: -1
+rear-thigh
+  rotate: false
+  xy: 656, 263
+  size: 55, 94
+  orig: 55, 94
+  offset: 0, 0
+  index: -1
+rear-upper-arm
+  rotate: false
+  xy: 719, 113
+  size: 40, 87
+  orig: 40, 87
+  offset: 0, 0
+  index: -1
+torso
+  rotate: false
+  xy: 271, 325
+  size: 98, 180
+  orig: 98, 180
+  offset: 0, 0
+  index: -1
