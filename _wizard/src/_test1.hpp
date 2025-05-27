@@ -64,7 +64,8 @@ namespace Game {
 		texs.Emplace(gLooper.res_texSpineBoy);
 
 		for (auto& sp : sps) {
-			vertTexs.Emplace(xx::MakeRef<xx::GLVertTexture>(sp->AnimToTexture("walk", Cfg::frameDelay)));
+			auto& o = vertTexs.Emplace(xx::MakeRef<xx::GLVertTexture>(sp->AnimToTexture("walk", Cfg::frameDelay)));
+			xx::CoutN("vertTex width = ", o->Width(), " height = ", o->Height(), " numVerts = ", o->NumVerts(), " numFrames = ", o->NumFrames());
 		}
 
 		for (int i = 0; i < 10000; ++i) {
@@ -74,6 +75,7 @@ namespace Game {
 			va->vertTex = vertTexs[idx];
 			va->numFrames = va->vertTex->NumFrames();
 			va->pos = { rnd.Next<float>(-800, 800), rnd.Next<float>(-400, 400) };
+			va->scale = 0.2f;
 		}
 	}
 

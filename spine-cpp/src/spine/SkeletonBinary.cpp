@@ -128,12 +128,12 @@ SkeletonData *SkeletonBinary::readSkeletonData(const unsigned char *binary, cons
 
 	char *skeletonData_version = readString(input);
 	skeletonData->_version.own(skeletonData_version);
-    if ("3.8.75" == skeletonData->_version) {
-        delete input;
-        delete skeletonData;
-        setError("Unsupported skeleton data, please export with a newer version of Spine.", "");
-        return NULL;
-    }
+    //if ("3.8.75" == skeletonData->_version) {
+    //    delete input;
+    //    delete skeletonData;
+    //    setError("Unsupported skeleton data, please export with a newer version of Spine.", "");
+    //    return NULL;
+    //}
 
 	skeletonData->_x = readFloat(input);
 	skeletonData->_y = readFloat(input);
