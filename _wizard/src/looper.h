@@ -32,6 +32,11 @@ struct Looper : xx::Engine<Looper>, Cfg {
 	spine::Animation* res_FrenchFries_idle{};
 	spine::Animation* res_FrenchFries_walk{};
 
+	xx::Ref<xx::GLTexture> res_Slime1_tex;
+	spine::SkeletonData* res_Slime1_skel{};
+	spine::Animation* res_Slime1_idle{};
+
+
 	xx::FrameBuffer fb;										// for light
     Game::Shader_QuadInstanceNumbers shaderNumbers;			// for effect damage number
 	xx::Ref<xx::GLTexture> res_nums1;						// for effect damage number

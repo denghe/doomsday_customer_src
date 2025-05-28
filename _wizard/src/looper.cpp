@@ -55,6 +55,9 @@ xx::Task<> Looper::MainTask() {
 	res_FrenchFries_idle = res_FrenchFries_skel->findAnimation("idle");
 	res_FrenchFries_walk = res_FrenchFries_skel->findAnimation("walk");
 
+	co_await se.AsyncLoad<true>("res/slime1", res_Slime1_skel, res_Slime1_tex);
+	res_Slime1_idle = res_Slime1_skel->findAnimation("idle");
+
 
 	rdd.Init(50, 128);
 

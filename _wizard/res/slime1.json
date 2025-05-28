@@ -1,0 +1,48 @@
+{
+"skeleton": {
+	"hash": "EiijEaoAaf5U8ISTXkMeqORHuSk",
+	"spine": "3.8.75",
+	"x": -20,
+	"y": -5.86,
+	"width": 55.42,
+	"height": 60.1,
+	"images": "",
+	"audio": ""
+},
+"bones": [
+	{ "name": "root" },
+	{ "name": "body", "parent": "root", "length": 13.68, "rotation": 90 },
+	{ "name": "weapon", "parent": "body", "length": 27, "rotation": 50, "x": 15, "transform": "onlyTranslation" },
+	{ "name": "shoot_point", "parent": "weapon", "x": 31 }
+],
+"slots": [
+	{ "name": "body", "bone": "body", "attachment": "body" },
+	{ "name": "weapon", "bone": "weapon", "attachment": "weapon" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"weapon": {
+				"weapon": { "x": 12, "width": 60, "height": 22 }
+			},
+			"body": {
+				"body": { "x": 13, "y": 0.04, "rotation": -90, "width": 28, "height": 26 }
+			}
+		}
+	}
+],
+"animations": {
+	"idle": {
+		"bones": {
+			"body": {
+				"scale": [
+					{},
+					{ "time": 0.5, "x": 0.95, "y": 1.05 },
+					{ "time": 1 }
+				]
+			}
+		}
+	}
+}
+}
