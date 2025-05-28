@@ -58,6 +58,9 @@ xx::Task<> Looper::MainTask() {
 	co_await se.AsyncLoad<true>("res/slime1", res_Slime1_skel, res_Slime1_tex);
 	res_Slime1_idle = res_Slime1_skel->findAnimation("idle");
 
+	co_await se.AsyncLoad<true>("res/dragon-ess", res_Dragon_skel, res_Dragon_tex);
+	res_Dragon_flying = res_Dragon_skel->findAnimation("flying");
+
 
 	rdd.Init(50, 128);
 

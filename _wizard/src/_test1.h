@@ -24,11 +24,13 @@ namespace Game {
 		xx::Ref<xx::GLVertTexture> vtSpineBoy;
 		xx::Ref<xx::GLVertTexture> vtFrenchFries;
 		xx::Ref<xx::GLVertTexture> vtSlime;
+		xx::Ref<xx::GLVertTexture> vtDragon;
 
 		void AddVertAnim(xx::Ref<xx::GLTexture> tex, xx::Ref<xx::GLVertTexture> vtex, float scale = 1.f);
 		void AddSomeSpineBoy(int32_t n);
 		void AddSomeFrenchFries(int32_t n);
 		void AddSomeSlime(int32_t n);
+		void AddSomeDragon(int32_t n);
 
 		void Init() override;
 		void Update() override;

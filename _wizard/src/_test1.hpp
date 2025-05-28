@@ -44,6 +44,10 @@ namespace Game {
 			, anchor8, gLooper.btnCfg, U"add 10000 Slime", [&]() {
 				AddSomeSlime(10000);
 			});
+		ui->MakeChildren<xx::Button>()->Init(1, pos8 + XY{ 0, -280 }
+			, anchor8, gLooper.btnCfg, U"add 10000 Dragon", [&]() {
+				AddSomeDragon(10000);
+			});
 	}
 
 
@@ -74,6 +78,12 @@ namespace Game {
 		}
 	}
 
+	inline void Test1::AddSomeDragon(int32_t n) {
+		for (int i = 0; i < n; ++i) {
+			AddVertAnim(gLooper.res_Dragon_tex, vtDragon, 0.2f);
+		}
+	}
+
 	inline void Test1::Init() {
 		UpdateScale();
 		MakeUI();
@@ -95,13 +105,10 @@ namespace Game {
 			->SetScale(5)
 			.SetAnimation(0, gLooper.res_Slime1_idle, true);
 
-		xx::SpinePlayer sp1{ gLooper.res_FrenchFries_skel };
-		xx::SpinePlayer sp2{ gLooper.res_SpineBoy_skel };
-		xx::SpinePlayer sp3{ gLooper.res_Slime1_skel };
-
-		vtFrenchFries.Emplace(sp1.AnimToTexture(gLooper.res_FrenchFries_walk, Cfg::frameDelay));
-		vtSpineBoy.Emplace(sp2.AnimToTexture(gLooper.res_SpineBoy_walk, Cfg::frameDelay));
-		vtSlime.Emplace(sp3.AnimToTexture(gLooper.res_Slime1_idle, Cfg::frameDelay));
+		vtFrenchFries.Emplace(xx::SpinePlayer{ gLooper.res_FrenchFries_skel }.AnimToTexture(gLooper.res_FrenchFries_walk, Cfg::frameDelay));
+		vtSpineBoy.Emplace(xx::SpinePlayer{ gLooper.res_SpineBoy_skel }.AnimToTexture(gLooper.res_SpineBoy_walk, Cfg::frameDelay));
+		vtSlime.Emplace(xx::SpinePlayer{ gLooper.res_Slime1_skel }.AnimToTexture(gLooper.res_Slime1_idle, Cfg::frameDelay));
+		vtDragon.Emplace(xx::SpinePlayer{ gLooper.res_Dragon_skel }.AnimToTexture(gLooper.res_Dragon_flying, Cfg::frameDelay));
 	}
 
 	inline void Test1::Update() {

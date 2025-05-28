@@ -36,6 +36,10 @@ struct Looper : xx::Engine<Looper>, Cfg {
 	spine::SkeletonData* res_Slime1_skel{};
 	spine::Animation* res_Slime1_idle{};
 
+	xx::Ref<xx::GLTexture> res_Dragon_tex;
+	spine::SkeletonData* res_Dragon_skel{};
+	spine::Animation* res_Dragon_flying{};
+
 
 	xx::FrameBuffer fb;										// for light
     Game::Shader_QuadInstanceNumbers shaderNumbers;			// for effect damage number
