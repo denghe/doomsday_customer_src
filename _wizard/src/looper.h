@@ -21,11 +21,16 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 struct Looper : xx::Engine<Looper>, Cfg {
 	xx::Task<> MainTask();
 
-	xx::Ref<xx::GLTexture> res_texSpineBoy;
-	spine::SkeletonData* res_skelSpineBoy{};
+	xx::Ref<xx::GLTexture> res_SpineBoy_tex;
+	spine::SkeletonData* res_SpineBoy_skel{};
+	spine::Animation* res_SpineBoy_walk{};
+	spine::Animation* res_SpineBoy_jump{};
+	spine::Animation* res_SpineBoy_run{};
 
-	xx::Ref<xx::GLTexture> res_texFrenchFries;
-	spine::SkeletonData* res_skelFrenchFries{};
+	xx::Ref<xx::GLTexture> res_FrenchFries_tex;
+	spine::SkeletonData* res_FrenchFries_skel{};
+	spine::Animation* res_FrenchFries_idle{};
+	spine::Animation* res_FrenchFries_walk{};
 
 	xx::FrameBuffer fb;										// for light
     Game::Shader_QuadInstanceNumbers shaderNumbers;			// for effect damage number

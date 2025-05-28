@@ -38,13 +38,13 @@ namespace Game {
 		UpdateScale();
 		MakeUI();
 
-#if 0
-		for (int i = 0; i < 1000; ++i) {
-			auto& sp = sps.Emplace().Emplace(gLooper.res_skelSpineBoy);
+#if 1
+		for (int i = 0; i < 1; ++i) {
+			auto& sp = sps.Emplace().Emplace(gLooper.res_SpineBoy_skel);
 			sp->SetMix("walk", "jump", 0.2f)
 				.SetMix("jump", "run", 0.2f)
-				.SetPosition(gLooper.rnd.Next<float>(-700, 700), gLooper.rnd.Next<float>(-400, 100))
-				//.SetPosition(0, -300)
+				//.SetPosition(gLooper.rnd.Next<float>(-700, 700), gLooper.rnd.Next<float>(-400, 100))
+				.SetPosition(0, 0)
 				.AddAnimation(0, "walk", true, 0)
 				.AddAnimation(0, "jump", false, 3)
 				.AddAnimation(0, "run", true, 0);
@@ -53,23 +53,20 @@ namespace Game {
 
 		auto& rnd = gLooper.rnd;
 
-		xx::Listi32<xx::Shared<xx::SpinePlayer>> sps;
-		xx::Listi32<xx::Ref<xx::GLTexture>> texs;
-		xx::Listi32<xx::Ref<xx::GLVertTexture>> vertTexs;
 
-		sps.Emplace().Emplace(gLooper.res_skelFrenchFries);
-		sps.Emplace().Emplace(gLooper.res_skelSpineBoy);
+		xx::SpinePlayer sp1{ gLooper.res_FrenchFries_skel };
+		xx::SpinePlayer sp2{ gLooper.res_SpineBoy_skel };
 
-		texs.Emplace(gLooper.res_texFrenchFries);
-		texs.Emplace(gLooper.res_texSpineBoy);
+		std::array<xx::Ref<xx::GLVertTexture>, 2> vertTexs;
+		vertTexs[0].Emplace(sp1.AnimToTexture(gLooper.res_FrenchFries_walk, Cfg::frameDelay));
+		vertTexs[1].Emplace(sp2.AnimToTexture(gLooper.res_SpineBoy_walk, Cfg::frameDelay));
 
-		for (auto& sp : sps) {
-			auto& o = vertTexs.Emplace(xx::MakeRef<xx::GLVertTexture>(sp->AnimToTexture("walk", Cfg::frameDelay)));
-			xx::CoutN("vertTex width = ", o->Width(), " height = ", o->Height(), " numVerts = ", o->NumVerts(), " numFrames = ", o->NumFrames());
-		}
+		std::array<xx::Ref<xx::GLTexture>, 2> texs;
+		texs[0] = gLooper.res_FrenchFries_tex;
+		texs[1] = gLooper.res_SpineBoy_tex;
 
 		for (int i = 0; i < 10000; ++i) {
-			auto idx = rnd.Next<int32_t>(0, sps.len);
+			auto idx = rnd.Next<int32_t>(0, 2);
 			auto& va = vas.Emplace().Emplace();
 			va->tex = texs[idx];
 			va->vertTex = vertTexs[idx];
@@ -90,14 +87,14 @@ namespace Game {
 	}
 
 	inline void Test1::Draw() {
+		for (auto& va : vas) {
+			va->Draw();
+		}
+
 		for (auto& sp : sps) {
 			sp->Draw();
 		}
 		gLooper.GLBlendFunc(gLooper.blendDefault);
-
-		for (auto& va : vas) {
-			va->Draw();
-		}
 
 		gLooper.DrawNode(ui);
 	}

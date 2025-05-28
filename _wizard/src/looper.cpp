@@ -45,8 +45,16 @@ xx::Task<> Looper::MainTask() {
 	// load spine res & parse
 	auto& se = xx::gSpineEnv;
 	se.Init();
-	co_await se.AsyncLoad("res/spineboy-ess", res_skelSpineBoy, res_texSpineBoy);
-	co_await se.AsyncLoad("res/french_fries", res_skelFrenchFries, res_texFrenchFries);
+
+	co_await se.AsyncLoad("res/spineboy-ess", res_SpineBoy_skel, res_SpineBoy_tex);
+	res_SpineBoy_walk = res_SpineBoy_skel->findAnimation("walk");
+	res_SpineBoy_jump = res_SpineBoy_skel->findAnimation("jump");
+	res_SpineBoy_run = res_SpineBoy_skel->findAnimation("run");
+
+	co_await se.AsyncLoad("res/french_fries", res_FrenchFries_skel, res_FrenchFries_tex);
+	res_FrenchFries_idle = res_FrenchFries_skel->findAnimation("idle");
+	res_FrenchFries_walk = res_FrenchFries_skel->findAnimation("walk");
+
 
 	rdd.Init(50, 128);
 

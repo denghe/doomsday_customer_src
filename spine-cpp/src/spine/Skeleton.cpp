@@ -545,7 +545,7 @@ void Skeleton::setScaleX(float inValue) {
 }
 
 float Skeleton::getScaleY() {
-	return _scaleY * (Bone::isYDown() ? -1 : 1);
+	return _scaleY;// *(Bone::isYDown() ? -1 : 1);
 }
 
 void Skeleton::setScaleY(float inValue) {
