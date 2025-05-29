@@ -3,6 +3,7 @@
 
 #include "game_shader_numbers.hpp"
 #include "game_scene.hpp"
+#include "game_effect_explosion.hpp"
 #include "game_drawable.hpp"
 #include "game_block.hpp"
 #include "game_map.hpp"

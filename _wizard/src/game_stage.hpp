@@ -74,6 +74,14 @@ namespace Game {
 		// update map env
 		map->Update();
 
+		// 
+		for (auto i = effectExplosions.len - 1; i >= 0; --i) {
+			auto& o = effectExplosions[i];
+			if (o.Update()) {
+				effectExplosions.SwapRemoveAt(i);
+			}
+		}
+
 		//	// update monster bullets
 		//	for (auto i = monsterBullets.len - 1; i >= 0; --i) {
 		//		auto& o = monsterBullets[i];
@@ -186,6 +194,12 @@ namespace Game {
 				DrawLight_Circle(camera.ToGLPos(o->pos), o->lightRadius, 0.7f);
 			}
 
+			for (auto i = 0, e = effectExplosions.len; i < e; ++i) {
+				auto& o = effectExplosions[i];
+				if (o.pos.x < areaMin.x || o.pos.x > areaMax.x || o.pos.y < areaMin.y || o.pos.y > areaMax.y) continue;
+				DrawLight_Circle(camera.ToGLPos(o.pos), o.lightRadius, 1.f);
+			}
+
 			// ...
 
 			});
@@ -193,6 +207,12 @@ namespace Game {
 		// combine content & light
 		gLooper.ShaderBegin(gLooper.shaderQuadInstanceLight).Draw(t, t2);
 
+		//
+		for (auto i = 0, e = effectExplosions.len; i < e; ++i) {
+			auto& o = effectExplosions[i];
+			if (o.pos.x < areaMin.x || o.pos.x > areaMax.x || o.pos.y < areaMin.y || o.pos.y > areaMax.y) continue;
+			o.Draw(this);
+		}
 
 		//	// draw effect texts
 		//	for (int32_t i = 0, e = effectTexts.ens.Count(); i < e; ++i) {

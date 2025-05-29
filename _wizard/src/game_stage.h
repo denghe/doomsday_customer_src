@@ -26,6 +26,7 @@ namespace Game {
 		xx::Shared<Map> map;
 		//xx::Listi32<xx::Shared<MonsterGen>> monsterGenerators;
 		//xx::Listi32<xx::Shared<Drawable>> effects;
+		xx::Listi32<EffectExplosion> effectExplosions;
 		//EffectTextManager effectTexts;
 		template<bool updateTime = true>
 		void StageUpdate();

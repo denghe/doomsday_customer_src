@@ -12,6 +12,7 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 #include "game_space_index_box.h"
 #include "game_space_index_circle.h"
 #include "game_scene.h"
+#include "game_effect_explosion.h"
 #include "game_drawable.h"
 #include "game_block.h"
 #include "game_map.h"

@@ -8,7 +8,7 @@ namespace Game {
 		pos = pos_;
 		radians = radians_;
 		radius = 16.f;
-		lightRadius = ResTpFrames::_size_char_bullet * 0.5f * 5.f;
+		lightRadius = ResTpFrames::_size_char_bullet * 0.5f * 3.f;
 		moveInc = { std::cosf(radians) * cMoveSpeed, std::sinf(radians) * cMoveSpeed };
 	}
 
@@ -34,7 +34,7 @@ namespace Game {
 			for (int colIdx = criFrom.x; colIdx <= criTo.x; ++colIdx) {
 				if (auto bc = blocks.TryAt({ colIdx, rowIdx }); bc) {
 					if (bc->IsCross(iPosLT, size)) {
-						// todo: bullet death effect
+						stage->effectExplosions.Emplace().Init(&gLooper.res.ef_explosion_, 30.f, pos, 1.f);
 						return 1;
 					}
 				}
