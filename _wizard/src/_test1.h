@@ -11,7 +11,7 @@ namespace Game {
 		float frameIndex{};
 
 		void Update();
-		void Draw();
+		void Draw(float sceneScale);
 	};
 
 	struct Test1 : Scene {

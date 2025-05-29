@@ -3,7 +3,8 @@
 #include "res_tp_frames.h"
 
 struct Cfg : xx::GDesign<1920, 1080, 120> {
-	static constexpr float unitSize{ 32.f };
+	static constexpr float unitSize{ 64.f };
+	static constexpr int32_t unitSizei{ int32_t(unitSize) };
 	static constexpr float unitRadius{ unitSize / 2 };
 };
 
@@ -11,9 +12,12 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 #include "game_space_index_box.h"
 #include "game_space_index_circle.h"
 #include "game_scene.h"
-#include "game_stage.h"
 #include "game_drawable.h"
-#include "game_effect_numbers.h"
+#include "game_block.h"
+#include "game_map.h"
+#include "game_player.h"
+//#include "game_effect_numbers.h"
+#include "game_stage.h"
 #include "game_main_menu.h"
 // more include here ...
 #include "_test1.h"

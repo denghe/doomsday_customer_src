@@ -2,10 +2,13 @@
 #include "looper.h"
 
 #include "game_shader_numbers.hpp"
-#include "game_effect_numbers.hpp"
 #include "game_scene.hpp"
-#include "game_stage.hpp"
 #include "game_drawable.hpp"
+#include "game_block.hpp"
+#include "game_map.hpp"
+#include "game_player.hpp"
+//#include "game_effect_numbers.hpp"
+#include "game_stage.hpp"
 #include "game_main_menu.hpp"
 // more include here ...
 #include "_test1.hpp"

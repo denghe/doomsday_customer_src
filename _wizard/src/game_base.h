@@ -5,7 +5,7 @@ namespace Game {
 	// predef
 	struct Bullet;
 	struct Player;
-	struct Ground;
+	struct Map;
 	struct Monster;
 	struct Drawable;
 	struct Creature;
@@ -22,7 +22,7 @@ namespace Game {
 		//xx::Listi32<xx::Shared<Loot>> flyingLoots;
 		//Space<Monster> monsters;
 		//xx::Listi32<xx::Shared<Spawner>> spawners;
-		//xx::Shared<Ground> ground;
+		//xx::Shared<Map> ground;
 		//xx::Listi32<xx::Shared<MonsterGen>> monsterGenerators;
 		//xx::Listi32<xx::Shared<Drawable>> effects;
 		//EffectTextManager effectTexts;

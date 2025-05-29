@@ -6,6 +6,7 @@ namespace Game {
 		ui.Emplace()->Init(0, {}, scale);
 		ui->MakeChildren<xx::Button>()->Init(2, pos5 + XY{ 0, 0 }, anchor5
 			, gLooper.btnCfg, U"new game").onClicked = [&]() {
+				gLooper.DelaySwitchTo<Stage>();
 			};
 		ui->MakeChildren<xx::Button>()->Init(2, pos7 + XY{ 10, -10 }, anchor7
 			, gLooper.btnCfg, U"test1").onClicked = [&]() {

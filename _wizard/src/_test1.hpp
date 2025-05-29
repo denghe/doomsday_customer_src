@@ -12,11 +12,11 @@ namespace Game {
 		}
 	}
 
-	inline void VertAnim::Draw() {
+	inline void VertAnim::Draw(float sceneScale) {
 		auto v = gLooper.ShaderBegin(gLooper.shaderTexVert).Draw(tex, vertTex, 1);
 		v->frameIndex = (int32_t)frameIndex;
-		v->pos = pos;
-		v->scale = scale;
+		v->pos = pos * sceneScale;
+		v->scale = scale * sceneScale;
 	}
 
 
@@ -126,14 +126,14 @@ namespace Game {
 
 	inline void Test1::Draw() {
 		for (auto& va : vas) {
-			va->Draw();
+			va->Draw(scale);
 		}
 
 		for (auto& sp : sps) {
-			sp->Draw();
+			sp->Draw(scale);
 			auto bone = sp->FindBone("shoot_point");
 			XY pos{ bone->getWorldX(), bone->getWorldY() };
-			xx::Quad().SetFrame(gLooper.res.ui_star).SetPosition(pos).Draw();
+			xx::Quad().SetFrame(gLooper.res.ui_star).SetPosition(pos * scale).SetScale(scale).Draw();
 		}
 		gLooper.GLBlendFunc(gLooper.blendDefault);
 

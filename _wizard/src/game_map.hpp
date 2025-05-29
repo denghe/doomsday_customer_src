@@ -1,0 +1,112 @@
+﻿#pragma once
+
+namespace Game {
+
+	inline void Map::Init() {
+		// Ｂ	block
+		// ｐ	player born place
+		// ｍ	monster born place
+		static std::u32string_view mapText{ UR"(
+Ｂ　　　ｍ　　　ｍ　　　ｍ　　　ｍ　　　ｍ　　　Ｂ
+Ｂ　　　　　　　　　　　　　　　　　　　　　　　Ｂ
+Ｂ　　　　　　　　　　　　　　　　　　　　　　　Ｂ
+Ｂ　　　　　　　　　　　　　　　　　　　　　　　Ｂ
+Ｂ　　　　　　　　　　　　　　　　　　　　　　　Ｂ
+Ｂ　　　　　　　　　　　　　　　　　　　　　　　Ｂ
+Ｂ　　　　　　　　　　　　　　　　　　　　　　　Ｂ
+Ｂ　　　　　　　　　　　　　　　　　　　　　　　Ｂ
+Ｂ　　　　　　　　　　　　　　　　　　　　　　　Ｂ
+Ｂ　　　　　　　　　　　　　　　　　　　　　　　Ｂ
+Ｂ　　　　　　　　　　　　　　　　　　　　　　　Ｂ
+Ｂ　　　　　　　　　　　　　　　　　　　　　　　Ｂ
+ＢＢ　　　　　　　　　　　　　　　　　ＢＢＢＢＢＢ
+ＢＢＢ　　　　　　　　　　　　　　　　Ｂ　　　　Ｂ
+ＢＢＢＢ　　　　ＢＢ　　　　　　　　　　　　　　Ｂ
+ＢＢＢＢＢ　　ＢＢＢＢ　ｐ　　　　　　　　　　　Ｂ
+ＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢ
+)" };
+
+		// remove first line control chars
+		while (true) {
+			assert(!mapText.empty());
+			if (auto c = mapText[0]; c == U'\r' || c == U'\n') {
+				mapText = mapText.substr(1, mapText.size() - 1);
+				continue;
+			}
+			break;
+		}
+
+		// remove last line control chars
+		while (true) {
+			assert(!mapText.empty());
+			if (auto c = mapText.back(); c == U'\r' || c == U'\n') {
+				mapText = mapText.substr(0, mapText.size() - 1);
+				continue;
+			}
+			break;
+		}
+
+		// calculate map width
+		int32_t mapWidth{};
+		for (int i = 0, e = (int)mapText.size(); i < e; ++i) {
+			if (auto c = mapText[i]; c == U'\r' || c == U'\n')
+				break;
+			++mapWidth;
+		}
+
+		// calculate map height
+		int32_t mapHeight{ 1 };
+		int32_t x{};
+		for (int i = 0, e = (int)mapText.size(); i < e; ++i) {
+			switch (auto c = mapText[i]) {
+			case U'\r':
+				continue;
+			case U'\n':
+				assert(x == mapWidth);	// ensure every row same width
+				x = 0;
+				++mapHeight;
+				continue;
+			}
+			++x;
+		}
+
+		blocks.Init(&gLooper.rdd, mapHeight, mapWidth, Cfg::unitSizei);
+
+		// scan contents
+		x = 0;
+		int32_t y{};
+		for (int i = 0, e = (int)mapText.size(); i < e; ++i) {
+			switch (auto c = mapText[i]) {
+			case U'\r':
+				continue;
+			case U'\n':
+				x = 0;
+				++y;
+				continue;
+			case U'Ｂ':
+				blocks.Add(xx::MakeShared<Block>()->Init(XY{ x, y } * Cfg::unitSize, Cfg::unitSize));
+				break;
+			case U'ｐ':
+				bornPlaces_Player.Emplace(x, y);
+				break;
+			case U'ｍ':
+				bornPlaces_Monster.Emplace(x, y);
+				break;
+			}
+			++x;
+		}
+
+		// fill block wayout data
+		for (auto& o : blocks.items) {
+			o->FillWayout(blocks);
+		}
+	}
+
+	inline void Map::Update() {
+	}
+
+	inline void Map::Draw(Stage* stage) {
+		for (auto& o : blocks.items) o->Draw(stage);
+	}
+
+}
