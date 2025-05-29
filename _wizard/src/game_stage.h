@@ -44,7 +44,7 @@ namespace Game {
 		//virtual void DrawCustomUI() {};
 		//virtual void OnWindowSizeChanged() {};
 
-		void DrawLight_Circle(XY screenPos, XY scale = Cfg::unitRadius * 5, float colorPlus = 1.f, xx::RGBA8 color = xx::RGBA8_White);
+		void DrawLight_Circle(XY screenPos, XY radius = Cfg::unitRadius * 5, float colorPlus = 1.f, xx::RGBA8 color = xx::RGBA8_White);
 	};
 
 }

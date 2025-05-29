@@ -91,10 +91,8 @@ namespace Game {
 		// handle blocks
 		PushOutWays pushOutWays{};
 		auto criFrom = blocks.PosToColRowIndex(iPosLT);
-		auto criTo = blocks.PosToColRowIndex(iPosRB);
+		auto criTo = blocks.PosToColRowIndex(iPosRB - 1);
 		// check cross & pushout
-
-		// todo: sort by push out ways
 		for (int rowIdx = criFrom.y; rowIdx <= criTo.y; ++rowIdx) {
 			for (int colIdx = criFrom.x; colIdx <= criTo.x; ++colIdx) {
 				if (auto bc = blocks.TryAt({ colIdx, rowIdx }); bc) {
@@ -109,7 +107,6 @@ namespace Game {
 				}
 			}
 		}
-
 		if ((uint32_t)pushOutWays) {
 			pos.x = float(iPosLT.x + (size.x >> 1));
 			pos.y = float(iPosLT.y + size.y);
@@ -170,9 +167,9 @@ namespace Game {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
 			.Draw(gLooper.res._texid_char_body, 2);
 		// body
-		q[0].pos = stage->camera.ToGLPos(pos);
+		q[0].pos = stage->camera.ToGLPos(pos) * stage->scale;
 		q[0].anchor = { 0.5f, 0 };
-		q[0].scale = stage->camera.scale;
+		q[0].scale = stage->camera.scale * stage->scale;
 		q[0].radians = 0;
 		q[0].colorplus = 1.f;
 		q[0].color = xx::RGBA8_White;

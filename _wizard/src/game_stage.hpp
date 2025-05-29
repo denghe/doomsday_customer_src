@@ -137,11 +137,11 @@ namespace Game {
 		//	//}
 	}
 
-	XX_INLINE void Stage::DrawLight_Circle(XY screenPos, XY scale, float colorPlus, xx::RGBA8 color) {
+	XX_INLINE void Stage::DrawLight_Circle(XY screenPos, XY radius, float colorPlus, xx::RGBA8 color) {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(gLooper.res._texid_ef_light, 1);
-		q->pos = screenPos;
+		q->pos = screenPos * scale;
 		q->anchor = 0.5f;
-		q->scale = camera.scale * scale * (1.f / (gLooper.res._size_ef_light / 2.f));
+		q->scale = camera.scale * radius * (1.f / (gLooper.res._size_ef_light / 2.f)) * scale;
 		q->radians = 0;
 		q->colorplus = colorPlus;
 		q->color = color;
