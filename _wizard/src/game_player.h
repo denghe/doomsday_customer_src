@@ -2,10 +2,6 @@
 
 namespace Game {
 
-	struct PlayerWeapon : Drawable {
-		// todo
-	};
-
 	struct Player : Drawable {
 		static constexpr XY cGravity{ 0.2, 0.4 };
 		static constexpr XY cSpeedInit{ 0, -650 / Cfg::fps };
@@ -16,7 +12,7 @@ namespace Game {
 		static constexpr bool cEnableStrictJumpMode{ true };
 
 		XY lightRadius{};
-		// todo: Weapon
+		xx::Shared<PlayerWeapon> weapon;
 
 		XY speed{};
 		int32_t lastXMoveDirection{};		// -1: left  0: stoped  1: right

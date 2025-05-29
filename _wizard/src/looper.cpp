@@ -6,6 +6,8 @@
 #include "game_drawable.hpp"
 #include "game_block.hpp"
 #include "game_map.hpp"
+#include "game_player_bullet.hpp"
+#include "game_player_weapon.hpp"
 #include "game_player.hpp"
 //#include "game_effect_numbers.hpp"
 #include "game_stage.hpp"
@@ -44,11 +46,12 @@ xx::Task<> Looper::MainTask() {
 
 	co_await res.AsyncLoad("res/");
 
-
-	// load spine res & parse
+	// if include spine.h, always need Init()
 	auto& se = xx::gSpineEnv;
 	se.Init();
-
+	// enable for test1
+#if 0
+	// load spine res & parse
 	co_await se.AsyncLoad("res/spineboy-ess", res_SpineBoy_skel, res_SpineBoy_tex);
 	res_SpineBoy_walk = res_SpineBoy_skel->findAnimation("walk");
 	res_SpineBoy_jump = res_SpineBoy_skel->findAnimation("jump");
@@ -63,7 +66,7 @@ xx::Task<> Looper::MainTask() {
 
 	co_await se.AsyncLoad<true>("res/dragon-ess", res_Dragon_skel, res_Dragon_tex);
 	res_Dragon_flying = res_Dragon_skel->findAnimation("flying");
-
+#endif
 
 	rdd.Init(50, 128);
 

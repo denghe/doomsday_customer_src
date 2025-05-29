@@ -14,6 +14,7 @@ namespace Game {
 		pos.y = leftTopPos.y + blocks.cellSize - 1.f;
 
 		lightRadius = ResTpFrames::_size_char_body * 0.5f * 10.f;
+		weapon.Emplace<PlayerWeapon>()->Init(this, {0, -20});
 	}
 
 	inline int32_t Player::Update() {
@@ -160,6 +161,9 @@ namespace Game {
 		}
 		lastJumpPressed = jumpPressed;
 
+
+		weapon->Update();
+
 		return 0;
 	}
 
@@ -182,6 +186,7 @@ namespace Game {
 		q[1].colorplus = 1.f;
 		q[1].color = xx::RGBA8_White;
 		q[1].texRect.data = ResTpFrames::_uvrect_char_head.data;
-		// todo: draw weapon
+		// weapon
+		weapon->Draw();
 	}
 }

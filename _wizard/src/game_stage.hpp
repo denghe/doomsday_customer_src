@@ -123,7 +123,7 @@ namespace Game {
 		//	// ... more updates
 
 		//	// sync cam
-		//	camera.SetOriginal(player->pos, camera.ToLogicPos(gLooper.mouse.pos));
+		//	camera.SetOriginal(player->pos, camera.ToLogicPos(gLooper.mouse.pos, scale));
 		//	camera.Update();
 
 		// update time
@@ -150,8 +150,8 @@ namespace Game {
 
 	inline void Stage::Draw() {
 		// calculate display cut area
-		auto areaMin = camera.ToLogicPos({ -gLooper.windowSize_2.x - Cfg::unitSize * 2, gLooper.windowSize_2.y + Cfg::unitSize * 2 });
-		auto areaMax = camera.ToLogicPos({ gLooper.windowSize_2.x + Cfg::unitSize * 2, -gLooper.windowSize_2.y - Cfg::unitSize * 2 });
+		auto areaMin = camera.ToLogicPos({ -gLooper.windowSize_2.x - Cfg::unitSize * 2, gLooper.windowSize_2.y + Cfg::unitSize * 2 }, scale);
+		auto areaMax = camera.ToLogicPos({ gLooper.windowSize_2.x + Cfg::unitSize * 2, -gLooper.windowSize_2.y - Cfg::unitSize * 2 }, scale);
 
 		// game logic content
 		auto t = gLooper.fb.Draw(gLooper.windowSize, true, xx::RGBA8{ 0,0,0,0 }, [&]() {
