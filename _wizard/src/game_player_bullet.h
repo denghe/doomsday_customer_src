@@ -3,12 +3,15 @@
 namespace Game {
 
 	struct Player;
+	struct PlayerWeapon;
 	struct PlayerBullet : Drawable {
-		static constexpr XY cShootOffset{ ResTpFrames::_size_char_weapon.x * 0.5f, 0 };
+		static constexpr float cMoveSpeed{ 500.f / Cfg::fps };
 		xx::Weak<Player> owner;
+		XY lightRadius{};
+		float radius{};
 		float radians{};
-		XY GetShootPos();
-		void Init(Player* owner_);
+		XY moveInc{};
+		void Init(PlayerWeapon* shooter, XY pos_, float radians_);
 		int32_t Update() override;
 		void Draw() override;
 	};

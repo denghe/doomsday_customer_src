@@ -56,13 +56,13 @@ namespace Game {
 	inline void Stage::StageUpdate() {
 		//	//if (paused) return;
 
-		//	// update player bullets
-		//	for (auto i = playerBullets.len - 1; i >= 0; --i) {
-		//		auto& o = playerBullets[i];
-		//		if (o->Update()) {
-		//			playerBullets.SwapRemoveAt(i);
-		//		}
-		//	}
+			// update player bullets
+		for (auto i = playerBullets.len - 1; i >= 0; --i) {
+			auto& o = playerBullets[i];
+			if (o->Update()) {
+				playerBullets.SwapRemoveAt(i);
+			}
+		}
 
 		// update player
 		if (player) {
@@ -160,6 +160,12 @@ namespace Game {
 			map->Draw(this);
 
 			// todo: monster bullet ...
+			for (int32_t i = 0, e = playerBullets.len; i < e; ++i) {
+				auto& o = playerBullets[i];
+				if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
+				o->Draw();
+			}
+
 
 			// draw player
 			if (player) {
@@ -174,11 +180,11 @@ namespace Game {
 				DrawLight_Circle(camera.ToGLPos(player->pos), player->lightRadius);
 			}
 
-			//for (auto e = monsters.items.len, i = 0; i < e; ++i) {
-			//	auto& o = monsters.items[i];
-			//	if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
-			//  DrawLight_Circle(camera.ToGLPos(o->pos), Cfg::unitRadius * 3);
-			//}
+			for (int32_t i = 0, e = playerBullets.len; i < e; ++i) {
+				auto& o = playerBullets[i];
+				if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
+				DrawLight_Circle(camera.ToGLPos(o->pos), o->lightRadius, 0.7f);
+			}
 
 			// ...
 

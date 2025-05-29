@@ -16,7 +16,7 @@ namespace Game {
 		xx::Rnd rnd;							// for game logic only
 		int32_t time{};							// for game logic only
 
-		//xx::Listi32<xx::Shared<Bullet>> playerBullets;
+		xx::Listi32<xx::Shared<PlayerBullet>> playerBullets;
 		//xx::Listi32<xx::Shared<Bullet>> monsterBullets;
 		xx::Shared<Player> player;
 		//Space<Loot> loots;

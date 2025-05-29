@@ -6,6 +6,7 @@ namespace Game {
 		stage = owner_->stage;
 		owner = xx::WeakFromThis(owner_);
 		holdOffset = holdOffset_;
+		pos = owner->pos + holdOffset;
 	}
 
 	inline int32_t PlayerWeapon::Update() {
@@ -14,11 +15,18 @@ namespace Game {
 		auto mp = stage->camera.ToLogicPos(gLooper.mouse.pos, stage->scale);
 		auto d = mp - pos;
 		radians = std::atan2f(d.y, d.x);
+
+		if (gLooper.mouse.PressedMBLeft()) {
+			auto sPos = GetShootPos();
+			stage->playerBullets.Emplace().Emplace<PlayerBullet>()->Init(this, sPos, radians);
+		}
 		return 0;
 	}
 
-	inline XY PlayerWeapon::GetShootPos() {
-		return pos + XY{ std::cosf(radians), std::sinf(radians) } * cShootOffset;
+	XX_INLINE XY PlayerWeapon::GetShootPos() {
+		auto cos = std::cosf(radians);
+		auto sin = std::sinf(radians);
+		return pos + XY{ cShootOffset.x * cos - cShootOffset.y * sin, cShootOffset.x * sin + cShootOffset.y * cos };
 	}
 
 	inline void PlayerWeapon::Draw() {

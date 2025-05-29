@@ -2,33 +2,58 @@
 
 namespace Game {
 
-	inline void PlayerBullet::Init(Player* owner_) {
-		stage = owner_->stage;
-		owner = xx::WeakFromThis(owner_);
+	inline void PlayerBullet::Init(PlayerWeapon* shooter, XY pos_, float radians_) {
+		owner = shooter->owner;
+		stage = owner->stage;
+		pos = pos_;
+		radians = radians_;
+		radius = 16.f;
+		lightRadius = ResTpFrames::_size_char_bullet * 0.5f * 5.f;
+		moveInc = { std::cosf(radians) * cMoveSpeed, std::sinf(radians) * cMoveSpeed };
 	}
 
 	inline int32_t PlayerBullet::Update() {
 		if (!owner) return 1;
-		pos = owner->pos + XY{ 0, -32 };		// weapon pivot pos
-		auto mp = stage->camera.ToLogicPos(gLooper.mouse.pos, stage->scale);
-		auto d = mp - pos;
-		radians = std::atan2f(d.y, d.x);
-		return 0;
-	}
+		pos += moveInc;
 
-	inline XY PlayerBullet::GetShootPos() {
-		return XY{ std::cosf(radians), std::sinf(radians) } * cShootOffset;
+		// out of map check
+		auto& gs = stage->map->blocks.gridSize;
+		if (pos.x < 0 || pos.y < 0 || pos.x >= gs.x || pos.y >= gs.y)
+			return 1;
+
+		auto iPos = pos.As<int32_t>();
+		auto r = radius * 0.5f;
+		auto iPosLT = iPos - int32_t(r);
+		auto iPosRB = iPos + int32_t(r);
+		XYi size{ int32_t(r) << 1 };
+
+		auto& blocks = stage->map->blocks;
+		auto criFrom = blocks.PosToColRowIndex(iPosLT);
+		auto criTo = blocks.PosToColRowIndex(iPosRB - 1);
+		for (int rowIdx = criFrom.y; rowIdx <= criTo.y; ++rowIdx) {
+			for (int colIdx = criFrom.x; colIdx <= criTo.x; ++colIdx) {
+				if (auto bc = blocks.TryAt({ colIdx, rowIdx }); bc) {
+					if (bc->IsCross(iPosLT, size)) {
+						// todo: bullet death effect
+						return 1;
+					}
+				}
+			}
+		}
+
+
+		return 0;
 	}
 
 	inline void PlayerBullet::Draw() {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
-			.Draw(gLooper.res._texid_char_weapon, 1);
+			.Draw(gLooper.res._texid_char_bullet, 1);
 		q->pos = stage->camera.ToGLPos(pos) * stage->scale;
-		q->anchor = { 0.5f, 0.5f };
-		q->scale = stage->camera.scale * stage->scale;
+		q->anchor = gLooper.res._anchor_char_bullet;
+		q->scale = radius / gLooper.res._size_char_bullet.y * stage->camera.scale * stage->scale;
 		q->radians = radians;
 		q->colorplus = 1.f;
 		q->color = xx::RGBA8_White;
-		q->texRect.data = ResTpFrames::_uvrect_char_weapon.data;
+		q->texRect.data = ResTpFrames::_uvrect_char_bullet.data;
 	}
 }
