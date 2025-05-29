@@ -18,7 +18,7 @@ namespace Game {
 	};
 
 	struct Ground2 : Ground {
-		xx::Ref<xx::GLTexture> tex;
+		xx::Ref<xx::GLTiledTexture> tex;
 
 		void Init(Stage* stage_);
 		void AddSomeGrass(float ratio, int32_t typeId) override;

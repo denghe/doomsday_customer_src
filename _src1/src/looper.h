@@ -14,7 +14,6 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 #include "xx2d_camera_ex.h"
 #include "game_shader_numbers.h"
 #include "game_shader_hpbar.h"
-#include "game_shader_tiles.h"
 #include "game_space.h"
 #include "game_effect_text.h"
 #include "game_stat.h"
@@ -76,7 +75,6 @@ struct Looper : xx::Engine<Looper>, Cfg {
 
     Game::Shader_QuadInstanceNumbers shaderNumbers;
     Game::Shader_QuadInstanceHPBar shaderHPBar;
-    Game::Shader_QuadInstanceTiles shaderTiles;
 
 	// res/?????
 	xx::Ref<xx::GLTexture> res_nums1;

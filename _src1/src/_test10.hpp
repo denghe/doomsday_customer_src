@@ -40,37 +40,7 @@ namespace Game {
 	}
 
 
-	// scale 9 map:
-	// 00 10 20
-	// 01 11 21
-	// 02 12 22
-
-	//// map logic size
-	//static constexpr xx::XYi miniMapSize{ 8, 5 };
-
-	//// tex aligned size
-	//static constexpr xx::XYi miniTexSize{(miniMapSize.x + 3) & ~3u, miniMapSize.y };
-
 	inline void Test10::Init() {
-
-		//// malloc tex mem
-		//auto d = std::make_unique<xx::UV[]>(miniTexSize.x * miniTexSize.y);
-
-		//// fill tex mem
-		//for (int y = 0; y < miniMapSize.y; ++y) {
-		//	uint16_t v{ 1 };
-		//	if (y == 0) v = 0; else if (y == miniMapSize.y - 1) v = 2;
-		//	for (int x = 0; x < miniMapSize.x; ++x) {
-		//		uint16_t u{ 1 };
-		//		if (x == 0) u = 0; else if (x == miniMapSize.x - 1) u = 2;
-		//		d[y * miniTexSize.x + x] = { u, v };
-		//	}
-		//}
-
-		//// copy & create tex
-		//tex.Emplace(xx::LoadGLTexture_Memory<GL_NEAREST, GL_REPEAT>(d.get(), miniTexSize.x, miniTexSize.y));
-
-
 
 		StageInit<false>({ 15, 15 });
 		ground.Emplace<Ground2>()->Init(this);
@@ -83,22 +53,10 @@ namespace Game {
 
 	void Test10::Update() {
 		Stage::Update();
-		//offset += 0.1f;
 	}
 
 
 	inline void Test10::DrawCustomUI() {
-		//static constexpr XY tileSize{ 128, 128 };
-		//static constexpr XY mapSize{ tileSize * miniMapSize };
-		//static constexpr XY scale{ 1 };
-
-		//auto q = gLooper.ShaderBegin(gLooper.shaderTiles).Draw(gLooper.res_map_01, tex);
-		//q->pos = -mapSize * scale * 0.5f;
-		//q->scale = scale;
-		//q->tileSize = tileSize;
-		//q->mapSize = mapSize;
-		//q->tiling = 1;
-		//q->offset = offset;
 	}
 
 }

@@ -50,7 +50,7 @@ namespace Game {
 		auto texId = gLooper.res._texid_player1;
 		static constexpr auto uvr = gLooper.res._uvrect_player1;
 
-		auto [vi, vs, is] = gLooper.ShaderBegin(gLooper.shaderVertexs).Draw(texId, 4 * (len - 1), 6 * (len - 1));
+		auto [vi, vs, is] = gLooper.ShaderBegin(gLooper.shaderVerts).Draw(texId, 4 * (len - 1), 6 * (len - 1));
 
 		static constexpr auto step = uvr.w / (float)(len - 1);
 		for (int32_t i = len - 2; i >= 0; --i) {

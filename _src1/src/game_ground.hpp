@@ -169,7 +169,7 @@ namespace Game {
 		xx::XYi miniTexSize{ (miniMapSize.x + 7) & ~7u, (miniMapSize.y + 7) & ~7u };
 
 		// malloc tex mem
-		auto d = std::make_unique<xx::UV[]>(miniTexSize.x * miniTexSize.y);
+		auto d = std::make_unique<std::array<float, 4>[]>(miniTexSize.x * miniTexSize.y);
 
 		// scale 9 map:
 		// 00 10 20
@@ -178,18 +178,17 @@ namespace Game {
 
 		// fill tex mem
 		for (int y = 0; y < miniMapSize.y; ++y) {
-			uint16_t v{ 1 };
+			float v{ 1 };
 			if (y == 0) v = 0; else if (y == miniMapSize.y - 1) v = 2;
 			for (int x = 0; x < miniMapSize.x; ++x) {
-				uint16_t u{ 1 };
+				float u{ 1 };
 				if (x == 0) u = 0; else if (x == miniMapSize.x - 1) u = 2;
-				d[y * miniTexSize.x + x] = { u, v };
+				d[y * miniTexSize.x + x] = { u, v, 1, 0 };
 			}
 		}
 
 		// copy & create tex
-		tex.Emplace(xx::LoadGLTexture_Memory<GL_NEAREST, GL_REPEAT>(
-			d.get(), miniTexSize.x, miniTexSize.y));
+		tex.Emplace(xx::LoadGLTiledTexture(d.get(), miniTexSize.x, miniTexSize.y, miniMapSize));
 	}
 
 	inline void Ground2::AddSomeGrass(float ratio, int32_t typeId) {
@@ -258,7 +257,7 @@ namespace Game {
 
 		static constexpr XY tileSize{ 128, 128 };
 
-		auto q = gLooper.ShaderBegin(gLooper.shaderTiles).Draw(gLooper.res_map_01, tex);
+		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstanceTiled).Draw(gLooper.res_map_01, tex);
 		q->pos = camera.ToGLPos({ 0, stage->mapSize.y });
 		q->scale = camera.scale;
 		q->tileSize = tileSize;
