@@ -11,6 +11,7 @@ namespace Game {
 		static constexpr int32_t cBigJumpNumFrames{ int32_t(0.2 / Cfg::frameDelay) };
 		static constexpr bool cEnableStrictJumpMode{ true };
 
+		xx::RGBA8 lightColor{};
 		XY lightRadius{};
 		xx::Shared<PlayerWeapon> weapon;
 

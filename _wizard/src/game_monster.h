@@ -11,8 +11,11 @@ namespace Game {
 		xx::Ref<xx::Frame> frame;
 		xx::Weak<MonsterFormation> monsterFormation;
 		int32_t monsterFormationPosIdx{};
+
 		float radius{};
 		float radians{};
+
+		xx::RGBA8 lightColor{};
 		XY lightRadius{};
 
 		void Init(Stage* stage_, xx::Ref<xx::Frame> frame_, int32_t bornPosIdx

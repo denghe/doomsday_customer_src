@@ -185,25 +185,25 @@ namespace Game {
 		auto t2 = gLooper.fb.Draw(gLooper.windowSize, true, xx::RGBA8{ 11,11,11,0 }, [&] {
 			gLooper.GLBlendFunc({ GL_SRC_COLOR, GL_ONE, GL_FUNC_ADD });
 			if (player) {
-				DrawLight_Circle(camera.ToGLPos(player->pos), player->lightRadius);
+				DrawLight_Circle(camera.ToGLPos(player->pos), player->lightRadius, 1.f, player->lightColor);
 			}
 
 			for (int32_t i = 0, e = playerBullets.len; i < e; ++i) {
 				auto& o = playerBullets[i];
 				if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
-				DrawLight_Circle(camera.ToGLPos(o->pos), o->lightRadius, 0.7f, xx::RGBA8_Yellow);
+				DrawLight_Circle(camera.ToGLPos(o->pos), o->lightRadius, 0.7f, o->lightColor);
 			}
 
 			for (auto i = 0, e = effectExplosions.len; i < e; ++i) {
 				auto& o = effectExplosions[i];
 				if (o.pos.x < areaMin.x || o.pos.x > areaMax.x || o.pos.y < areaMin.y || o.pos.y > areaMax.y) continue;
-				DrawLight_Circle(camera.ToGLPos(o.pos), o.lightRadius, 1.f, xx::RGBA8_Yellow);
+				DrawLight_Circle(camera.ToGLPos(o.pos), o.lightRadius, 1.f, o.color);
 			}
 
 			for (auto i = 0, e = monsters.items.len; i < e; ++i) {
 				auto& o = monsters.items[i];
 				if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
-				DrawLight_Circle(camera.ToGLPos(o->pos), o->lightRadius, 0.7f, xx::RGBA8_Red);
+				DrawLight_Circle(camera.ToGLPos(o->pos), o->lightRadius, 0.7f, o->lightColor);
 			}
 
 			// ...

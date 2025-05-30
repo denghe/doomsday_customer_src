@@ -2,6 +2,10 @@
 
 namespace Game {
 
+	XX_INLINE void EffectExplosion::Init(XY pos_, float scale_, xx::RGBA8 color_) {
+		Init(&gLooper.res.ef_explosion_, 20.f, pos_, scale_, color_);
+	}
+
 	XX_INLINE void EffectExplosion::Init(xx::Listi32<xx::Ref<xx::Frame>>* frames_, float frameFPS, XY pos_, float scale_, xx::RGBA8 color_) {
 		frames = frames_;
 		pos = pos_;
@@ -9,7 +13,7 @@ namespace Game {
 		scale = scale_;
 		color = color_;
 		frameDelay = Cfg::frameDelay * frameFPS;
-		lightRadius = 32.f * 5.f;
+		lightRadius = gLooper.res._size_ef_light.x * 0.5f * scale_;
 		radians = gLooper.rnd.Next<float>(-M_PI, M_PI);
 	}
 

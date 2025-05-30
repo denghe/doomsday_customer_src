@@ -14,7 +14,9 @@ namespace Game {
 		pos.x = leftTopPos.x + blocks.cellSize * 0.5f;
 		pos.y = leftTopPos.y + blocks.cellSize - 1.f;
 
+		lightColor = xx::RGBA8_Blue;
 		lightRadius = ResTpFrames::_size_char_body * 0.5f * 10.f;
+
 		weapon.Emplace<PlayerWeapon>()->Init(this, {0, -20});
 	}
 

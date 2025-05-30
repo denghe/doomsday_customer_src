@@ -9,6 +9,7 @@ namespace Game {
 		pos = pos_;
 		radians = radians_;
 		radius = 16.f;
+		lightColor = xx::RGBA8_Yellow;
 		lightRadius = ResTpFrames::_size_char_bullet * 0.5f * 3.f;
 		moveInc = { std::cosf(radians) * cMoveSpeed, std::sinf(radians) * cMoveSpeed };
 	}
@@ -27,8 +28,8 @@ namespace Game {
 			//	isCrit = true;
 			//}
 			//m->Hurt(dmg, d, -d, isCrit);
-			stage->effectExplosions.Emplace().Init(&gLooper.res.ef_explosion_, 30.f, pos, 0.5f, xx::RGBA8_Yellow);
-			stage->effectExplosions.Emplace().Init(&gLooper.res.ef_explosion_, 30.f, m->pos, 3.f, xx::RGBA8_Red);
+			stage->effectExplosions.Emplace().Init(pos, 0.5f, xx::RGBA8_Yellow);
+			stage->effectExplosions.Emplace().Init(m->pos, 3.f, xx::RGBA8_Red);
 			stage->monsters.Remove(m);
 			return 1;
 		}
@@ -54,7 +55,7 @@ namespace Game {
 			for (int colIdx = criFrom.x; colIdx <= criTo.x; ++colIdx) {
 				if (auto bc = blocks.TryAt({ colIdx, rowIdx }); bc) {
 					if (bc->IsCross(iPosLT, size)) {
-						stage->effectExplosions.Emplace().Init(&gLooper.res.ef_explosion_, 30.f, pos, 1.f, xx::RGBA8_Yellow);
+						stage->effectExplosions.Emplace().Init(pos, 1.f, lightColor);
 						return 1;
 					}
 				}
