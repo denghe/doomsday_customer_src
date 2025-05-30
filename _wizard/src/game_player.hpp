@@ -78,17 +78,6 @@ namespace Game {
 		iPosRB.x += size.x >> 1;
 		auto iPosLT = iPosRB - size;
 
-		// out of map check
-		if (iPosLT.x < 0 || iPosLT.y < 0)
-			return 1;
-		if (iPosRB.x >= blocks.gridSize.x || iPosRB.y >= blocks.gridSize.y)
-			return 1;
-
-		// falling count
-		if (speed.y > 0.f) {
-			++fallingFrameCount;
-		}
-
 		// handle blocks
 		PushOutWays pushOutWays{};
 		auto criFrom = blocks.PosToColRowIndex(iPosLT);
@@ -122,6 +111,17 @@ namespace Game {
 			if (moveDir < 0 && ((uint32_t&)pushOutWays & (uint32_t)PushOutWays::Right) > 0) {
 				speed.x = 0;
 			}
+		}
+
+		// out of map check
+		if (iPosLT.x < 0 || iPosLT.y < 0)
+			return 1;
+		if (iPosRB.x >= blocks.gridSize.x || iPosRB.y >= blocks.gridSize.y)
+			return 1;
+
+		// falling count
+		if (speed.y > 0.f) {
+			++fallingFrameCount;
 		}
 
 		// handle jump

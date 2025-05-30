@@ -17,133 +17,81 @@ namespace Game {
 	inline void Stage::Init() {
 		UpdateScale();
 		MakeUI();
-		StageInit();
+		map.Emplace<Map>()->Init();
+		camera.SetOriginal(map->blocks.gridSize / 2);
+		player.Emplace()->Init(this);
+		monsters.Init(&gLooper.rdd, map->blocks.numRows, map->blocks.numCols, map->blocks.cellSize);
+	}
+
+	inline void Stage::MonsterGen() {
+		XX_BEGIN(_n);
+		for (_a = time + int32_t(Cfg::fps * 10.f); time < _a;) {
+			{
+				auto idx = rnd.Next<int32_t>(map->bornPlaces_Monster.len);
+				auto m = xx::MakeShared<Monster>();
+				m->Init(this, gLooper.res.ui_trangle, idx);
+				monsters.Add(std::move(m));
+			}
+			/* sleep */ for (_b = time + int32_t(Cfg::fps * 0.1f); time < _b;) { XX_YIELD(_n); }
+		}
+		/* sleep */ for (_b = time + int32_t(Cfg::fps * 5.f); time < _b;) { XX_YIELD(_n); }
+		XX_YIELD_TO_BEGIN(_n);
+		XX_END(_n);
 	}
 
 	inline void Stage::Update() {
-		StageUpdate();
+
+		UpdateMap();
+		UpdateEffectExplosion();
+		UpdatePlayerBullet();
+		UpdateMonster();
+		UpdatePlayer();
+		// ... more updates
+
+		MonsterGen();
+
+		++time;
 	}
 
-	template<bool initMap>
-	inline void Stage::StageInit() {
-		if constexpr (initMap) {
-			map.Emplace<Map>()->Init();
+	XX_INLINE void Stage::UpdateMap() {
+		map->Update();
+	}
+
+	XX_INLINE void Stage::UpdatePlayer() {
+		if (player) {
+			if (player->Update()) {
+				player.Reset();
+			}
 		}
-		camera.SetOriginal(map->blocks.gridSize / 2);
-		player.Emplace()->Init(this);
 	}
 
-	//template<bool clearPlayer, bool clearGrass>
-	//inline void Stage::ClearItems() {
-	//	playerBullets.Clear();
-	//	monsterBullets.Clear();
-	//	if constexpr (clearPlayer) {
-	//		player.Reset();
-	//	}
-	//	monsters.Clear();
-	//	spawners.Clear();
-	//	monsterGenerators.Clear();
-	//	effects.Clear();
-	//	effectTexts.Clear();
-	//	if constexpr (clearGrass) {
-	//		ground->Clear();
-	//	}
-	//	// todo: rnd reset?
-	//	time = 0;
-	//}
-
-	template<bool updateTime>
-	inline void Stage::StageUpdate() {
-		//	//if (paused) return;
-
-			// update player bullets
+	XX_INLINE void Stage::UpdatePlayerBullet() {
 		for (auto i = playerBullets.len - 1; i >= 0; --i) {
 			auto& o = playerBullets[i];
 			if (o->Update()) {
 				playerBullets.SwapRemoveAt(i);
 			}
 		}
+	}
 
-		// update player
-		if (player) {
-			if (player->Update()) {
-				player.Reset();
+	XX_INLINE void Stage::UpdateMonster() {
+		for (auto i = monsters.items.len - 1; i >= 0; --i) {
+			auto& o = monsters.items[i];
+			if (o->Update()) {
+				monsters.Remove(o);
 			}
 		}
+	}
 
-		// update map env
-		map->Update();
-
-		// 
+	XX_INLINE void Stage::UpdateEffectExplosion() {
 		for (auto i = effectExplosions.len - 1; i >= 0; --i) {
 			auto& o = effectExplosions[i];
 			if (o.Update()) {
 				effectExplosions.SwapRemoveAt(i);
 			}
 		}
-
-		//	// update monster bullets
-		//	for (auto i = monsterBullets.len - 1; i >= 0; --i) {
-		//		auto& o = monsterBullets[i];
-		//		if (o->Update()) {
-		//			monsterBullets.SwapRemoveAt(i);
-		//		}
-		//	}
-
-		//	// update monsters
-		//	for (auto i = monsters.items.len - 1; i >= 0; --i) {
-		//		auto& o = monsters.items[i];
-		//		if (o->Update()) {
-		//			monsters.Remove(o);
-		//		}
-		//	}
-
-		//	// update monster generators
-		//	for (auto i = monsterGenerators.len - 1; i >= 0; i--) {
-		//		auto& mg = monsterGenerators[i];
-		//		if (mg->activeTime <= time) {
-		//			if (mg->destroyTime >= time) {
-		//				mg->Update();
-		//			}
-		//			else {
-		//				monsterGenerators.SwapRemoveAt(i);
-		//			}
-		//		}
-		//	}
-
-		//	// update effects
-		//	effectTexts.Update();
-		//	for (auto i = effects.len - 1; i >= 0; --i) {
-		//		auto& o = effects[i];
-		//		if (o->Update()) {
-		//			effects.SwapRemoveAt(i);
-		//		}
-		//	}
-
-		//	// update flying loots
-		//	for (auto i = flyingLoots.len - 1; i >= 0; --i) {
-		//		auto& o = flyingLoots[i];
-		//		if (o->Update()) {
-		//			flyingLoots.SwapRemoveAt(i);
-		//		}
-		//	}
-
-		//	// ... more updates
-
-		//	// sync cam
-		//	camera.SetOriginal(player->pos, camera.ToLogicPos(gLooper.mouse.pos, scale));
-		//	camera.Update();
-
-		// update time
-		if constexpr (updateTime) {
-			++time;
-		}
-
-		//	//// finish check
-		//	//if (monsterGenerators.Empty() && spawners.Empty() && monsters.items.Empty()) {
-		//	//	OnRoundEnd();
-		//	//}
 	}
+
 
 	XX_INLINE void Stage::DrawLight_Circle(XY screenPos, XY radius, float colorPlus, xx::RGBA8 color) {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(gLooper.res._texid_ef_light, 1);
@@ -164,18 +112,26 @@ namespace Game {
 		// game logic content
 		auto t = gLooper.fb.Draw(gLooper.windowSize, true, xx::RGBA8{ 0,0,0,0 }, [&]() {
 
-			// draw floor
 			map->Draw(this);
 
-			// todo: monster bullet ...
+			for (auto i = 0, e = monsters.items.len; i < e; ++i) {
+				auto& o = monsters.items[i];
+				if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
+				o->Draw();
+			}
+
 			for (int32_t i = 0, e = playerBullets.len; i < e; ++i) {
 				auto& o = playerBullets[i];
 				if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
 				o->Draw();
 			}
 
+			for (int32_t i = 0, e = playerBullets.len; i < e; ++i) {
+				auto& o = playerBullets[i];
+				if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
+				o->Draw();
+			}
 
-			// draw player
 			if (player) {
 				player->Draw();
 			}
@@ -200,6 +156,12 @@ namespace Game {
 				DrawLight_Circle(camera.ToGLPos(o.pos), o.lightRadius, 1.f);
 			}
 
+			for (auto i = 0, e = monsters.items.len; i < e; ++i) {
+				auto& o = monsters.items[i];
+				if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
+				DrawLight_Circle(camera.ToGLPos(o->pos), o->lightRadius, 0.7f);
+			}
+
 			// ...
 
 			});
@@ -207,33 +169,11 @@ namespace Game {
 		// combine content & light
 		gLooper.ShaderBegin(gLooper.shaderQuadInstanceLight).Draw(t, t2);
 
-		//
 		for (auto i = 0, e = effectExplosions.len; i < e; ++i) {
 			auto& o = effectExplosions[i];
 			if (o.pos.x < areaMin.x || o.pos.x > areaMax.x || o.pos.y < areaMin.y || o.pos.y > areaMax.y) continue;
 			o.Draw(this);
 		}
-
-		//	// draw effect texts
-		//	for (int32_t i = 0, e = effectTexts.ens.Count(); i < e; ++i) {
-		//		auto& o = effectTexts.ens[i];
-		//		if (o.pos.x < areaMin.x || o.pos.x > areaMax.x || o.pos.y < areaMin.y || o.pos.y > areaMax.y) continue;
-		//		o.Draw(this);
-		//	}
-
-		//	// draw loot
-		//	for (int32_t i = 0, e = loots.items.Count(); i < e; ++i) {
-		//		auto& o = loots.items[i];
-		//		if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
-		//		o->Draw();
-		//	}
-
-		//	// draw flying loot
-		//	for (int32_t i = 0, e = flyingLoots.Count(); i < e; ++i) {
-		//		auto& o = flyingLoots[i];
-		//		if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
-		//		o->DrawFlying();
-		//	}
 
 		// draw ui
 		if (ui) {

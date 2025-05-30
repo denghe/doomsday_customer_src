@@ -13,37 +13,33 @@ namespace Game {
 		void OnWindowSizeChanged() override;
 
 		xx::Camera camera;
-		xx::Rnd rnd;							// for game logic only
-		int32_t time{};							// for game logic only
+		xx::Rnd rnd;
+		int32_t time{};
 
-		xx::Listi32<xx::Shared<PlayerBullet>> playerBullets;
+		// for monster generator
+		int32_t _n{}, _a{}, _b{};
+
+		// for monster generator
+
+		xx::Listi32<xx::Shared<PlayerBullet>> playerBullets;	// todo: change to space index ?
 		//xx::Listi32<xx::Shared<Bullet>> monsterBullets;
 		xx::Shared<Player> player;
 		//Space<Loot> loots;
 		//xx::Listi32<xx::Shared<Loot>> flyingLoots;
-		//Space<Monster> monsters;
+		SpaceIndexCircle<Monster, true> monsters;
 		//xx::Listi32<xx::Shared<Spawner>> spawners;
 		xx::Shared<Map> map;
-		//xx::Listi32<xx::Shared<MonsterGen>> monsterGenerators;
 		//xx::Listi32<xx::Shared<Drawable>> effects;
 		xx::Listi32<EffectExplosion> effectExplosions;
-		//EffectTextManager effectTexts;
-		template<bool updateTime = true>
-		void StageUpdate();
-		//template<bool clearPlayer, bool clearGrass>
-		//void ClearItems();						// for round finished
-		//// todo
 
-		template<bool initMap = true>
-		void StageInit();
-		//virtual XY GetPlayerBornPos();
-		//void ForceLimit(XY& pos);
-		//bool IsOutOfMap(XY const& pos);
-		//XY GetRndPosDoughnut(float maxRadius, float safeRadius);
-		//void Update() override { StageUpdate(); };
-		//virtual void DrawCustomOrderYItem(xx::Listi32<std::pair<float, Game::Drawable*>>& yd, XY areaMin, XY areaMax) {};
-		//virtual void DrawCustomUI() {};
-		//virtual void OnWindowSizeChanged() {};
+		void MonsterGen();
+
+		void UpdateMap();
+		void UpdatePlayer();
+		void UpdatePlayerBullet();
+		void UpdateEffectExplosion();
+		void UpdateMonster();
+		// ...
 
 		void DrawLight_Circle(XY screenPos, XY radius = Cfg::unitRadius * 5, float colorPlus = 1.f, xx::RGBA8 color = xx::RGBA8_White);
 	};
