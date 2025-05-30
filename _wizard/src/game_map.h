@@ -6,6 +6,7 @@ namespace Game {
 		SpaceIndexBox<Block, false> blocks;
 		xx::Listi32<XYi> bornPlaces_Monster;
 		xx::Listi32<XYi> bornPlaces_Player;
+		xx::Listi32<XYi> flyTargets_Monster;
 
 		void Init();
 		void Update();

@@ -122,7 +122,7 @@ namespace Game {
 			// 3
 			++rIdx;
 			if (rIdx >= this->numRows) return nullptr;
-			idx += this->snumCols;
+			idx += this->numCols;
 			c = this->cells[idx];
 			while (c) {
 				auto nex = (T*)c->next;

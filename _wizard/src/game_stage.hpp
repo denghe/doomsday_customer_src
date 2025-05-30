@@ -18,23 +18,61 @@ namespace Game {
 		UpdateScale();
 		MakeUI();
 		map.Emplace<Map>()->Init();
-		camera.SetOriginal(map->blocks.gridSize / 2);
+		mapSize = map->blocks.gridSize;
+		camera.SetOriginal(mapSize / 2);
 		player.Emplace()->Init(this);
+		monsterFormation.Emplace()->Init(this);
 		monsters.Init(&gLooper.rdd, map->blocks.numRows, map->blocks.numCols, map->blocks.cellSize);
+	}
+
+	inline void Stage::ForceLimit(XY& pos) {
+		if (pos.x < 0.f) pos.x = 0.f;
+		else if (pos.x >= mapSize.x)
+			pos.x = mapSize.x - 0.1f;
+		if (pos.y < 0.f) pos.y = 0.f;
+		else if (pos.y >= mapSize.y)
+			pos.y = mapSize.y - 0.1f;
 	}
 
 	inline void Stage::MonsterGen() {
 		XX_BEGIN(_n);
-		for (_a = time + int32_t(Cfg::fps * 10.f); time < _a;) {
+
+		// random target pos
+		monsterFormation->FillShufflePoss();
+
+		// batch generate monsters
+		for (_a = 0; _a < monsterFormation->count; ++_a) {
 			{
-				auto idx = rnd.Next<int32_t>(map->bornPlaces_Monster.len);
+				// make monster
+				auto bornPosIdx = rnd.Next<int32_t>(map->bornPlaces_Monster.len);
 				auto m = xx::MakeShared<Monster>();
-				m->Init(this, gLooper.res.ui_trangle, idx);
+				m->Init(this, gLooper.res.ui_trangle, bornPosIdx, monsterFormation, _a);
 				monsters.Add(std::move(m));
 			}
-			/* sleep */ for (_b = time + int32_t(Cfg::fps * 0.1f); time < _b;) { XX_YIELD(_n); }
+
+			// sleep
+			for (_b = time + int32_t(Cfg::fps * 0.01f); time < _b;) {
+				XX_YIELD(_n);
+			}
 		}
-		/* sleep */ for (_b = time + int32_t(Cfg::fps * 5.f); time < _b;) { XX_YIELD(_n); }
+
+		// wait all monster ready
+		while (numReadyMonsters != monsters.items.len) {
+			XX_YIELD(_n);
+		}
+
+		// wait 10 seconds for fight
+		for (_b = time + int32_t(Cfg::fps * 10.f); time < _b;) {
+			// no monsters?
+			if (!monsters.items.len) {
+				XX_YIELD_TO_BEGIN(_n);
+			}
+			XX_YIELD(_n);
+		}
+
+		// if (!monsters.items.len)  escape? or move to player? path finding?
+
+		// loop
 		XX_YIELD_TO_BEGIN(_n);
 		XX_END(_n);
 	}
@@ -42,6 +80,7 @@ namespace Game {
 	inline void Stage::Update() {
 
 		UpdateMap();
+		UpdateMonsterFormation();
 		UpdateEffectExplosion();
 		UpdatePlayerBullet();
 		UpdateMonster();
@@ -55,6 +94,10 @@ namespace Game {
 
 	XX_INLINE void Stage::UpdateMap() {
 		map->Update();
+	}
+
+	XX_INLINE void Stage::UpdateMonsterFormation() {
+		monsterFormation->Update();
 	}
 
 	XX_INLINE void Stage::UpdatePlayer() {
@@ -75,6 +118,7 @@ namespace Game {
 	}
 
 	XX_INLINE void Stage::UpdateMonster() {
+		numReadyMonsters = 0;
 		for (auto i = monsters.items.len - 1; i >= 0; --i) {
 			auto& o = monsters.items[i];
 			if (o->Update()) {
@@ -147,19 +191,19 @@ namespace Game {
 			for (int32_t i = 0, e = playerBullets.len; i < e; ++i) {
 				auto& o = playerBullets[i];
 				if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
-				DrawLight_Circle(camera.ToGLPos(o->pos), o->lightRadius, 0.7f);
+				DrawLight_Circle(camera.ToGLPos(o->pos), o->lightRadius, 0.7f, xx::RGBA8_Yellow);
 			}
 
 			for (auto i = 0, e = effectExplosions.len; i < e; ++i) {
 				auto& o = effectExplosions[i];
 				if (o.pos.x < areaMin.x || o.pos.x > areaMax.x || o.pos.y < areaMin.y || o.pos.y > areaMax.y) continue;
-				DrawLight_Circle(camera.ToGLPos(o.pos), o.lightRadius, 1.f);
+				DrawLight_Circle(camera.ToGLPos(o.pos), o.lightRadius, 1.f, xx::RGBA8_Yellow);
 			}
 
 			for (auto i = 0, e = monsters.items.len; i < e; ++i) {
 				auto& o = monsters.items[i];
 				if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
-				DrawLight_Circle(camera.ToGLPos(o->pos), o->lightRadius, 0.7f);
+				DrawLight_Circle(camera.ToGLPos(o->pos), o->lightRadius, 0.7f, xx::RGBA8_Red);
 			}
 
 			// ...

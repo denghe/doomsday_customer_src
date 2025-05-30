@@ -6,16 +6,18 @@ namespace Game {
 		// Ｂ	block
 		// ｐ	player born place
 		// ｍ	monster born place
+		// Ｍ	monster fly target
 		static std::u32string_view mapText{ UR"(
 Ｂ　　　ｍ　　　ｍ　　　ｍ　　　ｍ　　　ｍ　　　Ｂ
 Ｂ　　　　　　　　　　　　　　　　　　　　　　　Ｂ
-Ｂ　　　　　　　　　　　　　　　　　　　　　　　Ｂ
-Ｂ　　　　　　　　　　　　　　　　　　　　　　　Ｂ
-Ｂ　　　　　　　　　　　　　　　　　　　　　　　Ｂ
-Ｂ　　　　　　　　　　　　　　　　　　　　　　　Ｂ
-Ｂ　　　　　　　　　　　　　　　　　　　　　　　Ｂ
-Ｂ　　　　　　　　　　　　　　　　　　　　　　　Ｂ
-Ｂ　　　　　　　　　　　　　　　　　　　　　　　Ｂ
+Ｂ　　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　　Ｂ
+Ｂ　　　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　　　Ｂ
+Ｂ　　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　　Ｂ
+Ｂ　　　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　　　Ｂ
+Ｂ　　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　　Ｂ
+Ｂ　　　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　　　Ｂ
+Ｂ　　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　　Ｂ
+Ｂ　　　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　　　Ｂ
 Ｂ　　　　　　　　　　　　　　　　　　　　　　　Ｂ
 Ｂ　　　　　　　　　　　　　　　　　　　　　　　Ｂ
 Ｂ　　　　　　　　　　　　　　　　　　　　　　　Ｂ
@@ -91,6 +93,9 @@ namespace Game {
 				break;
 			case U'ｍ':
 				bornPlaces_Monster.Emplace(x, y);
+				break;
+			case U'Ｍ':
+				flyTargets_Monster.Emplace(x, y);
 				break;
 			}
 			++x;

@@ -3,6 +3,7 @@
 namespace Game {
 
 	inline void PlayerWeapon::Init(Player* owner_, XY holdOffset_) {
+		assert(!stage);
 		stage = owner_->stage;
 		owner = xx::WeakFromThis(owner_);
 		holdOffset = holdOffset_;

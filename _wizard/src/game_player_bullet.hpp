@@ -3,6 +3,7 @@
 namespace Game {
 
 	inline void PlayerBullet::Init(PlayerWeapon* shooter, XY pos_, float radians_) {
+		assert(!stage);
 		owner = shooter->owner;
 		stage = owner->stage;
 		pos = pos_;
@@ -14,6 +15,25 @@ namespace Game {
 
 	inline int32_t PlayerBullet::Update() {
 		if (!owner) return 1;
+
+		// todo: hit check
+		if (auto m = stage->monsters.FindFirstCrossBy9(pos.x, pos.y, radius)) {
+			//stage->effects.Emplace().Emplace<EffectDeath>()->Init(stage, gLooper.res.bullet_coin5, pos, scale.x);
+			//auto d = pos - m->pos;
+			//auto dmg = damage * damageRatio;
+			//bool isCrit{};
+			//if (stage->rnd.Next<float>(0, 1) < criticalChance) {
+			//	dmg *= criticalBonusRatio;
+			//	isCrit = true;
+			//}
+			//m->Hurt(dmg, d, -d, isCrit);
+			stage->effectExplosions.Emplace().Init(&gLooper.res.ef_explosion_, 30.f, pos, 0.5f, xx::RGBA8_Yellow);
+			stage->effectExplosions.Emplace().Init(&gLooper.res.ef_explosion_, 30.f, m->pos, 3.f, xx::RGBA8_Red);
+			stage->monsters.Remove(m);
+			return 1;
+		}
+
+
 		pos += moveInc;
 
 		// out of map check
@@ -34,7 +54,7 @@ namespace Game {
 			for (int colIdx = criFrom.x; colIdx <= criTo.x; ++colIdx) {
 				if (auto bc = blocks.TryAt({ colIdx, rowIdx }); bc) {
 					if (bc->IsCross(iPosLT, size)) {
-						stage->effectExplosions.Emplace().Init(&gLooper.res.ef_explosion_, 30.f, pos, 1.f);
+						stage->effectExplosions.Emplace().Init(&gLooper.res.ef_explosion_, 30.f, pos, 1.f, xx::RGBA8_Yellow);
 						return 1;
 					}
 				}

@@ -6,6 +6,7 @@ namespace Game {
 
 
 	inline void Player::Init(Stage* stage_, int32_t bornPosIndex) {
+		assert(!stage);
 		stage = stage_;
 		auto& blocks = stage->map->blocks;
 		auto posIdx = stage->map->bornPlaces_Player[bornPosIndex];
