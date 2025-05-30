@@ -4,13 +4,15 @@ namespace Game {
 
 	inline void Stage::MakeUI() {
 		ui.Emplace()->Init(0, {}, scale);
-		ui->MakeChildren<xx::Button>()->Init(1, pos7 + XY{ 10, -10 }
+		float y = -10;
+		ui->MakeChildren<xx::Button>()->Init(1, pos7 + XY{ 10, y }
 			, anchor7, gLooper.btnCfg, U"exit", [&]() {
 				gLooper.DelaySwitchTo<Game::MainMenu>();
 			});
 	}
 
 	inline void Stage::OnWindowSizeChanged() {
+		camera.SetBaseScale(scale);
 		MakeUI();
 	}
 
@@ -78,7 +80,7 @@ namespace Game {
 	}
 
 	inline void Stage::Update() {
-
+		UpdateCamera();
 		UpdateMap();
 		UpdateMonsterFormation();
 		UpdateEffectExplosion();
@@ -90,6 +92,10 @@ namespace Game {
 		MonsterGen();
 
 		++time;
+	}
+
+	XX_INLINE void Stage::UpdateCamera() {
+		camera.Update(time);
 	}
 
 	XX_INLINE void Stage::UpdateMap() {
@@ -150,8 +156,8 @@ namespace Game {
 
 	inline void Stage::Draw() {
 		// calculate display cut area
-		auto areaMin = camera.ToLogicPos({ -gLooper.windowSize_2.x - Cfg::unitSize * 2, gLooper.windowSize_2.y + Cfg::unitSize * 2 }, scale);
-		auto areaMax = camera.ToLogicPos({ gLooper.windowSize_2.x + Cfg::unitSize * 2, -gLooper.windowSize_2.y - Cfg::unitSize * 2 }, scale);
+		auto areaMin = camera.ToLogicPos({ -gLooper.windowSize_2.x - Cfg::unitSize * 2, gLooper.windowSize_2.y + Cfg::unitSize * 2 });
+		auto areaMax = camera.ToLogicPos({ gLooper.windowSize_2.x + Cfg::unitSize * 2, -gLooper.windowSize_2.y - Cfg::unitSize * 2 });
 
 		// game logic content
 		auto t = gLooper.fb.Draw(gLooper.windowSize, true, xx::RGBA8{ 0,0,0,0 }, [&]() {
@@ -185,25 +191,25 @@ namespace Game {
 		auto t2 = gLooper.fb.Draw(gLooper.windowSize, true, xx::RGBA8{ 11,11,11,0 }, [&] {
 			gLooper.GLBlendFunc({ GL_SRC_COLOR, GL_ONE, GL_FUNC_ADD });
 			if (player) {
-				DrawLight_Circle(camera.ToGLPos(player->pos), player->lightRadius, 1.f, player->lightColor);
+				DrawLight_Circle(camera.ToGLPos_Logic(player->pos), player->lightRadius, 1.f, player->lightColor);
 			}
 
 			for (int32_t i = 0, e = playerBullets.len; i < e; ++i) {
 				auto& o = playerBullets[i];
 				if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
-				DrawLight_Circle(camera.ToGLPos(o->pos), o->lightRadius, 0.7f, o->lightColor);
+				DrawLight_Circle(camera.ToGLPos_Logic(o->pos), o->lightRadius, 0.7f, o->lightColor);
 			}
 
 			for (auto i = 0, e = effectExplosions.len; i < e; ++i) {
 				auto& o = effectExplosions[i];
 				if (o.pos.x < areaMin.x || o.pos.x > areaMax.x || o.pos.y < areaMin.y || o.pos.y > areaMax.y) continue;
-				DrawLight_Circle(camera.ToGLPos(o.pos), o.lightRadius, 1.f, o.color);
+				DrawLight_Circle(camera.ToGLPos_Logic(o.pos), o.lightRadius, 1.f, o.color);
 			}
 
 			for (auto i = 0, e = monsters.items.len; i < e; ++i) {
 				auto& o = monsters.items[i];
 				if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
-				DrawLight_Circle(camera.ToGLPos(o->pos), o->lightRadius, 0.7f, o->lightColor);
+				DrawLight_Circle(camera.ToGLPos_Logic(o->pos), o->lightRadius, 0.7f, o->lightColor);
 			}
 
 			// ...

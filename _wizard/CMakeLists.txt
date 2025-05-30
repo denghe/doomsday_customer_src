@@ -25,6 +25,7 @@ include_directories(
 	../soloud/include
 	../thread-pool/include
 	../spine-cpp/include
+	../soloud/include
 	../xx
 )
 
@@ -69,6 +70,9 @@ endif()
 
 if (WIN32)
 	target_link_libraries(${name} winmm)
+	
+	add_subdirectory(../soloud soloud)
+	target_link_libraries(${name} soloud)
 	
 	SET(MI_BUILD_TESTS OFF CACHE BOOL "MI_BUILD_TESTS" FORCE)
 	SET(MI_BUILD_SHARED OFF CACHE BOOL "MI_BUILD_SHARED" FORCE)

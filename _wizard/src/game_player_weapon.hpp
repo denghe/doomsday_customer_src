@@ -13,13 +13,14 @@ namespace Game {
 	inline int32_t PlayerWeapon::Update() {
 		if (!owner) return 1;
 		pos = owner->pos + holdOffset;
-		auto mp = stage->camera.ToLogicPos(gLooper.mouse.pos, stage->scale);
+		auto mp = stage->camera.ToLogicPos(gLooper.mouse.pos);
 		auto d = mp - pos;
 		radians = std::atan2f(d.y, d.x);
 
 		if (gLooper.mouse.PressedMBLeft()) {
 			auto sPos = GetShootPos();
 			stage->playerBullets.Emplace().Emplace<PlayerBullet>()->Init(this, sPos, radians);
+			gLooper.sound.Play(gLooper.res_sound_laster_gun_1, 0.5f);
 		}
 		return 0;
 	}
@@ -33,9 +34,9 @@ namespace Game {
 	inline void PlayerWeapon::Draw() {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
 			.Draw(gLooper.res._texid_char_weapon, 1);
-		q->pos = stage->camera.ToGLPos(pos) * stage->scale;
+		q->pos = stage->camera.ToGLPos(pos);
 		q->anchor = { cAnchorX, 0.5f };
-		q->scale = stage->camera.scale * stage->scale;
+		q->scale = stage->camera.scale;
 		q->radians = radians;
 		q->colorplus = 1.f;
 		q->color = xx::RGBA8_White;

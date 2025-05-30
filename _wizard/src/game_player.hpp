@@ -14,7 +14,7 @@ namespace Game {
 		pos.x = leftTopPos.x + blocks.cellSize * 0.5f;
 		pos.y = leftTopPos.y + blocks.cellSize - 1.f;
 
-		lightColor = xx::RGBA8_Blue;
+		lightColor = xx::RGBA8_White;
 		lightRadius = ResTpFrames::_size_char_body * 0.5f * 10.f;
 
 		weapon.Emplace<PlayerWeapon>()->Init(this, {0, -20});
@@ -174,9 +174,9 @@ namespace Game {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
 			.Draw(gLooper.res._texid_char_body, 2);
 		// body
-		q[0].pos = stage->camera.ToGLPos(pos) * stage->scale;
+		q[0].pos = stage->camera.ToGLPos(pos);
 		q[0].anchor = { 0.5f, 0 };
-		q[0].scale = stage->camera.scale * stage->scale;
+		q[0].scale = stage->camera.scale;
 		q[0].radians = 0;
 		q[0].colorplus = 1.f;
 		q[0].color = xx::RGBA8_White;

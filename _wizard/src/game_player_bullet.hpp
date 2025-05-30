@@ -28,6 +28,8 @@ namespace Game {
 			//	isCrit = true;
 			//}
 			//m->Hurt(dmg, d, -d, isCrit);
+			gLooper.sound.Play(gLooper.res_sound_monster_die_1);
+			stage->camera.Shake(5, 300.f * Cfg::frameDelay, int32_t(0.2f * Cfg::fps), stage->time);
 			stage->effectExplosions.Emplace().Init(pos, 0.5f, xx::RGBA8_Yellow);
 			stage->effectExplosions.Emplace().Init(m->pos, 3.f, xx::RGBA8_Red);
 			stage->monsters.Remove(m);
@@ -69,9 +71,9 @@ namespace Game {
 	inline void PlayerBullet::Draw() {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
 			.Draw(gLooper.res._texid_char_bullet, 1);
-		q->pos = stage->camera.ToGLPos(pos) * stage->scale;
+		q->pos = stage->camera.ToGLPos(pos);
 		q->anchor = gLooper.res._anchor_char_bullet;
-		q->scale = radius / gLooper.res._size_char_bullet.y * stage->camera.scale * stage->scale;
+		q->scale = radius / gLooper.res._size_char_bullet.y * stage->camera.scale;
 		q->radians = radians;
 		q->colorplus = 1.f;
 		q->color = xx::RGBA8_White;

@@ -5,6 +5,7 @@
 
 #include <xx2d.h>
 #include <xx2d_spine.h>
+#include <xx_sound.h>
 #ifndef __EMSCRIPTEN__
 #include "BS_thread_pool.hpp"
 #endif

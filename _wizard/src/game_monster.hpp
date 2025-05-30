@@ -78,9 +78,9 @@ namespace Game {
 		auto& f = *frame;
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
 			.Draw(f.tex, 1);
-		q->pos = stage->camera.ToGLPos(pos) * stage->scale;
+		q->pos = stage->camera.ToGLPos(pos);
 		q->anchor = *f.anchor;
-		q->scale = radius * 2.f / f.spriteSize.x * stage->camera.scale * stage->scale;
+		q->scale = radius * 2.f / f.spriteSize.x * stage->camera.scale;
 		q->radians = radians;
 		q->colorplus = 1.f;
 		q->color = xx::RGBA8_White;

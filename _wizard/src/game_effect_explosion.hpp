@@ -27,9 +27,9 @@ namespace Game {
 	XX_INLINE void EffectExplosion::Draw(Stage* stage) {
 		auto& frame = frames->At((int32_t)frameIndex);
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(frame->tex, 1);
-		q->pos = stage->camera.ToGLPos(pos) * stage->scale;
+		q->pos = stage->camera.ToGLPos(pos);
 		q->anchor = { 0.5f, 0.5f };
-		q->scale = stage->camera.scale * stage->scale * scale;
+		q->scale = stage->camera.scale * scale;
 		q->radians = radians;
 		q->colorplus = 1;
 		q->color = color;

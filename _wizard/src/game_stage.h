@@ -12,7 +12,7 @@ namespace Game {
 		void Draw() override;
 		void OnWindowSizeChanged() override;
 
-		xx::Camera camera;
+		Camera camera;
 		xx::Rnd rnd;
 		int32_t time{};
 		XY mapSize{};					// cache: map->blocks.gridSize
@@ -35,6 +35,7 @@ namespace Game {
 
 		void MonsterGen();
 
+		void UpdateCamera();
 		void UpdateMap();
 		void UpdateMonsterFormation();
 		void UpdatePlayer();

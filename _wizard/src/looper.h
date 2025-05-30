@@ -12,6 +12,7 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 #include "game_space_index_box.h"
 #include "game_space_index_circle.h"
 #include "game_scene.h"
+#include "game_camera.h"
 #include "game_effect_explosion.h"
 #include "game_drawable.h"
 #include "game_block.h"
@@ -48,6 +49,10 @@ struct Looper : xx::Engine<Looper>, Cfg {
 	xx::Ref<xx::GLTexture> res_Dragon_tex;
 	spine::SkeletonData* res_Dragon_skel{};
 	spine::Animation* res_Dragon_flying{};
+
+	xx::Sound sound;
+	xx::Shared<xx::SoundSource> res_sound_laster_gun_1;
+	xx::Shared<xx::SoundSource> res_sound_monster_die_1;
 
 
 	xx::FrameBuffer fb;										// for light

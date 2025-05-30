@@ -13,9 +13,9 @@ namespace Game {
 
 	inline void Block::Draw(Stage* stage) {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(gLooper.res._texid_ui_block, 1);
-		q->pos = stage->camera.ToGLPos(pos) * stage->scale;
+		q->pos = stage->camera.ToGLPos(pos);
 		q->anchor = { 0, 1 };
-		q->scale = XY{ size } * (1.f / gLooper.res._size_ui_block) * stage->camera.scale * stage->scale;
+		q->scale = XY{ size } * (1.f / gLooper.res._size_ui_block) * stage->camera.scale;
 		q->radians = 0;
 		q->colorplus = 1.f;
 		q->color = xx::RGBA8_White;
