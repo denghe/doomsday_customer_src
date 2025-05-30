@@ -14,12 +14,12 @@ namespace Game {
 	}
 
 	inline void MonsterFormation::Update() {
-		static constexpr auto step{ Cfg::unitSize / (Cfg::fps * 2.f) };
+		static constexpr auto step{ Cfg::unitSize * 2.f / (Cfg::fps * 2.f) };
 		XX_BEGIN(_n);
-		for (; offset.x > -Cfg::unitSize; offset.x -= step) {
+		for (; offset.x > -Cfg::unitSize * 2.f; offset.x -= step) {
 			XX_YIELD(_n);
 		}
-		for (; offset.x < Cfg::unitSize; offset.x += step) {
+		for (; offset.x < Cfg::unitSize * 2.f; offset.x += step) {
 			XX_YIELD(_n);
 		}
 		XX_YIELD_TO_BEGIN(_n);

@@ -20,10 +20,9 @@ namespace Game {
 	inline int32_t Monster::Update() {
 		// todo: move & fight logic
 
-		assert(monsterFormation);
 		auto tarPos = monsterFormation->GetPos(monsterFormationPosIdx);
 		
-
+		// fly to target
 		auto d = tarPos - pos;
 		auto dd = d.x * d.x + d.y * d.y;
 		if (dd < cMoveSpeed * cMoveSpeed) {
@@ -34,8 +33,6 @@ namespace Game {
 			auto mag = std::sqrtf(dd);
 			auto norm = d / mag;
 			pos += norm * cMoveSpeed;
-			stage->ForceLimit(pos);
-			stage->monsters.Update(this);	// sync space index
 		}
 
 		// prepare
@@ -70,6 +67,9 @@ namespace Game {
 			pos.y = float(iPosLT.y + size.y);
 			stage->ForceLimit(pos);
 		}
+
+		stage->ForceLimit(pos);
+		stage->monsters.Update(this);	// sync space index
 
 		return 0;
 	}
