@@ -18,9 +18,8 @@ namespace Game {
 	inline int32_t PlayerBullet::Update() {
 		if (!owner) return 1;
 
-		// todo: hit check
+		// hit check
 		if (auto m = stage->monsters.FindFirstCrossBy9(pos.x, pos.y, radius)) {
-			//stage->effects.Emplace().Emplace<EffectDeath>()->Init(stage, gLooper.res.bullet_coin5, pos, scale.x);
 			//auto d = pos - m->pos;
 			//auto dmg = damage * damageRatio;
 			//bool isCrit{};

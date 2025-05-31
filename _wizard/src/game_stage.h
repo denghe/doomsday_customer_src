@@ -15,6 +15,7 @@ namespace Game {
 		Camera camera;
 		xx::Rnd rnd;
 		int32_t time{};
+		float timePool{}, frameDelay{};
 		XY mapSize{};					// cache: map->blocks.gridSize
 
 		int32_t numReadyMonsters{};		// counter
@@ -24,7 +25,7 @@ namespace Game {
 		// for monster generator
 
 		xx::Listi32<xx::Shared<PlayerBullet>> playerBullets;
-		//xx::Listi32<xx::Shared<Bullet>> monsterBullets;
+		SpaceIndexCircle<MonsterBullet, true> monsterBullets;
 		xx::Shared<Player> player;
 		xx::Shared<MonsterFormation> monsterFormation;
 		SpaceIndexCircle<Monster, true> monsters;
@@ -40,6 +41,7 @@ namespace Game {
 		void UpdateMonsterFormation();
 		void UpdatePlayer();
 		void UpdatePlayerBullet();
+		void UpdateMonsterBullet();
 		void UpdateEffectExplosion();
 		void UpdateMonster();
 		// ...

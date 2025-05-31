@@ -17,7 +17,7 @@ namespace Game {
 		auto d = mp - pos;
 		radians = std::atan2f(d.y, d.x);
 
-		if (gLooper.mouse.PressedMBLeft()) {
+		if (gLooper.mouse.PressedMBLeft() && !gLooper.mouseEventHandler) {
 			auto sPos = GetShootPos();
 			stage->playerBullets.Emplace().Emplace<PlayerBullet>()->Init(this, sPos, radians);
 			gLooper.sound.Play(gLooper.res_sound_laster_gun_1, 0.5f);

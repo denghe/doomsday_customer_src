@@ -9,6 +9,26 @@ namespace Game {
 			, anchor7, gLooper.btnCfg, U"exit", [&]() {
 				gLooper.DelaySwitchTo<Game::MainMenu>();
 			});
+		y -= 90;
+		ui->MakeChildren<xx::Button>()->Init(1, pos7 + XY{ 10, y }
+			, anchor7, gLooper.btnCfg, U"Speed*1", [&]() {
+				frameDelay = Cfg::frameDelay;
+			});
+		y -= 90;
+		ui->MakeChildren<xx::Button>()->Init(1, pos7 + XY{ 10, y }
+			, anchor7, gLooper.btnCfg, U"Speed*10", [&]() {
+				frameDelay = Cfg::frameDelay * 10.f;
+			});
+		y -= 90;
+		ui->MakeChildren<xx::Button>()->Init(1, pos7 + XY{ 10, y }
+			, anchor7, gLooper.btnCfg, U"Speed*20", [&]() {
+				frameDelay = Cfg::frameDelay * 20.f;
+			});
+		y -= 90;
+		ui->MakeChildren<xx::Button>()->Init(1, pos7 + XY{ 10, y }
+			, anchor7, gLooper.btnCfg, U"Speed*0.2", [&]() {
+				frameDelay = Cfg::frameDelay * 0.2f;
+			});
 	}
 
 	inline void Stage::OnWindowSizeChanged() {
@@ -25,6 +45,8 @@ namespace Game {
 		player.Emplace()->Init(this);
 		monsterFormation.Emplace()->Init(this);
 		monsters.Init(&gLooper.rdd, map->blocks.numRows, map->blocks.numCols, map->blocks.cellSize);
+		monsterBullets.Init(&gLooper.rdd, map->blocks.numRows, map->blocks.numCols, map->blocks.cellSize);
+		frameDelay = Cfg::frameDelay;
 	}
 
 	inline void Stage::ForceLimit(XY& pos) {
@@ -38,60 +60,64 @@ namespace Game {
 
 	inline void Stage::MonsterGen() {
 		XX_BEGIN(_n);
+		while (true) {
+			// random target pos
+			monsterFormation->FillShufflePoss();
 
-		// random target pos
-		monsterFormation->FillShufflePoss();
+			// batch generate monsters
+			for (_a = 0; _a < monsterFormation->count; ++_a) {
+				{
+					// make monster
+					auto bornPosIdx = rnd.Next<int32_t>(map->bornPlaces_Monster.len);
+					auto m = xx::MakeShared<Monster>();
+					m->Init(this, gLooper.res.monster_1, bornPosIdx, monsterFormation, _a);
+					monsters.Add(std::move(m));
+				}
 
-		// batch generate monsters
-		for (_a = 0; _a < monsterFormation->count; ++_a) {
-			{
-				// make monster
-				auto bornPosIdx = rnd.Next<int32_t>(map->bornPlaces_Monster.len);
-				auto m = xx::MakeShared<Monster>();
-				m->Init(this, gLooper.res.ui_trangle, bornPosIdx, monsterFormation, _a);
-				monsters.Add(std::move(m));
+				// sleep
+				for (_b = time + int32_t(Cfg::fps * 0.01f); time < _b;) {
+					XX_YIELD(_n);
+				}
 			}
 
-			// sleep
-			for (_b = time + int32_t(Cfg::fps * 0.01f); time < _b;) {
+			// wait all monster ready
+			while (numReadyMonsters != monsters.items.len) {
 				XX_YIELD(_n);
 			}
-		}
 
-		// wait all monster ready
-		while (numReadyMonsters != monsters.items.len) {
-			XX_YIELD(_n);
-		}
-
-		// wait 10 seconds for fight
-		for (_b = time + int32_t(Cfg::fps * 10.f); time < _b;) {
-			// no monsters?
-			if (!monsters.items.len) {
-				XX_YIELD_TO_BEGIN(_n);
+			// wait ? seconds for fight
+			for (_b = time + int32_t(Cfg::fps * 1.f); time < _b;) {
+				// no monsters?
+				if (!monsters.items.len) {
+					XX_YIELD_TO_BEGIN(_n);
+				}
+				XX_YIELD(_n);
 			}
-			XX_YIELD(_n);
+
+			// if (!monsters.items.len)  escape? or move to player? path finding?
 		}
-
-		// if (!monsters.items.len)  escape? or move to player? path finding?
-
-		// loop
-		XX_YIELD_TO_BEGIN(_n);
 		XX_END(_n);
 	}
 
 	inline void Stage::Update() {
-		UpdateCamera();
-		UpdateMap();
-		UpdateMonsterFormation();
-		UpdateEffectExplosion();
-		UpdatePlayerBullet();
-		UpdateMonster();
-		UpdatePlayer();
-		// ... more updates
+		timePool += frameDelay;
+		while (timePool >= Cfg::frameDelay) {
+			timePool -= Cfg::frameDelay;
 
-		MonsterGen();
+			UpdateCamera();
+			UpdateMap();
+			UpdateMonsterFormation();
+			UpdateEffectExplosion();
+			UpdatePlayerBullet();
+			UpdateMonsterBullet();
+			UpdateMonster();
+			UpdatePlayer();
+			// ... more updates
 
-		++time;
+			MonsterGen();
+
+			++time;
+		}
 	}
 
 	XX_INLINE void Stage::UpdateCamera() {
@@ -119,6 +145,15 @@ namespace Game {
 			auto& o = playerBullets[i];
 			if (o->Update()) {
 				playerBullets.SwapRemoveAt(i);
+			}
+		}
+	}
+
+	XX_INLINE void Stage::UpdateMonsterBullet() {
+		for (auto i = monsterBullets.items.len - 1; i >= 0; --i) {
+			auto& o = monsterBullets.items[i];
+			if (o->Update()) {
+				monsterBullets.Remove(o);
 			}
 		}
 	}
@@ -170,8 +205,8 @@ namespace Game {
 				o->Draw();
 			}
 
-			for (int32_t i = 0, e = playerBullets.len; i < e; ++i) {
-				auto& o = playerBullets[i];
+			for (int32_t i = 0, e = monsterBullets.items.len; i < e; ++i) {
+				auto& o = monsterBullets.items[i];
 				if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
 				o->Draw();
 			}
@@ -212,6 +247,12 @@ namespace Game {
 				DrawLight_Circle(camera.ToGLPos_Logic(o->pos), o->lightRadius, o->lightColorPlus, o->lightColor);
 			}
 
+			for (int32_t i = 0, e = monsterBullets.items.len; i < e; ++i) {
+				auto& o = monsterBullets.items[i];
+				if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
+				DrawLight_Circle(camera.ToGLPos_Logic(o->pos), o->lightRadius, o->lightColorPlus, o->lightColor);
+			}
+
 			// ...
 
 			});
@@ -230,13 +271,13 @@ namespace Game {
 			gLooper.DrawNode(ui);
 		}
 
-		//	// draw tips
-		//	gLooper.ctcDefault.Draw({ 0, gLooper.windowSize_2.y - 5 }
-		//		, xx::ToString("jump: SPACE  move: ASDW  m = ", monsters.items.len
-		//			, " b = ", playerBullets.len
-		//			, " e = ", effects.len
-		//			, " et = ", effectTexts.ens.Count()
-		//		), xx::RGBA8_Green, { 0.5f, 1 });
+		// draw tips
+		gLooper.ctcDefault.Draw({ 0, gLooper.windowSize_2.y - 5 }
+			, xx::ToString("jump: SPACE  move: ASDW  shoot: mouse  m = ", monsters.items.len
+				, " mb = ", monsterBullets.items.len
+				, " pb = ", playerBullets.len
+				, " e = ", effectExplosions.len
+			), xx::RGBA8_Green, { 0.5f, 1 });
 	}
 
 }

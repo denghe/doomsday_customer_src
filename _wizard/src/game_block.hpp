@@ -125,23 +125,7 @@ namespace Game {
 
 	// cPos: left top position
 	XX_INLINE bool Block::IsCross(XYi const& cPos, XYi const& cSize) const {
-		if (cPos.x >= pos.x) {
-			if (cPos.y >= pos.y) {
-				if (cPos.x < pos.x + size.x) return cPos.y < pos.y + size.y;
-			}
-			else /* cPos.y < pos.y */ {
-				if (cPos.x < pos.x + size.x) return cPos.y + cSize.y > pos.y;
-			}
-		}
-		else /* cPos.x < pos.x */ {
-			if (cPos.y >= pos.y) {
-				if (cPos.x + cSize.x > pos.x) return cPos.y < pos.y + size.y;
-			}
-			else /* cPos.y < pos.y */ {
-				if (cPos.x + cSize.x > pos.x) return cPos.y + cSize.y > pos.y;
-			}
-		}
-		return false;
+		return xx::Math::IsAABBIntersect(pos, size, cPos, cSize);
 	}
 
 }

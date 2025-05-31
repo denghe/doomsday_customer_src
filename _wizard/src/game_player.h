@@ -3,6 +3,7 @@
 namespace Game {
 
 	struct Player : Drawable {
+		static constexpr auto cSize = XYi(ResTpFrames::_size_char_body);
 		static constexpr xx::RGBA8 cLightColor{ xx::RGBA8_White };
 		static constexpr float cLightRadiusRatio{ 1.f };
 		static constexpr float cLightColorPlus{ 1.f };
@@ -28,6 +29,7 @@ namespace Game {
 		XY lightRadius{};
 		xx::Shared<PlayerWeapon> weapon;
 
+		XYi GetPosLT();
 		void Init(struct Stage* stage_, int32_t bornPosIndex = 0);
 		int32_t Update() override;
 		void Draw() override;

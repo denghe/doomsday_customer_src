@@ -389,6 +389,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">pngs/monster_1.png</key>
             <key type="filename">pngs/ui_aim.png</key>
             <key type="filename">pngs/ui_arrow1.png</key>
             <key type="filename">pngs/ui_arrow3.png</key>

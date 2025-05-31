@@ -21,6 +21,10 @@ namespace Game {
 		weapon.Emplace<PlayerWeapon>()->Init(this, {0, -20});
 	}
 
+	XX_INLINE XYi Player::GetPosLT() {
+		return { (int32_t)pos.x - (cSize.x >> 1), (int32_t)pos.y - cSize.y };
+	}
+
 	inline int32_t Player::Update() {
 
 		// left right move command check
@@ -76,11 +80,9 @@ namespace Game {
 
 		// prepare
 		auto& blocks = stage->map->blocks;
-		static constexpr auto size = XYi(gLooper.res._size_char_body);
 
-		auto iPosRB = pos.As<int32_t>();
-		iPosRB.x += size.x >> 1;
-		auto iPosLT = iPosRB - size;
+		auto iPosLT = GetPosLT();
+		auto iPosRB = iPosLT + cSize;
 
 		// handle blocks
 		PushOutWays pushOutWays{};
@@ -90,11 +92,11 @@ namespace Game {
 		for (int rowIdx = criFrom.y; rowIdx <= criTo.y; ++rowIdx) {
 			for (int colIdx = criFrom.x; colIdx <= criTo.x; ++colIdx) {
 				if (auto bc = blocks.TryAt({ colIdx, rowIdx }); bc) {
-					if (bc->IsCross(iPosLT, size)) {
-						auto [newPos, pushOutWay] = bc->PushOut(iPosLT, size);
+					if (bc->IsCross(iPosLT, cSize)) {
+						auto [newPos, pushOutWay] = bc->PushOut(iPosLT, cSize);
 						if (pushOutWay != PushOutWays::Unknown) {
 							iPosLT = newPos;
-							iPosRB = iPosLT + size;
+							iPosRB = iPosLT + cSize;
 							(uint32_t&)pushOutWays |= (uint32_t&)pushOutWay;
 						}
 					}
@@ -102,8 +104,8 @@ namespace Game {
 			}
 		}
 		if ((uint32_t)pushOutWays) {
-			pos.x = float(iPosLT.x + (size.x >> 1));
-			pos.y = float(iPosLT.y + size.y);
+			pos.x = float(iPosLT.x + (cSize.x >> 1));
+			pos.y = float(iPosLT.y + cSize.y);
 			if (fallingFrameCount && ((uint32_t&)pushOutWays & (uint32_t)PushOutWays::Up) > 0) {
 				lastJumpPressed = highJumpStoped = jumping = false;
 				multiJumpedCount = fallingFrameCount = highJumpFrameCount = 0;

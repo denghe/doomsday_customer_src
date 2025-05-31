@@ -18,25 +18,50 @@ namespace Game {
 		monsterFormationPosIdx = monsterFormationPosIdx_;
 	}
 
-	inline int32_t Monster::Update() {
-		// todo: move & fight logic
+	XX_INLINE void Monster::FaceToPlayer() {
+		static constexpr auto playerSize_2 = Player::cSize * 0.5f;	// x: radius
+		//auto playerPos = stage->player->GetPosLT() + playerSize_2;	// center pos
+		auto playerPos = stage->player->pos;
+		auto d = XY{ playerPos } - pos;
+		radians = std::atan2f(d.y, d.x);
+	}
 
+	XX_INLINE void Monster::TryShoot() {
+		// calc shoot pos
+		auto cos = std::cosf(radians);
+		auto sin = std::sinf(radians);
+		auto s = radius * 2.f / frame->spriteSize.x;
+		auto x = frame->spriteSize.x * cShootOffset.x * s;
+		auto y = frame->spriteSize.y * cShootOffset.y * s;
+		auto sPos = pos + XY{ x * cos - y * sin, x * sin + y * cos };
+
+		// shoot logic
+		shootTimePool += Cfg::frameDelay;
+		while (shootTimePool >= cShootDelay) {
+			shootTimePool -= cShootDelay;
+			auto b = xx::MakeShared<MonsterBullet>();
+			b->Init(this, sPos, radians);
+			stage->monsterBullets.Add(std::move(b));
+		}
+	}
+
+	XX_INLINE bool Monster::FlyToTarget() {
 		auto tarPos = monsterFormation->GetPos(monsterFormationPosIdx);
-		
-		// fly to target
 		auto d = tarPos - pos;
 		auto dd = d.x * d.x + d.y * d.y;
 		if (dd < cMoveSpeed * cMoveSpeed) {
 			pos = tarPos;
-			stage->numReadyMonsters++;
+			return true;
 		}
 		else {
 			auto mag = std::sqrtf(dd);
 			auto norm = d / mag;
 			pos += norm * cMoveSpeed;
+			return false;
 		}
+	}
 
-		// prepare
+	XX_INLINE void Monster::HandleBlock() {
 		auto& blocks = stage->map->blocks;
 		auto size = XYi{ frame->spriteSize };
 
@@ -68,10 +93,33 @@ namespace Game {
 			pos.y = float(iPosLT.y + size.y);
 			stage->ForceLimit(pos);
 		}
+	}
 
+	XX_INLINE void Monster::SyncPos() {
 		stage->ForceLimit(pos);
 		stage->monsters.Update(this);	// sync space index
+	}
 
+	inline int32_t Monster::Update() {
+		XX_BEGIN(_n);
+	LabFly:
+		XX_YIELD_I(_n);
+		{
+		bool success = FlyToTarget();
+		FaceToPlayer();
+		SyncPos();
+		if (!success) goto LabFly;
+		}
+	LabFight:
+		XX_YIELD_I(_n);
+		++stage->numReadyMonsters;
+		FlyToTarget();
+		HandleBlock();
+		FaceToPlayer();
+		SyncPos();
+		TryShoot();
+		goto LabFight;
+		XX_END(_n);
 		return 0;
 	}
 

@@ -350,6 +350,9 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 		this->font_outline_126 = map["font_outline_126"sv];
 		this->_tex_font_outline_126 = this->font_outline_126->tex;
 		this->_texid_font_outline_126 = this->_tex_font_outline_126->GetValue();
+		this->monster_1 = map["monster_1"sv];
+		this->_tex_monster_1 = this->monster_1->tex;
+		this->_texid_monster_1 = this->_tex_monster_1->GetValue();
 		this->ui_aim = map["ui_aim"sv];
 		this->_tex_ui_aim = this->ui_aim->tex;
 		this->_texid_ui_aim = this->_tex_ui_aim->GetValue();
@@ -545,5 +548,6 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 	font_outline_.Add(font_outline_124);
 	font_outline_.Add(font_outline_125);
 	font_outline_.Add(font_outline_126);
+	monster_.Add(monster_1);
 	co_return;
 }
