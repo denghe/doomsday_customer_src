@@ -29,6 +29,10 @@ namespace Game {
 			, anchor7, gLooper.btnCfg, U"Speed*0.2", [&]() {
 				frameDelay = Cfg::frameDelay * 0.2f;
 			});
+		ui->MakeChildren<xx::Button>()->Init(1, pos8 + XY{ 10, -10 }
+			, anchor8, gLooper.btnCfg, U"Switch Light", [&]() {
+				disableLight = !disableLight;
+			});
 	}
 
 	inline void Stage::OnWindowSizeChanged() {
@@ -223,7 +227,10 @@ namespace Game {
 			});
 
 		// light tex
-		auto t2 = gLooper.fb.Draw(gLooper.windowSize, true, xx::RGBA8{ 11,11,11,0 }, [&] {
+		auto bgColor = disableLight ? xx::RGBA8_White : xx::RGBA8{ 33,33,33,0 };
+		auto t2 = gLooper.fb.Draw(gLooper.windowSize, true, bgColor, [&] {
+			if (disableLight) return;
+
 			gLooper.GLBlendFunc({ GL_SRC_COLOR, GL_ONE, GL_FUNC_ADD });
 			if (player) {
 				DrawLight_Circle(camera.ToGLPos_Logic(player->pos), player->lightRadius, 1.f, player->lightColor);

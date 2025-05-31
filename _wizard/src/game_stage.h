@@ -19,6 +19,7 @@ namespace Game {
 		XY mapSize{};					// cache: map->blocks.gridSize
 
 		int32_t numReadyMonsters{};		// counter
+		bool disableLight{};
 
 		// for monster generator
 		int32_t _n{}, _a{}, _b{};
