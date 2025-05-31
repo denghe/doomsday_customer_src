@@ -254,7 +254,7 @@ namespace Game {
 			});
 
 		// combine content & light
-		gLooper.ShaderBegin(gLooper.shaderQuadInstanceLight).Draw(t, t2, xx::RGBA8_White, 2.f);
+		gLooper.ShaderBegin(gLooper.shaderQuadInstanceLight).Draw(t, t2, xx::RGBA8_White, disableLight ? 1.f : 2.f);
 
 		for (auto i = 0, e = effectExplosions.len; i < e; ++i) {
 			auto& o = effectExplosions[i];

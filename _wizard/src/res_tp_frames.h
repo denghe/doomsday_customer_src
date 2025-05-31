@@ -815,7 +815,7 @@ struct ResTpFrames {
 	xx::Ref<xx::GLTexture> _tex_monster_bullet;
 	GLuint _texid_monster_bullet{};	// unsafe
 	static constexpr xx::XY _size_monster_bullet{ 64, 32 };
-	static constexpr xx::XY _anchor_monster_bullet{ 0.5, 0.5 };
+	static constexpr xx::XY _anchor_monster_bullet{ 0.75, 0.5 };
 	static constexpr xx::UVRect _uvrect_monster_bullet{ 375, 5, 64, 32 };
 
 	xx::Ref<xx::Frame> ui_aim;

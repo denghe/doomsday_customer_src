@@ -65,6 +65,8 @@ namespace Game {
 			}
 		}
 
+		stage->monsterBullets.Update(this);	// sync space index
+
 		return 0;
 	}
 
@@ -72,8 +74,8 @@ namespace Game {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
 			.Draw(gLooper.res._texid_monster_bullet, 1);
 		q->pos = stage->camera.ToGLPos(pos);
-		q->anchor = gLooper.res._anchor_char_bullet;
-		q->scale = radius / gLooper.res._size_char_bullet.y * stage->camera.scale;
+		q->anchor = gLooper.res._anchor_monster_bullet;
+		q->scale = radius / gLooper.res._size_monster_bullet.y * stage->camera.scale;
 		q->radians = radians;
 		q->colorplus = 1.f;
 		q->color = xx::RGBA8_White;
@@ -85,10 +87,10 @@ namespace Game {
 			.Draw(gLooper.res._texid_light_monster_bullet, 1);
 		q->pos = stage->camera.ToGLPos(pos);
 		q->anchor = 0.5f;
-		q->scale = radius / gLooper.res._size_char_bullet.y * stage->camera.scale * 5.f;
+		q->scale = radius / gLooper.res._size_monster_bullet.y * stage->camera.scale * 5.f;
 		q->radians = 0.f;
 		q->colorplus = 1.f;
-		q->color = xx::RGBA8_White;
+		q->color = { 0x35,0,0xcb,0xff };
 		q->texRect.data = ResTpFrames::_uvrect_light_monster_bullet.data;
 	}
 }

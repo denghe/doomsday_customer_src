@@ -16,20 +16,28 @@ namespace Game {
 		if (!owner) return 1;
 
 		// hit check
-		if (auto m = stage->monsters.FindFirstCrossBy9(pos.x, pos.y, radius)) {
-			//auto d = pos - m->pos;
+		if (auto o = stage->monsters.FindFirstCrossBy9(pos.x, pos.y, radius)) {
+			//auto d = pos - o->pos;
 			//auto dmg = damage * damageRatio;
 			//bool isCrit{};
 			//if (stage->rnd.Next<float>(0, 1) < criticalChance) {
 			//	dmg *= criticalBonusRatio;
 			//	isCrit = true;
 			//}
-			//m->Hurt(dmg, d, -d, isCrit);
+			//o->Hurt(dmg, d, -d, isCrit);
 			gLooper.sound.Play(gLooper.res_sound_monster_die_1);
 			stage->camera.Shake(5, 300.f * Cfg::frameDelay, int32_t(0.2f * Cfg::fps), stage->time);
 			stage->effectExplosions.Emplace().Init(pos, 0.5f);
-			stage->effectExplosions.Emplace().Init(m->pos, 3.f);
-			stage->monsters.Remove(m);
+			stage->effectExplosions.Emplace().Init(o->pos, 3.f, { 0x77,22,22,0xff });
+			stage->monsters.Remove(o);
+			return 1;
+		}
+
+		if (auto o = stage->monsterBullets.FindFirstCrossBy9(pos.x, pos.y, radius)) {
+			// todo: pierce effect
+			stage->effectExplosions.Emplace().Init(pos, 0.5f, { 0x35,0,0xcb,0xff });
+			stage->effectExplosions.Emplace().Init(o->pos, 0.5f);
+			stage->monsterBullets.Remove(o);
 			return 1;
 		}
 
