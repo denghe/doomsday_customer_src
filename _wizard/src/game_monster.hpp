@@ -11,8 +11,9 @@ namespace Game {
 		pos = posIdx * Cfg::unitSize + (Cfg::unitSize / 2);
 		radians = 0;
 		radius = 64.f / 2;
-		lightColor = xx::RGBA8_Red;
-		lightRadius = ResTpFrames::_size_char_bullet * 0.5f * 3.f;
+		lightColor = cLightColor;
+		lightColorPlus = cLightColorPlus;
+		lightRadius = ResTpFrames::_size_ef_light * 0.5f * cLightRadiusRatio;
 		monsterFormation = std::move(monsterFormation_);
 		monsterFormationPosIdx = monsterFormationPosIdx_;
 	}

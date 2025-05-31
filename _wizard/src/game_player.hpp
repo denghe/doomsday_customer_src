@@ -14,8 +14,9 @@ namespace Game {
 		pos.x = leftTopPos.x + blocks.cellSize * 0.5f;
 		pos.y = leftTopPos.y + blocks.cellSize - 1.f;
 
-		lightColor = xx::RGBA8_White;
-		lightRadius = ResTpFrames::_size_char_body * 0.5f * 10.f;
+		lightColor = cLightColor;
+		lightColorPlus = cLightColorPlus;
+		lightRadius = ResTpFrames::_size_ef_light * 0.5f * cLightRadiusRatio;
 
 		weapon.Emplace<PlayerWeapon>()->Init(this, {0, -20});
 	}
@@ -105,7 +106,7 @@ namespace Game {
 			pos.y = float(iPosLT.y + size.y);
 			if (fallingFrameCount && ((uint32_t&)pushOutWays & (uint32_t)PushOutWays::Up) > 0) {
 				lastJumpPressed = highJumpStoped = jumping = false;
-				multiJumpedCount = fallingFrameCount = bigJumpFrameCount = 0;
+				multiJumpedCount = fallingFrameCount = highJumpFrameCount = 0;
 				speed.y = 0;
 			}
 			if (moveDir > 0 && ((uint32_t&)pushOutWays & (uint32_t)PushOutWays::Left) > 0) {
@@ -127,7 +128,6 @@ namespace Game {
 			++fallingFrameCount;
 		}
 
-		// todo: prejump
 		// handle jump
 		auto jumpPressed = gLooper.KeyDown(xx::KeyboardKeys::Space);
 		auto downPressed = gLooper.KeyDown(xx::KeyboardKeys::S);
@@ -137,7 +137,7 @@ namespace Game {
 		if (!jumping) {
 			if (firstJumpPressed && fallingFrameCount < cCoyoteNumFrames) {
 				speed.y = cSpeedInit.y;
-				fallingFrameCount = bigJumpFrameCount = 0;
+				fallingFrameCount = highJumpFrameCount = 0;
 				jumping = true;
 			}
 			if (downJumpPressed && speed.y == 0) {
@@ -148,12 +148,12 @@ namespace Game {
 			if (firstJumpPressed && (multiJumpedCount < cExtraJumpCount)) {
 				++multiJumpedCount;
 				highJumpStoped = false;
-				fallingFrameCount = bigJumpFrameCount = 0;
+				fallingFrameCount = highJumpFrameCount = 0;
 				speed.y = cSpeedInit.y;
 			}
 			else if (highJumpPressed && !highJumpStoped) {
-				++bigJumpFrameCount;
-				if (bigJumpFrameCount < cBigJumpNumFrames) {
+				++highJumpFrameCount;
+				if (highJumpFrameCount < cHighJumpNumFrames) {
 					speed.y = cSpeedInit.y;
 				}
 			}

@@ -2,18 +2,20 @@
 
 namespace Game {
 
-	XX_INLINE void EffectExplosion::Init(XY pos_, float scale_, xx::RGBA8 color_) {
-		Init(&gLooper.res.ef_explosion_, 20.f, pos_, scale_, color_);
+	XX_INLINE void EffectExplosion::Init(XY pos_, float scale_, xx::RGBA8 color_, float colorPlus_, xx::RGBA8 lightColor_, float lightColorPlus_, XY lightRadius_) {
+		Init(&gLooper.res.ef_explosion_, 20.f, pos_, scale_, color_, colorPlus_, lightColor_, lightColorPlus_, lightRadius_);
 	}
 
-	XX_INLINE void EffectExplosion::Init(xx::Listi32<xx::Ref<xx::Frame>>* frames_, float frameFPS, XY pos_, float scale_, xx::RGBA8 color_) {
+	XX_INLINE void EffectExplosion::Init(xx::Listi32<xx::Ref<xx::Frame>>* frames_, float frameFPS, XY pos_, float scale_, xx::RGBA8 color_, float colorPlus_, xx::RGBA8 lightColor_, float lightColorPlus_, XY lightRadius_) {
 		frames = frames_;
+		frameDelay = Cfg::frameDelay * frameFPS;
 		pos = pos_;
-		frameIndex = 0;
 		scale = scale_;
 		color = color_;
-		frameDelay = Cfg::frameDelay * frameFPS;
-		lightRadius = gLooper.res._size_ef_light.x * 0.5f * scale_;
+		colorPlus = colorPlus_;
+		lightColor = lightColor_;
+		lightColorPlus = lightColorPlus_;
+		lightRadius = lightRadius_;
 		radians = gLooper.rnd.Next<float>(-M_PI, M_PI);
 	}
 
@@ -31,7 +33,7 @@ namespace Game {
 		q->anchor = { 0.5f, 0.5f };
 		q->scale = stage->camera.scale * scale;
 		q->radians = radians;
-		q->colorplus = 1;
+		q->colorplus = colorPlus;
 		q->color = color;
 		q->texRect.data = frame->textureRect.data;
 	}

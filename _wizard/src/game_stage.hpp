@@ -197,19 +197,19 @@ namespace Game {
 			for (int32_t i = 0, e = playerBullets.len; i < e; ++i) {
 				auto& o = playerBullets[i];
 				if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
-				DrawLight_Circle(camera.ToGLPos_Logic(o->pos), o->lightRadius, 0.7f, o->lightColor);
+				DrawLight_Circle(camera.ToGLPos_Logic(o->pos), o->lightRadius, o->lightColorPlus, o->lightColor);
 			}
 
 			for (auto i = 0, e = effectExplosions.len; i < e; ++i) {
 				auto& o = effectExplosions[i];
 				if (o.pos.x < areaMin.x || o.pos.x > areaMax.x || o.pos.y < areaMin.y || o.pos.y > areaMax.y) continue;
-				DrawLight_Circle(camera.ToGLPos_Logic(o.pos), o.lightRadius, 1.f, o.color);
+				DrawLight_Circle(camera.ToGLPos_Logic(o.pos), o.lightRadius, o.lightColorPlus, o.lightColor);
 			}
 
 			for (auto i = 0, e = monsters.items.len; i < e; ++i) {
 				auto& o = monsters.items[i];
 				if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
-				DrawLight_Circle(camera.ToGLPos_Logic(o->pos), o->lightRadius, 0.7f, o->lightColor);
+				DrawLight_Circle(camera.ToGLPos_Logic(o->pos), o->lightRadius, o->lightColorPlus, o->lightColor);
 			}
 
 			// ...
