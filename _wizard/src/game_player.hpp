@@ -104,8 +104,8 @@ namespace Game {
 			pos.x = float(iPosLT.x + (size.x >> 1));
 			pos.y = float(iPosLT.y + size.y);
 			if (fallingFrameCount && ((uint32_t&)pushOutWays & (uint32_t)PushOutWays::Up) > 0) {
-				longJumpStoped = doubleJumped = jumping = false;
-				fallingFrameCount = bigJumpFrameCount = 0;
+				lastJumpPressed = highJumpStoped = jumping = false;
+				multiJumpedCount = fallingFrameCount = bigJumpFrameCount = 0;
 				speed.y = 0;
 			}
 			if (moveDir > 0 && ((uint32_t&)pushOutWays & (uint32_t)PushOutWays::Left) > 0) {
@@ -127,11 +127,12 @@ namespace Game {
 			++fallingFrameCount;
 		}
 
+		// todo: prejump
 		// handle jump
 		auto jumpPressed = gLooper.KeyDown(xx::KeyboardKeys::Space);
 		auto downPressed = gLooper.KeyDown(xx::KeyboardKeys::S);
 		auto downJumpPressed = jumpPressed && downPressed;
-		auto longJumpPressed = jumpPressed && !downPressed && lastJumpPressed;
+		auto highJumpPressed = jumpPressed && !downPressed && lastJumpPressed;
 		auto firstJumpPressed = jumpPressed && !downPressed && !lastJumpPressed;
 		if (!jumping) {
 			if (firstJumpPressed && fallingFrameCount < cCoyoteNumFrames) {
@@ -144,22 +145,20 @@ namespace Game {
 			}
 		}
 		else {
-			if (firstJumpPressed && !doubleJumped) {
-				doubleJumped = true;
-				longJumpStoped = false;
+			if (firstJumpPressed && (multiJumpedCount < cExtraJumpCount)) {
+				++multiJumpedCount;
+				highJumpStoped = false;
 				fallingFrameCount = bigJumpFrameCount = 0;
 				speed.y = cSpeedInit.y;
 			}
-			else if (longJumpPressed && !longJumpStoped) {
+			else if (highJumpPressed && !highJumpStoped) {
 				++bigJumpFrameCount;
 				if (bigJumpFrameCount < cBigJumpNumFrames) {
 					speed.y = cSpeedInit.y;
 				}
 			}
 			else {
-				if constexpr (cEnableStrictJumpMode) {
-					longJumpStoped = true;
-				}
+				highJumpStoped = true;
 			}
 		}
 		lastJumpPressed = jumpPressed;

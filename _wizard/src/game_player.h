@@ -9,11 +9,7 @@ namespace Game {
 		static constexpr float cDownJumpYOffset{ 1 };
 		static constexpr int32_t cCoyoteNumFrames{ int32_t(0.1 / Cfg::frameDelay) };
 		static constexpr int32_t cBigJumpNumFrames{ int32_t(0.2 / Cfg::frameDelay) };
-		static constexpr bool cEnableStrictJumpMode{ true };
-
-		xx::RGBA8 lightColor{};
-		XY lightRadius{};
-		xx::Shared<PlayerWeapon> weapon;
+		static constexpr int32_t cExtraJumpCount{ 1 };
 
 		XY speed{};
 		int32_t lastXMoveDirection{};		// -1: left  0: stoped  1: right
@@ -21,8 +17,13 @@ namespace Game {
 		int32_t bigJumpFrameCount{};
 		bool lastJumpPressed{};
 		bool jumping{};
-		bool doubleJumped{};
-		bool longJumpStoped{};
+		bool highJumpStoped{};
+		//bool doubleJumped{};
+		int32_t multiJumpedCount{};
+
+		xx::RGBA8 lightColor{};
+		XY lightRadius{};
+		xx::Shared<PlayerWeapon> weapon;
 
 		void Init(struct Stage* stage_, int32_t bornPosIndex = 0);
 		int32_t Update() override;
