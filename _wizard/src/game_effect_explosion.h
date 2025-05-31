@@ -6,16 +6,14 @@ namespace Game {
 		xx::Listi32<xx::Ref<xx::Frame>>* frames{};
 		XY pos{};
 		float frameIndex{}, scale{}, frameDelay{}, radians{};
-		float colorPlus{};
+		float lightRadius{};
 		xx::RGBA8 color{};
-		xx::RGBA8 lightColor{};
-		float lightColorPlus{};
-		XY lightRadius{};
 
-		void Init(xx::Listi32<xx::Ref<xx::Frame>>* frames_, float frameFPS, XY pos_, float scale_, xx::RGBA8 color_, float colorPlus_, xx::RGBA8 lightColor_, float lightColorPlus_, XY lightRadius_);
-		void Init(XY pos_, float scale_, xx::RGBA8 color_, float colorPlus_, xx::RGBA8 lightColor_, float lightColorPlus_, XY lightRadius_);
+		void Init(xx::Listi32<xx::Ref<xx::Frame>>* frames_, float frameFPS, XY pos_, float scale_, xx::RGBA8 color_);
+		void Init(XY pos_, float scale_, xx::RGBA8 color_ = xx::RGBA8_White);
 		int32_t Update();
 		void Draw(struct Stage* stage);
+		void DrawLight(struct Stage* stage);
 	};
 
 }

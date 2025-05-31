@@ -13,7 +13,7 @@ namespace Game {
 		int32_t indexAtItems{ -1 }, indexAtCells{ -1 };
 		Monster* prev{}, * next{};
 
-		xx::Ref<xx::Frame> frame;
+		xx::Ref<xx::Frame> frame, lightFrame;
 		xx::Weak<MonsterFormation> monsterFormation;
 		int32_t monsterFormationPosIdx{};
 
@@ -23,20 +23,16 @@ namespace Game {
 		float shootTimePool{};
 		int32_t _n{};
 
-		xx::RGBA8 lightColor{};
-		float lightColorPlus{};
-		XY lightRadius{};
-
 		bool FlyToTarget();
 		void HandleBlock();
 		void SyncPos();
 		void FaceToPlayer();
 		void TryShoot();
 
-		void Init(Stage* stage_, xx::Ref<xx::Frame> frame_, int32_t bornPosIdx
-			, xx::Weak<MonsterFormation> monsterFormation_, int32_t monsterFormationPosIdx_);
+		void Init(Stage* stage_, int32_t bornPosIdx, xx::Weak<MonsterFormation> monsterFormation_, int32_t monsterFormationPosIdx_);
 		int32_t Update() override;
 		void Draw() override;
+		void DrawLight() override;
 	};
 
 }

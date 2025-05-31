@@ -74,7 +74,7 @@ namespace Game {
 					// make monster
 					auto bornPosIdx = rnd.Next<int32_t>(map->bornPlaces_Monster.len);
 					auto m = xx::MakeShared<Monster>();
-					m->Init(this, gLooper.res.monster_1, bornPosIdx, monsterFormation, _a);
+					m->Init(this, bornPosIdx, monsterFormation, _a);
 					monsters.Add(std::move(m));
 				}
 
@@ -90,7 +90,7 @@ namespace Game {
 			}
 
 			// wait ? seconds for fight
-			for (_b = time + int32_t(Cfg::fps * 1.f); time < _b;) {
+			for (_b = time + int32_t(Cfg::fps * 10.f); time < _b;) {
 				// no monsters?
 				if (!monsters.items.len) {
 					XX_YIELD_TO_BEGIN(_n);
@@ -182,17 +182,6 @@ namespace Game {
 	}
 
 
-	XX_INLINE void Stage::DrawLight_Circle(XY screenPos, XY radius, float colorPlus, xx::RGBA8 color) {
-		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(gLooper.res._texid_ef_light, 1);
-		q->pos = screenPos * scale;
-		q->anchor = 0.5f;
-		q->scale = camera.scale * radius * (1.f / (gLooper.res._size_ef_light / 2.f)) * scale;
-		q->radians = 0;
-		q->colorplus = colorPlus;
-		q->color = color;
-		q->texRect.data = gLooper.res._uvrect_ef_light.data;
-	}
-
 	inline void Stage::Draw() {
 		// calculate display cut area
 		auto areaMin = camera.ToLogicPos({ -gLooper.windowSize_2.x - Cfg::unitSize * 2, gLooper.windowSize_2.y + Cfg::unitSize * 2 });
@@ -227,37 +216,37 @@ namespace Game {
 			});
 
 		// light tex
-		auto bgColor = disableLight ? xx::RGBA8_White : xx::RGBA8{ 33,33,33,0 };
+		auto bgColor = disableLight ? xx::RGBA8_White : xx::RGBA8{ 0,0,0,0 };
 		auto t2 = gLooper.fb.Draw(gLooper.windowSize, true, bgColor, [&] {
 			if (disableLight) return;
 
 			gLooper.GLBlendFunc({ GL_SRC_COLOR, GL_ONE, GL_FUNC_ADD });
 			if (player) {
-				DrawLight_Circle(camera.ToGLPos_Logic(player->pos), player->lightRadius, 1.f, player->lightColor);
+				player->DrawLight();
 			}
 
 			for (int32_t i = 0, e = playerBullets.len; i < e; ++i) {
 				auto& o = playerBullets[i];
 				if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
-				DrawLight_Circle(camera.ToGLPos_Logic(o->pos), o->lightRadius, o->lightColorPlus, o->lightColor);
+				o->DrawLight();
 			}
 
 			for (auto i = 0, e = effectExplosions.len; i < e; ++i) {
 				auto& o = effectExplosions[i];
 				if (o.pos.x < areaMin.x || o.pos.x > areaMax.x || o.pos.y < areaMin.y || o.pos.y > areaMax.y) continue;
-				DrawLight_Circle(camera.ToGLPos_Logic(o.pos), o.lightRadius, o.lightColorPlus, o.lightColor);
+				o.DrawLight(this);
 			}
 
 			for (auto i = 0, e = monsters.items.len; i < e; ++i) {
 				auto& o = monsters.items[i];
 				if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
-				DrawLight_Circle(camera.ToGLPos_Logic(o->pos), o->lightRadius, o->lightColorPlus, o->lightColor);
+				o->DrawLight();
 			}
 
 			for (int32_t i = 0, e = monsterBullets.items.len; i < e; ++i) {
 				auto& o = monsterBullets.items[i];
 				if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
-				DrawLight_Circle(camera.ToGLPos_Logic(o->pos), o->lightRadius, o->lightColorPlus, o->lightColor);
+				o->DrawLight();
 			}
 
 			// ...
@@ -265,7 +254,7 @@ namespace Game {
 			});
 
 		// combine content & light
-		gLooper.ShaderBegin(gLooper.shaderQuadInstanceLight).Draw(t, t2);
+		gLooper.ShaderBegin(gLooper.shaderQuadInstanceLight).Draw(t, t2, xx::RGBA8_White, 2.f);
 
 		for (auto i = 0, e = effectExplosions.len; i < e; ++i) {
 			auto& o = effectExplosions[i];

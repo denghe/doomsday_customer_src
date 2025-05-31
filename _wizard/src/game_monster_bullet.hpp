@@ -7,10 +7,7 @@ namespace Game {
 		stage = shooter_->stage;
 		pos = pos_;
 		radians = radians_;
-		radius = 16.f;
-		lightColor = cLightColor;
-		lightColorPlus = cLightColorPlus;
-		lightRadius = ResTpFrames::_size_ef_light * 0.5f * cLightRadiusRatio;
+		radius = 12.f;
 		moveInc = { std::cosf(radians) * cMoveSpeed, std::sinf(radians) * cMoveSpeed };
 	}
 
@@ -33,7 +30,7 @@ namespace Game {
 				//	isCrit = true;
 				//}
 				//m->Hurt(dmg, d, -d, isCrit);
-				stage->effectExplosions.Emplace().Init(pos, 0.5f, lightColor, 1.f, lightColor, lightColorPlus, lightRadius);
+				stage->effectExplosions.Emplace().Init(pos, 0.5f, { 0x35,0,0xcb,0xff });
 				return 1;
 			}
 		}
@@ -60,7 +57,7 @@ namespace Game {
 				for (int colIdx = criFrom.x; colIdx <= criTo.x; ++colIdx) {
 					if (auto bc = blocks.TryAt({ colIdx, rowIdx }); bc) {
 						if (bc->IsCross(iPosLT, size)) {
-							stage->effectExplosions.Emplace().Init(pos, 1.f, lightColor, 1.f, lightColor, lightColorPlus, lightRadius * 2);
+							stage->effectExplosions.Emplace().Init(pos, 1.f, { 0x35,0,0xcb,0xff });
 							return 1;
 						}
 					}
@@ -73,13 +70,25 @@ namespace Game {
 
 	inline void MonsterBullet::Draw() {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
-			.Draw(gLooper.res._texid_char_bullet, 1);
+			.Draw(gLooper.res._texid_monster_bullet, 1);
 		q->pos = stage->camera.ToGLPos(pos);
 		q->anchor = gLooper.res._anchor_char_bullet;
 		q->scale = radius / gLooper.res._size_char_bullet.y * stage->camera.scale;
 		q->radians = radians;
 		q->colorplus = 1.f;
 		q->color = xx::RGBA8_White;
-		q->texRect.data = ResTpFrames::_uvrect_char_bullet.data;
+		q->texRect.data = ResTpFrames::_uvrect_monster_bullet.data;
+	}
+
+	inline void MonsterBullet::DrawLight() {
+		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
+			.Draw(gLooper.res._texid_light_monster_bullet, 1);
+		q->pos = stage->camera.ToGLPos(pos);
+		q->anchor = 0.5f;
+		q->scale = radius / gLooper.res._size_char_bullet.y * stage->camera.scale * 5.f;
+		q->radians = 0.f;
+		q->colorplus = 1.f;
+		q->color = xx::RGBA8_White;
+		q->texRect.data = ResTpFrames::_uvrect_light_monster_bullet.data;
 	}
 }

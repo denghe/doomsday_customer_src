@@ -20,7 +20,7 @@ namespace Game {
 		if (gLooper.mouse.PressedMBLeft() && !gLooper.mouseEventHandler) {
 			auto sPos = GetShootPos();
 			stage->playerBullets.Emplace().Emplace<PlayerBullet>()->Init(this, sPos, radians);
-			gLooper.sound.Play(gLooper.res_sound_laster_gun_1, 0.5f);
+			gLooper.sound.Play(gLooper.res_sound_laster_gun_1, 0.1f);
 		}
 		return 0;
 	}
@@ -41,5 +41,17 @@ namespace Game {
 		q->colorplus = 1.f;
 		q->color = xx::RGBA8_White;
 		q->texRect.data = ResTpFrames::_uvrect_char_weapon.data;
+	}
+
+	inline void PlayerWeapon::DrawLight() {
+		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
+			.Draw(gLooper.res._texid_light_monster_bullet, 1);
+		q->pos = stage->camera.ToGLPos(GetShootPos());
+		q->anchor = 0.5f;
+		q->scale = 32.f / gLooper.res._size_light_monster_bullet.y * stage->camera.scale * 3.f;
+		q->radians = 0.f;
+		q->colorplus = 1.f;
+		q->color = xx::RGBA8_White;
+		q->texRect.data = ResTpFrames::_uvrect_light_monster_bullet.data;
 	}
 }

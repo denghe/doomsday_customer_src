@@ -8,10 +8,7 @@ namespace Game {
 		stage = owner->stage;
 		pos = pos_;
 		radians = radians_;
-		radius = 16.f;
-		lightColor = cLightColor;
-		lightColorPlus = cLightColorPlus;
-		lightRadius = ResTpFrames::_size_ef_light * 0.5f * cLightRadiusRatio;
+		radius = 12.f;
 		moveInc = { std::cosf(radians) * cMoveSpeed, std::sinf(radians) * cMoveSpeed };
 	}
 
@@ -30,8 +27,8 @@ namespace Game {
 			//m->Hurt(dmg, d, -d, isCrit);
 			gLooper.sound.Play(gLooper.res_sound_monster_die_1);
 			stage->camera.Shake(5, 300.f * Cfg::frameDelay, int32_t(0.2f * Cfg::fps), stage->time);
-			stage->effectExplosions.Emplace().Init(pos, 0.5f, lightColor, 1.f, lightColor, lightColorPlus, lightRadius);
-			stage->effectExplosions.Emplace().Init(m->pos, 3.f, m->lightColor, 1.f, m->lightColor, 1.f, m->lightRadius * 4);
+			stage->effectExplosions.Emplace().Init(pos, 0.5f);
+			stage->effectExplosions.Emplace().Init(m->pos, 3.f);
 			stage->monsters.Remove(m);
 			return 1;
 		}
@@ -57,7 +54,7 @@ namespace Game {
 			for (int colIdx = criFrom.x; colIdx <= criTo.x; ++colIdx) {
 				if (auto bc = blocks.TryAt({ colIdx, rowIdx }); bc) {
 					if (bc->IsCross(iPosLT, size)) {
-						stage->effectExplosions.Emplace().Init(pos, 1.f, lightColor, 1.f, lightColor, lightColorPlus, lightRadius * 2);
+						stage->effectExplosions.Emplace().Init(pos, 1.f);
 						return 1;
 					}
 				}
@@ -75,8 +72,20 @@ namespace Game {
 		q->anchor = gLooper.res._anchor_char_bullet;
 		q->scale = radius / gLooper.res._size_char_bullet.y * stage->camera.scale;
 		q->radians = radians;
-		q->colorplus = 1.f;
+		q->colorplus = 0.5f;
 		q->color = xx::RGBA8_White;
 		q->texRect.data = ResTpFrames::_uvrect_char_bullet.data;
+	}
+
+	inline void PlayerBullet::DrawLight() {
+		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
+			.Draw(gLooper.res._texid_light_monster_bullet, 1);
+		q->pos = stage->camera.ToGLPos(pos);
+		q->anchor = 0.5f;
+		q->scale = radius / gLooper.res._size_char_bullet.y * 32.f / gLooper.res._size_light_monster_bullet.y * stage->camera.scale * 5.f;
+		q->radians = 0.f;
+		q->colorplus = 0.5f;
+		q->color = xx::RGBA8_White;
+		q->texRect.data = ResTpFrames::_uvrect_light_monster_bullet.data;
 	}
 }

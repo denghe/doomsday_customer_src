@@ -46,8 +46,6 @@ namespace Game {
 		void UpdateEffectExplosion();
 		void UpdateMonster();
 		// ...
-
-		void DrawLight_Circle(XY screenPos, XY radius = Cfg::unitRadius * 5, float colorPlus = 1.f, xx::RGBA8 color = xx::RGBA8_White);
 	};
 
 }

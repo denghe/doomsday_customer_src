@@ -2,18 +2,15 @@
 
 namespace Game {
 
-	inline void Monster::Init(Stage* stage_, xx::Ref<xx::Frame> frame_, int32_t bornPosIdx
-		, xx::Weak<MonsterFormation> monsterFormation_, int32_t monsterFormationPosIdx_) {
+	inline void Monster::Init(Stage* stage_, int32_t bornPosIdx, xx::Weak<MonsterFormation> monsterFormation_, int32_t monsterFormationPosIdx_) {
 		assert(!stage);
 		stage = stage_;
-		frame = std::move(frame_);
+		frame = gLooper.res.monster_1;
+		lightFrame = gLooper.res.light_monster_1;
 		auto posIdx = stage->map->bornPlaces_Monster[bornPosIdx];
 		pos = posIdx * Cfg::unitSize + (Cfg::unitSize / 2);
 		radians = 0;
 		radius = 64.f / 2;
-		lightColor = cLightColor;
-		lightColorPlus = cLightColorPlus;
-		lightRadius = ResTpFrames::_size_ef_light * 0.5f * cLightRadiusRatio;
 		monsterFormation = std::move(monsterFormation_);
 		monsterFormationPosIdx = monsterFormationPosIdx_;
 	}
@@ -125,6 +122,19 @@ namespace Game {
 
 	inline void Monster::Draw() {
 		auto& f = *frame;
+		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
+			.Draw(f.tex, 1);
+		q->pos = stage->camera.ToGLPos(pos);
+		q->anchor = *f.anchor;
+		q->scale = radius * 2.f / f.spriteSize.x * stage->camera.scale;
+		q->radians = radians;
+		q->colorplus = 1.f;
+		q->color = xx::RGBA8_White;
+		q->texRect.data = f.textureRect.data;
+	}
+
+	inline void Monster::DrawLight() {
+		auto& f = *lightFrame;
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
 			.Draw(f.tex, 1);
 		q->pos = stage->camera.ToGLPos(pos);

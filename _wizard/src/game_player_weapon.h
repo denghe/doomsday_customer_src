@@ -13,6 +13,7 @@ namespace Game {
 		void Init(Player* owner_, XY holdOffset_);
 		int32_t Update() override;
 		void Draw() override;
+		void DrawLight() override;
 	};
 
 }

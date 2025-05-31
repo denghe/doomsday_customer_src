@@ -179,7 +179,7 @@ namespace Game {
 		q[0].anchor = { 0.5f, 0 };
 		q[0].scale = stage->camera.scale;
 		q[0].radians = 0;
-		q[0].colorplus = 1.f;
+		q[0].colorplus = 0.5f;
 		q[0].color = xx::RGBA8_White;
 		q[0].texRect.data = ResTpFrames::_uvrect_char_body.data;
 		// head
@@ -187,10 +187,24 @@ namespace Game {
 		q[1].anchor = { 0.5f, 0 };
 		q[1].scale = q[0].scale;
 		q[1].radians = 0;
-		q[1].colorplus = 1.f;
+		q[1].colorplus = 0.7f;
 		q[1].color = xx::RGBA8_White;
 		q[1].texRect.data = ResTpFrames::_uvrect_char_head.data;
 		// weapon
 		weapon->Draw();
+	}
+
+	inline void Player::DrawLight() {
+		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
+			.Draw(gLooper.res._texid_ef_light, 1);
+		q[0].pos = stage->camera.ToGLPos(pos);
+		q[0].anchor = 0.5f;
+		q[0].scale = ResTpFrames::_size_char_body.x / ResTpFrames::_size_ef_light.x * stage->camera.scale * 80.f;
+		q[0].radians = 0.f;
+		q[0].colorplus = 0.5f;
+		q[0].color = xx::RGBA8_White;
+		q[0].texRect.data = ResTpFrames::_uvrect_ef_light.data;
+		// weapon
+		weapon->DrawLight();
 	}
 }
