@@ -56,12 +56,6 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 		this->ef_explosion_8 = map["ef_explosion_8"sv];
 		this->_tex_ef_explosion_8 = this->ef_explosion_8->tex;
 		this->_texid_ef_explosion_8 = this->_tex_ef_explosion_8->GetValue();
-		this->ef_explosion_9 = map["ef_explosion_9"sv];
-		this->_tex_ef_explosion_9 = this->ef_explosion_9->tex;
-		this->_texid_ef_explosion_9 = this->_tex_ef_explosion_9->GetValue();
-		this->ef_explosion_10 = map["ef_explosion_10"sv];
-		this->_tex_ef_explosion_10 = this->ef_explosion_10->tex;
-		this->_texid_ef_explosion_10 = this->_tex_ef_explosion_10->GetValue();
 		this->ef_light = map["ef_light"sv];
 		this->_tex_ef_light = this->ef_light->tex;
 		this->_texid_ef_light = this->_tex_ef_light->GetValue();
@@ -460,8 +454,6 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 	ef_explosion_.Add(ef_explosion_6);
 	ef_explosion_.Add(ef_explosion_7);
 	ef_explosion_.Add(ef_explosion_8);
-	ef_explosion_.Add(ef_explosion_9);
-	ef_explosion_.Add(ef_explosion_10);
 	font_outline_.Add(font_outline_32);
 	font_outline_.Add(font_outline_33);
 	font_outline_.Add(font_outline_34);

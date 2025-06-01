@@ -54,6 +54,7 @@ struct Looper : xx::Engine<Looper>, Cfg {
 	xx::Sound sound;
 	xx::Shared<xx::SoundSource> res_sound_laster_gun_1;
 	xx::Shared<xx::SoundSource> res_sound_monster_die_1;
+	xx::Shared<xx::SoundSource> res_sound_hit_1;
 
 
 	xx::FrameBuffer fb;										// for light

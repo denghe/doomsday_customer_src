@@ -156,19 +156,19 @@ namespace Game {
 			assert(c->prev != c);
 		}
 
-		XX_INLINE XYi PosToColRowIndex(XYi const& pos) const {
+		XX_INLINE XYi PosToColRowIndex(XYi pos) const {
 			auto cri = pos / cellSize;
 			assert(!(cri.x < 0 || cri.x >= numCols || cri.y < 0 || cri.y >= numRows));
 			return cri;
 		}
 
-		XX_INLINE XYi PosToColRowIndex(XY const& pos) const {
+		XX_INLINE XYi PosToColRowIndex(XY pos) const {
 			auto cri = (pos * _1_cellSize).As<int32_t>();
 			assert(!(cri.x < 0 || cri.x >= numCols || cri.y < 0 || cri.y >= numRows));
 			return cri;
 		}
 
-		XX_INLINE int32_t ColRowIndexToCellIndex(XYi const& cri) const {
+		XX_INLINE int32_t ColRowIndexToCellIndex(XYi cri) const {
 			auto ci = cri.y * numCols + cri.x;
 			assert(ci >= 0 && ci < cellsLen);
 			return ci;
@@ -181,7 +181,7 @@ namespace Game {
 		}
 
 		// out of range: return nullptr
-		XX_INLINE T* TryAt(XYi const& cri) const {
+		XX_INLINE T* TryAt(XYi cri) const {
 			if (cri.x < 0 || cri.x >= numCols) return nullptr;
 			if (cri.y < 0 || cri.y >= numRows) return nullptr;
 			auto ci = cri.y * numCols + cri.x;
@@ -189,7 +189,7 @@ namespace Game {
 			return cells[ci];
 		}
 
-		XX_INLINE T* At(XYi const& cri) const {
+		XX_INLINE T* At(XYi cri) const {
 			assert(cri.x >= 0 && cri.x < numCols);
 			assert(cri.y >= 0 && cri.y < numRows);
 			auto ci = cri.y * numCols + cri.x;
@@ -201,6 +201,159 @@ namespace Game {
 			items.Clear();
 			memset(cells.get(), 0, sizeof(T*) * cellsLen);
 			memset(counts.get(), 0, sizeof(int32_t) * cellsLen);
+		}
+
+
+
+		// foreach target cell + round 8 = 9 cells
+		// .Foreach9All([](T& o)->void {  all  });
+		// .Foreach9All([](T& o)->bool {  return false == break  });
+		template <bool enableExcept = false, typename F, typename R = std::invoke_result_t<F, T*>>
+		void Foreach9All(XYi pos, F&& func, T* except = {}) {
+			auto cIdx = pos.x / cellSize;
+			if (cIdx < 0 || cIdx >= numCols) return;
+			auto rIdx = pos.y / cellSize;
+			if (rIdx < 0 || rIdx >= numRows) return;
+
+			// 5
+			auto idx = rIdx * numCols + cIdx;
+			auto c = cells[idx];
+			while (c) {
+				auto nex = c->next;
+				if constexpr (enableExcept) {
+					if (c == except) {
+						c = nex;
+						continue;
+					}
+				}
+				if constexpr (std::is_void_v<R>) {
+					func(c);
+				}
+				else {
+					if (func(c)) return;
+				}
+				c = nex;
+			}
+
+			// 6
+			++cIdx;
+			if (cIdx >= numCols) return;
+			++idx;
+			c = cells[idx];
+			while (c) {
+				auto nex = c->next;
+				if constexpr (std::is_void_v<R>) {
+					func(c);
+				}
+				else {
+					if (func(c)) return;
+				}
+				c = nex;
+			}
+
+			// 3
+			++rIdx;
+			if (rIdx >= numRows) return;
+			idx += numCols;
+			c = cells[idx];
+			while (c) {
+				auto nex = c->next;
+				if constexpr (std::is_void_v<R>) {
+					func(c);
+				}
+				else {
+					if (func(c)) return;
+				}
+				c = nex;
+			}
+
+			// 2
+			--idx;
+			c = cells[idx];
+			while (c) {
+				auto nex = c->next;
+				if constexpr (std::is_void_v<R>) {
+					func(c);
+				}
+				else {
+					if (func(c)) return;
+				}
+				c = nex;
+			}
+
+			// 1
+			cIdx -= 2;
+			if (cIdx < 0) return;
+			--idx;
+			c = cells[idx];
+			while (c) {
+				auto nex = c->next;
+				if constexpr (std::is_void_v<R>) {
+					func(c);
+				}
+				else {
+					if (func(c)) return;
+				}
+				c = nex;
+			}
+
+			// 4
+			idx -= numCols;
+			c = cells[idx];
+			while (c) {
+				auto nex = c->next;
+				if constexpr (std::is_void_v<R>) {
+					func(c);
+				}
+				else {
+					if (func(c)) return;
+				}
+				c = nex;
+			}
+
+			// 7
+			rIdx -= 2;
+			if (rIdx < 0) return;
+			idx -= numCols;
+			c = cells[idx];
+			while (c) {
+				auto nex = c->next;
+				if constexpr (std::is_void_v<R>) {
+					func(c);
+				}
+				else {
+					if (func(c)) return;
+				}
+				c = nex;
+			}
+
+			// 8
+			++idx;
+			c = cells[idx];
+			while (c) {
+				auto nex = c->next;
+				if constexpr (std::is_void_v<R>) {
+					func(c);
+				}
+				else {
+					if (func(c)) return;
+				}
+				c = nex;
+			}
+
+			// 9
+			++idx;
+			c = cells[idx];
+			while (c) {
+				auto nex = c->next;
+				if constexpr (std::is_void_v<R>) {
+					func(c);
+				}
+				else {
+					if (func(c)) return;
+				}
+				c = nex;
+			}
 		}
 
 	};

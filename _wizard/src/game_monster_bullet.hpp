@@ -30,6 +30,7 @@ namespace Game {
 				//	isCrit = true;
 				//}
 				//m->Hurt(dmg, d, -d, isCrit);
+				gLooper.sound.Play(gLooper.res_sound_hit_1);
 				stage->effectExplosions.Emplace().Init(pos, 0.5f, { 0x35,0,0xcb,0xff });
 				return 1;
 			}
@@ -57,6 +58,7 @@ namespace Game {
 				for (int colIdx = criFrom.x; colIdx <= criTo.x; ++colIdx) {
 					if (auto bc = blocks.TryAt({ colIdx, rowIdx }); bc) {
 						if (bc->IsCross(iPosLT, size)) {
+							gLooper.sound.Play(gLooper.res_sound_hit_1);
 							stage->effectExplosions.Emplace().Init(pos, 1.f, { 0x35,0,0xcb,0xff });
 							return 1;
 						}

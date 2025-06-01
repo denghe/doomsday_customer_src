@@ -243,7 +243,6 @@
             </struct>
             <key type="filename">pngs/ef_explosion_0.png</key>
             <key type="filename">pngs/ef_explosion_1.png</key>
-            <key type="filename">pngs/ef_explosion_10.png</key>
             <key type="filename">pngs/ef_explosion_2.png</key>
             <key type="filename">pngs/ef_explosion_3.png</key>
             <key type="filename">pngs/ef_explosion_4.png</key>
@@ -251,7 +250,6 @@
             <key type="filename">pngs/ef_explosion_6.png</key>
             <key type="filename">pngs/ef_explosion_7.png</key>
             <key type="filename">pngs/ef_explosion_8.png</key>
-            <key type="filename">pngs/ef_explosion_9.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

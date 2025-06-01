@@ -10,12 +10,64 @@ namespace Game {
 		radians = radians_;
 		radius = 12.f;
 		moveInc = { std::cosf(radians) * cMoveSpeed, std::sinf(radians) * cMoveSpeed };
+		pierceCount = 1;
+		cPierceDelay = int32_t(0.1f * Cfg::fps);
 	}
 
 	inline int32_t PlayerBullet::Update() {
-		if (!owner) return 1;
+		assert(owner);
 
-		// hit check
+		// pierce: clear timeout data
+		auto now = stage->time;
+		auto newTime = now + cPierceDelay;
+		for (int32_t i = pierceBlackList.len - 1; i >= 0; --i) {
+			if (pierceBlackList[i].second < now) {
+				pierceBlackList.SwapRemoveAt(i);
+			}
+		}
+
+		// hit check ( monster bullet )
+		stage->monsterBullets.Foreach9All(pos.As<int32_t>(), [this, newTime](MonsterBullet* o)->bool {
+			auto d = o->pos - pos;
+			auto r = radius + o->radius;
+			if (d.x * d.x + d.y * d.y < r * r) {
+				for (int32_t i = 0, e = pierceBlackList.len; i < e; ++i) {	// check black list
+					if (pierceBlackList[i].first.GetPointer() == o) return false;     // exists: continue
+				}
+				// todo: o.Hurt(this);
+				if (true) {	// o is dead
+					stage->effectExplosions.Emplace().Init(o->pos, 0.5f, { 0x35,0,0xcb,0xff });
+					stage->monsterBullets.Remove(o);
+				}
+				else {
+					pierceBlackList.Emplace(xx::WeakFromThis(o), newTime);	// add to black list
+				}
+				if (--pierceCount < 0) return true;
+			}
+			return false;
+		});
+		if (pierceCount < 0) {
+			stage->effectExplosions.Emplace().Init(pos, 0.5f);
+			return 1;
+		}
+
+		/*
+			if (cfg.radius <= Scene.cellSize) monstersSpaceContainer.Foreach9All(x, y, HitCheck);
+			else monstersSpaceContainer.ForeachByRange(Scene.sd, x, y, cfg.radius, HitCheck);
+		 if canot pierce {
+			if (auto o = stage->monsterBullets.FindFirstCrossBy9(pos.x, pos.y, radius)) {
+				gLooper.sound.Play(gLooper.res_sound_hit_1);
+
+				stage->effectExplosions.Emplace().Init(o->pos, 0.5f, { 0x35,0,0xcb,0xff });
+				stage->monsterBullets.Remove(o);
+
+				stage->effectExplosions.Emplace().Init(pos, 0.5f);
+				return 1;
+			}
+		}
+		*/
+
+		// hit check ( monster )
 		if (auto o = stage->monsters.FindFirstCrossBy9(pos.x, pos.y, radius)) {
 			//auto d = pos - o->pos;
 			//auto dmg = damage * damageRatio;
@@ -24,20 +76,14 @@ namespace Game {
 			//	dmg *= criticalBonusRatio;
 			//	isCrit = true;
 			//}
-			//o->Hurt(dmg, d, -d, isCrit);
+			//auto dead = o->Hurt(dmg, d, -d, isCrit);
 			gLooper.sound.Play(gLooper.res_sound_monster_die_1);
 			stage->camera.Shake(5, 300.f * Cfg::frameDelay, int32_t(0.2f * Cfg::fps), stage->time);
-			stage->effectExplosions.Emplace().Init(pos, 0.5f);
+
 			stage->effectExplosions.Emplace().Init(o->pos, 3.f, { 0x77,22,22,0xff });
 			stage->monsters.Remove(o);
-			return 1;
-		}
 
-		if (auto o = stage->monsterBullets.FindFirstCrossBy9(pos.x, pos.y, radius)) {
-			// todo: pierce effect
-			stage->effectExplosions.Emplace().Init(pos, 0.5f, { 0x35,0,0xcb,0xff });
-			stage->effectExplosions.Emplace().Init(o->pos, 0.5f);
-			stage->monsterBullets.Remove(o);
+			stage->effectExplosions.Emplace().Init(pos, 0.5f);
 			return 1;
 		}
 
@@ -62,6 +108,7 @@ namespace Game {
 			for (int colIdx = criFrom.x; colIdx <= criTo.x; ++colIdx) {
 				if (auto bc = blocks.TryAt({ colIdx, rowIdx }); bc) {
 					if (bc->IsCross(iPosLT, size)) {
+						gLooper.sound.Play(gLooper.res_sound_hit_1);
 						stage->effectExplosions.Emplace().Init(pos, 1.f);
 						return 1;
 					}
@@ -96,4 +143,5 @@ namespace Game {
 		q->color = xx::RGBA8_White;
 		q->texRect.data = ResTpFrames::_uvrect_light_monster_bullet.data;
 	}
+
 }

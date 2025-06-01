@@ -8,6 +8,9 @@ namespace Game {
 		static constexpr float cMoveSpeed{ 500.f / Cfg::fps };
 		xx::Weak<Player> owner;
 
+		int32_t pierceCount{}, cPierceDelay{};
+		xx::Listi32<std::pair<xx::Weak<Drawable>, int32_t>> pierceBlackList;	// second: timeout
+
 		float radius{};
 		float radians{};
 		XY moveInc{};

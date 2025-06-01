@@ -52,6 +52,7 @@ xx::Task<> Looper::MainTask() {
 
 	res_sound_laster_gun_1 = sound.Load(co_await AsyncDownloadFromUrl("res/laster_gun_1.ogg"));
 	res_sound_monster_die_1 = sound.Load(co_await AsyncDownloadFromUrl("res/monster_die_1.ogg"));
+	res_sound_hit_1 = sound.Load(co_await AsyncDownloadFromUrl("res/hit_1.ogg"));
 
 	// if include spine.h, always need Init()
 	auto& se = xx::gSpineEnv;
