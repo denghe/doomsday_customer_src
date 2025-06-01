@@ -16,14 +16,14 @@ namespace Game {
 		xx::Rnd rnd;
 		int32_t time{};
 		float timePool{}, frameDelay{};
+		bool disableLight{};
 		XY mapSize{};					// cache: map->blocks.gridSize
 
-		int32_t numReadyMonsters{};		// counter
-		bool disableLight{};
+		int32_t roundId{};
+		int32_t numReadyMonsters{};		// some logic counter
 
-		// for monster generator
-		int32_t _n{}, _a{}, _b{};
-		// for monster generator
+		int32_t _1n{}, _1a{}, _1b{};	// for MonsterGen
+		int32_t _2n{}, _2a{}, _2b{};	// for Update_
 
 		xx::Listi32<xx::Shared<PlayerBullet>> playerBullets;
 		SpaceIndexCircle<MonsterBullet, true> monsterBullets;
@@ -33,10 +33,16 @@ namespace Game {
 		xx::Shared<Map> map;
 		xx::Listi32<EffectExplosion> effectExplosions;
 
+		void Update_();
+
 		void ForceLimit(XY& pos);
 
-		void MonsterGen();
+		void MonsterFormationInit();
+		int32_t MonsterGen();
+		bool KillRandomMonster();	// return true: no monster for kill
+		bool KillAllMonster();		// return true: no monster for kill
 
+		void UpdateAll();
 		void UpdateCamera();
 		void UpdateMap();
 		void UpdateMonsterFormation();
@@ -46,6 +52,7 @@ namespace Game {
 		void UpdateEffectExplosion();
 		void UpdateMonster();
 		// ...
+
 	};
 
 }

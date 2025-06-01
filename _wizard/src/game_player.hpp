@@ -199,9 +199,9 @@ namespace Game {
 			.Draw(gLooper.res._texid_ef_light, 1);
 		q[0].pos = stage->camera.ToGLPos(pos);
 		q[0].anchor = 0.5f;
-		q[0].scale = ResTpFrames::_size_char_body.x / ResTpFrames::_size_ef_light.x * stage->camera.scale * 80.f;
+		q[0].scale = ResTpFrames::_size_char_body.x / ResTpFrames::_size_ef_light.x * stage->camera.scale * 50.f;
 		q[0].radians = 0.f;
-		q[0].colorplus = 0.5f;
+		q[0].colorplus = 0.6f;
 		q[0].color = xx::RGBA8_White;
 		q[0].texRect.data = ResTpFrames::_uvrect_ef_light.data;
 		// weapon

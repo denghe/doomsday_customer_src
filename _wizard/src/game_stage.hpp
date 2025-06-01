@@ -11,23 +11,38 @@ namespace Game {
 			});
 		y -= 90;
 		ui->MakeChildren<xx::Button>()->Init(1, pos7 + XY{ 10, y }
-			, anchor7, gLooper.btnCfg, U"Speed*1", [&]() {
-				frameDelay = Cfg::frameDelay;
+			, anchor7, gLooper.btnCfg, U"GameSpeed*100", [&]() {
+				frameDelay = Cfg::frameDelay * 100.f;
 			});
 		y -= 90;
 		ui->MakeChildren<xx::Button>()->Init(1, pos7 + XY{ 10, y }
-			, anchor7, gLooper.btnCfg, U"Speed*10", [&]() {
+			, anchor7, gLooper.btnCfg, U"*10", [&]() {
 				frameDelay = Cfg::frameDelay * 10.f;
 			});
 		y -= 90;
 		ui->MakeChildren<xx::Button>()->Init(1, pos7 + XY{ 10, y }
-			, anchor7, gLooper.btnCfg, U"Speed*20", [&]() {
-				frameDelay = Cfg::frameDelay * 20.f;
+			, anchor7, gLooper.btnCfg, U"*5", [&]() {
+				frameDelay = Cfg::frameDelay * 5.f;
 			});
 		y -= 90;
 		ui->MakeChildren<xx::Button>()->Init(1, pos7 + XY{ 10, y }
-			, anchor7, gLooper.btnCfg, U"Speed*0.2", [&]() {
-				frameDelay = Cfg::frameDelay * 0.2f;
+			, anchor7, gLooper.btnCfg, U"*1", [&]() {
+				frameDelay = Cfg::frameDelay;
+			});
+		y -= 90;
+		ui->MakeChildren<xx::Button>()->Init(1, pos7 + XY{ 10, y }
+			, anchor7, gLooper.btnCfg, U"*0.7", [&]() {
+				frameDelay = Cfg::frameDelay * 0.7f;
+			});
+		y -= 90;
+		ui->MakeChildren<xx::Button>()->Init(1, pos7 + XY{ 10, y }
+			, anchor7, gLooper.btnCfg, U"*0.3", [&]() {
+				frameDelay = Cfg::frameDelay * 0.3f;
+			});
+		y -= 90;
+		ui->MakeChildren<xx::Button>()->Init(1, pos7 + XY{ 10, y }
+			, anchor7, gLooper.btnCfg, U"*0.1", [&]() {
+				frameDelay = Cfg::frameDelay * 0.1f;
 			});
 		ui->MakeChildren<xx::Button>()->Init(1, pos8 + XY{ 10, -10 }
 			, anchor8, gLooper.btnCfg, U"Switch Light", [&]() {
@@ -47,7 +62,7 @@ namespace Game {
 		mapSize = map->blocks.gridSize;
 		camera.SetOriginal(mapSize / 2);
 		player.Emplace()->Init(this);
-		monsterFormation.Emplace()->Init(this);
+		monsterFormation.Emplace<MonsterFormation_1>()->Init(this);
 		monsters.Init(&gLooper.rdd, map->blocks.numRows, map->blocks.numCols, map->blocks.cellSize);
 		monsterBullets.Init(&gLooper.rdd, map->blocks.numRows, map->blocks.numCols, map->blocks.cellSize);
 		frameDelay = Cfg::frameDelay;
@@ -62,66 +77,125 @@ namespace Game {
 			pos.y = mapSize.y - 0.1f;
 	}
 
-	inline void Stage::MonsterGen() {
-		XX_BEGIN(_n);
-		while (true) {
-			// random target pos
-			monsterFormation->FillShufflePoss();
+	XX_INLINE void Stage::MonsterFormationInit() {
+		switch (roundId) {
+		case 0: monsterFormation.Emplace<MonsterFormation_1>()->Init(this); break;
+		// ....
+		default: monsterFormation.Emplace<MonsterFormation>()->Init(this);
+		}
+		monsterFormation->FillShufflePoss();
+	}
 
-			// batch generate monsters
-			for (_a = 0; _a < monsterFormation->count; ++_a) {
-				{
-					// make monster
-					auto bornPosIdx = rnd.Next<int32_t>(map->bornPlaces_Monster.len);
-					auto m = xx::MakeShared<Monster>();
-					m->Init(this, bornPosIdx, monsterFormation, _a);
-					monsters.Add(std::move(m));
-				}
+	inline int32_t Stage::MonsterGen() {
+		XX_BEGIN(_1n);
 
-				// sleep
-				for (_b = time + int32_t(Cfg::fps * 0.01f); time < _b;) {
-					XX_YIELD(_n);
-				}
+		// batch generate monsters
+		for (_1a = 0; _1a < monsterFormation->count; ++_1a) {
+			{
+				// make monster
+				auto bornPosIdx = rnd.Next<int32_t>(map->bornPlaces_Monster.len);
+				auto m = xx::MakeShared<Monster>();
+				m->Init(this, bornPosIdx, monsterFormation, _1a);
+				monsters.Add(std::move(m));
 			}
 
-			// wait all monster ready
+			// sleep
+			for (_1b = time + int32_t(Cfg::fps * 0.01f); time < _1b;) {
+				XX_YIELD_I(_1n);
+			}
+		}
+		XX_END(_1n);
+		_1n = _1a = _1b = {};	// cleanup for next use
+		return 1;
+	}
+
+	XX_INLINE bool Stage::KillRandomMonster() {
+		if (auto len = monsters.items.len; !len) return true;
+		else {
+			auto i = rnd.Next<int32_t>(len);
+			auto& o = monsters.items[i];
+			gLooper.sound.Play(gLooper.res_sound_monster_die_1);
+			effectExplosions.Emplace().Init(o->pos, 3.f, { 0x77,22,22,0xff });
+			camera.Shake(5, 300.f * Cfg::frameDelay, int32_t(0.2f * Cfg::fps), time);
+			monsters.Remove(o);
+			return false;
+		}
+	}
+
+	XX_INLINE bool Stage::KillAllMonster() {
+		XX_BEGIN(_1n);
+		while (!KillRandomMonster()) {
+			for (_1b = time + int32_t(Cfg::fps * 0.01f); time < _1b;) { XX_YIELD_F(_1n); }	// sleep
+			XX_YIELD_F(_1n);
+		}
+		XX_END(_1n);
+		_1n = _1a = _1b = {};	// cleanup for next use
+		return true;
+	}
+
+	XX_INLINE void Stage::Update_() {
+		XX_BEGIN(_2n);
+		while (true) {
+
+			MonsterFormationInit();
+
+			// wait all monster generate
+			while (!MonsterGen()) {
+				UpdateAll();
+				XX_YIELD(_2n);
+			}
+
+			// wait all monster ready ( fly to target )
 			while (numReadyMonsters != monsters.items.len) {
-				XX_YIELD(_n);
+				UpdateAll();
+				XX_YIELD(_2n);
 			}
 
 			// wait ? seconds for fight
-			for (_b = time + int32_t(Cfg::fps * 10.f); time < _b;) {
-				// no monsters?
-				if (!monsters.items.len) {
-					XX_YIELD_TO_BEGIN(_n);
-				}
-				XX_YIELD(_n);
+			for (_2b = time + int32_t(Cfg::fps * 10.f); time < _2b;) {
+				UpdateAll();
+				XX_YIELD(_2n);
+				if (!monsters.items.len) break;	// no monsters?
 			}
 
-			// if (!monsters.items.len)  escape? or move to player? path finding?
+			// timeout + any monster exists. if (!monsters.items.len)  escape? or move to player? path finding?
+
+			// kill all monsters
+			while (!KillAllMonster()) {
+				UpdateAll();
+				XX_YIELD(_2n);
+			}
+
+			// wait ? seconds for next round
+			for (_2b = time + int32_t(Cfg::fps * 3.f); time < _2b;) {
+				UpdateAll();
+				XX_YIELD(_2n);
+			}
+
+			// next round
+			++roundId;
 		}
-		XX_END(_n);
+		XX_END(_2n);
 	}
 
 	inline void Stage::Update() {
 		timePool += frameDelay;
 		while (timePool >= Cfg::frameDelay) {
 			timePool -= Cfg::frameDelay;
-
-			UpdateCamera();
-			UpdateMap();
-			UpdateMonsterFormation();
-			UpdateEffectExplosion();
-			UpdatePlayerBullet();
-			UpdateMonsterBullet();
-			UpdateMonster();
-			UpdatePlayer();
-			// ... more updates
-
-			MonsterGen();
-
+			Update_();
 			++time;
 		}
+	}
+
+	inline void Stage::UpdateAll() {
+		UpdateCamera();
+		UpdateMap();
+		UpdateMonsterFormation();
+		UpdateEffectExplosion();
+		UpdatePlayerBullet();
+		UpdateMonsterBullet();
+		UpdateMonster();
+		UpdatePlayer();
 	}
 
 	XX_INLINE void Stage::UpdateCamera() {
@@ -180,7 +254,6 @@ namespace Game {
 			}
 		}
 	}
-
 
 	inline void Stage::Draw() {
 		// calculate display cut area

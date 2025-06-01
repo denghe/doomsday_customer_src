@@ -4,10 +4,12 @@ namespace Game {
 	inline void MonsterFormation::Init(Stage* stage_) {
 		assert(!stage);
 		stage = stage_;
-		for (auto& crIdx : stage_->map->flyTargets_Monster) {
-			auto pos = crIdx * Cfg::unitSize + (Cfg::unitSize * 0.5f);
-			poss.Emplace(pos);
+		auto& fts = stage_->map->flyTargets_Monster;
+
+		for (auto& crIdx : fts) {
+			poss.Emplace(IdxToPos(crIdx));
 		}
+
 		assert(poss.len);
 		shufflePoss.AddRange(poss.buf, poss.len);
 		count = poss.len;
@@ -26,7 +28,11 @@ namespace Game {
 		XX_END(_n);
 	}
 
-	inline XY MonsterFormation::GetPos(int32_t idx) {
+	XX_INLINE XY MonsterFormation::IdxToPos(XYi crIdx) {
+		return crIdx * Cfg::unitSize + (Cfg::unitSize * 0.5f);
+	}
+
+	XX_INLINE XY MonsterFormation::GetPos(int32_t idx) {
 		return poss[idx] + offset;
 	}
 
@@ -40,4 +46,42 @@ namespace Game {
 			}
 		}
 	}
+
+		/*
+Ｂ　　　　ｍ　　　ｍ　　　ｍ　　　ｍ　　　ｍ　　　　Ｂ
+Ｂ　　　　　　　　　　　　　　　　　　　　　　　　　Ｂ
+Ｂ　　　０　１　２　３　４　５　６　７　８　９　　　Ｂ	0 ~ 9
+Ｂ　　　　０　１　２　３　４　５　６　７　８　　　　Ｂ	10 ~ 18
+Ｂ　　　０　１　２　３　４　５　６　７　８　９　　　Ｂ	19 ~ 28
+Ｂ　　　　０　１　２　３　４　５　６　７　８　　　　Ｂ	29 ~ 37
+Ｂ　　　０　１　２　３　４　５　６　７　８　９　　　Ｂ	38 ~ 47
+Ｂ　　　　０　１　２　３　４　５　６　７　８　　　　Ｂ	48 ~ 56
+Ｂ　　　０　１　２　３　４　５　６　７　８　９　　　Ｂ	57 ~ 66
+Ｂ　　　　０　１　２　３　４　５　６　７　８　　　　Ｂ	67 ~ 75
+Ｂ　　　　　　　　　　　　　　　　　　　　　　　　　Ｂ
+Ｂ　　　　　　　　　　　　　　　　　　　　　　　　　Ｂ
+ＢＢＢ　　　　　　　　　　　　　　　　　ＢＢＢＢＢＢＢ
+		*/
+
+	/**************************************************************************/
+	/**************************************************************************/
+	// MonsterFormation_1
+
+	inline void MonsterFormation_1::Init(Stage* stage_) {
+		assert(!stage);
+		stage = stage_;
+		auto& fts = stage_->map->flyTargets_Monster;
+
+		poss.Emplace(IdxToPos(fts[29 + 4]));
+		poss.Emplace(IdxToPos(fts[48 + 4]));
+		poss.Emplace(IdxToPos(fts[67 + 4]));
+
+		shufflePoss.AddRange(poss.buf, poss.len);
+		count = poss.len;
+	}
+
+	inline void MonsterFormation_1::Update() {
+		offset.x = stage->player->pos.x - poss[0].x;
+	}
+
 }

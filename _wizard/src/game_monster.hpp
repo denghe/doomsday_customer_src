@@ -42,18 +42,18 @@ namespace Game {
 		}
 	}
 
-	XX_INLINE bool Monster::FlyToTarget() {
+	XX_INLINE bool Monster::MoveToTarget(float speed) {
 		auto tarPos = monsterFormation->GetPos(monsterFormationPosIdx);
 		auto d = tarPos - pos;
 		auto dd = d.x * d.x + d.y * d.y;
-		if (dd < cMoveSpeed * cMoveSpeed) {
+		if (dd < speed * speed) {
 			pos = tarPos;
 			return true;
 		}
 		else {
 			auto mag = std::sqrtf(dd);
 			auto norm = d / mag;
-			pos += norm * cMoveSpeed;
+			pos += norm * speed;
 			return false;
 		}
 	}
@@ -102,7 +102,7 @@ namespace Game {
 	LabFly:
 		XX_YIELD_I(_n);
 		{
-		bool success = FlyToTarget();
+		bool success = MoveToTarget(cFlySpeed);
 		FaceToPlayer();
 		SyncPos();
 		if (!success) goto LabFly;
@@ -110,7 +110,7 @@ namespace Game {
 	LabFight:
 		XX_YIELD_I(_n);
 		++stage->numReadyMonsters;
-		FlyToTarget();
+		MoveToTarget(cMoveSpeed);
 		HandleBlock();
 		FaceToPlayer();
 		SyncPos();
