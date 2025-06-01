@@ -36,6 +36,7 @@ namespace Game {
 				}
 				// todo: o.Hurt(this);
 				if (true) {	// o is dead
+					gLooper.sound.Play(gLooper.res_sound_hit_1);
 					stage->effectExplosions.Emplace().Init(o->pos, 0.5f, { 0x35,0,0xcb,0xff });
 					stage->monsterBullets.Remove(o);
 				}
@@ -47,6 +48,7 @@ namespace Game {
 			return false;
 		});
 		if (pierceCount < 0) {
+			gLooper.sound.Play(gLooper.res_sound_hit_1);
 			stage->effectExplosions.Emplace().Init(pos, 0.5f);
 			return 1;
 		}
