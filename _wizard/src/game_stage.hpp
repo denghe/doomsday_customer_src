@@ -2,52 +2,65 @@
 
 namespace Game {
 
-	inline void Stage::MakeUI() {
-		ui.Emplace()->Init(0, {}, scale);
+	inline void Stage::MakeUI_Develop() {
 		float y = -10;
 		ui->MakeChildren<xx::Button>()->Init(1, pos7 + XY{ 10, y }
-			, anchor7, gLooper.btnCfg, U"exit", [&]() {
+			, anchor7, gLooper.btnCfgSmall, U"exit", [&]() {
 				gLooper.DelaySwitchTo<Game::MainMenu>();
 			});
-		y -= 90;
+		y -= 50;
 		ui->MakeChildren<xx::Button>()->Init(1, pos7 + XY{ 10, y }
-			, anchor7, gLooper.btnCfg, U"GameSpeed*100", [&]() {
+			, anchor7, gLooper.btnCfgSmall, U"GameSpeed*100", [&]() {
 				frameDelay = Cfg::frameDelay * 100.f;
 			});
-		y -= 90;
+		y -= 50;
 		ui->MakeChildren<xx::Button>()->Init(1, pos7 + XY{ 10, y }
-			, anchor7, gLooper.btnCfg, U"*10", [&]() {
+			, anchor7, gLooper.btnCfgSmall, U"*10", [&]() {
 				frameDelay = Cfg::frameDelay * 10.f;
 			});
-		y -= 90;
+		y -= 50;
 		ui->MakeChildren<xx::Button>()->Init(1, pos7 + XY{ 10, y }
-			, anchor7, gLooper.btnCfg, U"*5", [&]() {
+			, anchor7, gLooper.btnCfgSmall, U"*5", [&]() {
 				frameDelay = Cfg::frameDelay * 5.f;
 			});
-		y -= 90;
+		y -= 50;
 		ui->MakeChildren<xx::Button>()->Init(1, pos7 + XY{ 10, y }
-			, anchor7, gLooper.btnCfg, U"*1", [&]() {
+			, anchor7, gLooper.btnCfgSmall, U"*1", [&]() {
 				frameDelay = Cfg::frameDelay;
 			});
-		y -= 90;
+		y -= 50;
 		ui->MakeChildren<xx::Button>()->Init(1, pos7 + XY{ 10, y }
-			, anchor7, gLooper.btnCfg, U"*0.7", [&]() {
+			, anchor7, gLooper.btnCfgSmall, U"*0.7", [&]() {
 				frameDelay = Cfg::frameDelay * 0.7f;
 			});
-		y -= 90;
+		y -= 50;
 		ui->MakeChildren<xx::Button>()->Init(1, pos7 + XY{ 10, y }
-			, anchor7, gLooper.btnCfg, U"*0.3", [&]() {
+			, anchor7, gLooper.btnCfgSmall, U"*0.3", [&]() {
 				frameDelay = Cfg::frameDelay * 0.3f;
 			});
-		y -= 90;
+		y -= 50;
 		ui->MakeChildren<xx::Button>()->Init(1, pos7 + XY{ 10, y }
-			, anchor7, gLooper.btnCfg, U"*0.1", [&]() {
+			, anchor7, gLooper.btnCfgSmall, U"*0.1", [&]() {
 				frameDelay = Cfg::frameDelay * 0.1f;
 			});
-		ui->MakeChildren<xx::Button>()->Init(1, pos8 + XY{ 10, -10 }
-			, anchor8, gLooper.btnCfg, U"Switch Light", [&]() {
+		ui->MakeChildren<xx::Button>()->Init(1, pos9 + XY{ -10, -10 }
+			, anchor9, gLooper.btnCfgSmall, U"Switch Light", [&]() {
 				disableLight = !disableLight;
 			});
+	}
+
+	inline void Stage::MakeUI() {
+		ui.Emplace()->Init(0, {}, scale);
+		MakeUI_Develop();
+		if (uiInfo) {
+			ui->AddChildren(uiInfo);
+			uiInfo->position = pos5 + XY{ 0, 450 };
+			uiInfo->FillTransRecursive();
+		}
+		else {
+			uiInfo = ui->MakeChildren<xx::Label>();
+			uiInfo->Init(1, pos5 + XY{ 0, 450 }, 2.f, anchor5, xx::RGBA8_White, "");
+		}
 	}
 
 	inline void Stage::OnWindowSizeChanged() {
@@ -60,12 +73,13 @@ namespace Game {
 		MakeUI();
 		map.Emplace<Map>()->Init();
 		mapSize = map->blocks.gridSize;
+		camera.SetBaseScale(scale);
 		camera.SetOriginal(mapSize / 2);
 		player.Emplace()->Init(this);
-		monsterFormation.Emplace<MonsterFormation_1>()->Init(this);
 		monsters.Init(&gLooper.rdd, map->blocks.numRows, map->blocks.numCols, map->blocks.cellSize);
 		monsterBullets.Init(&gLooper.rdd, map->blocks.numRows, map->blocks.numCols, map->blocks.cellSize);
 		frameDelay = Cfg::frameDelay;
+		roundId = 1;
 	}
 
 	inline void Stage::ForceLimit(XY& pos) {
@@ -77,16 +91,16 @@ namespace Game {
 			pos.y = mapSize.y - 0.1f;
 	}
 
-	XX_INLINE void Stage::MonsterFormationInit() {
+	XX_INLINE void Stage::InitMonsterFormation() {
 		switch (roundId) {
-		case 0: monsterFormation.Emplace<MonsterFormation_1>()->Init(this); break;
+		case 1: monsterFormation.Emplace<MonsterFormation_1>()->Init(this); break;
 		// ....
 		default: monsterFormation.Emplace<MonsterFormation>()->Init(this);
 		}
 		monsterFormation->FillShufflePoss();
 	}
 
-	inline int32_t Stage::MonsterGen() {
+	inline int32_t Stage::GenerateMonster() {
 		XX_BEGIN(_1n);
 
 		// batch generate monsters
@@ -137,10 +151,26 @@ namespace Game {
 		XX_BEGIN(_2n);
 		while (true) {
 
-			MonsterFormationInit();
+			// set monster formation by round id
+			InitMonsterFormation();
+
+			// show tips ? seconds
+			uiInfo->SetText(xx::ToString("Round ", roundId));
+			for (_2b = time + int32_t(Cfg::fps * 1.f); time < _2b;) {
+				UpdateAll();
+				XX_YIELD(_2n);
+			}
+
+			// show tips ? seconds
+			uiInfo->SetText("Begin !");
+			for (_2b = time + int32_t(Cfg::fps * 1.f); time < _2b;) {
+				UpdateAll();
+				XX_YIELD(_2n);
+			}
+			uiInfo->SetText();
 
 			// wait all monster generate
-			while (!MonsterGen()) {
+			while (!GenerateMonster()) {
 				UpdateAll();
 				XX_YIELD(_2n);
 			}
@@ -153,12 +183,18 @@ namespace Game {
 
 			// wait ? seconds for fight
 			for (_2b = time + int32_t(Cfg::fps * 10.f); time < _2b;) {
+				{
+					auto secs = int32_t((_2b - time) / Cfg::fps);
+					uiInfo->SetText(xx::ToString(secs));
+				}
 				UpdateAll();
 				XX_YIELD(_2n);
 				if (!monsters.items.len) break;	// no monsters?
 			}
+			uiInfo->SetText();
 
-			// timeout + any monster exists. if (!monsters.items.len)  escape? or move to player? path finding?
+			// timeout + any monster exists. if (!monsters.items.len)
+			// escape? or move to player? path finding?
 
 			// kill all monsters
 			while (!KillAllMonster()) {

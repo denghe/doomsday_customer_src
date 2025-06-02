@@ -91,5 +91,12 @@ xx::Task<> Looper::MainTask() {
 	btnCfg.txtScale = { 2 };
 	btnCfg.iconPadding = { 5 };
 
+	btnCfgSmall = btnCfg;
+	btnCfgSmall.borderScale = { 2.f };
+	btnCfgSmall.txtPadding = { 10, 3 };
+	btnCfgSmall.txtPaddingRightBottom = { 10, 5 };
+	btnCfgSmall.txtScale = { 1 };
+	btnCfgSmall.iconPadding = { 3 };
+
 	scene.Emplace<Game::MainMenu>()->Init();
 }

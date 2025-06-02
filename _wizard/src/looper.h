@@ -62,7 +62,7 @@ struct Looper : xx::Engine<Looper>, Cfg {
 	xx::Ref<xx::GLTexture> res_nums1;						// for effect damage number
 	ResTpFrames res;										// res/pngs.blist + png
 
-	xx::Scale9SpriteConfig btnCfg;
+	xx::Scale9SpriteConfig btnCfg, btnCfgSmall;
 	xx::SpaceGridRingDiffuseData rdd;
 	xx::Listi32<std::pair<float, Game::Drawable*>> yDraws;
 };

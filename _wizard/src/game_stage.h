@@ -5,6 +5,8 @@ namespace Game {
 	// stage's base
 	struct Stage : Scene {
 		xx::Shared<xx::Node> ui;
+		xx::Shared<xx::Label> uiInfo;
+		void MakeUI_Develop();
 		void MakeUI();
 
 		void Init() override;
@@ -22,7 +24,7 @@ namespace Game {
 		int32_t roundId{};
 		int32_t numReadyMonsters{};		// some logic counter
 
-		int32_t _1n{}, _1a{}, _1b{};	// for MonsterGen
+		int32_t _1n{}, _1a{}, _1b{};	// for GenerateMonster
 		int32_t _2n{}, _2a{}, _2b{};	// for Update_
 
 		xx::Listi32<xx::Shared<PlayerBullet>> playerBullets;
@@ -37,8 +39,8 @@ namespace Game {
 
 		void ForceLimit(XY& pos);
 
-		void MonsterFormationInit();
-		int32_t MonsterGen();
+		void InitMonsterFormation();
+		int32_t GenerateMonster();
 		bool KillRandomMonster();	// return true: no monster for kill
 		bool KillAllMonster();		// return true: no monster for kill
 
