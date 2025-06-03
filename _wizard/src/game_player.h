@@ -29,6 +29,8 @@ namespace Game {
 		XY lightRadius{};
 		xx::Shared<PlayerWeapon> weapon;
 
+		PlayerProperties pp;
+
 		XYi GetPosLT();
 		void Init(struct Stage* stage_, int32_t bornPosIndex = 0);
 		int32_t Update() override;

@@ -19,6 +19,7 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 #include "game_map.h"
 #include "game_player_bullet.h"
 #include "game_player_weapon.h"
+#include "game_player_properties.h"
 #include "game_player.h"
 #include "game_monster_formation.h"
 #include "game_monster_bullet.h"
