@@ -78,6 +78,8 @@ namespace Game {
 		player.Emplace()->Init(this);
 		monsters.Init(&gLooper.rdd, map->blocks.numRows, map->blocks.numCols, map->blocks.cellSize);
 		monsterBullets.Init(&gLooper.rdd, map->blocks.numRows, map->blocks.numCols, map->blocks.cellSize);
+		effectExplosions.Reserve(10000);
+		effectTexts.Init(this, 10000);
 		frameDelay = Cfg::frameDelay;
 		roundId = 1;
 	}
@@ -232,6 +234,7 @@ namespace Game {
 		UpdateMonsterBullet();
 		UpdateMonster();
 		UpdatePlayer();
+		effectTexts.Update();
 	}
 
 	XX_INLINE void Stage::UpdateCamera() {
@@ -367,6 +370,13 @@ namespace Game {
 
 		for (auto i = 0, e = effectExplosions.len; i < e; ++i) {
 			auto& o = effectExplosions[i];
+			if (o.pos.x < areaMin.x || o.pos.x > areaMax.x || o.pos.y < areaMin.y || o.pos.y > areaMax.y) continue;
+			o.Draw(this);
+		}
+
+		// draw effect texts
+		for (int32_t i = 0, e = effectTexts.ens.Count(); i < e; ++i) {
+			auto& o = effectTexts.ens[i];
 			if (o.pos.x < areaMin.x || o.pos.x > areaMax.x || o.pos.y < areaMin.y || o.pos.y > areaMax.y) continue;
 			o.Draw(this);
 		}

@@ -3,16 +3,22 @@
 namespace Game {
 
 	XX_INLINE void EffectText::Init(xx::XY const& pos_, xx::XY const& dist_, xx::RGBA8 color_, float scale_, double value_) {
-		// calculate center point
-		pos = { pos_.x - ResTpFrames::_size_font_outline_48.x * scale_ * len * 0.5f, pos_.y };
+		pos = pos_;
 		// calculate move frame inc with random speed
 		auto _1_mag = 1.f / std::sqrtf(dist_.x * dist_.x + dist_.y * dist_.y);
 		inc = dist_ * _1_mag * gLooper.rnd.Next<float>(cMoveSpeedMin, cMoveSpeedMax);
 		color = color_;
 		alpha = 1;
 		scale = scale_;
-		//std::numeric_limits<double>::min()
-		len = xx::ToStringEN(value_, buf.data());
+
+		auto s = xx::ToString((int32_t)(value_));
+		auto buf = s.data();
+		auto len = s.size();
+		auto tar = (uint8_t*)&data.numbers;
+		for (size_t i = 0; i < len; ++i) {
+			tar[i] = buf[i] - 48;
+		}
+		tar[15] = (uint8_t)len;
 	}
 
 	XX_INLINE int32_t EffectText::Update(Stage* stage) {
@@ -33,23 +39,10 @@ namespace Game {
 	}
 
 	XX_INLINE void EffectText::Draw(Stage* stage) {
-		auto& fs = gLooper.res.font_outline_;
-		auto qs = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(fs[0]->tex, len);
-		auto basePos = stage->camera.ToGLPos(pos);
-		auto s = stage->camera.scale * scale;
-		auto widthInc = ResTpFrames::_size_font_outline_48.x * s;
-		basePos.x -= widthInc * len / 2;
-		for (int32_t i = 0; i < len; ++i) {
-			auto& q = qs[i];
-			q.pos = basePos;
-			q.anchor = { 0, 0.5f };
-			q.scale = s;
-			q.radians = 0;
-			q.colorplus = 1;
-			q.color = {color.r, color.g, color.b, (uint8_t)(color.a * alpha)};
-			q.texRect.data = fs[buf[i] - 32]->textureRect.data;
-			basePos.x += widthInc;
-		}
+		data.pos = stage->camera.ToGLPos(pos);
+		data.scale = stage->camera.scale * scale;
+		data.color = color;
+		gLooper.ShaderBegin(gLooper.shaderNumbers).Draw(data);
 	}
 
 	XX_INLINE void EffectTextManager::Init(Stage* stage_, int32_t cap) {

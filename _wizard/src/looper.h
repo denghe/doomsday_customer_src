@@ -14,6 +14,7 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 #include "game_scene.h"
 #include "game_camera.h"
 #include "game_effect_explosion.h"
+#include "game_effect_numbers.h"
 #include "game_drawable.h"
 #include "game_block.h"
 #include "game_map.h"
@@ -26,7 +27,6 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 #include "game_monster_formation.h"
 #include "game_monster_bullet.h"
 #include "game_monster.h"
-//#include "game_effect_numbers.h"
 #include "game_stage.h"
 #include "game_main_menu.h"
 // more include here ...

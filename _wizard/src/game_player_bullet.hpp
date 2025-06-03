@@ -74,19 +74,15 @@ namespace Game {
 
 		// hit check ( monster )
 		if (auto o = stage->monsters.FindFirstCrossBy9(pos.x, pos.y, radius)) {
-			//auto d = pos - o->pos;
-			//auto dmg = damage * damageRatio;
-			//bool isCrit{};
-			//if (stage->rnd.Next<float>(0, 1) < criticalChance) {
-			//	dmg *= criticalBonusRatio;
-			//	isCrit = true;
-			//}
-			//auto dead = o->Hurt(dmg, d, -d, isCrit);
-			gLooper.sound.Play(gLooper.res_sound_monster_die_1);
-			stage->camera.Shake(5, 300.f * Cfg::frameDelay, int32_t(0.2f * Cfg::fps), stage->time);
-
-			o->Hurt(dp.first);
-			// todo: show dp number?
+			auto [d, dead] = o->Hurt(dp.first);
+			if (dead) {
+				gLooper.sound.Play(gLooper.res_sound_monster_die_1);
+				stage->camera.Shake(5, 300.f * Cfg::frameDelay, int32_t(0.2f * Cfg::fps), stage->time);
+			}
+			else {
+				gLooper.sound.Play(gLooper.res_sound_hit_1);
+			}
+			stage->effectTexts.Add(pos, o->pos - pos, dp.second ? xx::RGBA8_Red : xx::RGBA8_White, 2.f, d);
 			stage->effectExplosions.Emplace().Init(pos, 0.5f);
 			return 1;
 		}

@@ -34,6 +34,7 @@ namespace Game {
 		SpaceIndexCircle<Monster, true> monsters;
 		xx::Shared<Map> map;
 		xx::Listi32<EffectExplosion> effectExplosions;
+		EffectTextManager effectTexts;
 
 		void Update_();
 

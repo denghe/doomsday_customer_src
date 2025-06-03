@@ -11,8 +11,7 @@ namespace Game {
 		constexpr static float cFadeOutDurationSeconds{ 0.2f };
 		constexpr static float cFadeOutStep = 1.f / (cFadeOutDurationSeconds / Cfg::frameDelay);
 
-		std::array<char, 12> buf{};			// value to string cache
-		int32_t len{};						// buf's len
+		QuadInstanceNumbersData data;
 
 		int32_t lineNumber{};
 		xx::RGBA8 color{};
