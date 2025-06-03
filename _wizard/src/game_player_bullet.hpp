@@ -12,6 +12,7 @@ namespace Game {
 		moveInc = { std::cosf(radians) * cMoveSpeed, std::sinf(radians) * cMoveSpeed };
 		pierceCount = 1;
 		cPierceDelay = int32_t(0.1f * Cfg::fps);
+		pwp2b = shooter->pwp;
 	}
 
 	inline int32_t PlayerBullet::Update() {
@@ -69,6 +70,8 @@ namespace Game {
 		}
 		*/
 
+		auto dp = owner->pp.CalcDamagePoint(stage->rnd, pwp2b.damagePoint);
+
 		// hit check ( monster )
 		if (auto o = stage->monsters.FindFirstCrossBy9(pos.x, pos.y, radius)) {
 			//auto d = pos - o->pos;
@@ -82,9 +85,8 @@ namespace Game {
 			gLooper.sound.Play(gLooper.res_sound_monster_die_1);
 			stage->camera.Shake(5, 300.f * Cfg::frameDelay, int32_t(0.2f * Cfg::fps), stage->time);
 
-			stage->effectExplosions.Emplace().Init(o->pos, 3.f, { 0x77,22,22,0xff });
-			stage->monsters.Remove(o);
-
+			o->Hurt(dp.first);
+			// todo: show dp number?
 			stage->effectExplosions.Emplace().Init(pos, 0.5f);
 			return 1;
 		}

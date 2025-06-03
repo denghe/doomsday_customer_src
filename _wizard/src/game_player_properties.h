@@ -86,7 +86,8 @@ namespace Game {
 	struct PlayerProperties : PlayerProperties1, PlayerProperties2 {
 		int32_t regenerationFrameNumber{};
 
-		void PlayerPropertiesInit() {
+		// call at player init
+		void Init() {
 			healthMaxPreset = 100.f;
 			healthMaxFactor = 1.f;
 			healthRegenerationPreset = 0.f;
@@ -116,7 +117,8 @@ namespace Game {
 			luckyFactor = 1.f;
 		}
 
-		void PlayerPropertiesCalc() {
+		// call at player init & equipment changed
+		void CalcAll() {
 			healthMax = std::max(healthMaxPreset * healthMaxFactor, 1.f);
 			healthRegeneration = healthRegenerationPreset * healthRegenerationFactor;	// can < 0
 			manaMax = std::max(manaMaxPreset * manaMaxFactor, 0.f);
@@ -136,7 +138,7 @@ namespace Game {
 		}
 
 		// return damage point & is critical
-		XX_INLINE std::pair<float, bool> PlayerPropertiesCalcFinalDamagePoint(xx::Rnd& rnd, float baseDamagePoint) {
+		XX_INLINE std::pair<float, bool> CalcDamagePoint(xx::Rnd& rnd, float baseDamagePoint) {
 			auto d = baseDamagePoint * damage;
 			if (rnd.Next<float>() <= criticalChance) {
 				return { d * criticalDamage, true };
@@ -145,7 +147,7 @@ namespace Game {
 		}
 
 		// return actual hurt dp, int: 0 normal 1 dodge 2 death
-		XX_INLINE std::pair<float, int> PlayerPropertiesHurt(xx::Rnd& rnd, float targetDamagePoint) {
+		XX_INLINE std::pair<float, int> Hurt(xx::Rnd& rnd, float targetDamagePoint) {
 			if (rnd.Next<float>() <= dodge) return { 0.f, 1 };
 			targetDamagePoint *= 1.f - defense;
 			if (health <= targetDamagePoint) {
@@ -160,7 +162,7 @@ namespace Game {
 		}
 
 		// return regeneration quantity health, mana, success ( call for every frame update )
-		XX_INLINE std::tuple<float, float, bool> PlayerPropertiesRegeneration(int32_t numIntervalFrames, int32_t currentFrameNumber) {
+		XX_INLINE std::tuple<float, float, bool> TryRegeneration(int32_t numIntervalFrames, int32_t currentFrameNumber) {
 			if (regenerationFrameNumber > currentFrameNumber) return {};
 			auto bakHealth = health;
 			auto bakMana = mana;

@@ -13,6 +13,7 @@ namespace Game {
 		radius = 64.f / 2;
 		monsterFormation = std::move(monsterFormation_);
 		monsterFormationPosIdx = monsterFormationPosIdx_;
+		mp.Init();
 	}
 
 	XX_INLINE void Monster::FaceToPlayer() {
@@ -146,4 +147,18 @@ namespace Game {
 		q->texRect.data = f.textureRect.data;
 	}
 
+
+	inline std::pair<float, int> Monster::Hurt(float dp) {
+		auto r = mp.Hurt(dp);
+		if (r.second == 2) {
+			// dead
+			stage->effectExplosions.Emplace().Init(pos, 3.f, { 0x77,22,22,0xff });
+			stage->monsters.Remove(this);
+		}
+		else {
+			// todo: draw hp bar?
+			// not dead
+		}
+		return r;
+	}
 }

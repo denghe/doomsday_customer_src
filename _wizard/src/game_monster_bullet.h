@@ -13,6 +13,8 @@ namespace Game {
 		float radians{};
 		XY moveInc{};
 
+		MonsterProperties2 mp2;
+
 		void Init(Monster* shooter_, XY pos_, float radians_);
 		int32_t Update() override;
 		void Draw() override;

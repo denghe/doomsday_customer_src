@@ -9,6 +9,7 @@ namespace Game {
 		radians = radians_;
 		radius = 12.f;
 		moveInc = { std::cosf(radians) * cMoveSpeed, std::sinf(radians) * cMoveSpeed };
+		mp2 = shooter_->mp;
 	}
 
 	inline int32_t MonsterBullet::Update() {

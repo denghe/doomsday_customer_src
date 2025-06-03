@@ -15,6 +15,8 @@ namespace Game {
 		float radians{};
 		XY moveInc{};
 
+		PlayerWeaponProperties2b pwp2b;
+
 		void Init(PlayerWeapon* shooter, XY pos_, float radians_);
 		int32_t Update() override;
 		void Draw() override;

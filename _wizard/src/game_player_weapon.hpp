@@ -8,6 +8,8 @@ namespace Game {
 		owner = xx::WeakFromThis(owner_);
 		holdOffset = holdOffset_;
 		pos = owner->pos + holdOffset;
+		pwp.Init();
+		pwp.CalcAll();
 	}
 
 	inline int32_t PlayerWeapon::Update() {

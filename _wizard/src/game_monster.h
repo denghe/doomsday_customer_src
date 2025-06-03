@@ -24,6 +24,8 @@ namespace Game {
 		float shootTimePool{};
 		int32_t _n{};
 
+		MonsterProperties mp;
+
 		bool MoveToTarget(float speed);
 		void HandleBlock();
 		void SyncPos();
@@ -34,6 +36,9 @@ namespace Game {
 		int32_t Update() override;
 		void Draw() override;
 		void DrawLight() override;
+
+		// return true: dead( released )
+		std::pair<float, int> Hurt(float dp);
 	};
 
 }

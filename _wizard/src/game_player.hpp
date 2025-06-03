@@ -2,9 +2,6 @@
 
 namespace Game {
 
-	// todo: weapon
-
-
 	inline void Player::Init(Stage* stage_, int32_t bornPosIndex) {
 		assert(!stage);
 		stage = stage_;
@@ -17,6 +14,9 @@ namespace Game {
 		lightColor = cLightColor;
 		lightColorPlus = cLightColorPlus;
 		lightRadius = ResTpFrames::_size_ef_light * 0.5f * cLightRadiusRatio;
+
+		pp.Init();
+		pp.CalcAll();
 
 		weapon.Emplace<PlayerWeapon>()->Init(this, {0, -20});
 	}
