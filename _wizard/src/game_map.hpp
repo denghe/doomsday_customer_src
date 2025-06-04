@@ -107,9 +107,22 @@ namespace Game {
 	}
 
 	inline void Map::Update() {
+		bgUvOffset += XY{ 0.6f, -1.f } * 10 * Cfg::frameDelay;
 	}
 
 	inline void Map::Draw(Stage* stage) {
+		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstanceTilingOffset)
+			.Draw(gLooper.res._texid_bg_space1, 1);
+		q->pos = {};
+		q->anchor = 0.5f;
+		q->scale = gLooper.windowSize.x / ResTpFrames::_size_bg_space1.x;
+		q->radians = 0;
+		q->colorplus = 0.3f;
+		q->color = xx::RGBA8_White;
+		q->texRect.data = ResTpFrames::_uvrect_bg_space1.data;
+		q->tiling = 5;
+		q->offset = bgUvOffset;
+
 		for (auto& o : blocks.items) o->Draw(stage);
 	}
 

@@ -47,13 +47,13 @@ namespace Game {
 
 	inline void PlayerWeapon::DrawLight() {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
-			.Draw(gLooper.res._texid_light_monster_bullet, 1);
+			.Draw(gLooper.res._texid_ef_light64, 1);
 		q->pos = stage->camera.ToGLPos(GetShootPos());
 		q->anchor = 0.5f;
-		q->scale = 32.f / gLooper.res._size_light_monster_bullet.y * stage->camera.scale * 3.f;
+		q->scale = stage->camera.scale * 2.f;
 		q->radians = 0.f;
 		q->colorplus = 1.f;
 		q->color = xx::RGBA8_White;
-		q->texRect.data = ResTpFrames::_uvrect_light_monster_bullet.data;
+		q->texRect.data = ResTpFrames::_uvrect_ef_light64.data;
 	}
 }

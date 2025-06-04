@@ -7,7 +7,7 @@ namespace Game {
 		stage = shooter_->stage;
 		pos = pos_;
 		radians = radians_;
-		radius = 12.f;
+		radius = 6.f;
 		moveInc = { std::cosf(radians) * cMoveSpeed, std::sinf(radians) * cMoveSpeed };
 		mp2 = shooter_->mp;
 	}
@@ -78,7 +78,7 @@ namespace Game {
 			.Draw(gLooper.res._texid_monster_bullet, 1);
 		q->pos = stage->camera.ToGLPos(pos);
 		q->anchor = gLooper.res._anchor_monster_bullet;
-		q->scale = radius / gLooper.res._size_monster_bullet.y * stage->camera.scale;
+		q->scale = radius / (gLooper.res._size_monster_bullet.y * 0.5f) * stage->camera.scale;
 		q->radians = radians;
 		q->colorplus = 1.f;
 		q->color = xx::RGBA8_White;
@@ -87,13 +87,13 @@ namespace Game {
 
 	inline void MonsterBullet::DrawLight() {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
-			.Draw(gLooper.res._texid_light_monster_bullet, 1);
+			.Draw(gLooper.res._texid_ef_light64, 1);
 		q->pos = stage->camera.ToGLPos(pos);
 		q->anchor = 0.5f;
-		q->scale = radius / gLooper.res._size_monster_bullet.y * stage->camera.scale * 5.f;
+		q->scale = radius / (gLooper.res._size_monster_bullet.y * 0.5f) * stage->camera.scale * 5.f;
 		q->radians = 0.f;
 		q->colorplus = 1.f;
 		q->color = { 0x35,0,0xcb,0xff };
-		q->texRect.data = ResTpFrames::_uvrect_light_monster_bullet.data;
+		q->texRect.data = ResTpFrames::_uvrect_ef_light64.data;
 	}
 }

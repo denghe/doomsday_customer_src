@@ -74,7 +74,7 @@
         <key>textureSubPath</key>
         <string></string>
         <key>textureFormat</key>
-        <enum type="SettingsBase::TextureFormat">png8</enum>
+        <enum type="SettingsBase::TextureFormat">png</enum>
         <key>borderPadding</key>
         <uint>4</uint>
         <key>maxTextureSize</key>
@@ -179,6 +179,31 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">pngs/bg_space1.png</key>
+            <key type="filename">pngs/ef_explosion_0.png</key>
+            <key type="filename">pngs/ef_explosion_1.png</key>
+            <key type="filename">pngs/ef_explosion_2.png</key>
+            <key type="filename">pngs/ef_explosion_3.png</key>
+            <key type="filename">pngs/ef_explosion_4.png</key>
+            <key type="filename">pngs/ef_explosion_5.png</key>
+            <key type="filename">pngs/ef_explosion_6.png</key>
+            <key type="filename">pngs/ef_explosion_7.png</key>
+            <key type="filename">pngs/ef_explosion_8.png</key>
+            <key type="filename">pngs/ef_light64.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>16,16,32,32</rect>
+                <key>scale9Paddings</key>
+                <rect>16,16,32,32</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">pngs/char_body.png</key>
             <key type="filename">pngs/char_head.png</key>
             <struct type="IndividualSpriteSettings">
@@ -241,15 +266,34 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">pngs/ef_explosion_0.png</key>
-            <key type="filename">pngs/ef_explosion_1.png</key>
-            <key type="filename">pngs/ef_explosion_2.png</key>
-            <key type="filename">pngs/ef_explosion_3.png</key>
-            <key type="filename">pngs/ef_explosion_4.png</key>
-            <key type="filename">pngs/ef_explosion_5.png</key>
-            <key type="filename">pngs/ef_explosion_6.png</key>
-            <key type="filename">pngs/ef_explosion_7.png</key>
-            <key type="filename">pngs/ef_explosion_8.png</key>
+            <key type="filename">pngs/ef_light32.png</key>
+            <key type="filename">pngs/light_monster_1.png</key>
+            <key type="filename">pngs/monster_1.png</key>
+            <key type="filename">pngs/ui_aim.png</key>
+            <key type="filename">pngs/ui_arrow1.png</key>
+            <key type="filename">pngs/ui_arrow3.png</key>
+            <key type="filename">pngs/ui_block.png</key>
+            <key type="filename">pngs/ui_box.png</key>
+            <key type="filename">pngs/ui_cannon1.png</key>
+            <key type="filename">pngs/ui_cannon3.png</key>
+            <key type="filename">pngs/ui_circle.png</key>
+            <key type="filename">pngs/ui_clock.png</key>
+            <key type="filename">pngs/ui_coin1.png</key>
+            <key type="filename">pngs/ui_coin2.png</key>
+            <key type="filename">pngs/ui_gear.png</key>
+            <key type="filename">pngs/ui_gem.png</key>
+            <key type="filename">pngs/ui_heart.png</key>
+            <key type="filename">pngs/ui_mask.png</key>
+            <key type="filename">pngs/ui_menu.png</key>
+            <key type="filename">pngs/ui_rect.png</key>
+            <key type="filename">pngs/ui_ring.png</key>
+            <key type="filename">pngs/ui_run1.png</key>
+            <key type="filename">pngs/ui_run2.png</key>
+            <key type="filename">pngs/ui_run3.png</key>
+            <key type="filename">pngs/ui_star.png</key>
+            <key type="filename">pngs/ui_sun.png</key>
+            <key type="filename">pngs/ui_sword.png</key>
+            <key type="filename">pngs/ui_trangle.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -258,24 +302,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>16,16,32,32</rect>
+                <rect>8,8,16,16</rect>
                 <key>scale9Paddings</key>
-                <rect>16,16,32,32</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">pngs/ef_light.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>64,64,128,128</rect>
-                <key>scale9Paddings</key>
-                <rect>64,64,128,128</rect>
+                <rect>8,8,16,16</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -385,48 +414,6 @@
                 <rect>2,3,5,7</rect>
                 <key>scale9Paddings</key>
                 <rect>2,3,5,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">pngs/light_monster_1.png</key>
-            <key type="filename">pngs/light_monster_bullet.png</key>
-            <key type="filename">pngs/monster_1.png</key>
-            <key type="filename">pngs/ui_aim.png</key>
-            <key type="filename">pngs/ui_arrow1.png</key>
-            <key type="filename">pngs/ui_arrow3.png</key>
-            <key type="filename">pngs/ui_block.png</key>
-            <key type="filename">pngs/ui_box.png</key>
-            <key type="filename">pngs/ui_cannon1.png</key>
-            <key type="filename">pngs/ui_cannon3.png</key>
-            <key type="filename">pngs/ui_circle.png</key>
-            <key type="filename">pngs/ui_clock.png</key>
-            <key type="filename">pngs/ui_coin1.png</key>
-            <key type="filename">pngs/ui_coin2.png</key>
-            <key type="filename">pngs/ui_gear.png</key>
-            <key type="filename">pngs/ui_gem.png</key>
-            <key type="filename">pngs/ui_heart.png</key>
-            <key type="filename">pngs/ui_mask.png</key>
-            <key type="filename">pngs/ui_menu.png</key>
-            <key type="filename">pngs/ui_rect.png</key>
-            <key type="filename">pngs/ui_ring.png</key>
-            <key type="filename">pngs/ui_run1.png</key>
-            <key type="filename">pngs/ui_run2.png</key>
-            <key type="filename">pngs/ui_run3.png</key>
-            <key type="filename">pngs/ui_star.png</key>
-            <key type="filename">pngs/ui_sun.png</key>
-            <key type="filename">pngs/ui_sword.png</key>
-            <key type="filename">pngs/ui_trangle.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>8,8,16,16</rect>
-                <key>scale9Paddings</key>
-                <rect>8,8,16,16</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

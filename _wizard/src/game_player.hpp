@@ -11,10 +11,6 @@ namespace Game {
 		pos.x = leftTopPos.x + blocks.cellSize * 0.5f;
 		pos.y = leftTopPos.y + blocks.cellSize - 1.f;
 
-		lightColor = cLightColor;
-		lightColorPlus = cLightColorPlus;
-		lightRadius = ResTpFrames::_size_ef_light * 0.5f * cLightRadiusRatio;
-
 		pp.Init();
 		pp.CalcAll();
 
@@ -190,20 +186,34 @@ namespace Game {
 		q[1].colorplus = 0.7f;
 		q[1].color = xx::RGBA8_White;
 		q[1].texRect.data = ResTpFrames::_uvrect_char_head.data;
+
+		//{
+		//	auto q = gLooper.ShaderBegin(gLooper.shaderRingInstance).Draw(1);
+		//	q->color = xx::RGBA8_White;
+		//	q->pos = stage->camera.ToGLPos(pos) * XY { 1, gLooper.flipY };
+		//	q->radius = 200;
+		//}
+
 		// weapon
 		weapon->Draw();
 	}
 
 	inline void Player::DrawLight() {
-		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
-			.Draw(gLooper.res._texid_ef_light, 1);
-		q[0].pos = stage->camera.ToGLPos(pos);
-		q[0].anchor = 0.5f;
-		q[0].scale = ResTpFrames::_size_char_body.x / ResTpFrames::_size_ef_light.x * stage->camera.scale * 50.f;
-		q[0].radians = 0.f;
-		q[0].colorplus = 0.6f;
-		q[0].color = xx::RGBA8_White;
-		q[0].texRect.data = ResTpFrames::_uvrect_ef_light.data;
+		auto q = gLooper.ShaderBegin(gLooper.shaderRingInstance).Draw(1);
+		q->pos = stage->camera.ToGLPos(pos);
+		q->radius = Cfg::height * 0.8 * stage->camera.scale;
+		q->color = {180,180,180,255};
+
+		//auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
+		//	.Draw(gLooper.res._texid_ef_light256, 1);
+		//q[0].pos = stage->camera.ToGLPos(pos);
+		//q[0].anchor = 0.5f;
+		//q[0].scale = ResTpFrames::_size_char_body.x / ResTpFrames::_size_ef_light256.x * stage->camera.scale * 50.f;
+		//q[0].radians = 0.f;
+		//q[0].colorplus = 0.6f;
+		//q[0].color = xx::RGBA8_White;
+		//q[0].texRect.data = ResTpFrames::_uvrect_ef_light256.data;
+
 		// weapon
 		weapon->DrawLight();
 	}

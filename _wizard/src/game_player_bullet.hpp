@@ -8,7 +8,7 @@ namespace Game {
 		stage = owner->stage;
 		pos = pos_;
 		radians = radians_;
-		radius = 12.f;
+		radius = 6.f;
 		moveInc = { std::cosf(radians) * cMoveSpeed, std::sinf(radians) * cMoveSpeed };
 		pierceCount = 1;
 		cPierceDelay = int32_t(0.1f * Cfg::fps);
@@ -82,7 +82,7 @@ namespace Game {
 			else {
 				gLooper.sound.Play(gLooper.res_sound_hit_1);
 			}
-			stage->effectTexts.Add(pos, o->pos - pos, dp.second ? xx::RGBA8_Red : xx::RGBA8_White, 2.f, d);
+			stage->effectTexts.Add(pos, pos - o->pos, dp.second ? xx::RGBA8_Red : xx::RGBA8_White, 2.f, d);
 			stage->effectExplosions.Emplace().Init(pos, 0.5f);
 			return 1;
 		}
@@ -125,7 +125,7 @@ namespace Game {
 			.Draw(gLooper.res._texid_char_bullet, 1);
 		q->pos = stage->camera.ToGLPos(pos);
 		q->anchor = gLooper.res._anchor_char_bullet;
-		q->scale = radius / gLooper.res._size_char_bullet.y * stage->camera.scale;
+		q->scale = radius / (gLooper.res._size_char_bullet.y * 0.5f) * stage->camera.scale;
 		q->radians = radians;
 		q->colorplus = 0.5f;
 		q->color = xx::RGBA8_White;
@@ -134,14 +134,14 @@ namespace Game {
 
 	inline void PlayerBullet::DrawLight() {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
-			.Draw(gLooper.res._texid_light_monster_bullet, 1);
+			.Draw(gLooper.res._texid_ef_light64, 1);
 		q->pos = stage->camera.ToGLPos(pos);
 		q->anchor = 0.5f;
-		q->scale = radius / gLooper.res._size_char_bullet.y * 32.f / gLooper.res._size_light_monster_bullet.y * stage->camera.scale * 5.f;
+		q->scale = radius / (gLooper.res._size_char_bullet.y * 0.5f) * stage->camera.scale * 5.f;
 		q->radians = 0.f;
 		q->colorplus = 0.5f;
 		q->color = xx::RGBA8_White;
-		q->texRect.data = ResTpFrames::_uvrect_light_monster_bullet.data;
+		q->texRect.data = ResTpFrames::_uvrect_ef_light64.data;
 	}
 
 }

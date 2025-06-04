@@ -4,9 +4,6 @@ namespace Game {
 
 	struct Player : Drawable {
 		static constexpr auto cSize = XYi(ResTpFrames::_size_char_body);
-		static constexpr xx::RGBA8 cLightColor{ xx::RGBA8_White };
-		static constexpr float cLightRadiusRatio{ 1.f };
-		static constexpr float cLightColorPlus{ 1.f };
 		static constexpr XY cGravity{ 0.2, 0.4 };
 		static constexpr XY cSpeedInit{ 0, -650 / Cfg::fps };
 		static constexpr XY cSpeedMax{ 400 / Cfg::fps, 1000 / Cfg::fps };
@@ -24,9 +21,6 @@ namespace Game {
 		bool highJumpStoped{};
 		int32_t multiJumpedCount{};
 
-		xx::RGBA8 lightColor{};
-		float lightColorPlus{};
-		XY lightRadius{};
 		xx::Shared<PlayerWeapon> weapon;
 
 		PlayerProperties pp;

@@ -7,6 +7,7 @@ namespace Game {
 		xx::Listi32<XYi> bornPlaces_Monster;
 		xx::Listi32<XYi> bornPlaces_Player;
 		xx::Listi32<XYi> flyTargets_Monster;
+		XY bgUvOffset{};
 
 		void Init();
 		void Update();

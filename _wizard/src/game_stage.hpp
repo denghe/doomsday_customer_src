@@ -295,6 +295,11 @@ namespace Game {
 	}
 
 	inline void Stage::Draw() {
+
+		// smooth display for some game content
+		gLooper.ShaderEnd();
+		gLooper.res.bg_space1->tex->SetGLTexParm<GL_LINEAR>();
+
 		// calculate display cut area
 		auto areaMin = camera.ToLogicPos({ -gLooper.windowSize_2.x - Cfg::unitSize * 2, gLooper.windowSize_2.y + Cfg::unitSize * 2 });
 		auto areaMax = camera.ToLogicPos({ gLooper.windowSize_2.x + Cfg::unitSize * 2, -gLooper.windowSize_2.y - Cfg::unitSize * 2 });
@@ -373,6 +378,11 @@ namespace Game {
 			if (o.pos.x < areaMin.x || o.pos.x > areaMax.x || o.pos.y < areaMin.y || o.pos.y > areaMax.y) continue;
 			o.Draw(this);
 		}
+
+
+		// sharp display for text & ui
+		gLooper.ShaderEnd();
+		gLooper.res.bg_space1->tex->SetGLTexParm<GL_NEAREST>();
 
 		// draw effect texts
 		for (int32_t i = 0, e = effectTexts.ens.Count(); i < e; ++i) {

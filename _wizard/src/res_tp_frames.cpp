@@ -14,6 +14,9 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 		xx_assert(tp);
 		auto map = tp->GetMapSV();
 
+		this->bg_space1 = map["bg_space1"sv];
+		this->_tex_bg_space1 = this->bg_space1->tex;
+		this->_texid_bg_space1 = this->_tex_bg_space1->GetValue();
 		this->char_body = map["char_body"sv];
 		this->_tex_char_body = this->char_body->tex;
 		this->_texid_char_body = this->_tex_char_body->GetValue();
@@ -56,9 +59,12 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 		this->ef_explosion_8 = map["ef_explosion_8"sv];
 		this->_tex_ef_explosion_8 = this->ef_explosion_8->tex;
 		this->_texid_ef_explosion_8 = this->_tex_ef_explosion_8->GetValue();
-		this->ef_light = map["ef_light"sv];
-		this->_tex_ef_light = this->ef_light->tex;
-		this->_texid_ef_light = this->_tex_ef_light->GetValue();
+		this->ef_light32 = map["ef_light32"sv];
+		this->_tex_ef_light32 = this->ef_light32->tex;
+		this->_texid_ef_light32 = this->_tex_ef_light32->GetValue();
+		this->ef_light64 = map["ef_light64"sv];
+		this->_tex_ef_light64 = this->ef_light64->tex;
+		this->_texid_ef_light64 = this->_tex_ef_light64->GetValue();
 		this->font_outline_32 = map["font_outline_32"sv];
 		this->_tex_font_outline_32 = this->font_outline_32->tex;
 		this->_texid_font_outline_32 = this->_tex_font_outline_32->GetValue();
@@ -347,9 +353,6 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 		this->light_monster_1 = map["light_monster_1"sv];
 		this->_tex_light_monster_1 = this->light_monster_1->tex;
 		this->_texid_light_monster_1 = this->_tex_light_monster_1->GetValue();
-		this->light_monster_bullet = map["light_monster_bullet"sv];
-		this->_tex_light_monster_bullet = this->light_monster_bullet->tex;
-		this->_texid_light_monster_bullet = this->_tex_light_monster_bullet->GetValue();
 		this->monster_1 = map["monster_1"sv];
 		this->_tex_monster_1 = this->monster_1->tex;
 		this->_texid_monster_1 = this->_tex_monster_1->GetValue();
