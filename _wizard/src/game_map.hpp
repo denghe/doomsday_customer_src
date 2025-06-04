@@ -117,7 +117,7 @@ namespace Game {
 		q->anchor = 0.5f;
 		q->scale = gLooper.windowSize.x / ResTpFrames::_size_bg_space1.x;
 		q->radians = 0;
-		q->colorplus = 0.3f;
+		q->colorplus = 0.5f;
 		q->color = xx::RGBA8_White;
 		q->texRect.data = ResTpFrames::_uvrect_bg_space1.data;
 		q->tiling = 10;
