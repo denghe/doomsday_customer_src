@@ -41,7 +41,7 @@ namespace Game {
 	XX_INLINE void EffectText::Draw(Stage* stage) {
 		data.pos = stage->camera.ToGLPos(pos);
 		data.scale = stage->camera.scale * scale;
-		data.color = color;
+		data.color = { color.r, color.g, color.b, (uint8_t)(color.a * alpha) };
 		gLooper.ShaderBegin(gLooper.shaderNumbers).Draw(data);
 	}
 

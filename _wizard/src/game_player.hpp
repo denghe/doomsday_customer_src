@@ -201,7 +201,7 @@ namespace Game {
 	inline void Player::DrawLight() {
 		auto q = gLooper.ShaderBegin(gLooper.shaderRingInstance).Draw(1);
 		q->pos = stage->camera.ToGLPos(pos);
-		q->radius = Cfg::height * 0.8 * stage->camera.scale;
+		q->radius = Cfg::height * 0.8f * stage->camera.scale;
 		q->color = {180,180,180,255};
 
 		//auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)

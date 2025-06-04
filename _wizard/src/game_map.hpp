@@ -120,7 +120,7 @@ namespace Game {
 		q->colorplus = 0.3f;
 		q->color = xx::RGBA8_White;
 		q->texRect.data = ResTpFrames::_uvrect_bg_space1.data;
-		q->tiling = 5;
+		q->tiling = 10;
 		q->offset = bgUvOffset;
 
 		for (auto& o : blocks.items) o->Draw(stage);

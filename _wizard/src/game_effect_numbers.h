@@ -5,8 +5,8 @@ namespace Game {
 	struct Stage;
 	struct EffectText {
 		constexpr static float cMoveDurationSeconds{ 0.5f };
-		constexpr static float cMoveSpeedMin{ 100 / Cfg::fps };
-		constexpr static float cMoveSpeedMax{ 250 / Cfg::fps };
+		constexpr static float cMoveSpeedMin{ 50 / Cfg::fps };
+		constexpr static float cMoveSpeedMax{ 100 / Cfg::fps };
 
 		constexpr static float cFadeOutDurationSeconds{ 0.2f };
 		constexpr static float cFadeOutStep = 1.f / (cFadeOutDurationSeconds / Cfg::frameDelay);
