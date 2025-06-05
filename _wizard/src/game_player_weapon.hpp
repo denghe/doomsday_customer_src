@@ -18,11 +18,17 @@ namespace Game {
 		auto mp = stage->camera.ToLogicPos(gLooper.mouse.pos);
 		auto d = mp - pos;
 		radians = std::atan2f(d.y, d.x);
+		auto sPos = GetShootPos();
 
-		if (gLooper.mouse.PressedMBLeft() && !gLooper.mouseEventHandler) {
-			auto sPos = GetShootPos();
-			stage->playerBullets.Emplace().Emplace<PlayerBullet>()->Init(this, sPos, radians);
-			gLooper.sound.Play(gLooper.res_sound_laster_gun_1, 0.1f);
+		// todo: projectileAmount shootSpeed manaCost spread
+		if (stage->time >= nextShootTime && !gLooper.mouseEventHandler) {
+			if (gLooper.mouse.PressedMBRight()) {
+				nextShootTime = stage->time + int32_t(Cfg::fps / pwp.shootSpeed);
+				stage->playerBullets.Emplace().Emplace<PlayerBullet_FireB>()->Init(this, sPos, radians);
+			} else if (gLooper.mouse.PressedMBLeft()) {
+				nextShootTime = stage->time + int32_t(Cfg::fps / pwp.shootSpeed);
+				stage->playerBullets.Emplace().Emplace<PlayerBullet_FireA>()->Init(this, sPos, radians);
+			}
 		}
 		return 0;
 	}

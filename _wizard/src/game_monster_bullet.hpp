@@ -100,8 +100,9 @@ namespace Game {
 	}
 
 	XX_INLINE std::pair<float, int> MonsterBullet::Hurt(float dp) {
+		// todo
 		PlayDeathEffect(0.5f);
-		return { dp,2 };
+		return { dp, 2 };
 	}
 
 }

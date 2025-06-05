@@ -155,10 +155,8 @@ namespace Game {
 
 	XX_INLINE std::pair<float, int> Monster::Hurt(float dp) {
 		auto r = mp.Hurt(dp);
-		if (r.second == 2) {
-			// dead
+		if (r.second == 2) {	// dead
 			PlayDeathEffect(1.f);
-			stage->monsters.Remove(this);
 		}
 		else {
 			// todo: draw hp bar?

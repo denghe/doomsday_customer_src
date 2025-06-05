@@ -38,7 +38,7 @@ namespace Game {
 		void DrawLight() override;
 
 		void PlayDeathEffect(float scale_);
-		// return actual hurt dp, int: 0 normal 1 dodge 2 death( play death effect + released )
+		// return actual hurt dp, int: 0 normal 1 dodge 2 death( play death effect )
 		std::pair<float, int> Hurt(float dp);
 	};
 

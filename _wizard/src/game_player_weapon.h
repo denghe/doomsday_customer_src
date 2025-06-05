@@ -9,6 +9,7 @@ namespace Game {
 		xx::Weak<Player> owner;
 		XY holdOffset{};
 		float radians{};
+		int32_t nextShootTime{};
 		PlayerWeaponProperties pwp;
 		XY GetShootPos();
 		void Init(Player* owner_, XY holdOffset_);

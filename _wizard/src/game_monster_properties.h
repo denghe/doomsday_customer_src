@@ -24,7 +24,7 @@ namespace Game {
 		// return actual hurt dp, int: 0 normal 1 dodge 2 death
 		XX_INLINE std::pair<float, int> Hurt(float targetDamagePoint) {
 			if (health <= targetDamagePoint) {
-				auto d = targetDamagePoint - health;
+				auto d = health;
 				health = 0;
 				return { d, 2 };
 			}

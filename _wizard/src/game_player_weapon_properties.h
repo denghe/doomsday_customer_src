@@ -64,7 +64,7 @@ namespace Game {
 		void Init() {
 			projectileAmountPreset = 1.f;
 			projectileAmountFactor = 1.f;
-			shootSpeedPreset = 1.f;
+			shootSpeedPreset = 2.f;
 			shootSpeedFactor = 1.f;
 			manaCostPreset = 10.f;
 			manaCostFactor = 1.f;

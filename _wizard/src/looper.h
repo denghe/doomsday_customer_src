@@ -21,6 +21,8 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 #include "game_monster_properties.h"
 #include "game_player_weapon_properties.h"
 #include "game_player_bullet.h"
+#include "game_player_bullet_fire_a.h"
+#include "game_player_bullet_fire_b.h"
 #include "game_player_weapon.h"
 #include "game_player_properties.h"
 #include "game_player.h"

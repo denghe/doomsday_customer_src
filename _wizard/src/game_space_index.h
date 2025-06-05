@@ -204,7 +204,6 @@ namespace Game {
 		}
 
 
-
 		// foreach target cell + round 8 = 9 cells
 		// .Foreach9All([](T& o)->void {  all  });
 		// .Foreach9All([](T& o)->bool {  return false == break  });
@@ -353,6 +352,53 @@ namespace Game {
 					if (func(c)) return;
 				}
 				c = nex;
+			}
+		}
+
+
+		// ring diffuse foreach ( usually for update logic or range search )
+		// .ForeachByRange([](T* o)->void {  all  });
+		// .ForeachByRange([](T* o)->bool {  break  });
+		template <bool enableExcept = false, typename F, typename R = std::invoke_result_t<F, T*>>
+		void ForeachByRange(xx::SpaceGridRingDiffuseData const& d, XYi pos, int32_t maxDistance, F&& func, T* except = {}) {
+			auto cIdxBase = pos.x / cellSize;
+			if (cIdxBase < 0 || cIdxBase >= numCols) return;
+			auto rIdxBase = pos.y / cellSize;
+			if (rIdxBase < 0 || rIdxBase >= numRows) return;
+			auto searchRange = maxDistance + cellSize;
+
+			auto& lens = d.lens;
+			auto& idxs = d.idxs;
+			for (int32_t i = 1, e = lens.len; i < e; i++) {
+				auto offsets = lens[i - 1].count;
+				auto size = lens[i].count - lens[i - 1].count;
+				for (int32_t j = 0; j < size; ++j) {
+					auto& tmp = idxs[offsets + j];
+					auto cIdx = cIdxBase + tmp.x;
+					if (cIdx < 0 || cIdx >= numCols) continue;
+					auto rIdx = rIdxBase + tmp.y;
+					if (rIdx < 0 || rIdx >= numRows) continue;
+					auto cidx = rIdx * numCols + cIdx;
+
+					auto c = cells[cidx];
+					while (c) {
+						auto nex = c->next;
+						if constexpr (enableExcept) {
+							if (c == except) {
+								c = nex;
+								continue;
+							}
+						}
+						if constexpr (std::is_void_v<R>) {
+							func(c);
+						}
+						else {
+							if (func(c)) return;
+						}
+						c = nex;
+					}
+				}
+				if (lens[i].radius > searchRange) break;
 			}
 		}
 
