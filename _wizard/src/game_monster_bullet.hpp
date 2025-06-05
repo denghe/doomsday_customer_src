@@ -23,16 +23,8 @@ namespace Game {
 			auto rr = r * r;
 			if (dd < rr) {
 				// todo
-				//auto d = pos - m->pos;
-				//auto dmg = damage * damageRatio;
-				//bool isCrit{};
-				//if (stage->rnd.Next<float>(0, 1) < criticalChance) {
-				//	dmg *= criticalBonusRatio;
-				//	isCrit = true;
-				//}
-				//m->Hurt(dmg, d, -d, isCrit);
-				gLooper.sound.Play(gLooper.res_sound_hit_1);
-				stage->effectExplosions.Emplace().Init(pos, 0.5f, { 0x35,0,0xcb,0xff });
+				//player->Hurt(dmg, isCrit);
+				PlayDeathEffect(0.5f);
 				return 1;
 			}
 		}
@@ -59,8 +51,7 @@ namespace Game {
 				for (int colIdx = criFrom.x; colIdx <= criTo.x; ++colIdx) {
 					if (auto bc = blocks.TryAt({ colIdx, rowIdx }); bc) {
 						if (bc->IsCross(iPosLT, size)) {
-							gLooper.sound.Play(gLooper.res_sound_hit_1);
-							stage->effectExplosions.Emplace().Init(pos, 1.f, { 0x35,0,0xcb,0xff });
+							PlayDeathEffect(1.f);
 							return 1;
 						}
 					}
@@ -70,19 +61,25 @@ namespace Game {
 
 		stage->monsterBullets.Update(this);	// sync space index
 
+		// frame step
+		frameIndex += 15.f / Cfg::fps;
+		if (frameIndex >= gLooper.res._countof_dark_bullet_) {
+			frameIndex = 0;
+		}
+
 		return 0;
 	}
 
 	inline void MonsterBullet::Draw() {
-		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
-			.Draw(gLooper.res._texid_monster_bullet, 1);
+		auto& frame = gLooper.res.dark_bullet_[(int32_t)frameIndex];
+		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(frame->tex, 1);
 		q->pos = stage->camera.ToGLPos(pos);
-		q->anchor = gLooper.res._anchor_monster_bullet;
-		q->scale = radius / (gLooper.res._size_monster_bullet.y * 0.5f) * stage->camera.scale;
+		q->anchor = *frame->anchor;
+		q->scale = radius * 2.f / frame->spriteSize.y * stage->camera.scale;
 		q->radians = radians;
 		q->colorplus = 1.f;
 		q->color = xx::RGBA8_White;
-		q->texRect.data = ResTpFrames::_uvrect_monster_bullet.data;
+		q->texRect.data = frame->textureRect.data;
 	}
 
 	inline void MonsterBullet::DrawLight() {
@@ -90,10 +87,21 @@ namespace Game {
 			.Draw(gLooper.res._texid_ef_light64, 1);
 		q->pos = stage->camera.ToGLPos(pos);
 		q->anchor = 0.5f;
-		q->scale = radius / (gLooper.res._size_monster_bullet.y * 0.5f) * stage->camera.scale * 5.f;
+		q->scale = radius / (gLooper.res._size_dark_bullet_0.y * 0.5f) * stage->camera.scale * 5.f;
 		q->radians = 0.f;
 		q->colorplus = 1.f;
 		q->color = { 0x35,0,0xcb,0xff };
 		q->texRect.data = ResTpFrames::_uvrect_ef_light64.data;
 	}
+
+	XX_INLINE void MonsterBullet::PlayDeathEffect(float scale_) {
+		gLooper.sound.Play(gLooper.res_sound_hit_1, scale_);
+		stage->effectExplosions.Emplace().Init(pos, scale_, cLightColor);
+	}
+
+	XX_INLINE std::pair<float, int> MonsterBullet::Hurt(float dp) {
+		PlayDeathEffect(0.5f);
+		return { dp,2 };
+	}
+
 }

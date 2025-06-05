@@ -3,7 +3,7 @@
 namespace Game {
 
 	XX_INLINE void EffectExplosion::Init(XY pos_, float scale_, xx::RGBA8 color_) {
-		Init(&gLooper.res.ef_explosion_, 20.f, pos_, scale_, color_);
+		Init(&gLooper.res.global_explosion_, 20.f, pos_, scale_, color_);
 	}
 
 	XX_INLINE void EffectExplosion::Init(xx::Listi32<xx::Ref<xx::Frame>>* frames_, float frameFPS, XY pos_, float scale_, xx::RGBA8 color_) {

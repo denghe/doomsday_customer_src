@@ -147,12 +147,17 @@ namespace Game {
 		q->texRect.data = f.textureRect.data;
 	}
 
+	XX_INLINE void Monster::PlayDeathEffect(float scale_) {
+		gLooper.sound.Play(gLooper.res_sound_monster_die_1, scale_);
+		stage->camera.Shake(5, 300.f * Cfg::frameDelay, int32_t(0.2f * scale_ * Cfg::fps), stage->time);
+		stage->effectExplosions.Emplace().Init(pos, 3.f * scale_, { 0x77,22,22,0xff });
+	}
 
-	inline std::pair<float, int> Monster::Hurt(float dp) {
+	XX_INLINE std::pair<float, int> Monster::Hurt(float dp) {
 		auto r = mp.Hurt(dp);
 		if (r.second == 2) {
 			// dead
-			stage->effectExplosions.Emplace().Init(pos, 3.f, { 0x77,22,22,0xff });
+			PlayDeathEffect(1.f);
 			stage->monsters.Remove(this);
 		}
 		else {
@@ -161,4 +166,6 @@ namespace Game {
 		}
 		return r;
 	}
+
+
 }

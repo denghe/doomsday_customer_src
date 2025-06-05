@@ -180,16 +180,16 @@
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
             <key type="filename">pngs/bg_space1.png</key>
-            <key type="filename">pngs/ef_explosion_0.png</key>
-            <key type="filename">pngs/ef_explosion_1.png</key>
-            <key type="filename">pngs/ef_explosion_2.png</key>
-            <key type="filename">pngs/ef_explosion_3.png</key>
-            <key type="filename">pngs/ef_explosion_4.png</key>
-            <key type="filename">pngs/ef_explosion_5.png</key>
-            <key type="filename">pngs/ef_explosion_6.png</key>
-            <key type="filename">pngs/ef_explosion_7.png</key>
-            <key type="filename">pngs/ef_explosion_8.png</key>
             <key type="filename">pngs/ef_light64.png</key>
+            <key type="filename">pngs/global_explosion_0.png</key>
+            <key type="filename">pngs/global_explosion_1.png</key>
+            <key type="filename">pngs/global_explosion_2.png</key>
+            <key type="filename">pngs/global_explosion_3.png</key>
+            <key type="filename">pngs/global_explosion_4.png</key>
+            <key type="filename">pngs/global_explosion_5.png</key>
+            <key type="filename">pngs/global_explosion_6.png</key>
+            <key type="filename">pngs/global_explosion_7.png</key>
+            <key type="filename">pngs/global_explosion_8.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -251,6 +251,34 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">pngs/dark_bullet_0.png</key>
+            <key type="filename">pngs/dark_bullet_1.png</key>
+            <key type="filename">pngs/dark_bullet_2.png</key>
+            <key type="filename">pngs/dark_bullet_3.png</key>
+            <key type="filename">pngs/dark_bullet_4.png</key>
+            <key type="filename">pngs/dark_bullet_5.png</key>
+            <key type="filename">pngs/dark_bullet_6.png</key>
+            <key type="filename">pngs/fire_bullet_0.png</key>
+            <key type="filename">pngs/fire_bullet_1.png</key>
+            <key type="filename">pngs/fire_bullet_2.png</key>
+            <key type="filename">pngs/fire_bullet_3.png</key>
+            <key type="filename">pngs/fire_bullet_4.png</key>
+            <key type="filename">pngs/fire_bullet_5.png</key>
+            <key type="filename">pngs/fire_bullet_6.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.85,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,3,16,7</rect>
+                <key>scale9Paddings</key>
+                <rect>8,3,16,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">pngs/ef_1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -267,6 +295,12 @@
                 <false/>
             </struct>
             <key type="filename">pngs/ef_light32.png</key>
+            <key type="filename">pngs/fire_explosion_0.png</key>
+            <key type="filename">pngs/fire_explosion_1.png</key>
+            <key type="filename">pngs/fire_explosion_2.png</key>
+            <key type="filename">pngs/fire_explosion_3.png</key>
+            <key type="filename">pngs/fire_explosion_4.png</key>
+            <key type="filename">pngs/fire_explosion_5.png</key>
             <key type="filename">pngs/light_monster_1.png</key>
             <key type="filename">pngs/monster_1.png</key>
             <key type="filename">pngs/ui_aim.png</key>

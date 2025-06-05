@@ -27,18 +27,18 @@ namespace Game {
 			}
 		}
 
+		auto dp = owner->pp.CalcDamagePoint(stage->rnd, pwp2b.damagePoint);
+
 		// hit check ( monster bullet )
-		stage->monsterBullets.Foreach9All(pos.As<int32_t>(), [this, newTime](MonsterBullet* o)->bool {
+		stage->monsterBullets.Foreach9All(pos.As<int32_t>(), [this, newTime, dp](MonsterBullet* o)->bool {
 			auto d = o->pos - pos;
 			auto r = radius + o->radius;
 			if (d.x * d.x + d.y * d.y < r * r) {
 				for (int32_t i = 0, e = pierceBlackList.len; i < e; ++i) {	// check black list
 					if (pierceBlackList[i].first.GetPointer() == o) return false;     // exists: continue
 				}
-				// todo: o.Hurt(this);
-				if (true) {	// o is dead
-					gLooper.sound.Play(gLooper.res_sound_hit_1);
-					stage->effectExplosions.Emplace().Init(o->pos, 0.5f, { 0x35,0,0xcb,0xff });
+				auto [d, dead] = o->Hurt(dp.first);
+				if (dead) {
 					stage->monsterBullets.Remove(o);
 				}
 				else {
@@ -50,7 +50,7 @@ namespace Game {
 		});
 		if (pierceCount < 0) {
 			gLooper.sound.Play(gLooper.res_sound_hit_1);
-			stage->effectExplosions.Emplace().Init(pos, 0.5f);
+			stage->effectExplosions.Emplace().Init(pos, 0.5f, cLightColor);
 			return 1;
 		}
 
@@ -70,23 +70,13 @@ namespace Game {
 		}
 		*/
 
-		auto dp = owner->pp.CalcDamagePoint(stage->rnd, pwp2b.damagePoint);
-
 		// hit check ( monster )
 		if (auto o = stage->monsters.FindFirstCrossBy9(pos.x, pos.y, radius)) {
 			auto [d, dead] = o->Hurt(dp.first);
-			if (dead) {
-				gLooper.sound.Play(gLooper.res_sound_monster_die_1);
-				stage->camera.Shake(5, 300.f * Cfg::frameDelay, int32_t(0.2f * Cfg::fps), stage->time);
-			}
-			else {
-				gLooper.sound.Play(gLooper.res_sound_hit_1);
-			}
 			stage->effectTexts.Add(pos, pos - o->pos, dp.second ? xx::RGBA8_Red : xx::RGBA8_White, 2.f, d);
-			stage->effectExplosions.Emplace().Init(pos, 0.5f);
+			PlayDeathEffect(0.5f);
 			return 1;
 		}
-
 
 		pos += moveInc;
 
@@ -108,28 +98,32 @@ namespace Game {
 			for (int colIdx = criFrom.x; colIdx <= criTo.x; ++colIdx) {
 				if (auto bc = blocks.TryAt({ colIdx, rowIdx }); bc) {
 					if (bc->IsCross(iPosLT, size)) {
-						gLooper.sound.Play(gLooper.res_sound_hit_1);
-						stage->effectExplosions.Emplace().Init(pos, 1.f);
+						PlayDeathEffect(1.f);
 						return 1;
 					}
 				}
 			}
 		}
 
+		// frame step
+		frameIndex += 15.f / Cfg::fps;
+		if (frameIndex >= gLooper.res._countof_dark_bullet_) {
+			frameIndex = 0;
+		}
 
 		return 0;
 	}
 
 	inline void PlayerBullet::Draw() {
-		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
-			.Draw(gLooper.res._texid_char_bullet, 1);
+		auto& frame = gLooper.res.fire_bullet_[(int32_t)frameIndex];
+		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(frame->tex, 1);
 		q->pos = stage->camera.ToGLPos(pos);
-		q->anchor = gLooper.res._anchor_char_bullet;
-		q->scale = radius / (gLooper.res._size_char_bullet.y * 0.5f) * stage->camera.scale;
+		q->anchor = *frame->anchor;
+		q->scale = radius * 2.f / frame->spriteSize.y * stage->camera.scale;
 		q->radians = radians;
-		q->colorplus = 0.5f;
+		q->colorplus = 1.f;
 		q->color = xx::RGBA8_White;
-		q->texRect.data = ResTpFrames::_uvrect_char_bullet.data;
+		q->texRect.data = frame->textureRect.data;
 	}
 
 	inline void PlayerBullet::DrawLight() {
@@ -137,11 +131,16 @@ namespace Game {
 			.Draw(gLooper.res._texid_ef_light64, 1);
 		q->pos = stage->camera.ToGLPos(pos);
 		q->anchor = 0.5f;
-		q->scale = radius / (gLooper.res._size_char_bullet.y * 0.5f) * stage->camera.scale * 5.f;
+		q->scale = radius / (gLooper.res._size_fire_bullet_0.y * 0.5f) * stage->camera.scale * 5.f;
 		q->radians = 0.f;
 		q->colorplus = 0.5f;
-		q->color = xx::RGBA8_White;
+		q->color = cLightColor;
 		q->texRect.data = ResTpFrames::_uvrect_ef_light64.data;
+	}
+
+	XX_INLINE void PlayerBullet::PlayDeathEffect(float scale_) {
+		gLooper.sound.Play(gLooper.res_sound_hit_1, scale_);
+		stage->effectExplosions.Emplace().Init(pos, scale_, cLightColor);
 	}
 
 }
