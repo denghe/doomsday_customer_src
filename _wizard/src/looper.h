@@ -57,9 +57,11 @@ struct Looper : xx::Engine<Looper>, Cfg {
 	spine::Animation* res_Dragon_flying{};
 
 	xx::Sound sound;
-	xx::Shared<xx::SoundSource> res_sound_laster_gun_1;
-	xx::Shared<xx::SoundSource> res_sound_monster_die_1;
+	xx::Shared<xx::SoundSource> res_sound_shoot_1;
+	xx::Shared<xx::SoundSource> res_sound_shoot_2;
 	xx::Shared<xx::SoundSource> res_sound_hit_1;
+	xx::Shared<xx::SoundSource> res_sound_bomb_1;
+	xx::Shared<xx::SoundSource> res_sound_bomb_2;
 
 
 	xx::FrameBuffer fb;										// for light

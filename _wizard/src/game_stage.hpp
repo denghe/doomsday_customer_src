@@ -130,7 +130,7 @@ namespace Game {
 		else {
 			auto i = rnd.Next<int32_t>(len);
 			auto& o = monsters.items[i];
-			gLooper.sound.Play(gLooper.res_sound_monster_die_1);
+			gLooper.sound.Play(gLooper.res_sound_bomb_1);
 			effectExplosions.Emplace().Init(o->pos, 3.f, { 0x77,22,22,0xff });
 			camera.Shake(5, 300.f * Cfg::frameDelay, int32_t(0.2f * Cfg::fps), time);
 			monsters.Remove(o);

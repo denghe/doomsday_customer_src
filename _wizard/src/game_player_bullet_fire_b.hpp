@@ -11,7 +11,7 @@ namespace Game {
 		radius = 16.f;	// todo: get value from enhance?
 		moveInc = { std::cosf(radians) * cMoveSpeed, std::sinf(radians) * cMoveSpeed };
 		pwp2b = shooter->pwp;
-		gLooper.sound.Play(gLooper.res_sound_laster_gun_1, 0.1f);
+		gLooper.sound.Play(gLooper.res_sound_shoot_2, 0.2f);
 	}
 
 	inline int32_t PlayerBullet_FireB::Update() {
@@ -122,7 +122,7 @@ namespace Game {
 		});
 
 		// play effect
-		gLooper.sound.Play(gLooper.res_sound_hit_1);	// todo: change
+		gLooper.sound.Play(gLooper.res_sound_bomb_2);
 		auto r = radius * 2.f / gLooper.res._size_fire_explosion_0.x;
 		stage->effectExplosions.Emplace().Init(&gLooper.res.fire_explosion_, 15, pos, r, cLightColor);
 

@@ -13,7 +13,7 @@ namespace Game {
 		pierceCount = 1;	// todo: get value from enhance?
 		cPierceDelay = int32_t(0.1f * Cfg::fps);
 		pwp2b = shooter->pwp;
-		gLooper.sound.Play(gLooper.res_sound_laster_gun_1, 0.1f);
+		gLooper.sound.Play(gLooper.res_sound_shoot_1, 0.2f);
 	}
 
 	inline int32_t PlayerBullet_FireA::Update() {

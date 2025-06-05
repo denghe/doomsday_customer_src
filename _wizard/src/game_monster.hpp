@@ -148,7 +148,7 @@ namespace Game {
 	}
 
 	XX_INLINE void Monster::PlayDeathEffect(float scale_) {
-		gLooper.sound.Play(gLooper.res_sound_monster_die_1, scale_);
+		gLooper.sound.Play(gLooper.res_sound_bomb_1, scale_);
 		stage->camera.Shake(5, 300.f * Cfg::frameDelay, int32_t(0.2f * scale_ * Cfg::fps), stage->time);
 		stage->effectExplosions.Emplace().Init(pos, 3.f * scale_, { 0x77,22,22,0xff });
 	}
