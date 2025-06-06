@@ -121,7 +121,7 @@ namespace Game {
 		// hit check ( monster )
 		if (auto o = stage->monsters.FindFirstCrossBy9(pos.x, pos.y, radius)) {
 			auto [d, dead] = o->Hurt(dp.first);
-			stage->effectTexts.Add(pos, pos - o->pos, dp.second ? xx::RGBA8_Red : xx::RGBA8_White, 2.f, d);
+			stage->effectTexts.Add(pos, pos - o->pos, dp.second ? xx::RGBA8_Red : xx::RGBA8_White, 2.f, (int32_t)d);
 			PlayDeathEffect(0.5f);
 			if (dead) {
 				stage->monsters.Remove(o);

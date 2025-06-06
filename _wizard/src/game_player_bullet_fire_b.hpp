@@ -116,7 +116,7 @@ namespace Game {
 			auto r = radius + o->radius;
 			if (d.x * d.x + d.y * d.y < r * r) {
 				auto [v, dead] = o->Hurt(dp.first);
-				stage->effectTexts.Add(o->pos, o->pos - pos, dp.second ? xx::RGBA8_Red : xx::RGBA8_White, 3.f, v);
+				stage->effectTexts.Add(o->pos, o->pos - pos, dp.second ? xx::RGBA8_Red : xx::RGBA8_White, 3.f, (int32_t)v);
 				if(dead) stage->monsters.Remove(o);
 			}
 		});

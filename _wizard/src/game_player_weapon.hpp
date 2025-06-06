@@ -20,11 +20,11 @@ namespace Game {
 		radians = std::atan2f(d.y, d.x);
 		auto sPos = GetShootPos();
 
-		// todo: projectileAmount shootSpeed manaCost spread
+		// todo: projectileAmount spread
 		if (stage->time >= nextShootTime && !gLooper.mouseEventHandler) {
 			if (gLooper.mouse.PressedMBRight()) {
-				if (owner->pp.mana >= 10.f) {
-					owner->pp.mana -= 10.f;	// todo: get it from config?
+				if (owner->pp.mana >= pwp.manaCost) {
+					owner->pp.mana -= pwp.manaCost;
 					nextShootTime = stage->time + int32_t(Cfg::fps / pwp.shootSpeed);
 					stage->playerBullets.Emplace().Emplace<PlayerBullet_FireB>()->Init(this, sPos, radians);
 				}

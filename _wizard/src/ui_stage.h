@@ -30,8 +30,12 @@ namespace UI {
 		xx::Shared<xx::Label> gameTips;
 		xx::Shared<xx::Label> roundInfo;
 		xx::Shared<HPBar> hpBar, mpBar;
-		void MakeDevelopUI();
+
 		void MakeUI();
+
+		xx::Shared<xx::Label> labelProjectileAmount, labelShootSpeed, labelManaCost, labelSpread;
+		void MakeDevelopUI();
+		void DrawDevelop();
 	};
 
 }
