@@ -21,7 +21,7 @@ namespace Game {
 		float scale{};
 
 		// pos: original position,  dist: determine move direction
-		void Init(XY const& pos_, XY const& vec_, xx::RGBA8 color_, float scale_, double value_);
+		void Init(XY const& pos_, XY const& vec_, xx::RGBA8 color_, float scale_, int32_t value_, bool includeSignal = false);
 
 		int32_t Update(Stage *stage);
 
@@ -40,7 +40,7 @@ namespace Game {
 		xx::Queue<EffectText> ens;
 
 		void Init(Stage* stage_, int32_t cap);
-		void Add(XY const& pos_, XY const& vec_, xx::RGBA8 color_, float scale_, double value_);
+		void Add(XY const& pos_, XY const& vec_, xx::RGBA8 color_, float scale_, int32_t value_, bool showSignal = false);
 		bool Update();
 		void Draw();
 		void Clear();

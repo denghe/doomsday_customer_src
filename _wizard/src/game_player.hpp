@@ -14,7 +14,7 @@ namespace Game {
 		pp.Init();
 		pp.CalcAll();
 
-		weapon.Emplace<PlayerWeapon>()->Init(this, {0, -20});
+		weapon.Emplace<PlayerWeapon>()->Init(this, { 0, -20 });
 	}
 
 	XX_INLINE XYi Player::GetPosLT() {
@@ -162,6 +162,15 @@ namespace Game {
 		lastJumpPressed = jumpPressed;
 
 
+		if (auto [h, m, ok] = pp.TryRegeneration(int32_t(Cfg::fps * 1.f), stage->time); ok) {
+			if (auto i = int32_t(h); i > 0) {
+				stage->effectTexts.Add(pos + XY{ 0, -Cfg::unitSize }, { 0, -1 }, xx::RGBA8_Red, 2, i, true);
+			}
+			if (auto i = int32_t(m); i > 0) {
+				stage->effectTexts.Add(pos + XY{ 0, -Cfg::unitSize }, { 0, -1 }, {99,155,255,255}, 2, i, true);
+			}
+		}
+
 		weapon->Update();
 
 		return 0;
@@ -187,13 +196,6 @@ namespace Game {
 		q[1].color = xx::RGBA8_White;
 		q[1].texRect.data = ResTpFrames::_uvrect_char_head.data;
 
-		//{
-		//	auto q = gLooper.ShaderBegin(gLooper.shaderRingInstance).Draw(1);
-		//	q->color = xx::RGBA8_White;
-		//	q->pos = stage->camera.ToGLPos(pos) * XY { 1, gLooper.flipY };
-		//	q->radius = 200;
-		//}
-
 		// weapon
 		weapon->Draw();
 	}
@@ -202,19 +204,21 @@ namespace Game {
 		auto q = gLooper.ShaderBegin(gLooper.shaderRingInstance).Draw(1);
 		q->pos = stage->camera.ToGLPos(pos);
 		q->radius = Cfg::height * 0.8f * stage->camera.scale;
-		q->color = {180,180,180,255};
-
-		//auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
-		//	.Draw(gLooper.res._texid_ef_light256, 1);
-		//q[0].pos = stage->camera.ToGLPos(pos);
-		//q[0].anchor = 0.5f;
-		//q[0].scale = ResTpFrames::_size_char_body.x / ResTpFrames::_size_ef_light256.x * stage->camera.scale * 50.f;
-		//q[0].radians = 0.f;
-		//q[0].colorplus = 0.6f;
-		//q[0].color = xx::RGBA8_White;
-		//q[0].texRect.data = ResTpFrames::_uvrect_ef_light256.data;
+		q->color = { 180,180,180,255 };
 
 		// weapon
 		weapon->DrawLight();
+	}
+
+	XX_INLINE std::pair<float, int> Player::Hurt(float dp) {
+		auto r = pp.Hurt(stage->rnd, dp);
+		if (r.second == 2) {	// dead
+			//PlayDeathEffect(1.f); todo
+		}
+		else {
+			// todo: draw hp bar?
+			// not dead
+		}
+		return r;
 	}
 }

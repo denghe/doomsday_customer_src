@@ -8,7 +8,9 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 	static constexpr float unitRadius{ unitSize / 2 };
 };
 
-#include "game_shader_numbers.h"
+#include "shader_hpbar.h"
+#include "shader_numbers.h"
+#include "ui_stage.h"
 #include "game_space_index_box.h"
 #include "game_space_index_circle.h"
 #include "game_scene.h"
@@ -67,6 +69,8 @@ struct Looper : xx::Engine<Looper>, Cfg {
 	xx::FrameBuffer fb;										// for light
     Game::Shader_QuadInstanceNumbers shaderNumbers;			// for effect damage number
 	xx::Ref<xx::GLTexture> res_nums1;						// for effect damage number
+    Game::Shader_QuadInstanceHPBar shaderHPBar;				// for hp & mp bar
+	xx::Ref<xx::GLTexture> res_hpbar;						// for hp bar
 	ResTpFrames res;										// res/pngs.blist + png
 
 	xx::Scale9SpriteConfig btnCfg, btnCfgSmall;

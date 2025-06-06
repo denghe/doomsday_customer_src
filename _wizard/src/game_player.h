@@ -30,6 +30,8 @@ namespace Game {
 		int32_t Update() override;
 		void Draw() override;
 		void DrawLight() override;
+
+		std::pair<float, int> Hurt(float dp);
 	};
 
 }

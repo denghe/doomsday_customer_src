@@ -23,9 +23,13 @@ namespace Game {
 		// todo: projectileAmount shootSpeed manaCost spread
 		if (stage->time >= nextShootTime && !gLooper.mouseEventHandler) {
 			if (gLooper.mouse.PressedMBRight()) {
-				nextShootTime = stage->time + int32_t(Cfg::fps / pwp.shootSpeed);
-				stage->playerBullets.Emplace().Emplace<PlayerBullet_FireB>()->Init(this, sPos, radians);
-			} else if (gLooper.mouse.PressedMBLeft()) {
+				if (owner->pp.mana >= 10.f) {
+					owner->pp.mana -= 10.f;	// todo: get it from config?
+					nextShootTime = stage->time + int32_t(Cfg::fps / pwp.shootSpeed);
+					stage->playerBullets.Emplace().Emplace<PlayerBullet_FireB>()->Init(this, sPos, radians);
+				}
+			}
+			else if (gLooper.mouse.PressedMBLeft()) {
 				nextShootTime = stage->time + int32_t(Cfg::fps / pwp.shootSpeed);
 				stage->playerBullets.Emplace().Emplace<PlayerBullet_FireA>()->Init(this, sPos, radians);
 			}

@@ -4,15 +4,6 @@ namespace Game {
 
 	// stage's base
 	struct Stage : Scene {
-		xx::Shared<xx::Node> ui;
-		xx::Shared<xx::Label> uiInfo;
-		void MakeUI_Develop();
-		void MakeUI();
-
-		void Init() override;
-		void Update() override;
-		void Draw() override;
-		void OnWindowSizeChanged() override;
 
 		Camera camera;
 		xx::Rnd rnd;
@@ -24,7 +15,7 @@ namespace Game {
 		int32_t roundId{};
 		int32_t numReadyMonsters{};		// some logic counter
 
-		int32_t _1n{}, _1a{}, _1b{};	// for GenerateMonster
+		int32_t _1n{}, _1a{}, _1b{};	// for GenerateMonster & KillAllMonster
 		int32_t _2n{}, _2a{}, _2b{};	// for Update_
 
 		xx::Listi32<xx::Shared<PlayerBullet>> playerBullets;
@@ -35,6 +26,13 @@ namespace Game {
 		xx::Shared<Map> map;
 		xx::Listi32<EffectExplosion> effectExplosions;
 		EffectTextManager effectTexts;
+
+		UI::Stage ui;
+
+		void Init() override;
+		void Update() override;
+		void Draw() override;
+		void OnWindowSizeChanged() override;
 
 		void Update_();
 
@@ -53,6 +51,7 @@ namespace Game {
 		void UpdatePlayerBullet();
 		void UpdateMonsterBullet();
 		void UpdateEffectExplosion();
+		void UpdateEffectNumber();
 		void UpdateMonster();
 		// ...
 

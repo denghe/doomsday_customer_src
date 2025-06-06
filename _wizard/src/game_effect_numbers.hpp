@@ -2,7 +2,7 @@
 
 namespace Game {
 
-	XX_INLINE void EffectText::Init(xx::XY const& pos_, xx::XY const& dist_, xx::RGBA8 color_, float scale_, double value_) {
+	XX_INLINE void EffectText::Init(xx::XY const& pos_, xx::XY const& dist_, xx::RGBA8 color_, float scale_, int32_t value_, bool showSignal) {
 		pos = pos_;
 		// calculate move frame inc with random speed
 		auto _1_mag = 1.f / std::sqrtf(dist_.x * dist_.x + dist_.y * dist_.y);
@@ -11,7 +11,20 @@ namespace Game {
 		alpha = 1;
 		scale = scale_;
 
-		auto s = xx::ToString((int32_t)(value_));
+		std::string s;
+		if (showSignal) {
+			if (value_ >= 0) {
+				s.push_back((char)58);
+				xx::Append(s, (uint32_t)value_);
+			}
+			else {
+				s.push_back((char)59);
+				xx::Append(s, (uint32_t)-value_);
+			}
+		}
+		else {
+			xx::Append(s, (uint32_t)std::abs(value_));
+		}
 		auto buf = s.data();
 		auto len = s.size();
 		auto tar = (uint8_t*)&data.numbers;
@@ -19,6 +32,7 @@ namespace Game {
 			tar[i] = buf[i] - 48;
 		}
 		tar[15] = (uint8_t)len;
+		pos.x -= len * (13.f * 0.5f);
 	}
 
 	XX_INLINE int32_t EffectText::Update(Stage* stage) {
@@ -50,8 +64,8 @@ namespace Game {
 		ens.Reserve(cap);
 	}
 
-	XX_INLINE void EffectTextManager::Add(xx::XY const& pos_, xx::XY const& dist_, xx::RGBA8 color_, float scale_, double value_) {
-		ens.Emplace().Init(pos_, dist_, color_, scale_, value_);
+	XX_INLINE void EffectTextManager::Add(xx::XY const& pos_, xx::XY const& dist_, xx::RGBA8 color_, float scale_, int32_t value_, bool showSignal) {
+		ens.Emplace().Init(pos_, dist_, color_, scale_, value_, showSignal);
 	}
 
 	XX_INLINE bool EffectTextManager::Update() {

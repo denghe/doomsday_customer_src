@@ -23,7 +23,7 @@ namespace Game {
         virtual void Begin() override;
         virtual void End() override;
         void Commit();
-        QuadInstanceNumbersData* Draw(uint32_t v);
+        QuadInstanceNumbersData* Draw(int32_t v, bool includeSignal = false);
         QuadInstanceNumbersData* Draw(std::string_view sv);
         void Draw(QuadInstanceNumbersData const& data);
     };

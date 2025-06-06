@@ -1,7 +1,9 @@
 ﻿#include "pch.h"
 #include "looper.h"
 
-#include "game_shader_numbers.hpp"
+#include "shader_hpbar.hpp"
+#include "shader_numbers.hpp"
+#include "ui_stage.hpp"
 #include "game_scene.hpp"
 #include "game_effect_explosion.hpp"
 #include "game_effect_numbers.hpp"
@@ -43,12 +45,10 @@ int32_t main() {
 #endif
 
 xx::Task<> Looper::MainTask() {
-#ifdef __EMSCRIPTEN__
 	res_nums1 = co_await AsyncLoadTextureFromUrl("res/nums1.png");
-#else
-	res_nums1 = LoadTexture("res/nums1.png");
-#endif
+	res_hpbar = co_await AsyncLoadTextureFromUrl("res/hpbar.png");
 	shaderNumbers.Init();
+	shaderHPBar.Init();
 
 	co_await res.AsyncLoad("res/");
 

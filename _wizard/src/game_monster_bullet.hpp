@@ -22,8 +22,7 @@ namespace Game {
 			auto r = radius + playerSize_2.x;
 			auto rr = r * r;
 			if (dd < rr) {
-				// todo
-				//player->Hurt(dmg, isCrit);
+				stage->player->Hurt(mp2.damagePoint);
 				PlayDeathEffect(0.5f);
 				return 1;
 			}

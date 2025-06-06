@@ -47,7 +47,7 @@ void main() {
     uint n = (n4 >> (cIdx << 3)) & 0xffu;           // * 8
     vec2 uv = vec2(10.f * float(n) + vTexCoord.x - float(i) * 9.f, vTexCoord.y);
     //vec2 uv = vTexCoord;
-    oColor = vColor * texture(uTex0, uv / vec2(100.f, 13.f));
+    oColor = vColor * texture(uTex0, uv / vec2(120.f, 13.f));
 })"sv });
 
         p = LinkGLProgram(v, f);
@@ -147,8 +147,22 @@ void main() {
         return r;
     }
 
-    inline QuadInstanceNumbersData* Shader_QuadInstanceNumbers::Draw(uint32_t v) {
-        return Draw(xx::ToString(v));
+    inline QuadInstanceNumbersData* Shader_QuadInstanceNumbers::Draw(int32_t v, bool includeSignal) {
+        std::string s;
+        if (includeSignal) {
+            if (v >= 0) {
+                xx::Append(s, (uint32_t)v);
+                s.push_back((char)58);
+            }
+            else {
+                xx::Append(s, (uint32_t)-v);
+                s.push_back((char)59);
+            }
+        }
+        else {
+            xx::Append(s, std::abs(v));
+        }
+        return Draw(s);
     }
 
     inline void Shader_QuadInstanceNumbers::Draw(QuadInstanceNumbersData const& data) {

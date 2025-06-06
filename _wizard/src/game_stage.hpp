@@ -2,75 +2,14 @@
 
 namespace Game {
 
-	inline void Stage::MakeUI_Develop() {
-		float y = -10;
-		ui->MakeChildren<xx::Button>()->Init(1, pos7 + XY{ 10, y }
-			, anchor7, gLooper.btnCfgSmall, U"exit", [&]() {
-				gLooper.DelaySwitchTo<Game::MainMenu>();
-			});
-		y -= 50;
-		ui->MakeChildren<xx::Button>()->Init(1, pos7 + XY{ 10, y }
-			, anchor7, gLooper.btnCfgSmall, U"GameSpeed*100", [&]() {
-				frameDelay = Cfg::frameDelay * 100.f;
-			});
-		y -= 50;
-		ui->MakeChildren<xx::Button>()->Init(1, pos7 + XY{ 10, y }
-			, anchor7, gLooper.btnCfgSmall, U"*10", [&]() {
-				frameDelay = Cfg::frameDelay * 10.f;
-			});
-		y -= 50;
-		ui->MakeChildren<xx::Button>()->Init(1, pos7 + XY{ 10, y }
-			, anchor7, gLooper.btnCfgSmall, U"*5", [&]() {
-				frameDelay = Cfg::frameDelay * 5.f;
-			});
-		y -= 50;
-		ui->MakeChildren<xx::Button>()->Init(1, pos7 + XY{ 10, y }
-			, anchor7, gLooper.btnCfgSmall, U"*1", [&]() {
-				frameDelay = Cfg::frameDelay;
-			});
-		y -= 50;
-		ui->MakeChildren<xx::Button>()->Init(1, pos7 + XY{ 10, y }
-			, anchor7, gLooper.btnCfgSmall, U"*0.7", [&]() {
-				frameDelay = Cfg::frameDelay * 0.7f;
-			});
-		y -= 50;
-		ui->MakeChildren<xx::Button>()->Init(1, pos7 + XY{ 10, y }
-			, anchor7, gLooper.btnCfgSmall, U"*0.3", [&]() {
-				frameDelay = Cfg::frameDelay * 0.3f;
-			});
-		y -= 50;
-		ui->MakeChildren<xx::Button>()->Init(1, pos7 + XY{ 10, y }
-			, anchor7, gLooper.btnCfgSmall, U"*0.1", [&]() {
-				frameDelay = Cfg::frameDelay * 0.1f;
-			});
-		ui->MakeChildren<xx::Button>()->Init(1, pos9 + XY{ -10, -10 }
-			, anchor9, gLooper.btnCfgSmall, U"Switch Light", [&]() {
-				disableLight = !disableLight;
-			});
-	}
-
-	inline void Stage::MakeUI() {
-		ui.Emplace()->Init(0, {}, scale);
-		MakeUI_Develop();
-		if (uiInfo) {
-			ui->AddChildren(uiInfo);
-			uiInfo->position = pos5 + XY{ 0, 450 };
-			uiInfo->FillTransRecursive();
-		}
-		else {
-			uiInfo = ui->MakeChildren<xx::Label>();
-			uiInfo->Init(1, pos5 + XY{ 0, 450 }, 2.f, anchor5, xx::RGBA8_White, "");
-		}
-	}
-
 	inline void Stage::OnWindowSizeChanged() {
 		camera.SetBaseScale(scale);
-		MakeUI();
+		ui.OnWindowSizeChanged();
 	}
 
 	inline void Stage::Init() {
 		UpdateScale();
-		MakeUI();
+		ui.Init(xx::WeakFromThis(this));
 		map.Emplace<Map>()->Init();
 		mapSize = map->blocks.gridSize;
 		camera.SetBaseScale(scale);
@@ -157,19 +96,19 @@ namespace Game {
 			InitMonsterFormation();
 
 			// show tips ? seconds
-			uiInfo->SetText(xx::ToString("Round ", roundId));
+			ui.SetRoundInfo(xx::ToString("Round ", roundId));
 			for (_2b = time + int32_t(Cfg::fps * 1.f); time < _2b;) {
 				UpdateAll();
 				XX_YIELD(_2n);
 			}
 
 			// show tips ? seconds
-			uiInfo->SetText("Begin !");
+			ui.SetRoundInfo("Begin !");
 			for (_2b = time + int32_t(Cfg::fps * 1.f); time < _2b;) {
 				UpdateAll();
 				XX_YIELD(_2n);
 			}
-			uiInfo->SetText();
+			ui.SetRoundInfo();
 
 			// wait all monster generate
 			while (!GenerateMonster()) {
@@ -187,13 +126,13 @@ namespace Game {
 			for (_2b = time + int32_t(Cfg::fps * 10.f); time < _2b;) {
 				{
 					auto secs = int32_t((_2b - time) / Cfg::fps);
-					uiInfo->SetText(xx::ToString(secs));
+					ui.SetRoundInfo(xx::ToString(secs));
 				}
 				UpdateAll();
 				XX_YIELD(_2n);
 				if (!monsters.items.len) break;	// no monsters?
 			}
-			uiInfo->SetText();
+			ui.SetRoundInfo();
 
 			// timeout + any monster exists. if (!monsters.items.len)
 			// escape? or move to player? path finding?
@@ -229,12 +168,12 @@ namespace Game {
 		UpdateCamera();
 		UpdateMap();
 		UpdateMonsterFormation();
+		UpdateEffectNumber();
 		UpdateEffectExplosion();
 		UpdatePlayerBullet();
 		UpdateMonsterBullet();
 		UpdateMonster();
 		UpdatePlayer();
-		effectTexts.Update();
 	}
 
 	XX_INLINE void Stage::UpdateCamera() {
@@ -292,6 +231,10 @@ namespace Game {
 				effectExplosions.SwapRemoveAt(i);
 			}
 		}
+	}
+
+	XX_INLINE void Stage::UpdateEffectNumber() {
+		effectTexts.Update();
 	}
 
 	inline void Stage::Draw() {
@@ -392,17 +335,8 @@ namespace Game {
 		}
 
 		// draw ui
-		if (ui) {
-			gLooper.DrawNode(ui);
-		}
+		ui.Draw();
 
-		// draw tips
-		gLooper.ctcDefault.Draw({ 0, gLooper.windowSize_2.y - 5 }
-			, xx::ToString("jump: SPACE  move: ASDW  shoot: mouse  m = ", monsters.items.len
-				, " mb = ", monsterBullets.items.len
-				, " pb = ", playerBullets.len
-				, " e = ", effectExplosions.len
-			), xx::RGBA8_Green, { 0.5f, 1 });
 	}
 
 }

@@ -120,11 +120,13 @@ namespace Game {
 		// call at player init & equipment changed
 		void CalcAll() {
 			healthMax = std::max(healthMaxPreset * healthMaxFactor, 1.f);
+			health = healthMax;
 			healthRegeneration = healthRegenerationPreset * healthRegenerationFactor;	// can < 0
 			manaMax = std::max(manaMaxPreset * manaMaxFactor, 0.f);
+			mana = manaMax;
 			manaRegeneration = manaRegenerationPreset * manaRegenerationFactor;	// can < 0
 			defense = 100.f / (100.f + defensePreset * defenseFactor);
-			dodge = 100.f / (100.f + dodgePreset * dodgeFactor);
+			dodge = 1.f - 100.f / (100.f + dodgePreset * dodgeFactor);
 			invincibleFrameDuration = std::max(invincibleFrameDurationPreset * invincibleFrameDurationFactor, 0.f);
 			damage = damagePreset;
 			criticalChance = std::max(std::min(criticalChancePreset * criticalChanceFactor, 1.f), 0.f);
@@ -148,8 +150,9 @@ namespace Game {
 
 		// return actual hurt dp, int: 0 normal 1 dodge 2 death
 		XX_INLINE std::pair<float, int> Hurt(xx::Rnd& rnd, float targetDamagePoint) {
+			if (health <= 0) return { 0.f, 2 };
 			if (rnd.Next<float>() <= dodge) return { 0.f, 1 };
-			targetDamagePoint *= 1.f - defense;
+			targetDamagePoint *= defense;
 			if (health <= targetDamagePoint) {
 				auto d = targetDamagePoint - health;
 				health = 0;

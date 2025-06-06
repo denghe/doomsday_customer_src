@@ -101,14 +101,14 @@ namespace Game {
 		}
 #endif
 
-		sps.Emplace().Emplace(gLooper.res_Slime1_skel)
-			->SetScale(5)
-			.SetAnimation(0, gLooper.res_Slime1_idle, true);
+		//sps.Emplace().Emplace(gLooper.res_Slime1_skel)
+		//	->SetScale(5)
+		//	.SetAnimation(0, gLooper.res_Slime1_idle, true);
 
-		vtFrenchFries.Emplace(xx::SpinePlayer{ gLooper.res_FrenchFries_skel }.AnimToTexture(gLooper.res_FrenchFries_walk, Cfg::frameDelay));
-		vtSpineBoy.Emplace(xx::SpinePlayer{ gLooper.res_SpineBoy_skel }.AnimToTexture(gLooper.res_SpineBoy_walk, Cfg::frameDelay));
-		vtSlime.Emplace(xx::SpinePlayer{ gLooper.res_Slime1_skel }.AnimToTexture(gLooper.res_Slime1_idle, Cfg::frameDelay));
-		vtDragon.Emplace(xx::SpinePlayer{ gLooper.res_Dragon_skel }.AnimToTexture(gLooper.res_Dragon_flying, Cfg::frameDelay));
+		//vtFrenchFries.Emplace(xx::SpinePlayer{ gLooper.res_FrenchFries_skel }.AnimToTexture(gLooper.res_FrenchFries_walk, Cfg::frameDelay));
+		//vtSpineBoy.Emplace(xx::SpinePlayer{ gLooper.res_SpineBoy_skel }.AnimToTexture(gLooper.res_SpineBoy_walk, Cfg::frameDelay));
+		//vtSlime.Emplace(xx::SpinePlayer{ gLooper.res_Slime1_skel }.AnimToTexture(gLooper.res_Slime1_idle, Cfg::frameDelay));
+		//vtDragon.Emplace(xx::SpinePlayer{ gLooper.res_Dragon_skel }.AnimToTexture(gLooper.res_Dragon_flying, Cfg::frameDelay));
 	}
 
 	inline void Test1::Update() {
