@@ -123,7 +123,7 @@ namespace Game {
 			}
 
 			// wait ? seconds for fight
-			for (_2b = time + int32_t(Cfg::fps * 10.f); time < _2b;) {
+			for (_2b = time + int32_t(Cfg::fps * 30.f); time < _2b;) {
 				{
 					auto secs = int32_t((_2b - time) / Cfg::fps);
 					ui.SetRoundInfo(xx::ToString(secs));

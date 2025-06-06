@@ -68,7 +68,7 @@ namespace Game {
 			shootSpeedFactor = 1.f;
 			manaCostPreset = 10.f;
 			manaCostFactor = 1.f;
-			spreadPreset = 1.f;
+			spreadPreset = 5.f;
 			spreadFactor = 1.f;
 			damagePointPreset = 10.f;
 			damagePointFactor = 1.f;

@@ -26,12 +26,20 @@ namespace Game {
 				if (owner->pp.mana >= pwp.manaCost) {
 					owner->pp.mana -= pwp.manaCost;
 					nextShootTime = stage->time + int32_t(Cfg::fps / pwp.shootSpeed);
-					stage->playerBullets.Emplace().Emplace<PlayerBullet_FireB>()->Init(this, sPos, radians);
+					for (int32_t i = 0; i < (int32_t)pwp.projectileAmount; ++i) {
+						auto v = float(M_PI) / 180.f * pwp.spread;
+						auto r = stage->rnd.Next<float>(-v, v);
+						stage->playerBullets.Emplace().Emplace<PlayerBullet_FireB>()->Init(this, sPos, radians + r);
+					}
 				}
 			}
 			else if (gLooper.mouse.PressedMBLeft()) {
 				nextShootTime = stage->time + int32_t(Cfg::fps / pwp.shootSpeed);
-				stage->playerBullets.Emplace().Emplace<PlayerBullet_FireA>()->Init(this, sPos, radians);
+				for (int32_t i = 0; i < (int32_t)pwp.projectileAmount; ++i) {
+					auto v = float(M_PI) / 180.f * pwp.spread;
+					auto r = stage->rnd.Next<float>(-v, v);
+					stage->playerBullets.Emplace().Emplace<PlayerBullet_FireA>()->Init(this, sPos, radians + r);
+				}
 			}
 		}
 		return 0;
