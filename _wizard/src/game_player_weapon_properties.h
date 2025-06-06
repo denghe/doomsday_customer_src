@@ -19,6 +19,8 @@ namespace Game {
 	struct PlayerWeaponProperties1b {
 		float damagePointPreset{};
 		float damagePointFactor{};
+		float pierceCountPreset{};
+		float pierceCountFactor{};
 		float hurtDelaySecondsPreset{};
 		float hurtDelaySecondsFactor{};
 		float movementSpeedPreset{};
@@ -48,6 +50,7 @@ namespace Game {
 	// for projectile
 	struct PlayerWeaponProperties2b {
 		float damagePoint{};
+		float pierceCount{};
 		float hurtDelaySeconds{};
 		float movementSpeed{};
 		float scale{};
@@ -72,6 +75,8 @@ namespace Game {
 			spreadFactor = 1.f;
 			damagePointPreset = 10.f;
 			damagePointFactor = 1.f;
+			pierceCountPreset = 1.f;
+			pierceCountFactor = 1.f;
 			hurtDelaySecondsPreset = 0.1f;
 			hurtDelaySecondsFactor = 1.f;
 			movementSpeedPreset = 300.f;
@@ -95,6 +100,7 @@ namespace Game {
 			manaCost = manaCostPreset * manaCostFactor;
 			spread = spreadPreset * spreadFactor;
 			damagePoint = damagePointPreset * damagePointFactor;
+			pierceCount = pierceCountPreset * pierceCountFactor;
 			hurtDelaySeconds = hurtDelaySecondsPreset * hurtDelaySecondsFactor;
 			movementSpeed = movementSpeedPreset * movementSpeedFactor;
 			scale = scalePreset * scaleFactor;

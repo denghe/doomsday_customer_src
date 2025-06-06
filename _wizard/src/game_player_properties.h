@@ -103,7 +103,7 @@ namespace Game {
 			invincibleFrameDurationPreset = 0.1f;
 			invincibleFrameDurationFactor = 1.f;
 			damagePreset = 1.f;
-			criticalChancePreset = 0.05f;
+			criticalChancePreset = 0.1f;
 			criticalChanceFactor = 1.f;
 			criticalDamagePreset = 2.f;
 			criticalDamageFactor = 1.f;

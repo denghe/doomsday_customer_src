@@ -4,7 +4,6 @@ namespace Game {
 
 	struct PlayerBullet_FireB : PlayerBullet {
 		static constexpr xx::RGBA8 cLightColor{ 0xff,0xd1,0x54,0xff };
-		static constexpr float cMoveSpeed{ 500.f / Cfg::fps };
 
 		float frameIndex{};
 		float radius{};

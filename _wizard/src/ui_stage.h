@@ -30,12 +30,15 @@ namespace UI {
 		xx::Shared<xx::Label> gameTips;
 		xx::Shared<xx::Label> roundInfo;
 		xx::Shared<HPBar> hpBar, mpBar;
-
 		void MakeUI();
 
+		bool isDevMode{}, lastIsDevMode{};
+		xx::Shared<xx::Label> labelCriticalChance, labelCriticalDamage, labelJumpExtraNums;
 		xx::Shared<xx::Label> labelProjectileAmount, labelShootSpeed, labelManaCost, labelSpread;
+		xx::Shared<xx::Label> labelDamagePoint, labelPierceCount, labelHurtDelaySeconds, labelMovementSpeed, labelScale;
+		xx::Shared<xx::Label> labelKnockback, labelDuration, labelEffectRate, labelEffectPower;
 		void MakeDevelopUI();
-		void DrawDevelop();
+		void DrawDevUI();
 	};
 
 }

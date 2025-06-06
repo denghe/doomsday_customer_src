@@ -5,12 +5,13 @@ namespace Game {
 	inline void PlayerBullet_FireB::Init(PlayerWeapon* shooter, XY pos_, float radians_) {
 		assert(!stage);
 		owner = shooter->owner;
+		pwp2b = shooter->pwp;
 		stage = owner->stage;
 		pos = pos_;
 		radians = radians_;
-		radius = 16.f;	// todo: get value from enhance?
-		moveInc = { std::cosf(radians) * cMoveSpeed, std::sinf(radians) * cMoveSpeed };
-		pwp2b = shooter->pwp;
+		radius = 16.f * pwp2b.scale;
+		auto spd = pwp2b.movementSpeed * Cfg::frameDelay;
+		moveInc = { std::cosf(radians) * spd, std::sinf(radians) * spd };
 		gLooper.sound.Play(gLooper.res_sound_shoot_2, 0.2f);
 	}
 
@@ -102,7 +103,7 @@ namespace Game {
 
 		auto dp = owner->pp.CalcDamagePoint(stage->rnd, pwp2b.damagePoint);
 
-		stage->monsterBullets.ForeachByRange(gLooper.rdd, pos, int32_t(radius + Cfg::unitRadius), [this, dp](MonsterBullet* o) {
+		stage->monsterBullets.ForeachByRange(gLooper.rdd, pos, int32_t(radius + Cfg::unitSize), [this, dp](MonsterBullet* o) {
 			auto d = o->pos - pos;
 			auto r = radius + o->radius;
 			if (d.x * d.x + d.y * d.y < r * r) {
@@ -111,7 +112,7 @@ namespace Game {
 			}
 		});
 
-		stage->monsters.ForeachByRange(gLooper.rdd, pos, int32_t(radius + Cfg::unitRadius), [this, dp](Monster* o) {
+		stage->monsters.ForeachByRange(gLooper.rdd, pos, int32_t(radius + Cfg::unitSize), [this, dp](Monster* o) {
 			auto d = o->pos - pos;
 			auto r = radius + o->radius;
 			if (d.x * d.x + d.y * d.y < r * r) {

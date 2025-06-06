@@ -10,7 +10,6 @@ namespace Game {
 		static constexpr float cDownJumpYOffset{ 1 };
 		static constexpr int32_t cCoyoteNumFrames{ int32_t(0.1 / Cfg::frameDelay) };
 		static constexpr int32_t cHighJumpNumFrames{ int32_t(0.2 / Cfg::frameDelay) };
-		static constexpr int32_t cExtraJumpCount{ 1 };
 
 		XY speed{};
 		int32_t lastXMoveDirection{};		// -1: left  0: stoped  1: right

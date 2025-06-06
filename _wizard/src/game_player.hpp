@@ -143,7 +143,7 @@ namespace Game {
 			}
 		}
 		else {
-			if (firstJumpPressed && (multiJumpedCount < cExtraJumpCount)) {
+			if (firstJumpPressed && (multiJumpedCount < pp.jumpExtraNums)) {
 				++multiJumpedCount;
 				highJumpStoped = false;
 				fallingFrameCount = highJumpFrameCount = 0;

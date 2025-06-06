@@ -5,14 +5,13 @@ namespace Game {
 	inline void PlayerBullet_FireA::Init(PlayerWeapon* shooter, XY pos_, float radians_) {
 		assert(!stage);
 		owner = shooter->owner;
+		pwp2b = shooter->pwp;
 		stage = owner->stage;
 		pos = pos_;
 		radians = radians_;
-		radius = 6.f;	// todo: get value from enhance?
-		moveInc = { std::cosf(radians) * cMoveSpeed, std::sinf(radians) * cMoveSpeed };
-		pierceCount = 1;	// todo: get value from enhance?
-		cPierceDelay = int32_t(0.1f * Cfg::fps);
-		pwp2b = shooter->pwp;
+		radius = 6.f * pwp2b.scale;
+		auto spd = pwp2b.movementSpeed * Cfg::frameDelay;
+		moveInc = { std::cosf(radians) * spd, std::sinf(radians) * spd };
 		gLooper.sound.Play(gLooper.res_sound_shoot_1, 0.2f);
 	}
 
@@ -68,7 +67,7 @@ namespace Game {
 	XX_INLINE bool PlayerBullet_FireA::HitCheck() {
 		// pierce: clear timeout data
 		auto now = stage->time;
-		auto newTime = now + cPierceDelay;
+		auto newTime = now + int32_t(pwp2b.hurtDelaySeconds * Cfg::fps);
 		for (int32_t i = pierceBlackList.len - 1; i >= 0; --i) {
 			if (pierceBlackList[i].second < now) {
 				pierceBlackList.SwapRemoveAt(i);
@@ -92,11 +91,11 @@ namespace Game {
 				} else {
 					pierceBlackList.Emplace(xx::WeakFromThis(o), newTime);	// add to black list
 				}
-				if (--pierceCount < 0) return true;
+				if (--pwp2b.pierceCount < 0) return true;
 			}
 			return false;
 			});
-		if (pierceCount < 0) {
+		if (pwp2b.pierceCount < 0) {
 			gLooper.sound.Play(gLooper.res_sound_hit_1);
 			stage->effectExplosions.Emplace().Init(pos, 0.5f, cLightColor);
 			return true;

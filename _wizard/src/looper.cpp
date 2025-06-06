@@ -80,7 +80,7 @@ xx::Task<> Looper::MainTask() {
 	res_Dragon_flying = res_Dragon_skel->findAnimation("flying");
 #endif
 
-	rdd.Init(50, 128);
+	rdd.Init(50, Cfg::unitSizei);
 
 	fb.Init();
 

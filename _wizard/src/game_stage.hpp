@@ -191,7 +191,7 @@ namespace Game {
 	XX_INLINE void Stage::UpdatePlayer() {
 		if (player) {
 			if (player->Update()) {
-				player.Reset();
+				player.Emplace()->Init(this);
 			}
 		}
 	}

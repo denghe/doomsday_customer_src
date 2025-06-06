@@ -4,9 +4,7 @@ namespace Game {
 
 	struct PlayerBullet_FireA : PlayerBullet {
 		static constexpr xx::RGBA8 cLightColor{ 0xff,0xd1,0x54,0xff };
-		static constexpr float cMoveSpeed{ 500.f / Cfg::fps };
 
-		int32_t pierceCount{}, cPierceDelay{};
 		xx::Listi32<std::pair<xx::Weak<Drawable>, int32_t>> pierceBlackList;	// second: timeout
 
 		float frameIndex{};

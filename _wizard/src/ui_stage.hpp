@@ -19,7 +19,13 @@ namespace UI {
 	}
 
 	inline void Stage::Draw() {
-		DrawDevelop();
+		if (lastIsDevMode != isDevMode) {
+			lastIsDevMode = isDevMode;
+			MakeUI();
+		}
+		if (isDevMode) {
+			DrawDevUI();
+		}
 
 		auto& pp = stage->player->pp;
 		hpBar->v1 = (uint32_t)pp.health;
@@ -49,7 +55,9 @@ namespace UI {
 
 	inline void Stage::MakeUI() {
 		root.Emplace()->Init(0, {}, stage->scale);
-		MakeDevelopUI();
+		if (isDevMode) {
+			MakeDevelopUI();
+		}
 
 		if (roundInfo) {
 			root->AddChildren(roundInfo);
@@ -69,9 +77,7 @@ namespace UI {
 		mpBar = root->MakeChildren<HPBar>();
 		mpBar->Init(1, stage->pos7 + XY{ 10, -20 - 15 * barScale }, barScale, {}, { 110, 15 });
 		mpBar->color = xx::RGBA8_Blue;
-	}
 
-	inline void Stage::MakeDevelopUI() {
 		auto a = stage->anchor9;
 		auto c = gLooper.btnCfgSmall;
 		auto p = stage->pos9 + XY{ -10, -10 };
@@ -82,7 +88,17 @@ namespace UI {
 			gLooper.DelaySwitchTo<Game::MainMenu>();
 			});
 		p.y -= 50;
-		root->MakeChildren<xx::Button>()->Init(1, p, a, c, U"GameSpeed*100", [&]() {
+		root->MakeChildren<xx::Button>()->Init(1, p, a, c, U"switch dev mode", [&]() {
+			isDevMode = !isDevMode;
+			});
+	}
+
+	inline void Stage::MakeDevelopUI() {
+		auto a = stage->anchor9;
+		auto c = gLooper.btnCfgSmall;
+		auto p = stage->pos9 + XY{ -10, -10 };
+		p.y -= 150;
+		root->MakeChildren<xx::Button>()->Init(1, p, a, c, U"*100", [&]() {
 			stage->frameDelay = Cfg::frameDelay * 100.f;
 			});
 		p.y -= 50;
@@ -94,7 +110,7 @@ namespace UI {
 			stage->frameDelay = Cfg::frameDelay * 2.f;
 			});
 		p.y -= 50;
-		root->MakeChildren<xx::Button>()->Init(1, p, a, c, U"*1", [&]() {
+		root->MakeChildren<xx::Button>()->Init(1, p, a, c, U"GameSpeed*1", [&]() {
 			stage->frameDelay = Cfg::frameDelay;
 			});
 		p.y -= 50;
@@ -115,6 +131,57 @@ namespace UI {
 		{
 			auto& b1 = root->MakeChildren<xx::Button>();
 			b1->Init(1, p, a, c, U" + ", [&]() {
+				stage->player->pp.criticalChance += 0.1f;
+			});
+			auto& b2 = root->MakeChildren<xx::Button>();
+			b2->Init(1, p + XY{ b1->size.x, 0 }, a, c, U" - ", [&]() {
+				if (stage->player->pp.criticalChance > 0.1f) {
+					stage->player->pp.criticalChance -= 0.1f;
+				}
+			});
+			auto& l1 = root->MakeChildren<xx::Label>();
+			l1->Init(1, p + XY{ b1->size.x + b2->size.x + 2, 0 }, 1.f, a, xx::RGBA8_White, U"(player)criticalChance = ");
+			labelCriticalChance = root->MakeChildren<xx::Label>();
+			labelCriticalChance->Init(1, p + XY{ b1->size.x + b2->size.x + 2 + l1->size.x, 0 }, 1.f, a, xx::RGBA8_Green, U"");
+		}
+		p.y -= 50;
+		{
+			auto& b1 = root->MakeChildren<xx::Button>();
+			b1->Init(1, p, a, c, U" + ", [&]() {
+				stage->player->pp.criticalDamage += 0.5f;
+			});
+			auto& b2 = root->MakeChildren<xx::Button>();
+			b2->Init(1, p + XY{ b1->size.x, 0 }, a, c, U" - ", [&]() {
+				if (stage->player->pp.criticalDamage > 0.5f) {
+					stage->player->pp.criticalDamage -= -0.5f;
+				}
+			});
+			auto& l1 = root->MakeChildren<xx::Label>();
+			l1->Init(1, p + XY{ b1->size.x + b2->size.x + 2, 0 }, 1.f, a, xx::RGBA8_White, U"(player)criticalDamage = ");
+			labelCriticalDamage = root->MakeChildren<xx::Label>();
+			labelCriticalDamage->Init(1, p + XY{ b1->size.x + b2->size.x + 2 + l1->size.x, 0 }, 1.f, a, xx::RGBA8_Green, U"");
+		}
+		p.y -= 50;
+		{
+			auto& b1 = root->MakeChildren<xx::Button>();
+			b1->Init(1, p, a, c, U" + ", [&]() {
+				++stage->player->pp.jumpExtraNums;
+			});
+			auto& b2 = root->MakeChildren<xx::Button>();
+			b2->Init(1, p + XY{ b1->size.x, 0 }, a, c, U" - ", [&]() {
+				if (stage->player->pp.jumpExtraNums > 1.f) {
+					--stage->player->pp.jumpExtraNums;
+				}
+			});
+			auto& l1 = root->MakeChildren<xx::Label>();
+			l1->Init(1, p + XY{ b1->size.x + b2->size.x + 2, 0 }, 1.f, a, xx::RGBA8_White, U"(player)jumpExtraNums = ");
+			labelJumpExtraNums = root->MakeChildren<xx::Label>();
+			labelJumpExtraNums->Init(1, p + XY{ b1->size.x + b2->size.x + 2 + l1->size.x, 0 }, 1.f, a, xx::RGBA8_Green, U"");
+		}
+		p.y -= 60;
+		{
+			auto& b1 = root->MakeChildren<xx::Button>();
+			b1->Init(1, p, a, c, U" + ", [&]() {
 				++stage->player->weapon->pwp.projectileAmount;
 			});
 			auto& b2 = root->MakeChildren<xx::Button>();
@@ -123,8 +190,10 @@ namespace UI {
 					--stage->player->weapon->pwp.projectileAmount;
 				}
 			});
+			auto& l1 = root->MakeChildren<xx::Label>();
+			l1->Init(1, p + XY{ b1->size.x + b2->size.x + 2, 0 }, 1.f, a, xx::RGBA8_White, U"(weapon)projectileAmount = ");
 			labelProjectileAmount = root->MakeChildren<xx::Label>();
-			labelProjectileAmount->Init(1, p + XY{ b1->size.x + b2->size.x + 2, 0 }, 1.f, a, xx::RGBA8_Green, U"");
+			labelProjectileAmount->Init(1, p + XY{ b1->size.x + b2->size.x + 2 + l1->size.x, 0 }, 1.f, a, xx::RGBA8_Green, U"");
 		}
 		p.y -= 50;
 		{
@@ -138,8 +207,10 @@ namespace UI {
 					--stage->player->weapon->pwp.shootSpeed;
 				}
 			});
+			auto& l1 = root->MakeChildren<xx::Label>();
+			l1->Init(1, p + XY{ b1->size.x + b2->size.x + 2, 0 }, 1.f, a, xx::RGBA8_White, U"(weapon)shootSpeed = ");
 			labelShootSpeed = root->MakeChildren<xx::Label>();
-			labelShootSpeed->Init(1, p + XY{ b1->size.x + b2->size.x + 2, 0 }, 1.f, a, xx::RGBA8_Green, U"");
+			labelShootSpeed->Init(1, p + XY{ b1->size.x + b2->size.x + 2 + l1->size.x, 0 }, 1.f, a, xx::RGBA8_Green, U"");
 		}
 		p.y -= 50;
 		{
@@ -153,8 +224,10 @@ namespace UI {
 					--stage->player->weapon->pwp.manaCost;
 				}
 			});
+			auto& l1 = root->MakeChildren<xx::Label>();
+			l1->Init(1, p + XY{ b1->size.x + b2->size.x + 2, 0 }, 1.f, a, xx::RGBA8_White, U"(weapon)manaCost = ");
 			labelManaCost = root->MakeChildren<xx::Label>();
-			labelManaCost->Init(1, p + XY{ b1->size.x + b2->size.x + 2, 0 }, 1.f, a, xx::RGBA8_Green, U"");
+			labelManaCost->Init(1, p + XY{ b1->size.x + b2->size.x + 2 + l1->size.x, 0 }, 1.f, a, xx::RGBA8_Green, U"");
 		}
 		p.y -= 50;
 		{
@@ -168,23 +241,93 @@ namespace UI {
 					--stage->player->weapon->pwp.spread;
 				}
 			});
+			auto& l1 = root->MakeChildren<xx::Label>();
+			l1->Init(1, p + XY{ b1->size.x + b2->size.x + 2, 0 }, 1.f, a, xx::RGBA8_White, U"(weapon)spread = ");
 			labelSpread = root->MakeChildren<xx::Label>();
-			labelSpread->Init(1, p + XY{ b1->size.x + b2->size.x + 2, 0 }, 1.f, a, xx::RGBA8_Green, U"");
+			labelSpread->Init(1, p + XY{ b1->size.x + b2->size.x + 2 + l1->size.x, 0 }, 1.f, a, xx::RGBA8_Green, U"");
+		}
+
+		p.y -= 60;
+		{
+			auto& b1 = root->MakeChildren<xx::Button>();
+			b1->Init(1, p, a, c, U" + ", [&]() {
+				++stage->player->weapon->pwp.damagePoint;
+				});
+			auto& b2 = root->MakeChildren<xx::Button>();
+			b2->Init(1, p + XY{ b1->size.x, 0 }, a, c, U" - ", [&]() {
+				if (stage->player->weapon->pwp.damagePoint > 0.f) {
+					--stage->player->weapon->pwp.damagePoint;
+				}
+				});
+			auto& l1 = root->MakeChildren<xx::Label>();
+			l1->Init(1, p + XY{ b1->size.x + b2->size.x + 2, 0 }, 1.f, a, xx::RGBA8_White, U"(bullet)damagePoint = ");
+			labelDamagePoint = root->MakeChildren<xx::Label>();
+			labelDamagePoint->Init(1, p + XY{ b1->size.x + b2->size.x + 2 + l1->size.x, 0 }, 1.f, a, xx::RGBA8_Green, U"");
+		}
+		p.y -= 50;
+		{
+			auto& b1 = root->MakeChildren<xx::Button>();
+			b1->Init(1, p, a, c, U" + ", [&]() {
+				++stage->player->weapon->pwp.pierceCount;
+				});
+			auto& b2 = root->MakeChildren<xx::Button>();
+			b2->Init(1, p + XY{ b1->size.x, 0 }, a, c, U" - ", [&]() {
+				if (stage->player->weapon->pwp.pierceCount > 0.f) {
+					--stage->player->weapon->pwp.pierceCount;
+				}
+				});
+			auto& l1 = root->MakeChildren<xx::Label>();
+			l1->Init(1, p + XY{ b1->size.x + b2->size.x + 2, 0 }, 1.f, a, xx::RGBA8_White, U"(bullet)pierceCount = ");
+			labelPierceCount = root->MakeChildren<xx::Label>();
+			labelPierceCount->Init(1, p + XY{ b1->size.x + b2->size.x + 2 + l1->size.x, 0 }, 1.f, a, xx::RGBA8_Green, U"");
+		}
+		p.y -= 50;
+		{
+			auto& b1 = root->MakeChildren<xx::Button>();
+			b1->Init(1, p, a, c, U" + ", [&]() {
+				stage->player->weapon->pwp.movementSpeed += 50.f;
+				});
+			auto& b2 = root->MakeChildren<xx::Button>();
+			b2->Init(1, p + XY{ b1->size.x, 0 }, a, c, U" - ", [&]() {
+				if (stage->player->weapon->pwp.movementSpeed > 50.f) {
+					stage->player->weapon->pwp.movementSpeed -= 50.f;
+				}
+				});
+			auto& l1 = root->MakeChildren<xx::Label>();
+			l1->Init(1, p + XY{ b1->size.x + b2->size.x + 2, 0 }, 1.f, a, xx::RGBA8_White, U"(bullet)movementSpeed = ");
+			labelMovementSpeed = root->MakeChildren<xx::Label>();
+			labelMovementSpeed->Init(1, p + XY{ b1->size.x + b2->size.x + 2 + l1->size.x, 0 }, 1.f, a, xx::RGBA8_Green, U"");
+		}
+		p.y -= 50;
+		{
+			auto& b1 = root->MakeChildren<xx::Button>();
+			b1->Init(1, p, a, c, U" + ", [&]() {
+				stage->player->weapon->pwp.scale += 0.5f;
+				});
+			auto& b2 = root->MakeChildren<xx::Button>();
+			b2->Init(1, p + XY{ b1->size.x, 0 }, a, c, U" - ", [&]() {
+				if (stage->player->weapon->pwp.scale > 0.5f) {
+					stage->player->weapon->pwp.scale -= 0.5f;
+				}
+				});
+			auto& l1 = root->MakeChildren<xx::Label>();
+			l1->Init(1, p + XY{ b1->size.x + b2->size.x + 2, 0 }, 1.f, a, xx::RGBA8_White, U"(bullet)scale = ");
+			labelScale = root->MakeChildren<xx::Label>();
+			labelScale->Init(1, p + XY{ b1->size.x + b2->size.x + 2 + l1->size.x, 0 }, 1.f, a, xx::RGBA8_Green, U"");
 		}
 	}
 
-	inline void Stage::DrawDevelop() {
-		labelProjectileAmount->SetText(
-			xx::ToString("projectileAmount = ", stage->player->weapon->pwp.projectileAmount)
-		);
-		labelShootSpeed->SetText(
-			xx::ToString("shootSpeed = ", stage->player->weapon->pwp.shootSpeed)
-		);
-		labelManaCost->SetText(
-			xx::ToString("manaCost = ", stage->player->weapon->pwp.manaCost)
-		);
-		labelSpread->SetText(
-			xx::ToString("spread = ", stage->player->weapon->pwp.spread)
-		);
+	inline void Stage::DrawDevUI() {
+		labelCriticalChance->SetText(xx::ToString(stage->player->pp.criticalChance));
+		labelCriticalDamage->SetText(xx::ToString(stage->player->pp.criticalDamage));
+		labelJumpExtraNums->SetText(xx::ToString(stage->player->pp.jumpExtraNums));
+		labelProjectileAmount->SetText(xx::ToString(stage->player->weapon->pwp.projectileAmount));
+		labelShootSpeed->SetText(xx::ToString(stage->player->weapon->pwp.shootSpeed));
+		labelManaCost->SetText(xx::ToString(stage->player->weapon->pwp.manaCost));
+		labelSpread->SetText(xx::ToString(stage->player->weapon->pwp.spread));
+		labelDamagePoint->SetText(xx::ToString(stage->player->weapon->pwp.damagePoint));
+		labelPierceCount->SetText(xx::ToString(stage->player->weapon->pwp.pierceCount));
+		labelMovementSpeed->SetText(xx::ToString(stage->player->weapon->pwp.movementSpeed));
+		labelScale->SetText(xx::ToString(stage->player->weapon->pwp.scale));
 	}
 }
