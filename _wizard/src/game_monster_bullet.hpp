@@ -14,12 +14,12 @@ namespace Game {
 
 	inline int32_t MonsterBullet::Update() {
 
+		// hit player check
 		{
-			static constexpr auto playerSize_2 = Player::cSize * 0.5f;	// x: radius
-			auto playerPos = stage->player->GetPosLT() + playerSize_2;	// center pos
+			auto playerPos = stage->player->centerPos;
 			auto d = playerPos - pos;
 			auto dd = d.x * d.x + d.y * d.y;
-			auto r = radius + playerSize_2.x;
+			auto r = radius + stage->player->radius;
 			auto rr = r * r;
 			if (dd < rr) {
 				stage->player->Hurt(mp2.damagePoint);
@@ -48,7 +48,7 @@ namespace Game {
 			auto criTo = blocks.PosToColRowIndex(iPosRB - 1);
 			for (int rowIdx = criFrom.y; rowIdx <= criTo.y; ++rowIdx) {
 				for (int colIdx = criFrom.x; colIdx <= criTo.x; ++colIdx) {
-					if (auto bc = blocks.TryAt({ colIdx, rowIdx }); bc) {
+					if (auto bc = blocks.At({ colIdx, rowIdx }); bc) {
 						if (bc->IsCross(iPosLT, size)) {
 							PlayDeathEffect(1.f);
 							return 1;

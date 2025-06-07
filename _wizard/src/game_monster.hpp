@@ -17,30 +17,55 @@ namespace Game {
 	}
 
 	XX_INLINE void Monster::FaceToPlayer() {
-		static constexpr auto playerSize_2 = Player::cSize * 0.5f;	// x: radius
-		//auto playerPos = stage->player->GetPosLT() + playerSize_2;	// center pos
-		auto playerPos = stage->player->pos;
-		auto d = XY{ playerPos } - pos;
+		auto playerPos = stage->player->centerPos;
+		auto d = playerPos - pos;
 		radians = std::atan2f(d.y, d.x);
-	}
-
-	XX_INLINE void Monster::TryShoot() {
-		// calc shoot pos
 		auto cos = std::cosf(radians);
 		auto sin = std::sinf(radians);
 		auto s = radius * 2.f / frame->spriteSize.x;
 		auto x = frame->spriteSize.x * cShootOffset.x * s;
 		auto y = frame->spriteSize.y * cShootOffset.y * s;
-		auto sPos = pos + XY{ x * cos - y * sin, x * sin + y * cos };
+		shootPos = pos + XY{ x * cos - y * sin, x * sin + y * cos };
 
-		// shoot logic
-		shootTimePool += Cfg::frameDelay;
-		while (shootTimePool >= cShootDelay) {
-			shootTimePool -= cShootDelay;
-			auto b = xx::MakeShared<MonsterBullet>();
-			b->Init(this, sPos, radians);
-			stage->monsterBullets.Add(std::move(b));
+		if (stage->time < rayTracePlayerTime) return;
+		rayTracePlayerTime = stage->time + cRayTracePlayerInterval;
+
+		d = playerPos - shootPos;
+		auto distance = std::sqrt(d.x * d.x + d.y * d.y);	// todo: max distance check ?
+		auto boxRadius = stage->player->radius * 0.8f;
+		if (distance > boxRadius + stage->player->radius) {
+			auto& blocks = stage->map->blocks;
+			auto numSteps = (int32_t)(distance / boxRadius);
+			auto stepDistance = distance / (float)numSteps;
+			XY stepInc{ cos * stepDistance, sin * stepDistance };
+			auto topLeftPos = shootPos - boxRadius;
+			auto rightBottomPos = shootPos + boxRadius;
+			for (int32_t i = 0; i < numSteps - 1; ++i) {
+				topLeftPos += stepInc;
+				rightBottomPos += stepInc;
+				auto criFrom = blocks.PosToColRowIndex(topLeftPos);
+				auto criTo = blocks.PosToColRowIndex(rightBottomPos);
+				for (int rowIdx = criFrom.y; rowIdx <= criTo.y; ++rowIdx) {
+					for (int colIdx = criFrom.x; colIdx <= criTo.x; ++colIdx) {
+						if (auto bc = blocks.At({ colIdx, rowIdx }); bc) {
+							if (bc->IsCross(topLeftPos, (int32_t)boxRadius << 1)) {
+								rayTracePlayerSuccess = false;
+								return;
+							}
+						}
+					}
+				}
+			}
 		}
+		rayTracePlayerSuccess = true;
+	}
+
+	XX_INLINE void Monster::TryShoot() {
+		if (stage->time < shootTime) return;
+		shootTime = stage->time + cShootDelay;
+		auto b = xx::MakeShared<MonsterBullet>();
+		b->Init(this, shootPos, radians);
+		stage->monsterBullets.Add(std::move(b));
 	}
 
 	XX_INLINE bool Monster::MoveToTarget(float speed) {
@@ -74,7 +99,7 @@ namespace Game {
 		// check cross & pushout
 		for (int rowIdx = criFrom.y; rowIdx <= criTo.y; ++rowIdx) {
 			for (int colIdx = criFrom.x; colIdx <= criTo.x; ++colIdx) {
-				if (auto bc = blocks.TryAt({ colIdx, rowIdx }); bc) {
+				if (auto bc = blocks.At({ colIdx, rowIdx }); bc) {
 					if (bc->IsCross(iPosLT, size)) {
 						auto [newPos, pushOutWay] = bc->PushOut(iPosLT, size);
 						if (pushOutWay != PushOutWays::Unknown) {
@@ -115,7 +140,9 @@ namespace Game {
 		HandleBlock();
 		FaceToPlayer();
 		SyncPos();
-		TryShoot();
+		if (rayTracePlayerSuccess) {
+			TryShoot();
+		}
 		goto LabFight;
 		XX_END(_n);
 		return 0;

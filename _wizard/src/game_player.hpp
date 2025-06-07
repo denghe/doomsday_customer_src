@@ -10,6 +10,8 @@ namespace Game {
 		auto leftTopPos = blocks.cellSize * posIdx;
 		pos.x = leftTopPos.x + blocks.cellSize * 0.5f;
 		pos.y = leftTopPos.y + blocks.cellSize - 1.f;
+		centerPos = pos + cCenterPosOffset;
+		radius = cSize.x * 0.5f;
 
 		pp.Init();
 		pp.CalcAll();
@@ -87,7 +89,7 @@ namespace Game {
 		// check cross & pushout
 		for (int rowIdx = criFrom.y; rowIdx <= criTo.y; ++rowIdx) {
 			for (int colIdx = criFrom.x; colIdx <= criTo.x; ++colIdx) {
-				if (auto bc = blocks.TryAt({ colIdx, rowIdx }); bc) {
+				if (auto bc = blocks.At({ colIdx, rowIdx }); bc) {
 					if (bc->IsCross(iPosLT, cSize)) {
 						auto [newPos, pushOutWay] = bc->PushOut(iPosLT, cSize);
 						if (pushOutWay != PushOutWays::Unknown) {
@@ -170,6 +172,9 @@ namespace Game {
 				stage->effectTexts.Add(pos + XY{ 0, -Cfg::unitSize }, { 0, -1 }, {99,155,255,255}, 2, i, true);
 			}
 		}
+
+		// sync
+		centerPos = pos + cCenterPosOffset;
 
 		weapon->Update();
 

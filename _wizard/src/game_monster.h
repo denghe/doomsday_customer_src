@@ -8,8 +8,9 @@ namespace Game {
 		static constexpr float cLightColorPlus{ 0.5f };
 		static constexpr float cFlySpeed{ 500.f / Cfg::fps };
 		static constexpr float cMoveSpeed{ 100.f / Cfg::fps };
-		static constexpr float cShootDelay{ 1.f };
+		static constexpr int32_t cShootDelay{ int32_t(1.f * Cfg::fps) };
 		static constexpr XY cShootOffset{ 0.5f, 0 };	// ratio
+		static constexpr int32_t cRayTracePlayerInterval{ int32_t( 0.5f * Cfg::fps ) };
 
 		int32_t indexAtItems{ -1 }, indexAtCells{ -1 };
 		Monster* prev{}, * next{};
@@ -21,7 +22,11 @@ namespace Game {
 		float radius{};
 		float radians{};
 
-		float shootTimePool{};
+		XY shootPos{};
+		int32_t shootTime{};
+		int32_t rayTracePlayerTime{};
+		bool rayTracePlayerSuccess{};	// can hit to player
+
 		int32_t _n{};
 
 		MonsterProperties mp;
