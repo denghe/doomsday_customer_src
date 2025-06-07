@@ -273,11 +273,13 @@ namespace Game {
 			if (player) {
 				player->Draw();
 			}
-			});
+		});
 
 		// light tex
+		static constexpr float lightTexScale{ 0.125f };	// for improve performance
+		camera.SetBaseScale(scale * lightTexScale);
 		auto bgColor = disableLight ? xx::RGBA8_White : xx::RGBA8{ 0,0,0,0 };
-		auto t2 = gLooper.fb.Draw(gLooper.windowSize, true, bgColor, [&] {
+		auto t2 = gLooper.fb.Draw(gLooper.windowSize * lightTexScale, true, bgColor, [&] {
 			if (disableLight) return;
 
 			gLooper.GLBlendFunc({ GL_SRC_COLOR, GL_ONE, GL_FUNC_ADD });
@@ -310,8 +312,9 @@ namespace Game {
 			}
 
 			// ...
+		});
+		camera.SetBaseScale(scale);
 
-			});
 
 		// combine content & light
 		gLooper.ShaderBegin(gLooper.shaderQuadInstanceLight).Draw(t, t2, xx::RGBA8_White, disableLight ? 1.f : 2.f);

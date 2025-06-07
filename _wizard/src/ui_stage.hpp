@@ -129,6 +129,16 @@ namespace UI {
 		p = stage->pos7 + XY{ 10, -100 };
 		a = stage->anchor7;
 		{
+			root->MakeChildren<xx::Button>()->Init(1, p, a, c, U"load cfg1", [&]() {
+				stage->player->weapon->pwp.projectileAmount = 100;
+				stage->player->weapon->pwp.shootSpeed = 120;
+				stage->player->weapon->pwp.movementSpeed = 100;
+				stage->player->weapon->pwp.spread = 70;
+				stage->player->weapon->pwp.manaCost = 0;
+				});
+		}
+		p.y -= 50;
+		{
 			auto& b1 = root->MakeChildren<xx::Button>();
 			b1->Init(1, p, a, c, U" + ", [&]() {
 				if (stage->player->pp.criticalChance < 1.f) {
