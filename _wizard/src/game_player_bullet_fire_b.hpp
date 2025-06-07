@@ -41,7 +41,7 @@ namespace Game {
 		q->anchor = 0.5f;
 		q->scale = radius / (gLooper.res._size_fire_bullet_0.y * 0.5f) * stage->camera.scale * 5.f;
 		q->radians = 0.f;
-		q->colorplus = 0.5f;
+		q->colorplus = 0.7f;
 		q->color = cLightColor;
 		q->texRect.data = ResTpFrames::_uvrect_ef_light64.data;
 	}
@@ -99,7 +99,7 @@ namespace Game {
 		return false;
 
 	LabExpbloding:
-		radius *= 10;
+		radius *= cExplodeRadiusRatio;
 
 		auto dp = owner->pp.CalcDamagePoint(stage->rnd, pwp2b.damagePoint);
 
