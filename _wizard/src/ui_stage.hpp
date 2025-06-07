@@ -131,7 +131,9 @@ namespace UI {
 		{
 			auto& b1 = root->MakeChildren<xx::Button>();
 			b1->Init(1, p, a, c, U" + ", [&]() {
-				stage->player->pp.criticalChance += 0.1f;
+				if (stage->player->pp.criticalChance < 1.f) {
+					stage->player->pp.criticalChance += 0.1f;
+				}
 			});
 			auto& b2 = root->MakeChildren<xx::Button>();
 			b2->Init(1, p + XY{ b1->size.x, 0 }, a, c, U" - ", [&]() {
@@ -165,7 +167,9 @@ namespace UI {
 		{
 			auto& b1 = root->MakeChildren<xx::Button>();
 			b1->Init(1, p, a, c, U" + ", [&]() {
-				++stage->player->pp.jumpExtraNums;
+				if (stage->player->pp.jumpExtraNums < 5.f) {
+					++stage->player->pp.jumpExtraNums;
+				}
 			});
 			auto& b2 = root->MakeChildren<xx::Button>();
 			b2->Init(1, p + XY{ b1->size.x, 0 }, a, c, U" - ", [&]() {
@@ -182,7 +186,9 @@ namespace UI {
 		{
 			auto& b1 = root->MakeChildren<xx::Button>();
 			b1->Init(1, p, a, c, U" + ", [&]() {
-				++stage->player->weapon->pwp.projectileAmount;
+				if (stage->player->weapon->pwp.projectileAmount < 100.f) {
+					++stage->player->weapon->pwp.projectileAmount;
+				}
 			});
 			auto& b2 = root->MakeChildren<xx::Button>();
 			b2->Init(1, p + XY{ b1->size.x, 0 }, a, c, U" - ", [&]() {
@@ -199,7 +205,9 @@ namespace UI {
 		{
 			auto& b1 = root->MakeChildren<xx::Button>();
 			b1->Init(1, p, a, c, U" + ", [&]() {
-				++stage->player->weapon->pwp.shootSpeed;
+				if (stage->player->weapon->pwp.shootSpeed < 120.f) {
+					++stage->player->weapon->pwp.shootSpeed;
+				}
 			});
 			auto& b2 = root->MakeChildren<xx::Button>();
 			b2->Init(1, p + XY{ b1->size.x, 0 }, a, c, U" - ", [&]() {
@@ -216,7 +224,9 @@ namespace UI {
 		{
 			auto& b1 = root->MakeChildren<xx::Button>();
 			b1->Init(1, p, a, c, U" + ", [&]() {
-				++stage->player->weapon->pwp.manaCost;
+				if (stage->player->weapon->pwp.manaCost < 100.f) {
+					++stage->player->weapon->pwp.manaCost;
+				}
 			});
 			auto& b2 = root->MakeChildren<xx::Button>();
 			b2->Init(1, p + XY{ b1->size.x, 0 }, a, c, U" - ", [&]() {
@@ -233,7 +243,9 @@ namespace UI {
 		{
 			auto& b1 = root->MakeChildren<xx::Button>();
 			b1->Init(1, p, a, c, U" + ", [&]() {
-				++stage->player->weapon->pwp.spread;
+				if (stage->player->weapon->pwp.spread < 180.f) {
+					++stage->player->weapon->pwp.spread;
+				}
 			});
 			auto& b2 = root->MakeChildren<xx::Button>();
 			b2->Init(1, p + XY{ b1->size.x, 0 }, a, c, U" - ", [&]() {
@@ -285,12 +297,14 @@ namespace UI {
 		{
 			auto& b1 = root->MakeChildren<xx::Button>();
 			b1->Init(1, p, a, c, U" + ", [&]() {
-				stage->player->weapon->pwp.movementSpeed += 50.f;
+				if (stage->player->weapon->pwp.movementSpeed < 2000.f) {
+					stage->player->weapon->pwp.movementSpeed += 100.f;
+				}
 				});
 			auto& b2 = root->MakeChildren<xx::Button>();
 			b2->Init(1, p + XY{ b1->size.x, 0 }, a, c, U" - ", [&]() {
-				if (stage->player->weapon->pwp.movementSpeed > 50.f) {
-					stage->player->weapon->pwp.movementSpeed -= 50.f;
+				if (stage->player->weapon->pwp.movementSpeed > 100.f) {
+					stage->player->weapon->pwp.movementSpeed -= 100.f;
 				}
 				});
 			auto& l1 = root->MakeChildren<xx::Label>();
@@ -302,7 +316,9 @@ namespace UI {
 		{
 			auto& b1 = root->MakeChildren<xx::Button>();
 			b1->Init(1, p, a, c, U" + ", [&]() {
-				stage->player->weapon->pwp.scale += 0.5f;
+				if (stage->player->weapon->pwp.scale < 3.f) {
+					stage->player->weapon->pwp.scale += 0.5f;
+				}
 				});
 			auto& b2 = root->MakeChildren<xx::Button>();
 			b2->Init(1, p + XY{ b1->size.x, 0 }, a, c, U" - ", [&]() {
