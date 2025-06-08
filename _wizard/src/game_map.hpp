@@ -110,7 +110,7 @@ namespace Game {
 		bgUvOffset += XY{ 0.6f, -1.f } * 10 * Cfg::frameDelay;
 	}
 
-	inline void Map::Draw(Stage* stage) {
+	inline void Map::Draw(Stage* stage) const {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstanceTilingOffset)
 			.Draw(gLooper.res._texid_bg_space1, 1);
 		q->pos = {};
@@ -124,6 +124,30 @@ namespace Game {
 		q->offset = bgUvOffset;
 
 		for (auto& o : blocks.items) o->Draw(stage);
+	}
+
+	inline uint8_t const* Map::GetFlowField(XYi cri) const {
+		assert(cri.x >= 0 && cri.x < blocks.numCols);
+		assert(cri.y >= 0 && cri.y < blocks.numRows);
+		auto ci = blocks.ColRowIndexToCellIndex(cri);
+		if (!flowFields[ci]) {
+			xx::Listi32<XYi> neighbors;
+			neighbors.Reserve(blocks.cellsLen);
+			auto d = std::make_unique_for_overwrite<uint8_t[]>(blocks.cellsLen);
+			auto f = std::make_unique<uint32_t[]>(blocks.cellsLen);
+			f[ci] = 1;
+			neighbors.Emplace(cri);
+			for (int32_t i = 0; i < neighbors.len; ++i) {
+				// todo: fill neighbors & f
+			}
+			for (int32_t y = 0; y < blocks.numRows; ++y) {
+				for (int32_t x = 0; x < blocks.numCols; ++x) {
+					// todo: fill d
+				}
+			}
+			flowFields[ci] = std::move(d);
+		}
+		return flowFields[ci].get();
 	}
 
 }

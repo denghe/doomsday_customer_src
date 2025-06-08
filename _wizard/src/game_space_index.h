@@ -14,11 +14,11 @@ namespace Game {
 	template<typename T, bool enableDoubleLink>
 	struct SpaceIndex {
 		XYi gridSize{};								// gridSize = cellSize * numCR
-		int32_t cellSize{};
+		int32_t cellSize{};							// diameter
 		float _1_cellSize{};						// 1 / cellSize
 		int32_t numRows{}, numCols{};
 		xx::Listi32<xx::Shared<T>> items;
-		int32_t cellsLen{};
+		int32_t cellsLen{};							// numRows * numCols;
 		std::unique_ptr<T*[]> cells;
 		std::unique_ptr<int32_t[]> counts;
 		xx::SpaceGridRingDiffuseData const* rdd{};	// ref to requires data
