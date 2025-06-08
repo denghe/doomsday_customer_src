@@ -132,7 +132,7 @@ namespace UI {
 			root->MakeChildren<xx::Button>()->Init(1, p, a, c, U"load cfg1", [&]() {
 				stage->player->weapon->pwp.projectileAmount = 100;
 				stage->player->weapon->pwp.shootSpeed = 120;
-				stage->player->weapon->pwp.movementSpeed = 100;
+				stage->player->weapon->pwp.movementSpeed = 2000;
 				stage->player->weapon->pwp.spread = 70;
 				stage->player->weapon->pwp.manaCost = 0;
 				});

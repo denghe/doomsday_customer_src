@@ -400,7 +400,7 @@ namespace Game {
 		}
 		auto ds = flowFields[bci].get();
 
-#if 1
+#if 0
 		return GetFlowFieldVec(ds, blocks.PosToColRowIndex(fromPos));
 #else
 		// calc move dir ( 4 point lerp bilinear )
