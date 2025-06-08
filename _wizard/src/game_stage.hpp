@@ -276,7 +276,7 @@ namespace Game {
 		});
 
 		// light tex
-		static constexpr float lightTexScale{ 0.125f };	// for improve performance
+		static constexpr float lightTexScale{ 0.25f };	// for improve performance
 		camera.SetBaseScale(scale * lightTexScale);
 		auto bgColor = disableLight ? xx::RGBA8_White : xx::RGBA8{ 0,0,0,0 };
 		auto t2 = gLooper.fb.Draw(gLooper.windowSize * lightTexScale, true, bgColor, [&] {

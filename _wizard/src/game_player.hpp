@@ -90,8 +90,8 @@ namespace Game {
 		for (int rowIdx = criFrom.y; rowIdx <= criTo.y; ++rowIdx) {
 			for (int colIdx = criFrom.x; colIdx <= criTo.x; ++colIdx) {
 				if (auto bc = blocks.At({ colIdx, rowIdx }); bc) {
-					if (bc->IsCross(iPosLT, cSize)) {
-						auto [newPos, pushOutWay] = bc->PushOut(iPosLT, cSize);
+					if (bc->IsCrossBox(iPosLT, cSize)) {
+						auto [newPos, pushOutWay] = bc->PushOutBox(iPosLT, cSize);
 						if (pushOutWay != PushOutWays::Unknown) {
 							iPosLT = newPos;
 							iPosRB = iPosLT + cSize;

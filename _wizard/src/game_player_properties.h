@@ -111,7 +111,7 @@ namespace Game {
 			movementSpeedFactor = 1.f;
 			jumpHeightPreset = 1.f;
 			jumpHeightFactor = 1.f;
-			jumpExtraNumsPreset = 0.f;
+			jumpExtraNumsPreset = 2.f;
 			jumpExtraNumsFactor = 1.f;
 			luckyPreset = 0.f;
 			luckyFactor = 1.f;

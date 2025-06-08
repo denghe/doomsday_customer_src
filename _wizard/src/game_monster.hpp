@@ -10,13 +10,13 @@ namespace Game {
 		auto posIdx = stage->map->bornPlaces_Monster[bornPosIdx];
 		pos = posIdx * Cfg::unitSize + (Cfg::unitSize / 2);
 		radians = 0;
-		radius = 64.f / 2;
+		radius = 50.f / 2;
 		monsterFormation = std::move(monsterFormation_);
 		monsterFormationPosIdx = monsterFormationPosIdx_;
 		mp.Init();
 	}
 
-	XX_INLINE void Monster::FaceToPlayer() {
+	XX_INLINE void Monster::FaceAndRayTracePlayer() {
 		auto playerPos = stage->player->centerPos;
 		auto d = playerPos - pos;
 		radians = std::atan2f(d.y, d.x);
@@ -48,7 +48,7 @@ namespace Game {
 				for (int rowIdx = criFrom.y; rowIdx <= criTo.y; ++rowIdx) {
 					for (int colIdx = criFrom.x; colIdx <= criTo.x; ++colIdx) {
 						if (auto bc = blocks.At({ colIdx, rowIdx }); bc) {
-							if (bc->IsCross(topLeftPos, (int32_t)boxRadius << 1)) {
+							if (bc->IsCrossBox(topLeftPos, boxRadius * 2.f)) {
 								rayTracePlayerSuccess = false;
 								return;
 							}
@@ -68,7 +68,7 @@ namespace Game {
 		stage->monsterBullets.Add(std::move(b));
 	}
 
-	XX_INLINE bool Monster::MoveToTarget(float speed) {
+	XX_INLINE bool Monster::MoveToTargetFormationPos(float speed) {
 		auto tarPos = monsterFormation->GetPos(monsterFormationPosIdx);
 		auto d = tarPos - pos;
 		auto dd = d.x * d.x + d.y * d.y;
@@ -84,38 +84,24 @@ namespace Game {
 		}
 	}
 
-	XX_INLINE void Monster::HandleBlock() {
+	XX_INLINE void Monster::MoveToPlayer(float speed) {
+		auto s = stage->map->GetFlowFieldVec(pos, radius, stage->player->centerPos);
+		pos += s * speed;
+	}
+
+	XX_INLINE void Monster::HandleBlocks() {
 		auto& blocks = stage->map->blocks;
-		auto size = XYi{ frame->spriteSize };
-
-		auto iPosRB = pos.As<int32_t>();
-		iPosRB.x += size.x >> 1;
-		auto iPosLT = iPosRB - size;
-
-		// handle blocks
-		PushOutWays pushOutWays{};
-		auto criFrom = blocks.PosToColRowIndex(iPosLT);
-		auto criTo = blocks.PosToColRowIndex(iPosRB - 1);
+		auto criFrom = blocks.PosToColRowIndex(pos - radius);
+		auto criTo = blocks.PosToColRowIndex(pos + radius - 0.01f);
 		// check cross & pushout
 		for (int rowIdx = criFrom.y; rowIdx <= criTo.y; ++rowIdx) {
 			for (int colIdx = criFrom.x; colIdx <= criTo.x; ++colIdx) {
 				if (auto bc = blocks.At({ colIdx, rowIdx }); bc) {
-					if (bc->IsCross(iPosLT, size)) {
-						auto [newPos, pushOutWay] = bc->PushOut(iPosLT, size);
-						if (pushOutWay != PushOutWays::Unknown) {
-							iPosLT = newPos;
-							iPosRB = iPosLT + size;
-							(uint32_t&)pushOutWays |= (uint32_t&)pushOutWay;
-						}
-					}
+					bc->PushOutCircle(pos, radius);
 				}
 			}
 		}
-		if ((uint32_t)pushOutWays) {
-			pos.x = float(iPosLT.x + (size.x >> 1));
-			pos.y = float(iPosLT.y + size.y);
-			stage->ForceLimit(pos);
-		}
+		stage->ForceLimit(pos);
 	}
 
 	XX_INLINE void Monster::SyncPos() {
@@ -125,20 +111,33 @@ namespace Game {
 
 	inline int32_t Monster::Update() {
 		XX_BEGIN(_n);
-	LabFly:
+	LabFlyToFormationPos:
 		XX_YIELD_I(_n);
 		{
-		bool success = MoveToTarget(cFlySpeed);
-		FaceToPlayer();
+		bool success = MoveToTargetFormationPos(cFlySpeed);
+		FaceAndRayTracePlayer();
 		SyncPos();
-		if (!success) goto LabFly;
+		if (!success) goto LabFlyToFormationPos;
+		}
+	LabFormationFight:
+		XX_YIELD_I(_n);
+		++stage->numReadyMonsters;
+		MoveToTargetFormationPos(cMoveSpeed);
+		HandleBlocks();
+		FaceAndRayTracePlayer();
+		SyncPos();
+		if (rayTracePlayerSuccess) {
+			TryShoot();
+			goto LabFormationFight;
 		}
 	LabFight:
 		XX_YIELD_I(_n);
 		++stage->numReadyMonsters;
-		MoveToTarget(cMoveSpeed);
-		HandleBlock();
-		FaceToPlayer();
+		if (!rayTracePlayerSuccess) {
+			MoveToPlayer(cTraceSpeed);
+			HandleBlocks();
+		}
+		FaceAndRayTracePlayer();
 		SyncPos();
 		if (rayTracePlayerSuccess) {
 			TryShoot();

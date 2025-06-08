@@ -8,9 +8,10 @@ namespace Game {
 		static constexpr float cLightColorPlus{ 0.5f };
 		static constexpr float cFlySpeed{ 500.f / Cfg::fps };
 		static constexpr float cMoveSpeed{ 100.f / Cfg::fps };
+		static constexpr float cTraceSpeed{ 200.f / Cfg::fps };
 		static constexpr int32_t cShootDelay{ int32_t(1.f * Cfg::fps) };
 		static constexpr XY cShootOffset{ 0.5f, 0 };	// ratio
-		static constexpr int32_t cRayTracePlayerInterval{ int32_t( 0.5f * Cfg::fps ) };
+		static constexpr int32_t cRayTracePlayerInterval{ int32_t( 0.2f * Cfg::fps ) };
 
 		int32_t indexAtItems{ -1 }, indexAtCells{ -1 };
 		Monster* prev{}, * next{};
@@ -31,10 +32,11 @@ namespace Game {
 
 		MonsterProperties mp;
 
-		bool MoveToTarget(float speed);
-		void HandleBlock();
-		void SyncPos();
-		void FaceToPlayer();
+		bool MoveToTargetFormationPos(float speed);
+		void MoveToPlayer(float speed);
+		void HandleBlocks();
+		void SyncPos();		// force limit & space index update
+		void FaceAndRayTracePlayer();
 		void TryShoot();
 
 		void Init(Stage* stage_, int32_t bornPosIdx, xx::Weak<MonsterFormation> monsterFormation_, int32_t monsterFormationPosIdx_);

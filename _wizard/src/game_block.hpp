@@ -24,10 +24,34 @@ namespace Game {
 
 	template<typename T>
 	inline void Block::FillWayout(T& blocks) {
-		// search neighbor & set wayout bit
+#if 0
+		(uint8_t&)wayout = 0;
+		static constexpr int dx{ 5 }, dy{ 5 };
+		auto left = blocks.ExistsPoint(pos + XYi{ -dx, dy });
+		auto up = blocks.ExistsPoint(pos + XYi{ dy, -dx });
+		auto right = blocks.ExistsPoint(pos + size + XYi{ dx, -dy });
+		auto down = blocks.ExistsPoint(pos + size + XYi{ -dy, dx });
+
+		atEdge = left == 2 && up == 2
+			|| up == 2 && right == 2
+			|| right == 2 && down == 2
+			|| down == 2 && left == 2;
+
+		if (left > 0 && up > 0 && right > 0 && down > 0) {
+			wayout.left = left == 1;
+			wayout.up = up == 1;
+			wayout.right = right == 1;
+			wayout.down = down == 1;
+		}
+		else {
+			wayout.left = left == 0;
+			wayout.up = up == 0;
+			wayout.right = right == 0;
+			wayout.down = down == 0;
+		}
+#else
 		auto cri = blocks.PosToColRowIndex(pos);
 		assert(blocks.TryAt(cri) == this);
-		bool atEdge{};
 
 		if (cri.y == 0) {
 			wayout.up = false; atEdge = true;
@@ -55,11 +79,13 @@ namespace Game {
 			if (cri.x != 0) wayout.left = true;
 			if (cri.x + 1 != blocks.numCols) wayout.right = true;
 		}
+#endif
 	}
+
 
 	// only for size >= cSize
 	// cPos: left top position
-	inline std::pair<XYi, PushOutWays> Block::PushOut(XYi const& cPos, XYi const& cSize) const {
+	inline std::pair<XYi, PushOutWays> Block::PushOutBox(XYi cPos, XYi cSize) const {
 		// calculate 4 way distance & choose min val
 		auto bPosRB = pos + size;	// RB: right bottom
 		XYi bHalfSize{ size.x >> 1, size.y >> 1 };
@@ -123,9 +149,20 @@ namespace Game {
 		}
 	}
 
+	XX_INLINE bool Block::PushOutCircle(XY& cPos, float cRadius) {
+#if 0
+		XY halfSize{ size.x * 0.5f, size.y * 0.5f };
+		XY p{ pos.x + halfSize.x, pos.y + halfSize.y };
+		return xx::Math::MoveCircleIfIntersectsBox<float>(wayout, p.x, p.y, halfSize.x, halfSize.y
+			, cPos.x, cPos.y, cRadius, atEdge);
+#else
+		return xx::TranslateControl::MoveCircleIfIntersectsBox2({ pos, pos + size }, cPos, cRadius);
+#endif
+	}
+
 	// cPos: left top position
-	XX_INLINE bool Block::IsCross(XYi const& cPos, XYi const& cSize) const {
-		return xx::Math::IsAABBIntersect(pos, size, cPos, cSize);
+	XX_INLINE bool Block::IsCrossBox(XYi cPosLT, XYi cSize) const {
+		return xx::Math::IsAABBIntersect(pos, size, cPosLT, cSize);
 	}
 
 }

@@ -23,6 +23,11 @@ namespace Game {
 		std::unique_ptr<int32_t[]> counts;
 		xx::SpaceGridRingDiffuseData const* rdd{};	// ref to requires data
 
+		// helpers
+		static constexpr std::array<XYi, 8> neighborOffsets{
+			XYi{1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1},
+		};
+
 		void Init(xx::SpaceGridRingDiffuseData const* rdd_, int32_t numRows_, int32_t numCols_, int32_t cellSize_, int32_t cap = 10000) {
 			assert(!cells);
 			assert(numCols_ > 0 && numRows_ > 0 && cellSize_ > 0);
@@ -202,6 +207,8 @@ namespace Game {
 			memset(cells.get(), 0, sizeof(T*) * cellsLen);
 			memset(counts.get(), 0, sizeof(int32_t) * cellsLen);
 		}
+
+
 
 
 		// foreach target cell + round 8 = 9 cells

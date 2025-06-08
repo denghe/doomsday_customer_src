@@ -141,7 +141,7 @@ namespace Game {
 		for (int rowIdx = criFrom.y; rowIdx <= criTo.y; ++rowIdx) {
 			for (int colIdx = criFrom.x; colIdx <= criTo.x; ++colIdx) {
 				if (auto bc = blocks.At({ colIdx, rowIdx }); bc) {
-					if (bc->IsCross(iPosLT, size)) {
+					if (bc->IsCrossBox(iPosLT, size)) {
 						PlayDeathEffect(1.f);
 						return true;
 					}

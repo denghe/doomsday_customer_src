@@ -10,14 +10,16 @@ namespace Game {
 		XYi pos{}, size{};
 		int32_t indexAtItems{ -1 }, indexAtCells{ -1 };
 		xx::Math::BlockWayout wayout{};
+		bool atEdge{};
 
 		xx::Shared<Block> Init(XYi pos_, XYi size_);
 		void Update();
 		void Draw(struct Stage* stage);
 
 		template<typename T> void FillWayout(T& blocks);
-		std::pair<XYi, PushOutWays> PushOut(XYi const& cPos, XYi const& cSize) const;
-		bool IsCross(XYi const& cPosLT, XYi const& cSize) const;
+		std::pair<XYi, PushOutWays> PushOutBox(XYi cPos, XYi cSize) const;
+		bool PushOutCircle(XY& tarPos, float tarRadius);
+		bool IsCrossBox(XYi cPosLT, XYi cSize) const;
 	};
 
 }
