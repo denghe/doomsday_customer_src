@@ -34,7 +34,7 @@ namespace Game {
 				}
 			}
 			else if (gLooper.mouse.PressedMBLeft()) {
-				nextShootTime = stage->time + int32_t(Cfg::fps / pwp.shootSpeed);
+				nextShootTime = stage->time + int32_t(Cfg::fps / pwp.shootSpeed * 0.5f);
 				for (int32_t i = 0; i < (int32_t)pwp.projectileAmount; ++i) {
 					auto v = float(M_PI) / 180.f * pwp.spread;
 					auto r = stage->rnd.Next<float>(-v, v);

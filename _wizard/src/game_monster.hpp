@@ -119,6 +119,7 @@ namespace Game {
 	}
 
 	inline int32_t Monster::Update() {
+		if (stunEndTime >= stage->time) return 0;	// when stun: pause all action
 		XX_BEGIN(_n);
 	LabFlyToFormationPos:
 		XX_YIELD_I(_n);
@@ -174,22 +175,31 @@ namespace Game {
 		q->anchor = *f.anchor;
 		q->scale = radius * 2.f / f.spriteSize.x * stage->camera.scale;
 		q->radians = radians;
-		q->colorplus = 1.f;
+		q->colorplus = stunEndTime >= stage->time ? 100000.f : 1.f;
 		q->color = xx::RGBA8_White;
 		q->texRect.data = f.textureRect.data;
 	}
 
 	inline void Monster::DrawLight() {
-		auto& f = *lightFrame;
+		xx::Frame* f;
+		float cp;
+		if (stunEndTime >= stage->time) {
+			f = frame;
+			cp = 100000.f;
+		}
+		else {
+			f = lightFrame;
+			cp = 1.f;
+		}
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
-			.Draw(f.tex, 1);
+			.Draw(f->tex, 1);
 		q->pos = stage->camera.ToGLPos(pos);
-		q->anchor = *f.anchor;
-		q->scale = radius * 2.f / f.spriteSize.x * stage->camera.scale;
+		q->anchor = *f->anchor;
+		q->scale = radius * 2.f / f->spriteSize.x * stage->camera.scale;
 		q->radians = radians;
-		q->colorplus = 1.f;
+		q->colorplus = cp;
 		q->color = xx::RGBA8_White;
-		q->texRect.data = f.textureRect.data;
+		q->texRect.data = f->textureRect.data;
 	}
 
 	XX_INLINE void Monster::PlayDeathEffect(float scale_) {
@@ -204,6 +214,7 @@ namespace Game {
 			PlayDeathEffect(1.f);
 		}
 		else {	// not dead
+			stunEndTime = stage->time + int32_t(0.1f * Cfg::fps);
 			// todo: draw hp bar?
 			// change to white?
 			// stun?

@@ -71,7 +71,7 @@ namespace Game {
 			shootSpeedFactor = 1.f;
 			manaCostPreset = 10.f;
 			manaCostFactor = 1.f;
-			spreadPreset = 5.f;
+			spreadPreset = 2.f;
 			spreadFactor = 1.f;
 			damagePointPreset = 10.f;
 			damagePointFactor = 1.f;
@@ -79,7 +79,7 @@ namespace Game {
 			pierceCountFactor = 1.f;
 			hurtDelaySecondsPreset = 0.1f;
 			hurtDelaySecondsFactor = 1.f;
-			movementSpeedPreset = 300.f;
+			movementSpeedPreset = 600.f;
 			movementSpeedFactor = 1.f;
 			scalePreset = 1.f;
 			scaleFactor = 1.f;

@@ -27,6 +27,7 @@ namespace Game {
 		XY shootPos{};
 		int32_t shootTime{};
 		int32_t rayTracePlayerTime{};
+		int32_t stunEndTime{};			// if (stunEndTime >= stage->time) color look liks white
 		bool rayTracePlayerSuccess{};	// can hit to player
 
 		int32_t _n{};	// for Update()
