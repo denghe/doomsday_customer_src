@@ -190,6 +190,9 @@
             <key type="filename">pngs/global_explosion_6.png</key>
             <key type="filename">pngs/global_explosion_7.png</key>
             <key type="filename">pngs/global_explosion_8.png</key>
+            <key type="filename">pngs/laser1.png</key>
+            <key type="filename">pngs/laser2.png</key>
+            <key type="filename">pngs/light_laser64.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -301,6 +304,7 @@
             <key type="filename">pngs/fire_explosion_3.png</key>
             <key type="filename">pngs/fire_explosion_4.png</key>
             <key type="filename">pngs/fire_explosion_5.png</key>
+            <key type="filename">pngs/light_laser32.png</key>
             <key type="filename">pngs/light_monster_1.png</key>
             <key type="filename">pngs/monster_1.png</key>
             <key type="filename">pngs/ui_aim.png</key>
