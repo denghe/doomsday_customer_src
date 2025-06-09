@@ -2,30 +2,13 @@
 
 namespace Game {
 
-	inline void Map::Init() {
-		// Ｂ	block
-		// ｐ	player born place
-		// ｍ	monster born place
-		// Ｍ	monster fly target
-		static std::u32string_view mapText{ UR"(
-Ｂ　　　　ｍ　　　ｍ　　　ｍ　　　ｍ　　　ｍ　　　　Ｂ
-Ｂ　　　　　　　　　　　　　　　　　　　　　　　　　Ｂ
-Ｂ　　　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　　　Ｂ
-Ｂ　　　　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　　　　Ｂ
-Ｂ　　　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　　　Ｂ
-Ｂ　　　　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　　　　Ｂ
-Ｂ　　　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　　　Ｂ
-Ｂ　　　　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　　　　Ｂ
-Ｂ　　　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　　　Ｂ
-Ｂ　　　　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　　　　Ｂ
-Ｂ　　　　　　　　　　　　　　　　　　　　　　　　　Ｂ
-ＢＢＢＢＢＢＢＢＢＢ　　　　　　　　　　　　　　　　Ｂ
-Ｂ　　　Ｂ　　　　Ｂ　　　　　　　　　　ＢＢＢＢＢＢＢ
-Ｂ　Ｂ　　　Ｂ　　Ｂ　　　　　　　　　　Ｂ　　　　　Ｂ
-Ｂ　ＢＢＢＢＢＢＢＢ　　　　　　　　　　　　　　　　Ｂ
-Ｂ　　　　　　　　　　　　ｐ　　　　　　　　　Ｂ　　Ｂ
-ＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢ
-)" };
+	// map elements:
+	// Ｂ	block
+	// ｐ	player born place
+	// ｍ	monster born place
+	// Ｍ	monster fly target
+	inline void Map::Init(Stage* stage_, std::u32string_view mapText) {
+		this->stage = stage_;
 
 		// remove first line control chars
 		while (true) {
@@ -94,7 +77,7 @@ namespace Game {
 				bornPlaces_Monster.Emplace(x, y);
 				break;
 			case U'Ｍ':
-				flyTargets_Monster.Emplace(x, y);
+				flyTargets_Monster.Emplace(IdxToPos({ x, y }));
 				break;
 			}
 			++x;
@@ -111,13 +94,19 @@ namespace Game {
 
 		// test
 		//auto r = GetFlowFieldVec({23,14});
+
+		ShuffleFlyTargets();
+
+		auto ms = blocks.gridSize.As<float>();
+		cameraOriginal = { ms.x * 0.5f, ms.y - Cfg::height_2 };
 	}
 
-	inline void Map::Update() {
+	inline int32_t Map::Update() {
 		bgUvOffset += XY{ 0.6f, -1.f } * 10 * Cfg::frameDelay;
+		return 0;
 	}
 
-	inline void Map::Draw(Stage* stage) {
+	inline void Map::Draw() {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstanceTilingOffset)
 			.Draw(gLooper.res._texid_bg_space1, 1);
 		q->pos = {};
@@ -133,6 +122,8 @@ namespace Game {
 		for (auto& o : blocks.items) o->Draw(stage);
 	}
 
+	inline void Map::DrawLight() {
+	}
 
 	XX_INLINE XY Map::GetFlowFieldVec(uint8_t* ds, XYi cri) {
 		static constexpr float v{ 0.7071067811865475f };
@@ -459,4 +450,127 @@ namespace Game {
 		else return {};
 #endif
 	}
+
+
+
+	XX_INLINE XY Map::IdxToPos(XYi crIdx) {
+		return crIdx * Cfg::unitSize + (Cfg::unitSize * 0.5f);
+	}
+
+	XX_INLINE XY Map::GetFlyTargetPos(int32_t idx) {
+		return flyTargets_Monster[idx];
+	}
+
+	XX_INLINE XY Map::GetFlyTargetPosWithOffset(int32_t idx) {
+		return flyTargets_Monster[idx] + offset;
+	}
+
+	inline void Map::ShuffleFlyTargets() {
+		auto& rnd = stage->rnd;
+		auto len = flyTargets_Monster.len;
+		auto buf = flyTargets_Monster.buf;
+		for (int32_t i = 0, tar = 1; ++i != len; ++tar) {
+			if (int32_t offset = rnd.Next(tar); offset != tar) {
+				std::swap(buf[i], buf[offset]);
+			}
+		}
+	}
+
+	inline int32_t Map::GenerateMonster() {
+		XX_BEGIN(_1n);
+		for (_1a = 0; _1a < flyTargets_Monster.len; ++_1a) {
+			{
+				// make monster
+				auto idx = stage->rnd.Next<int32_t>(bornPlaces_Monster.len);
+				auto bornPos = IdxToPos(bornPlaces_Monster[idx]);
+				auto m = xx::MakeShared<Monster>();
+				m->Init(stage, bornPos, _1a);
+				stage->monsters.Add(std::move(m));
+			}
+
+			// sleep
+			for (_1b = stage->time + int32_t(Cfg::fps * 0.01f); stage->time < _1b;) {
+				XX_YIELD_I(_1n);
+			}
+		}
+		XX_END(_1n);
+		return 1;
+	}
+
+
+
+	/****************************************************************************/
+	/****************************************************************************/
+
+	inline void Map_1::Init(Stage* stage_) {
+		this->Map::Init(stage_, UR"(
+Ｂ　　ｍｍｍｍｍｍｍｍｍｍｍｍｍｍｍｍｍｍｍｍｍ　　Ｂ
+Ｂ　　　　　　　　　　　　　　　　　　　　　　　　　Ｂ
+Ｂ　　　　　　　　　　　　　　　　　　　　　　　　　Ｂ
+Ｂ　　　　　　　　　　　　　　　　　　　　　　　　　Ｂ
+Ｂ　　　　　　　　　　　　　　　　　　　　　　　　　Ｂ
+Ｂ　　　　　　　　　　　　　　　　　　　　　　　　　Ｂ
+Ｂ　　　　　　　　　　　　　　　　　　　　　　　　　Ｂ
+Ｂ　　　　　　　　　　　　　　　　　　　　　　　　　Ｂ
+Ｂ　　　　Ｍ　　　Ｍ　　　Ｍ　　　Ｍ　　　Ｍ　　　　Ｂ
+Ｂ　　　　　　　　　　　　　　　　　　　　　　　　　Ｂ
+Ｂ　　　　　　　　　　　　　　　　　　　　　　　　　Ｂ
+Ｂ　　　　　　　　　　　　　　　　　　　　　　　　　Ｂ
+Ｂ　　　　　　　　　　　　　　　　　　　　　　　　　Ｂ
+Ｂ　　　　　　　　　　　　　　　　　　　　　　　　　Ｂ
+Ｂ　　　　　　　　　　　　　　　　　　　　　　　　　Ｂ
+Ｂ　　　　　　　　　　　　　　　　　　　　　　　　　Ｂ
+Ｂ　　　　　　　　　　　　　　　　　　　　　　　　　Ｂ
+Ｂ　　　　　　　　　　　　ｐ　　　　　　　　　　　　Ｂ
+ＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢ
+)");
+	}
+
+	inline int32_t Map_1::Update() {
+		this->Map::Update();
+		offset.x = (stage->player->pos.x - cameraOriginal.x) * 0.2f;
+		return 0;
+	}
+
+	/****************************************************************************/
+	/****************************************************************************/
+
+	inline void Map_2::Init(Stage* stage_) {
+		this->Map::Init(stage_, UR"(
+Ｂ　　ｍｍｍｍｍｍｍｍｍｍｍｍｍｍｍｍｍｍｍｍｍ　　Ｂ
+Ｂ　　　　　　　　　　　　　　　　　　　　　　　　　Ｂ
+Ｂ　　　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　　　Ｂ
+Ｂ　　　　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　　　　Ｂ
+Ｂ　　　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　　　Ｂ
+Ｂ　　　　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　　　　Ｂ
+Ｂ　　　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　　　Ｂ
+Ｂ　　　　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　　　　Ｂ
+Ｂ　　　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　　　Ｂ
+Ｂ　　　　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　Ｍ　　　　Ｂ
+Ｂ　　　　　　　　　　　　　　　　　　　　　　　　　Ｂ
+ＢＢＢＢＢＢＢＢＢＢ　　　　　　　　　　　　　　　　Ｂ
+Ｂ　　　Ｂ　　　　Ｂ　　　　　　　　　　ＢＢＢＢＢＢＢ
+Ｂ　Ｂ　　　Ｂ　　Ｂ　　　　　　　　　　Ｂ　　　　　Ｂ
+Ｂ　ＢＢＢＢＢＢＢＢ　　　　　　　　　　　　　　　　Ｂ
+Ｂ　　　　　　　　　　　　ｐ　　　　　　　　　Ｂ　　Ｂ
+ＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢ
+)");
+	}
+
+	inline int32_t Map_2::Update() {
+		this->Map::Update();
+		static constexpr auto step{ Cfg::unitSize * 2.f / (Cfg::fps * 2.f) };
+		XX_BEGIN(_n);
+		while (true) {
+			for (; offset.x > -Cfg::unitSize * 2.f; offset.x -= step) {
+				XX_YIELD_I(_n);
+			}
+			for (; offset.x < Cfg::unitSize * 2.f; offset.x += step) {
+				XX_YIELD_I(_n);
+			}
+		}
+		XX_END(_n);
+		return 0;
+	}
+
 }

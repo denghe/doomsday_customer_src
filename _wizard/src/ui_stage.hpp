@@ -99,27 +99,27 @@ namespace UI {
 		auto p = stage->pos9 + XY{ -10, -10 };
 		p.y -= 150;
 		root->MakeChildren<xx::Button>()->Init(1, p, a, c, U"*100", [&]() {
-			stage->frameDelay = Cfg::frameDelay * 100.f;
+			stage->delta = Cfg::frameDelay * 100.f;
 			});
 		p.y -= 50;
 		root->MakeChildren<xx::Button>()->Init(1, p, a, c, U"*10", [&]() {
-			stage->frameDelay = Cfg::frameDelay * 10.f;
+			stage->delta = Cfg::frameDelay * 10.f;
 			});
 		p.y -= 50;
 		root->MakeChildren<xx::Button>()->Init(1, p, a, c, U"*2", [&]() {
-			stage->frameDelay = Cfg::frameDelay * 2.f;
+			stage->delta = Cfg::frameDelay * 2.f;
 			});
 		p.y -= 50;
 		root->MakeChildren<xx::Button>()->Init(1, p, a, c, U"GameSpeed*1", [&]() {
-			stage->frameDelay = Cfg::frameDelay;
+			stage->delta = Cfg::frameDelay;
 			});
 		p.y -= 50;
 		root->MakeChildren<xx::Button>()->Init(1, p, a, c, U"*0.5", [&]() {
-			stage->frameDelay = Cfg::frameDelay * 0.5f;
+			stage->delta = Cfg::frameDelay * 0.5f;
 			});
 		p.y -= 50;
 		root->MakeChildren<xx::Button>()->Init(1, p, a, c, U"*0.2", [&]() {
-			stage->frameDelay = Cfg::frameDelay * 0.2f;
+			stage->delta = Cfg::frameDelay * 0.2f;
 			});
 		p.y -= 50;
 		root->MakeChildren<xx::Button>()->Init(1, p, a, c, U"Switch Light", [&]() {

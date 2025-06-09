@@ -13,7 +13,6 @@
 #include "game_player_bullet.hpp"
 #include "game_player_weapon.hpp"
 #include "game_player.hpp"
-#include "game_monster_formation.hpp"
 #include "game_monster_bullet.hpp"
 #include "game_player_bullet_fire_a.hpp"
 #include "game_player_bullet_fire_b.hpp"

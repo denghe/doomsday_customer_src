@@ -10,17 +10,13 @@ namespace Game {
 	inline void Stage::Init() {
 		UpdateScale();
 		ui.Init(xx::WeakFromThis(this));
-		map.Emplace<Map>()->Init();
-		mapSize = map->blocks.gridSize;
-		camera.SetBaseScale(scale);
-		camera.SetOriginal(mapSize / 2);
-		player.Emplace()->Init(this);
-		monsters.Init(&gLooper.rdd, map->blocks.numRows, map->blocks.numCols, map->blocks.cellSize);
-		monsterBullets.Init(&gLooper.rdd, map->blocks.numRows, map->blocks.numCols, map->blocks.cellSize);
+
 		effectExplosions.Reserve(10000);
 		effectTexts.Init(this, 10000);
-		frameDelay = Cfg::frameDelay;
+		delta = Cfg::frameDelay;
 		roundId = 1;
+
+		SelectMapByRoundId();
 	}
 
 	inline void Stage::ForceLimit(XY& pos) {
@@ -32,36 +28,33 @@ namespace Game {
 			pos.y = mapSize.y - 0.1f;
 	}
 
-	XX_INLINE void Stage::InitMonsterFormation() {
+	inline void Stage::SelectMapByRoundId() {
+		xx::ReNew(monsterBullets);
+		xx::ReNew(monsters);
+		playerBullets.Clear();
+
 		switch (roundId) {
-		case 1: monsterFormation.Emplace<MonsterFormation_1>()->Init(this); break;
+		case 1:
+			map.Emplace<Map_1>()->Init(this);
+			break;
+		case 2:
+			map.Emplace<Map_2>()->Init(this);
+			break;
+		case 3:
+			map.Emplace<Map_2>()->Init(this);
+			break;
 		// ....
-		default: monsterFormation.Emplace<MonsterFormation>()->Init(this);
+		default:
+			map.Emplace<Map_1>()->Init(this);
 		}
-		monsterFormation->FillShufflePoss();
-	}
+		//monsterFormation->FillShufflePoss();
+		mapSize = map->blocks.gridSize;
+		camera.SetBaseScale(scale);
+		camera.SetOriginal(map->cameraOriginal);
+		player.Emplace()->Init(this);
 
-	inline int32_t Stage::GenerateMonster() {
-		XX_BEGIN(_1n);
-
-		// batch generate monsters
-		for (_1a = 0; _1a < monsterFormation->count; ++_1a) {
-			{
-				// make monster
-				auto bornPosIdx = rnd.Next<int32_t>(map->bornPlaces_Monster.len);
-				auto m = xx::MakeShared<Monster>();
-				m->Init(this, bornPosIdx, monsterFormation, _1a);
-				monsters.Add(std::move(m));
-			}
-
-			// sleep
-			for (_1b = time + int32_t(Cfg::fps * 0.01f); time < _1b;) {
-				XX_YIELD_I(_1n);
-			}
-		}
-		XX_END(_1n);
-		_1n = _1a = _1b = {};	// cleanup for next use
-		return 1;
+		monsterBullets.Init(&gLooper.rdd, map->blocks.numRows, map->blocks.numCols, map->blocks.cellSize);
+		monsters.Init(&gLooper.rdd, map->blocks.numRows, map->blocks.numCols, map->blocks.cellSize);
 	}
 
 	XX_INLINE bool Stage::KillRandomMonster() {
@@ -71,7 +64,7 @@ namespace Game {
 			auto& o = monsters.items[i];
 			gLooper.sound.Play(gLooper.res_sound_bomb_1);
 			effectExplosions.Emplace().Init(o->pos, 3.f, { 0x77,22,22,0xff });
-			camera.Shake(5, 300.f * Cfg::frameDelay, int32_t(0.2f * Cfg::fps), time);
+			camera.shaker.Shake(5, 300.f * Cfg::frameDelay, int32_t(0.2f * Cfg::fps), time);
 			monsters.Remove(o);
 			return false;
 		}
@@ -92,9 +85,6 @@ namespace Game {
 		XX_BEGIN(_2n);
 		while (true) {
 
-			// set monster formation by round id
-			InitMonsterFormation();
-
 			// show tips ? seconds
 			ui.SetRoundInfo(xx::ToString("Round ", roundId));
 			for (_2b = time + int32_t(Cfg::fps * 1.f); time < _2b;) {
@@ -111,7 +101,7 @@ namespace Game {
 			ui.SetRoundInfo();
 
 			// wait all monster generate
-			while (!GenerateMonster()) {
+			while (!map->GenerateMonster()) {
 				UpdateAll();
 				XX_YIELD(_2n);
 			}
@@ -149,14 +139,18 @@ namespace Game {
 				XX_YIELD(_2n);
 			}
 
+			// todo: game over check?
 			// next round
 			++roundId;
+
+			// set monster formation by round id
+			SelectMapByRoundId();
 		}
 		XX_END(_2n);
 	}
 
 	inline void Stage::Update() {
-		timePool += frameDelay;
+		timePool += delta;
 		while (timePool >= Cfg::frameDelay) {
 			timePool -= Cfg::frameDelay;
 			Update_();
@@ -167,7 +161,6 @@ namespace Game {
 	inline void Stage::UpdateAll() {
 		UpdateCamera();
 		UpdateMap();
-		UpdateMonsterFormation();
 		UpdateEffectNumber();
 		UpdateEffectExplosion();
 		UpdatePlayerBullet();
@@ -177,15 +170,11 @@ namespace Game {
 	}
 
 	XX_INLINE void Stage::UpdateCamera() {
-		camera.Update(time);
+		camera.Update(rnd, time);
 	}
 
 	XX_INLINE void Stage::UpdateMap() {
 		map->Update();
-	}
-
-	XX_INLINE void Stage::UpdateMonsterFormation() {
-		monsterFormation->Update();
 	}
 
 	XX_INLINE void Stage::UpdatePlayer() {
@@ -250,7 +239,7 @@ namespace Game {
 		// game logic content
 		auto t = gLooper.fb.Draw(gLooper.windowSize, true, xx::RGBA8{ 0,0,0,0 }, [&]() {
 
-			map->Draw(this);
+			map->Draw();
 
 			for (auto i = 0, e = monsters.items.len; i < e; ++i) {
 				auto& o = monsters.items[i];
@@ -281,8 +270,10 @@ namespace Game {
 		auto bgColor = disableLight ? xx::RGBA8_White : xx::RGBA8{ 0,0,0,0 };
 		auto t2 = gLooper.fb.Draw(gLooper.windowSize * lightTexScale, true, bgColor, [&] {
 			if (disableLight) return;
-
 			gLooper.GLBlendFunc({ GL_SRC_COLOR, GL_ONE, GL_FUNC_ADD });
+
+			map->DrawLight();
+
 			if (player) {
 				player->DrawLight();
 			}

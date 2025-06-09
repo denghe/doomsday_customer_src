@@ -2,21 +2,20 @@
 
 namespace Game {
 
-	inline void Monster::Init(Stage* stage_, int32_t bornPosIdx, xx::Weak<MonsterFormation> monsterFormation_, int32_t monsterFormationPosIdx_) {
+	inline void Monster::Init(Stage* stage_, XY bornPos, int32_t flyTargetsIdx_) {
 		assert(!stage);
 		stage = stage_;
 		frame = gLooper.res.monster_1;
 		lightFrame = gLooper.res.light_monster_1;
-		auto posIdx = stage->map->bornPlaces_Monster[bornPosIdx];
-		pos = posIdx * Cfg::unitSize + (Cfg::unitSize / 2);
+		pos = bornPos;
 		radians = 0;
 		radius = 50.f / 2;
-		monsterFormation = std::move(monsterFormation_);
-		monsterFormationPosIdx = monsterFormationPosIdx_;
+		flyTargetsIdx = flyTargetsIdx_;
 		mp.Init();
+		shaker.Shake(20, 500.f * Cfg::frameDelay, 999999999, stage->time);
 	}
 
-	XX_INLINE void Monster::FaceAndRayTracePlayer() {
+	XX_INLINE void Monster::TracePlayer() {
 		auto playerPos = stage->player->centerPos;
 		auto d = playerPos - pos;
 		radians = std::atan2f(d.y, d.x);
@@ -68,8 +67,18 @@ namespace Game {
 		stage->monsterBullets.Add(std::move(b));
 	}
 
-	XX_INLINE bool Monster::MoveToTargetFormationPos(float speed) {
-		auto tarPos = monsterFormation->GetPos(monsterFormationPosIdx);
+
+	template<bool withOffset>
+	XX_INLINE XY Monster::GetFlyTargetPos() {
+		if constexpr (withOffset) {
+			return stage->map->GetFlyTargetPosWithOffset(flyTargetsIdx);
+		}
+		else {
+			return stage->map->GetFlyTargetPos(flyTargetsIdx);
+		}
+	}
+
+	XX_INLINE bool Monster::MoveTo(XY tarPos, float speed) {
 		auto d = tarPos - pos;
 		auto dd = d.x * d.x + d.y * d.y;
 		if (dd < speed * speed) {
@@ -114,17 +123,23 @@ namespace Game {
 	LabFlyToFormationPos:
 		XX_YIELD_I(_n);
 		{
-		bool success = MoveToTargetFormationPos(cFlySpeed);
-		FaceAndRayTracePlayer();
+		bool isFinish = MoveTo(GetFlyTargetPos<false>(), cFlySpeed);
+		TracePlayer();
 		SyncPos();
-		if (!success) goto LabFlyToFormationPos;
+		if (!isFinish) goto LabFlyToFormationPos;
 		}
 	LabFormationFight:
 		XX_YIELD_I(_n);
 		++stage->numReadyMonsters;
-		MoveToTargetFormationPos(cMoveSpeed);
+		if (rayTracePlayerSuccess) {
+			shaker.Update(stage->rnd, stage->time);
+			MoveTo(GetFlyTargetPos<true>() + shaker.offset, cMoveSpeed);
+		}
+		else {
+			MoveTo(GetFlyTargetPos<true>(), cMoveSpeed);
+		}
 		HandleBlocks();
-		FaceAndRayTracePlayer();
+		TracePlayer();
 		SyncPos();
 		if (rayTracePlayerSuccess) {
 			TryShoot();
@@ -133,11 +148,15 @@ namespace Game {
 	LabFight:
 		XX_YIELD_I(_n);
 		++stage->numReadyMonsters;
-		if (!rayTracePlayerSuccess) {
-			MoveToPlayer(cTraceSpeed);
-			HandleBlocks();
+		if (rayTracePlayerSuccess) {
+			shaker.Update(stage->rnd, stage->time);
+			MoveTo(pos + shaker.offset, cTraceSpeed);
 		}
-		FaceAndRayTracePlayer();
+		else {
+			MoveToPlayer(cTraceSpeed);
+		}
+		HandleBlocks();
+		TracePlayer();
 		SyncPos();
 		if (rayTracePlayerSuccess) {
 			TryShoot();
@@ -175,7 +194,7 @@ namespace Game {
 
 	XX_INLINE void Monster::PlayDeathEffect(float scale_) {
 		gLooper.sound.Play(gLooper.res_sound_bomb_1, scale_);
-		stage->camera.Shake(5, 300.f * Cfg::frameDelay, int32_t(0.2f * scale_ * Cfg::fps), stage->time);
+		stage->camera.shaker.Shake(5, 300.f * Cfg::frameDelay, int32_t(0.2f * scale_ * Cfg::fps), stage->time);
 		stage->effectExplosions.Emplace().Init(pos, 3.f * scale_, { 0x77,22,22,0xff });
 	}
 
@@ -184,12 +203,14 @@ namespace Game {
 		if (r.second == 2) {	// dead
 			PlayDeathEffect(1.f);
 		}
-		else {
+		else {	// not dead
 			// todo: draw hp bar?
-			// not dead
+			// change to white?
+			// stun?
+			// knockback?
+			// dot? buff?
 		}
 		return r;
 	}
-
 
 }

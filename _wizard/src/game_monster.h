@@ -17,29 +17,32 @@ namespace Game {
 		Monster* prev{}, * next{};
 
 		xx::Ref<xx::Frame> frame, lightFrame;
-		xx::Weak<MonsterFormation> monsterFormation;
-		int32_t monsterFormationPosIdx{};
+		int32_t flyTargetsIdx{};
 
 		float radius{};
 		float radians{};
+
+		Shaker shaker;
 
 		XY shootPos{};
 		int32_t shootTime{};
 		int32_t rayTracePlayerTime{};
 		bool rayTracePlayerSuccess{};	// can hit to player
 
-		int32_t _n{};
+		int32_t _n{};	// for Update()
 
 		MonsterProperties mp;
 
-		bool MoveToTargetFormationPos(float speed);
+		template<bool withOffset>
+		XY GetFlyTargetPos();
+		bool MoveTo(XY tarPos, float speed);
 		void MoveToPlayer(float speed);
 		void HandleBlocks();
 		void SyncPos();		// force limit & space index update
-		void FaceAndRayTracePlayer();
+		void TracePlayer();
 		void TryShoot();
 
-		void Init(Stage* stage_, int32_t bornPosIdx, xx::Weak<MonsterFormation> monsterFormation_, int32_t monsterFormationPosIdx_);
+		void Init(Stage* stage_, XY bornPos, int32_t flyTargetsIdx_);
 		int32_t Update() override;
 		void Draw() override;
 		void DrawLight() override;
