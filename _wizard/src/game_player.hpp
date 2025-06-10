@@ -16,7 +16,7 @@ namespace Game {
 		pp.Init();
 		pp.CalcAll();
 
-		weapon.Emplace<PlayerWeapon>()->Init(this, { 0, -20 });
+		weapon.Emplace<PlayerWeapon_1>()->Init(this, { 0, -20 });
 	}
 
 	XX_INLINE XYi Player::GetPosLT() {
