@@ -30,11 +30,14 @@ namespace Game {
 		XY GetFlyTargetPosWithOffset(int32_t idx);
 		void ShuffleFlyTargets();
 		virtual int32_t GenerateMonster();
+		template<typename M>
+		int32_t GenerateMonster_core();
 	};
 
 	struct Map_1 : Map {
 		void Init(Stage* stage_);
 		int32_t Update() override;
+		int32_t GenerateMonster() override;
 	};
 
 	struct Map_2 : Map {

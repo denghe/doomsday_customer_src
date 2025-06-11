@@ -3,9 +3,6 @@
 namespace Game {
 
 	struct Monster : Drawable {
-		static constexpr xx::RGBA8 cLightColor{ 255,127,127,255 };	// red
-		static constexpr float cLightRadiusRatio{ 1.f };
-		static constexpr float cLightColorPlus{ 0.5f };
 		static constexpr float cFlySpeed{ 500.f / Cfg::fps };
 		static constexpr float cMoveSpeed{ 100.f / Cfg::fps };
 		static constexpr float cTraceSpeed{ 200.f / Cfg::fps };

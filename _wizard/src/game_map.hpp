@@ -477,13 +477,18 @@ namespace Game {
 	}
 
 	inline int32_t Map::GenerateMonster() {
+		return GenerateMonster_core<Monster>();
+	}
+
+	template<typename M>
+	XX_INLINE int32_t Map::GenerateMonster_core() {
 		XX_BEGIN(_1n);
 		for (_1a = 0; _1a < flyTargets_Monster.len; ++_1a) {
 			{
 				// make monster
 				auto idx = stage->rnd.Next<int32_t>(bornPlaces_Monster.len);
 				auto bornPos = IdxToPos(bornPlaces_Monster[idx]);
-				auto m = xx::MakeShared<Monster>();
+				auto m = xx::MakeShared<M>();
 				m->Init(stage, bornPos, _1a);
 				stage->monsters.Add(std::move(m));
 			}
@@ -524,6 +529,10 @@ namespace Game {
 Ｂ　　　　　　　　　　　　ｐ　　　　　　　　　　　　Ｂ
 ＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢＢ
 )");
+	}
+
+	inline int32_t Map_1::GenerateMonster() {
+		return GenerateMonster_core<Monster_1>();
 	}
 
 	inline int32_t Map_1::Update() {

@@ -107,7 +107,7 @@ namespace Game {
 
 		auto dp = owner->pp.CalcDamagePoint(stage->rnd, pwp.damagePoint);
 
-		// pierce: clear timeout data
+		// clear timeout data
 		auto now = stage->time;
 		auto newTime = now + int32_t(pwp.hurtDelaySeconds * Cfg::fps);
 		for (int32_t i = hitBlackList.len - 1; i >= 0; --i) {
