@@ -16,7 +16,7 @@ namespace Game {
 		void UpdatePosRadians();
 		int32_t Update() override;
 		void Draw() override;
-		void DrawLight() override;
+		void DrawLight(float colorPlus_) override;
 	};
 
 
@@ -30,7 +30,7 @@ namespace Game {
 
 		int32_t Update() override;
 		void Draw() override;
-		void DrawLight() override;
+		void DrawLight(float colorPlus_) override;
 		void PlayDeathEffect(XY pos_, float scale_);
 
 	};

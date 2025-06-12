@@ -35,14 +35,14 @@ namespace Game {
 		q->texRect.data = frame->textureRect.data;
 	}
 
-	XX_INLINE void EffectExplosion::DrawLight(Stage* stage) {
+	XX_INLINE void EffectExplosion::DrawLight(Stage* stage, float colorPlus_) {
 		auto& frame = gLooper.res.ef_light64;
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(frame->tex, 1);
 		q->pos = stage->camera.ToGLPos(pos);
 		q->anchor = { 0.5f, 0.5f };
 		q->scale = stage->camera.scale * scale * 3.f * lightRadius;
 		q->radians = radians;
-		q->colorplus = 1.f;
+		q->colorplus = colorPlus_;
 		q->color = color;
 		q->texRect.data = frame->textureRect.data;
 	}

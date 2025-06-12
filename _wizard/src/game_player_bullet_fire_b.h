@@ -14,7 +14,7 @@ namespace Game {
 		void Init(PlayerWeapon* shooter, XY pos_, float radians_);
 		int32_t Update() override;
 		void Draw() override;
-		void DrawLight() override;
+		void DrawLight(float colorPlus_) override;
 
 		bool Move();
 		bool HitCheck();

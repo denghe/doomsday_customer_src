@@ -122,7 +122,7 @@ namespace Game {
 		for (auto& o : blocks.items) o->Draw(stage);
 	}
 
-	inline void Map::DrawLight() {
+	inline void Map::DrawLight(float colorPlus_) {
 	}
 
 	XX_INLINE XY Map::GetFlowFieldVec(uint8_t* ds, XYi cri) {

@@ -180,7 +180,7 @@ namespace Game {
 		q->texRect.data = f.textureRect.data;
 	}
 
-	inline void Monster::DrawLight() {
+	inline void Monster::DrawLight(float colorPlus_) {
 		xx::Frame* f;
 		float cp;
 		if (stunEndTime >= stage->time) {
@@ -189,7 +189,7 @@ namespace Game {
 		}
 		else {
 			f = lightFrame;
-			cp = 1.f;
+			cp = colorPlus_;
 		}
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
 			.Draw(f->tex, 1);

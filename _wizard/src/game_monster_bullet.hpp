@@ -81,14 +81,14 @@ namespace Game {
 		q->texRect.data = frame->textureRect.data;
 	}
 
-	inline void MonsterBullet::DrawLight() {
+	inline void MonsterBullet::DrawLight(float colorPlus_) {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
 			.Draw(gLooper.res._texid_ef_light64, 1);
 		q->pos = stage->camera.ToGLPos(pos);
 		q->anchor = 0.5f;
 		q->scale = radius / (gLooper.res._size_dark_bullet_0.y * 0.5f) * stage->camera.scale * 5.f;
 		q->radians = 0.f;
-		q->colorplus = 1.f;
+		q->colorplus = colorPlus_;
 		q->color = { 0x35,0,0xcb,0xff };
 		q->texRect.data = ResTpFrames::_uvrect_ef_light64.data;
 	}

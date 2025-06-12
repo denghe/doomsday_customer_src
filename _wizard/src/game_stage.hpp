@@ -82,6 +82,7 @@ namespace Game {
 	}
 
 	XX_INLINE void Stage::Update_() {
+		mousePos = camera.ToLogicPos(gLooper.mouse.pos);
 		XX_BEGIN(_2n);
 		while (true) {
 
@@ -272,34 +273,34 @@ namespace Game {
 			if (disableLight) return;
 			gLooper.GLBlendFunc({ GL_SRC_COLOR, GL_ONE, GL_FUNC_ADD });
 
-			map->DrawLight();
+			map->DrawLight(0.5f);
 
 			if (player) {
-				player->DrawLight();
+				player->DrawLight(1.f);
 			}
 
 			for (int32_t i = 0, e = playerBullets.len; i < e; ++i) {
 				auto& o = playerBullets[i];
 				if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
-				o->DrawLight();
+				o->DrawLight(0.5f);
 			}
 
 			for (auto i = 0, e = effectExplosions.len; i < e; ++i) {
 				auto& o = effectExplosions[i];
 				if (o.pos.x < areaMin.x || o.pos.x > areaMax.x || o.pos.y < areaMin.y || o.pos.y > areaMax.y) continue;
-				o.DrawLight(this);
+				o.DrawLight(this, 0.5f);
 			}
 
 			for (auto i = 0, e = monsters.items.len; i < e; ++i) {
 				auto& o = monsters.items[i];
 				if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
-				o->DrawLight();
+				o->DrawLight(0.5f);
 			}
 
 			for (int32_t i = 0, e = monsterBullets.items.len; i < e; ++i) {
 				auto& o = monsterBullets.items[i];
 				if (o->pos.x < areaMin.x || o->pos.x > areaMax.x || o->pos.y < areaMin.y || o->pos.y > areaMax.y) continue;
-				o->DrawLight();
+				o->DrawLight(0.5f);
 			}
 
 			// ...

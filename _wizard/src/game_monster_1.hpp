@@ -96,6 +96,8 @@ namespace Game {
 			SyncPos();
 		}
 		else {
+			HandleBlocks();
+			SyncPos();
 			TryShoot();
 		}
 		return 0;

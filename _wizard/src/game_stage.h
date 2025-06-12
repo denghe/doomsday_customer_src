@@ -11,6 +11,7 @@ namespace Game {
 		float timePool{}, delta{};
 		bool disableLight{};
 		XY mapSize{};					// cache: map->blocks.gridSize
+		XY mousePos{};					// logic pos
 
 		int32_t roundId{};
 		int32_t numReadyMonsters{};		// some logic counter

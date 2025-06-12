@@ -23,7 +23,7 @@ namespace Game {
 		void Init(Stage* stage_, std::u32string_view mapText);
 		int32_t Update() override;
 		void Draw() override;
-		void DrawLight() override;
+		void DrawLight(float colorPlus_) override;
 
 		static XY IdxToPos(XYi idx);
 		XY GetFlyTargetPos(int32_t idx);

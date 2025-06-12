@@ -31,7 +31,7 @@ namespace Game {
 		void Init(struct Stage* stage_, int32_t bornPosIndex = 0);
 		int32_t Update() override;
 		void Draw() override;
-		void DrawLight() override;
+		void DrawLight(float colorPlus_) override;
 
 		std::pair<float, int> Hurt(float dp);
 	};

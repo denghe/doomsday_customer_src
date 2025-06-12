@@ -20,7 +20,7 @@ namespace Game {
 		void Init(Monster* shooter_, XY pos_, float radians_);
 		int32_t Update() override;
 		void Draw() override;
-		void DrawLight() override;
+		void DrawLight(float colorPlus_) override;
 
 		void PlayDeathEffect(float scale_);
 		// return actual hurt dp, int: 0 normal 1 dodge 2 death( play death effect + released )

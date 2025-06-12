@@ -63,14 +63,14 @@ namespace Game {
 		q->texRect.data = ResTpFrames::_uvrect_char_weapon.data;
 	}
 
-	inline void PlayerWeapon::DrawLight() {
+	inline void PlayerWeapon::DrawLight(float colorPlus_) {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
 			.Draw(gLooper.res._texid_ef_light64, 1);
 		q->pos = stage->camera.ToGLPos(shootPos);
 		q->anchor = 0.5f;
 		q->scale = stage->camera.scale * 2.f;
 		q->radians = 0.f;
-		q->colorplus = 1.f;
+		q->colorplus = colorPlus_;
 		q->color = xx::RGBA8_White;
 		q->texRect.data = ResTpFrames::_uvrect_ef_light64.data;
 	}
@@ -213,8 +213,8 @@ namespace Game {
 		q->offset = { uvOffset, 0 };
 	}
 
-	inline void PlayerWeapon_1::DrawLight() {
-		PlayerWeapon::DrawLight();
+	inline void PlayerWeapon_1::DrawLight(float colorPlus_) {
+		PlayerWeapon::DrawLight(colorPlus_);
 		if (!shooting) return;
 		// draw laser bullet light
 		auto f = gLooper.res.light_laser32;
@@ -224,7 +224,7 @@ namespace Game {
 		q->anchor = { 0, 0.5f };
 		q->scale = { scale, 1 };
 		q->radians = radians;
-		q->colorplus = 1.f;
+		q->colorplus = colorPlus_;
 		q->color = { 115,223,255,255 };
 		q->texRect.data = f->textureRect.data;
 		q->tiling = 1;

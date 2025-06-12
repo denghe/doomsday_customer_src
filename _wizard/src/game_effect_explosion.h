@@ -13,7 +13,7 @@ namespace Game {
 		void Init(XY pos_, float scale_, xx::RGBA8 color_ = xx::RGBA8_White);
 		int32_t Update();
 		void Draw(struct Stage* stage);
-		void DrawLight(struct Stage* stage);
+		void DrawLight(struct Stage* stage, float colorPlus_);
 	};
 
 }
