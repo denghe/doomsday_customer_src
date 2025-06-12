@@ -2,11 +2,16 @@
 
 namespace Game {
 
-	struct Monster_1_1;
+	struct Monster1_1;
 
-	struct Monster_1 : Monster {
+	struct Monster1 : Monster {
 		static constexpr int32_t numChildren{ 9 };
-		std::array<std::pair<XY, float>, numChildren> childrenInfos;	// pos + radians
+		struct ChildrenInfo {
+			XY offset{};
+			float radians{}, cos{}, sin{};
+		};
+
+		std::array<ChildrenInfo, numChildren> childrenInfos;	// pos + radians
 		std::array<int32_t, numChildren> childrenIndexs;
 		int32_t childrenIndexsCount{};
 		int32_t nextSummonTime{}, summonDelay{};
@@ -17,14 +22,15 @@ namespace Game {
 		void FillChildrenInfo();
 	};
 
-	struct Monster_1_1 : Monster {
-		xx::Weak<Monster_1> parent;
+	struct Monster1_1 : Monster {
+		xx::Weak<Monster1> parent;
 		float radiusInc{}, tarRadius{};
 		int32_t nextShootTime{}, shootDelay{};
-		void Init(xx::Weak<Monster_1> parent_, int32_t index_);
+		void Init(xx::Weak<Monster1> parent_, int32_t index_);
 		int32_t Update() override;
-		~Monster_1_1() override;
+		~Monster1_1() override;
 		void TryShoot();
 	};
+
 
 }

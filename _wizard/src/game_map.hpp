@@ -532,7 +532,7 @@ namespace Game {
 	}
 
 	inline int32_t Map_1::GenerateMonster() {
-		return GenerateMonster_core<Monster_1>();
+		return GenerateMonster_core<Monster1>();
 	}
 
 	inline int32_t Map_1::Update() {

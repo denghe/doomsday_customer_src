@@ -14,10 +14,11 @@
 #include "game_player_weapon.hpp"
 #include "game_player.hpp"
 #include "game_monster_bullet.hpp"
+#include "game_monster_bullet1_1.hpp"
 #include "game_player_bullet_fire_a.hpp"
 #include "game_player_bullet_fire_b.hpp"
 #include "game_monster.hpp"
-#include "game_monster_1.hpp"
+#include "game_monster1.hpp"
 #include "game_stage.hpp"
 #include "game_main_menu.hpp"
 // more include here ...

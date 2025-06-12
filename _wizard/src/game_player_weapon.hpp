@@ -78,7 +78,7 @@ namespace Game {
 	/********************************************************************************/
 	/********************************************************************************/
 
-	inline int32_t PlayerWeapon_1::Update() {
+	inline int32_t PlayerWeapon1::Update() {
 		if (!owner) return 1;
 		UpdatePosRadians();
 
@@ -195,12 +195,13 @@ namespace Game {
 		return 0;
 	}
 
-	inline void PlayerWeapon_1::Draw() {
+	inline void PlayerWeapon1::Draw() {
 		PlayerWeapon::Draw();
 		if (!shooting) return;
 		// draw laser bullet
 		auto f = gLooper.res.laser1;
 		auto scale = distance / f->spriteSize.x * stage->camera.scale;
+		if (scale < 0.00001f) scale = 0.00001f;
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstanceTilingOffset).Draw(f->tex, 1);
 		q->pos = stage->camera.ToGLPos(shootPos);
 		q->anchor = { 0, 0.5f };
@@ -210,10 +211,10 @@ namespace Game {
 		q->color = { 115,223,255,255 };
 		q->texRect.data = f->textureRect.data;
 		q->tiling = { scale, 1 };
-		q->offset = { uvOffset, 0 };
+		q->offset = { uvOffset / scale, 0 };
 	}
 
-	inline void PlayerWeapon_1::DrawLight(float colorPlus_) {
+	inline void PlayerWeapon1::DrawLight(float colorPlus_) {
 		PlayerWeapon::DrawLight(colorPlus_);
 		if (!shooting) return;
 		// draw laser bullet light
@@ -231,7 +232,7 @@ namespace Game {
 		q->offset = 0;
 	}
 
-	XX_INLINE void PlayerWeapon_1::PlayDeathEffect(XY pos_, float scale_) {
+	XX_INLINE void PlayerWeapon1::PlayDeathEffect(XY pos_, float scale_) {
 		gLooper.sound.Play(gLooper.res_sound_hit_1, scale_);
 		stage->effectExplosions.Emplace().Init(pos_, scale_, xx::RGBA8_White);
 	}

@@ -20,7 +20,7 @@ namespace Game {
 	};
 
 
-	struct PlayerWeapon_1 : PlayerWeapon {
+	struct PlayerWeapon1 : PlayerWeapon {
 		static constexpr float cMaxDistance{ Cfg::unitSize * 35.f };
 		static constexpr float cRayTraceBoxRadius{ Cfg::unitSize * 0.1f };
 		XY tarPos{};

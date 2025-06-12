@@ -2,6 +2,7 @@
 
 namespace Game {
 
+	template<typename WT>
 	inline void Player::Init(Stage* stage_, int32_t bornPosIndex) {
 		assert(!stage);
 		stage = stage_;
@@ -16,7 +17,7 @@ namespace Game {
 		pp.Init();
 		pp.CalcAll();
 
-		weapon.Emplace<PlayerWeapon_1>()->Init(this, { 0, -20 });
+		weapon.Emplace<WT>()->Init(this, { 0, -20 });
 	}
 
 	XX_INLINE XYi Player::GetPosLT() {

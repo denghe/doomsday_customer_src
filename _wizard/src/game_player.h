@@ -28,6 +28,7 @@ namespace Game {
 		PlayerProperties pp;
 
 		XYi GetPosLT();
+		template<typename WT>
 		void Init(struct Stage* stage_, int32_t bornPosIndex = 0);
 		int32_t Update() override;
 		void Draw() override;

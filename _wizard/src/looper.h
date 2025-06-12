@@ -30,8 +30,9 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 #include "game_player_properties.h"
 #include "game_player.h"
 #include "game_monster_bullet.h"
+#include "game_monster_bullet1_1.h"
 #include "game_monster.h"
-#include "game_monster_1.h"
+#include "game_monster1.h"
 #include "game_stage.h"
 #include "game_main_menu.h"
 // more include here ...

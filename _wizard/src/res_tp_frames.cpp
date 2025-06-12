@@ -17,12 +17,18 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 		this->bg_space1 = map["bg_space1"sv];
 		this->_tex_bg_space1 = this->bg_space1->tex;
 		this->_texid_bg_space1 = this->_tex_bg_space1->GetValue();
+		this->bullet1_0 = map["bullet1_0"sv];
+		this->_tex_bullet1_0 = this->bullet1_0->tex;
+		this->_texid_bullet1_0 = this->_tex_bullet1_0->GetValue();
+		this->bullet1_1 = map["bullet1_1"sv];
+		this->_tex_bullet1_1 = this->bullet1_1->tex;
+		this->_texid_bullet1_1 = this->_tex_bullet1_1->GetValue();
+		this->bullet1_2 = map["bullet1_2"sv];
+		this->_tex_bullet1_2 = this->bullet1_2->tex;
+		this->_texid_bullet1_2 = this->_tex_bullet1_2->GetValue();
 		this->char_body = map["char_body"sv];
 		this->_tex_char_body = this->char_body->tex;
 		this->_texid_char_body = this->_tex_char_body->GetValue();
-		this->char_bullet = map["char_bullet"sv];
-		this->_tex_char_bullet = this->char_bullet->tex;
-		this->_texid_char_bullet = this->_tex_char_bullet->GetValue();
 		this->char_head = map["char_head"sv];
 		this->_tex_char_head = this->char_head->tex;
 		this->_texid_char_head = this->_tex_char_head->GetValue();
@@ -416,21 +422,24 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 		this->laser2 = map["laser2"sv];
 		this->_tex_laser2 = this->laser2->tex;
 		this->_texid_laser2 = this->_tex_laser2->GetValue();
+		this->light_bullet1_0 = map["light_bullet1_0"sv];
+		this->_tex_light_bullet1_0 = this->light_bullet1_0->tex;
+		this->_texid_light_bullet1_0 = this->_tex_light_bullet1_0->GetValue();
+		this->light_bullet1_1 = map["light_bullet1_1"sv];
+		this->_tex_light_bullet1_1 = this->light_bullet1_1->tex;
+		this->_texid_light_bullet1_1 = this->_tex_light_bullet1_1->GetValue();
+		this->light_bullet1_2 = map["light_bullet1_2"sv];
+		this->_tex_light_bullet1_2 = this->light_bullet1_2->tex;
+		this->_texid_light_bullet1_2 = this->_tex_light_bullet1_2->GetValue();
 		this->light_laser32 = map["light_laser32"sv];
 		this->_tex_light_laser32 = this->light_laser32->tex;
 		this->_texid_light_laser32 = this->_tex_light_laser32->GetValue();
-		this->light_laser64 = map["light_laser64"sv];
-		this->_tex_light_laser64 = this->light_laser64->tex;
-		this->_texid_light_laser64 = this->_tex_light_laser64->GetValue();
 		this->light_monster_1 = map["light_monster_1"sv];
 		this->_tex_light_monster_1 = this->light_monster_1->tex;
 		this->_texid_light_monster_1 = this->_tex_light_monster_1->GetValue();
 		this->monster_1 = map["monster_1"sv];
 		this->_tex_monster_1 = this->monster_1->tex;
 		this->_texid_monster_1 = this->_tex_monster_1->GetValue();
-		this->monster_bullet = map["monster_bullet"sv];
-		this->_tex_monster_bullet = this->monster_bullet->tex;
-		this->_texid_monster_bullet = this->_tex_monster_bullet->GetValue();
 		this->ui_aim = map["ui_aim"sv];
 		this->_tex_ui_aim = this->ui_aim->tex;
 		this->_texid_ui_aim = this->_tex_ui_aim->GetValue();
@@ -519,6 +528,9 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 
 	// fill groups
 
+	bullet1_.Add(bullet1_0);
+	bullet1_.Add(bullet1_1);
+	bullet1_.Add(bullet1_2);
 	dark_bullet_.Add(dark_bullet_0);
 	dark_bullet_.Add(dark_bullet_1);
 	dark_bullet_.Add(dark_bullet_2);
@@ -644,6 +656,9 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 	global_explosion_.Add(global_explosion_6);
 	global_explosion_.Add(global_explosion_7);
 	global_explosion_.Add(global_explosion_8);
+	light_bullet1_.Add(light_bullet1_0);
+	light_bullet1_.Add(light_bullet1_1);
+	light_bullet1_.Add(light_bullet1_2);
 	light_monster_.Add(light_monster_1);
 	monster_.Add(monster_1);
 	co_return;

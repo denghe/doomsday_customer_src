@@ -36,22 +36,25 @@ namespace Game {
 		switch (roundId) {
 		case 1:
 			map.Emplace<Map_1>()->Init(this);
+			player.Emplace()->Init<PlayerWeapon1>(this);
 			break;
 		case 2:
 			map.Emplace<Map_2>()->Init(this);
+			player.Emplace()->Init<PlayerWeapon>(this);
 			break;
 		case 3:
 			map.Emplace<Map_2>()->Init(this);
+			player.Emplace()->Init<PlayerWeapon1>(this);
 			break;
 		// ....
 		default:
 			map.Emplace<Map_1>()->Init(this);
+			player.Emplace()->Init<PlayerWeapon>(this);
 		}
 		//monsterFormation->FillShufflePoss();
 		mapSize = map->blocks.gridSize;
 		camera.SetBaseScale(scale);
 		camera.SetOriginal(map->cameraOriginal);
-		player.Emplace()->Init(this);
 
 		monsterBullets.Init(&gLooper.rdd, map->blocks.numRows, map->blocks.numCols, map->blocks.cellSize);
 		monsters.Init(&gLooper.rdd, map->blocks.numRows, map->blocks.numCols, map->blocks.cellSize);
@@ -181,7 +184,7 @@ namespace Game {
 	XX_INLINE void Stage::UpdatePlayer() {
 		if (player) {
 			if (player->Update()) {
-				player.Emplace()->Init(this);
+				player.Emplace()->Init<PlayerWeapon>(this);
 			}
 		}
 	}
@@ -266,7 +269,7 @@ namespace Game {
 		});
 
 		// light tex
-		static constexpr float lightTexScale{ 0.125f };	// for improve performance
+		static constexpr float lightTexScale{ 0.25f };	// for improve performance
 		camera.SetBaseScale(scale * lightTexScale);
 		auto bgColor = disableLight ? xx::RGBA8_White : xx::RGBA8{ 0,0,0,0 };
 		auto t2 = gLooper.fb.Draw(gLooper.windowSize * lightTexScale, true, bgColor, [&] {
