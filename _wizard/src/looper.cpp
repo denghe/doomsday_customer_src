@@ -23,6 +23,7 @@
 #include "game_main_menu.hpp"
 // more include here ...
 #include "_test1.hpp"
+#include "_test2.hpp"
 
 Looper gLooper;
 

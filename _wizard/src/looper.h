@@ -37,6 +37,7 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 #include "game_main_menu.h"
 // more include here ...
 #include "_test1.h"
+#include "_test2.h"
 
 struct Looper : xx::Engine<Looper>, Cfg {
 	xx::Task<> MainTask();

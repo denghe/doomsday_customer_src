@@ -103,7 +103,7 @@ namespace Game {
 
 		auto dp = owner->pp.CalcDamagePoint(stage->rnd, pwp2b.damagePoint);
 
-		stage->monsterBullets.ForeachByRange(gLooper.rdd, pos, int32_t(radius + Cfg::unitSize), [this, dp](MonsterBullet* o) {
+		stage->monsterBullets.ForeachByRange(pos, int32_t(radius + Cfg::unitSize), [this, dp](MonsterBullet* o) {
 			auto d = o->pos - pos;
 			auto r = radius + o->radius;
 			if (d.x * d.x + d.y * d.y < r * r) {
@@ -112,7 +112,7 @@ namespace Game {
 			}
 		});
 
-		stage->monsters.ForeachByRange(gLooper.rdd, pos, int32_t(radius + Cfg::unitSize), [this, dp](Monster* o) {
+		stage->monsters.ForeachByRange(pos, int32_t(radius + Cfg::unitSize), [this, dp](Monster* o) {
 			auto d = o->pos - pos;
 			auto r = radius + o->radius;
 			if (d.x * d.x + d.y * d.y < r * r) {

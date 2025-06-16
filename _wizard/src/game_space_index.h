@@ -367,15 +367,15 @@ namespace Game {
 		// .ForeachByRange([](T* o)->void {  all  });
 		// .ForeachByRange([](T* o)->bool {  break  });
 		template <bool enableExcept = false, typename F, typename R = std::invoke_result_t<F, T*>>
-		void ForeachByRange(xx::SpaceGridRingDiffuseData const& d, XYi pos, int32_t maxDistance, F&& func, T* except = {}) {
+		void ForeachByRange(XYi pos, int32_t maxDistance, F&& func, T* except = {}) {
 			auto cIdxBase = pos.x / cellSize;
 			if (cIdxBase < 0 || cIdxBase >= numCols) return;
 			auto rIdxBase = pos.y / cellSize;
 			if (rIdxBase < 0 || rIdxBase >= numRows) return;
 			auto searchRange = maxDistance + cellSize;
 
-			auto& lens = d.lens;
-			auto& idxs = d.idxs;
+			auto& lens = rdd->lens;
+			auto& idxs = rdd->idxs;
 			for (int32_t i = 1, e = lens.len; i < e; i++) {
 				auto offsets = lens[i - 1].count;
 				auto size = lens[i].count - lens[i - 1].count;
