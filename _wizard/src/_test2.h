@@ -22,6 +22,10 @@ namespace Game {
 	};
 
 	struct MB : Test2Item {
+		//void Draw() override;		// shadow
+		virtual void Draw1() {};	// border
+		virtual void Draw2() {};	// body
+		virtual void Draw3() {};	// bone
 	};
 
 	/************************************************************/
@@ -34,11 +38,17 @@ namespace Game {
 	};
 
 	struct M1 : M {
+		static constexpr int32_t cShootNums{ 9 };
 		static constexpr float cShootDelaySeconds{ 27.f / 120.f };
 		static constexpr int32_t cShootDelayNumFrames{ int32_t(cShootDelaySeconds * Cfg::fps) };
+		static constexpr float cShootBigDelaySeconds{ 180.f / 120.f };
+		static constexpr int32_t cShootBigDelayNumFrames{ int32_t(cShootBigDelaySeconds * Cfg::fps) };
+		static constexpr float cRadiansStep{ -float(M_PI) * 0.5f / ((cShootDelayNumFrames + 1) * cShootNums) };
 		std::array<M1C, 4> cannonInfos;
-		int32_t _n{}, _i{}, nextShootTime{};
+		int32_t _n{}, _i{}, _t{}, _c{};
+		void RotateTo(float radians_);	// SetRadians + SyncCannonInfos
 		void SyncCannonInfos();
+		void Shoot();
 		void Init(Test2* scene_);
 		int32_t Update() override;
 		void Draw() override;
@@ -58,6 +68,9 @@ namespace Game {
 		void Init(xx::Weak<M1> shooter_, int32_t cannonIndex_);
 		int32_t Update() override;
 		void Draw() override;
+		void Draw1() override;
+		void Draw2() override;
+		void Draw3() override;
 	};
 
 	/************************************************************/

@@ -50,7 +50,13 @@ namespace Game {
 	}
 
 	inline void Test2::Draw() {
+		// draw bg
+		xx::Quad().SetFrame(gLooper.res.ui_dot).SetScale(lastWindowSize).SetColor({ 249, 181, 81, 255 }).Draw();
+
 		for (auto& o : mbs) o->Draw();
+		for (auto& o : mbs) o->Draw1();
+		for (auto& o : mbs) o->Draw2();
+		for (auto& o : mbs) o->Draw3();
 		for (auto& o : ms) o->Draw();
 
 		gLooper.DrawNode(ui);
@@ -74,11 +80,14 @@ namespace Game {
 
 	/********************************************************************************/
 
-	XX_INLINE void M1::SyncCannonInfos() {
+	XX_INLINE void M1::RotateTo(float radians_) {
+		SetRadians(radians_);
+		SyncCannonInfos();
+	}
 
+	XX_INLINE void M1::SyncCannonInfos() {
 		// pos + XY{ cShootOffset.x * radiansCos - cShootOffset.y * radiansSin
 		//	, cShootOffset.x * radiansSin + cShootOffset.y * radiansCos };
-
 		// 1, 0
 		cannonInfos[0].pos = pos + XY{ radius * radiansCos, radius * radiansSin };
 		cannonInfos[0].radians = radians + 0.f;
@@ -93,6 +102,12 @@ namespace Game {
 		cannonInfos[3].radians = radians + float(M_PI) * 1.5f;
 	}
 
+	XX_INLINE void M1::Shoot() {
+		for (int32_t i = 0; i < 4; ++i) {
+			scene->mbs.Emplace().Emplace<MB1>()->Init(xx::WeakFromThis(this), i);
+		}
+	}
+
 	inline void M1::Init(Test2* scene_) {
 		scene = scene_;
 		pos = {960, 540};
@@ -103,9 +118,19 @@ namespace Game {
 
 	inline int32_t M1::Update() {
 		XX_BEGIN(_n);
-		// todo
-		//scene->mbs.Emplace().Emplace<MB1>()->Init(xx::WeakFromThis(this), 0);
-		XX_YIELD_I(_n);
+		while (true) {
+			for (_i = 0; _i < cShootNums; ++_i) {
+				Shoot();
+				for (_t = scene->time + cShootDelayNumFrames; _t >= scene->time;) {
+					RotateTo(radians + cRadiansStep);
+					XX_YIELD_I(_n);
+				}
+			}
+			RotateTo(0);
+			for (_t = scene->time + cShootBigDelayNumFrames; _t >= scene->time;) {
+				XX_YIELD_I(_n);
+			}
+		}
 		XX_END(_n);
 		return 0;
 	}
@@ -180,12 +205,51 @@ namespace Game {
 		auto& f = *gLooper.res.ui_circle;
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
 			.Draw(f.tex, 1);
+		q->pos = scene->camera.ToGLPos(pos + XY{ 12, 12 });
+		q->anchor = *f.anchor;
+		q->scale = radius * 2.f / f.spriteSize.x * scene->camera.scale;
+		q->radians = radians;
+		q->colorplus = 1.f;
+		q->color = { 127, 127, 127, 127 };
+		q->texRect.data = f.textureRect.data;
+	}
+
+	inline void MB1::Draw1() {
+		auto& f = *gLooper.res.ui_circle;
+		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
+			.Draw(f.tex, 1);
 		q->pos = scene->camera.ToGLPos(pos);
 		q->anchor = *f.anchor;
 		q->scale = radius * 2.f / f.spriteSize.x * scene->camera.scale;
 		q->radians = radians;
 		q->colorplus = 1.f;
-		q->color = xx::RGBA8_White;
+		q->color = { 47, 6, 1, 255 };
+		q->texRect.data = f.textureRect.data;
+	}
+
+	inline void MB1::Draw2() {
+		auto& f = *gLooper.res.ui_circle;
+		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
+			.Draw(f.tex, 1);
+		q->pos = scene->camera.ToGLPos(pos);
+		q->anchor = *f.anchor;
+		q->scale = radius * 2.f / f.spriteSize.x * scene->camera.scale * 0.8f;
+		q->radians = radians;
+		q->colorplus = 1.f;
+		q->color = { 248, 125, 22, 255 };
+		q->texRect.data = f.textureRect.data;
+	}
+
+	inline void MB1::Draw3() {
+		auto& f = *gLooper.res.ui_circle;
+		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
+			.Draw(f.tex, 1);
+		q->pos = scene->camera.ToGLPos(pos);
+		q->anchor = *f.anchor;
+		q->scale = radius * 2.f / f.spriteSize.x * scene->camera.scale * 0.4f;
+		q->radians = radians;
+		q->colorplus = 1.f;
+		q->color = { 252, 250, 241, 255 };
 		q->texRect.data = f.textureRect.data;
 	}
 
