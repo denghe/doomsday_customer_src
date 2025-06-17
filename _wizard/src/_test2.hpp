@@ -63,6 +63,7 @@ namespace Game {
 	}
 
 	inline void Test2::OnWindowSizeChanged() {
+		camera.SetBaseScale(scale);
 		MakeUI();
 	}
 
@@ -77,6 +78,61 @@ namespace Game {
 		radiansCos = std::cosf(radians_);
 		radiansSin = std::sinf(radians_);
 	}
+
+	/********************************************************************************/
+
+	inline void MB::Draw() {
+		auto& f = *gLooper.res.ui_circle;
+		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
+			.Draw(f.tex, 1);
+		q->pos = scene->camera.ToGLPos(pos + XY{ 12, 12 });
+		q->anchor = *f.anchor;
+		q->scale = radius * 2.f / f.spriteSize.x * scene->camera.scale;
+		q->radians = radians;
+		q->colorplus = 1.f;
+		q->color = { 127, 127, 127, 127 };
+		q->texRect.data = f.textureRect.data;
+	}
+
+	inline void MB::Draw1() {
+		auto& f = *gLooper.res.ui_circle;
+		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
+			.Draw(f.tex, 1);
+		q->pos = scene->camera.ToGLPos(pos);
+		q->anchor = *f.anchor;
+		q->scale = radius * 2.f / f.spriteSize.x * scene->camera.scale;
+		q->radians = radians;
+		q->colorplus = 1.f;
+		q->color = { 47, 6, 1, 255 };
+		q->texRect.data = f.textureRect.data;
+	}
+
+	inline void MB::Draw2() {
+		auto& f = *gLooper.res.ui_circle;
+		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
+			.Draw(f.tex, 1);
+		q->pos = scene->camera.ToGLPos(pos);
+		q->anchor = *f.anchor;
+		q->scale = radius * 2.f / f.spriteSize.x * scene->camera.scale * 0.8f;
+		q->radians = radians;
+		q->colorplus = 1.f;
+		q->color = { 248, 125, 22, 255 };
+		q->texRect.data = f.textureRect.data;
+	}
+
+	inline void MB::Draw3() {
+		auto& f = *gLooper.res.ui_circle;
+		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
+			.Draw(f.tex, 1);
+		q->pos = scene->camera.ToGLPos(pos);
+		q->anchor = *f.anchor;
+		q->scale = radius * 2.f / f.spriteSize.x * scene->camera.scale * 0.4f;
+		q->radians = radians;
+		q->colorplus = 1.f;
+		q->color = { 252, 250, 241, 255 };
+		q->texRect.data = f.textureRect.data;
+	}
+
 
 	/********************************************************************************/
 
@@ -198,59 +254,7 @@ namespace Game {
 			XX_YIELD_I(_n);
 		};
 		XX_END(_n);
-		return 0;
-	}
-
-	inline void MB1::Draw() {
-		auto& f = *gLooper.res.ui_circle;
-		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
-			.Draw(f.tex, 1);
-		q->pos = scene->camera.ToGLPos(pos + XY{ 12, 12 });
-		q->anchor = *f.anchor;
-		q->scale = radius * 2.f / f.spriteSize.x * scene->camera.scale;
-		q->radians = radians;
-		q->colorplus = 1.f;
-		q->color = { 127, 127, 127, 127 };
-		q->texRect.data = f.textureRect.data;
-	}
-
-	inline void MB1::Draw1() {
-		auto& f = *gLooper.res.ui_circle;
-		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
-			.Draw(f.tex, 1);
-		q->pos = scene->camera.ToGLPos(pos);
-		q->anchor = *f.anchor;
-		q->scale = radius * 2.f / f.spriteSize.x * scene->camera.scale;
-		q->radians = radians;
-		q->colorplus = 1.f;
-		q->color = { 47, 6, 1, 255 };
-		q->texRect.data = f.textureRect.data;
-	}
-
-	inline void MB1::Draw2() {
-		auto& f = *gLooper.res.ui_circle;
-		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
-			.Draw(f.tex, 1);
-		q->pos = scene->camera.ToGLPos(pos);
-		q->anchor = *f.anchor;
-		q->scale = radius * 2.f / f.spriteSize.x * scene->camera.scale * 0.8f;
-		q->radians = radians;
-		q->colorplus = 1.f;
-		q->color = { 248, 125, 22, 255 };
-		q->texRect.data = f.textureRect.data;
-	}
-
-	inline void MB1::Draw3() {
-		auto& f = *gLooper.res.ui_circle;
-		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
-			.Draw(f.tex, 1);
-		q->pos = scene->camera.ToGLPos(pos);
-		q->anchor = *f.anchor;
-		q->scale = radius * 2.f / f.spriteSize.x * scene->camera.scale * 0.4f;
-		q->radians = radians;
-		q->colorplus = 1.f;
-		q->color = { 252, 250, 241, 255 };
-		q->texRect.data = f.textureRect.data;
+		return 1;
 	}
 
 }

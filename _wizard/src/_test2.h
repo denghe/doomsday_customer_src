@@ -22,10 +22,11 @@ namespace Game {
 	};
 
 	struct MB : Test2Item {
-		//void Draw() override;		// shadow
-		virtual void Draw1() {};	// border
-		virtual void Draw2() {};	// body
-		virtual void Draw3() {};	// bone
+		float radius{}, radians{};
+		void Draw() override;	// shadow
+		virtual void Draw1();	// border
+		virtual void Draw2();	// body
+		virtual void Draw3();	// bone
 	};
 
 	/************************************************************/
@@ -63,14 +64,10 @@ namespace Game {
 		xx::Weak<M1> shooter;
 		int32_t _n{};
 		int32_t cannonIndex{}, lifeEndTime{};
-		float radius{}, tarRadius{}, radiusInc{}, radians{};
+		float tarRadius{}, radiusInc{};
 		XY posInc{};
 		void Init(xx::Weak<M1> shooter_, int32_t cannonIndex_);
 		int32_t Update() override;
-		void Draw() override;
-		void Draw1() override;
-		void Draw2() override;
-		void Draw3() override;
 	};
 
 	/************************************************************/
