@@ -19,7 +19,7 @@ namespace Game {
 			}).size.x;
 		x += 10 + ui->MakeChildren<xx::Button>()->Init(1, pos7 + XY{ x, -10 }, anchor7
 			, gLooper.btnCfg, U"M3", [&]() {
-				//SelectMonster<M1>();
+				SelectMonster<M3>();
 			}).size.x;
 	}
 
@@ -95,7 +95,7 @@ namespace Game {
 		auto& f = *gLooper.res.ui_circle;
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
 			.Draw(f.tex, 1);
-		q->pos = scene->camera.ToGLPos(pos + XY{ 12, 12 });
+		q->pos = scene->camera.ToGLPos(pos + f.spriteSize * 0.3f);
 		q->anchor = *f.anchor;
 		q->scale = radius * 2.f / f.spriteSize.x * scene->camera.scale;
 		q->radians = radians;
@@ -143,6 +143,47 @@ namespace Game {
 		q->texRect.data = f.textureRect.data;
 	}
 
+	/********************************************************************************/
+
+	template<typename T>
+	inline void MBn<T>::Init(xx::Weak<T> shooter_, int32_t cannonIndex_, float scaleDurationSeconds_, float tarRadius_, float moveSpeed_) {
+		scene = shooter_->scene;
+		auto& ci = shooter_->cannonInfos[cannonIndex_];
+		shooter = std::move(shooter_);
+		cannonIndex = cannonIndex_;
+		pos = ci.pos;
+		radius = 0.f;
+		radians = ci.radians;
+		scaleDurationNumFrames = int32_t(scaleDurationSeconds_ * Cfg::fps);
+		tarRadius = tarRadius_;
+		radiusInc = (tarRadius_ - radius) / scaleDurationNumFrames;
+		moveSpeedStep = moveSpeed_ * Cfg::frameDelay;
+	}
+
+	template<typename T>
+	inline int32_t MBn<T>::Update() {
+		// todo: hit player check
+		XX_BEGIN(_n);
+		while (radius < tarRadius) {
+			if (!shooter) {
+				// todo: death effect
+				return 1;
+			}
+			radius += radiusInc;
+			pos = shooter->cannonInfos[cannonIndex].pos;
+			radians = shooter->cannonInfos[cannonIndex].radians;
+			XX_YIELD_I(_n);
+		}
+		radius = tarRadius;
+		lifeEndTime = scene->time + int32_t(Cfg::fps * 10.f);
+		posInc = { std::cosf(radians) * moveSpeedStep, std::sinf(radians) * moveSpeedStep };
+		while (lifeEndTime >= scene->time) {
+			pos += posInc;
+			XX_YIELD_I(_n);
+		};
+		XX_END(_n);
+		return 1;
+	}
 
 	/********************************************************************************/
 
@@ -170,7 +211,7 @@ namespace Game {
 
 	XX_INLINE void M1::Shoot() {
 		for (int32_t i = 0; i < 4; ++i) {
-			scene->mbs.Emplace().Emplace<MB1>()->Init(xx::WeakFromThis(this), i);
+			scene->mbs.Emplace().Emplace<MBn<M1>>()->Init(xx::WeakFromThis(this), i, 0.225f, 20.f, 111.f);
 		}
 	}
 
@@ -193,7 +234,7 @@ namespace Game {
 				}
 			}
 			RotateTo(0);
-			for (_t = scene->time + cShootBigDelayNumFrames; _t >= scene->time;) {
+			for (_t = scene->time + int32_t(cShootBigDelaySeconds * Cfg::fps); _t >= scene->time;) {
 				XX_YIELD_I(_n);
 			}
 		}
@@ -203,7 +244,6 @@ namespace Game {
 
 	inline void M1::Draw() {
 		// 4 cannon + 1 body
-		// todo
 		auto baseScale = radius * 2.f / gLooper.res._size_ui_gear.x * scene->camera.scale;
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
 			.Draw(gLooper.res._texid_ui_gear, 5);
@@ -230,45 +270,6 @@ namespace Game {
 	}
 
 	/********************************************************************************/
-
-	inline void MB1::Init(xx::Weak<M1> shooter_, int32_t cannonIndex_) {
-		scene = shooter_->scene;
-		auto& ci = shooter_->cannonInfos[cannonIndex_];
-		shooter = std::move(shooter_);
-		cannonIndex = cannonIndex_;
-		pos = ci.pos;
-		radius = 0.f;
-		tarRadius = cRadius;
-		radiusInc = (tarRadius - radius) * c1_ScaleDurationNumFrames;
-		radians = ci.radians;
-	}
-
-	inline int32_t MB1::Update() {
-		// todo: hit player check
-		XX_BEGIN(_n);
-		while (radius < tarRadius) {
-			if (!shooter) {
-				// todo: death effect
-				return 1;
-			}
-			radius += radiusInc;
-			pos = shooter->cannonInfos[cannonIndex].pos;
-			radians = shooter->cannonInfos[cannonIndex].radians;
-			XX_YIELD_I(_n);
-		}
-		radius = tarRadius;
-		lifeEndTime = scene->time + int32_t(Cfg::fps * 10.f);
-		posInc = { std::cosf(radians) * cMoveSpeedStep, std::sinf(radians) * cMoveSpeedStep };
-		while (lifeEndTime >= scene->time) {
-			pos += posInc;
-			XX_YIELD_I(_n);
-		};
-		XX_END(_n);
-		return 1;
-	}
-
-	/********************************************************************************/
-
 
 	XX_INLINE void M2::RotateTo(float radians_) {
 		SetRadians(radians_);
@@ -299,13 +300,13 @@ namespace Game {
 	}
 
 	XX_INLINE void M2::Shoot12() {
-		scene->mbs.Emplace().Emplace<MB2>()->Init(xx::WeakFromThis(this), 0, 0.5f, 35.f, 400.f);
-		scene->mbs.Emplace().Emplace<MB2>()->Init(xx::WeakFromThis(this), 1, 0.5f, 35.f, 400.f);
+		scene->mbs.Emplace().Emplace<MBn<M2>>()->Init(xx::WeakFromThis(this), 0, 0.5f, 35.f, 400.f);
+		scene->mbs.Emplace().Emplace<MBn<M2>>()->Init(xx::WeakFromThis(this), 1, 0.5f, 35.f, 400.f);
 	}
 
 	XX_INLINE void M2::Shoot34() {
-		scene->mbs.Emplace().Emplace<MB2>()->Init(xx::WeakFromThis(this), 2, 0.225f, 20.f, 300.f);
-		scene->mbs.Emplace().Emplace<MB2>()->Init(xx::WeakFromThis(this), 3, 0.225f, 20.f, 300.f);
+		scene->mbs.Emplace().Emplace<MBn<M2>>()->Init(xx::WeakFromThis(this), 2, 0.225f, 20.f, 300.f);
+		scene->mbs.Emplace().Emplace<MBn<M2>>()->Init(xx::WeakFromThis(this), 3, 0.225f, 20.f, 300.f);
 	}
 
 	inline void M2::Init(Test2* scene_) {
@@ -324,16 +325,16 @@ namespace Game {
 		XX_BEGIN(_n);
 		while (true) {
 			Shoot34();
-			for (_t = scene->time + cShootDelayNumFrames34; _t >= scene->time;) { XX_YIELD_I(_n); }
+			for (_t = scene->time + int32_t(cShootDelay34 * Cfg::fps); _t >= scene->time;) { XX_YIELD_I(_n); }
 			Shoot34();
-			for (_t = scene->time + cShootDelayNumFrames34; _t >= scene->time;) { XX_YIELD_I(_n); }
+			for (_t = scene->time + int32_t(cShootDelay34 * Cfg::fps); _t >= scene->time;) { XX_YIELD_I(_n); }
 			Shoot34();
-			for (_t = scene->time + cShootDelayNumFrames34; _t >= scene->time;) { XX_YIELD_I(_n); }
+			for (_t = scene->time + int32_t(cShootDelay34 * Cfg::fps); _t >= scene->time;) { XX_YIELD_I(_n); }
 			Shoot12();
-			for (_t = scene->time + cShootDelayNumFrames12; _t >= scene->time;) { XX_YIELD_I(_n); }
+			for (_t = scene->time + int32_t(cShootDelay12 * Cfg::fps); _t >= scene->time;) { XX_YIELD_I(_n); }
 			Shoot12();
-			for (_t = scene->time + cShootDelayNumFrames12last; _t >= scene->time;) { XX_YIELD_I(_n); }
-			for (_t = scene->time + cShootBigDelayNumFrames; _t >= scene->time;) { XX_YIELD_I(_n); }
+			for (_t = scene->time + int32_t(cShootDelay12last * Cfg::fps); _t >= scene->time;) { XX_YIELD_I(_n); }
+			for (_t = scene->time + int32_t(cShootBigDelay * Cfg::fps); _t >= scene->time;) { XX_YIELD_I(_n); }
 		}
 		XX_END(_n);
 		return 0;
@@ -341,7 +342,6 @@ namespace Game {
 
 	inline void M2::Draw() {
 		// 4 cannon + 1 body
-		// todo
 		auto baseScale = radius * 2.f / gLooper.res._size_ui_gear.x * scene->camera.scale;
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
 			.Draw(gLooper.res._texid_ui_gear, 5);
@@ -369,41 +369,72 @@ namespace Game {
 
 	/********************************************************************************/
 
-	inline void MB2::Init(xx::Weak<M2> shooter_, int32_t cannonIndex_, float scaleDurationSeconds_, float tarRadius_, float moveSpeed_) {
-		scene = shooter_->scene;
-		auto& ci = shooter_->cannonInfos[cannonIndex_];
-		shooter = std::move(shooter_);
-		cannonIndex = cannonIndex_;
-		pos = ci.pos;
-		radius = 0.f;
-		radians = ci.radians;
-		scaleDurationNumFrames = int32_t(scaleDurationSeconds_ * Cfg::fps);
-		tarRadius = tarRadius_;
-		radiusInc = (tarRadius_ - radius) / scaleDurationNumFrames;
-		moveSpeedStep = moveSpeed_ * Cfg::frameDelay;
+	XX_INLINE void M3::SyncCannonInfos() {
+		auto c = radiansCos;
+		auto s = radiansSin;
+		auto ox = radius;
+		auto oy = 0;
+		cannonInfos[0].pos = pos + XY{ ox * c - oy * s, ox * s + oy * c };
+		cannonInfos[0].radians = radians + 0.f;
 	}
 
-	inline int32_t MB2::Update() {
-		// todo: hit player check
+	XX_INLINE void M3::TryShoot() {
+		if (nextShootTime >= scene->time) return;
+		nextShootTime = scene->time + int32_t(cShootDelay * Cfg::fps);
+		scene->mbs.Emplace().Emplace<MBn<M3>>()->Init(xx::WeakFromThis(this), 0, cBulletScaleDurations, cBulletRadius, cBulletMoveSpeed);
+	}
+
+	inline void M3::Init(Test2* scene_) {
+		scene = scene_;
+		pos = { 960, 540 };
+		radius = cRadius;
+		SetRadians<true>(0.f);
+		SyncCannonInfos();
+	}
+
+	inline int32_t M3::Update() {
 		XX_BEGIN(_n);
-		while (radius < tarRadius) {
-			if (!shooter) {
-				// todo: death effect
-				return 1;
+		while (true) {
+			for (; pos.y > cMoveYRange.from; pos.y -= cMoveSpeed * Cfg::frameDelay) {
+				SyncCannonInfos();
+				TryShoot();
+				XX_YIELD_I(_n);
 			}
-			radius += radiusInc;
-			pos = shooter->cannonInfos[cannonIndex].pos;
-			radians = shooter->cannonInfos[cannonIndex].radians;
-			XX_YIELD_I(_n);
+			for (; pos.y < cMoveYRange.to; pos.y += cMoveSpeed * Cfg::frameDelay) {
+				SyncCannonInfos();
+				TryShoot();
+				XX_YIELD_I(_n);
+			}
 		}
-		radius = tarRadius;
-		lifeEndTime = scene->time + int32_t(Cfg::fps * 10.f);
-		posInc = { std::cosf(radians) * moveSpeedStep, std::sinf(radians) * moveSpeedStep };
-		while (lifeEndTime >= scene->time) {
-			pos += posInc;
-			XX_YIELD_I(_n);
-		};
 		XX_END(_n);
 		return 1;
 	}
+
+	inline void M3::Draw() {
+		// 1 cannon + 1 body
+		auto baseScale = radius * 2.f / gLooper.res._size_ui_gear.x * scene->camera.scale;
+		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
+			.Draw(gLooper.res._texid_ui_gear, 2);
+		// cannon
+		{
+			auto& f = *gLooper.res.ui_run3;
+			q[0].pos = scene->camera.ToGLPos(cannonInfos[0].pos);
+			q[0].anchor = { 0, 0.5f };
+			q[0].scale = baseScale * 0.2f;
+			q[0].radians = cannonInfos[0].radians;
+			q[0].colorplus = stunEndTime >= scene->time ? 100000.f : 1.f;
+			q[0].color = xx::RGBA8_White;
+			q[0].texRect.data = f.textureRect.data;
+		}
+		// body
+		auto& f = *gLooper.res.ui_gear;
+		q[1].pos = scene->camera.ToGLPos(pos);
+		q[1].anchor = 0.5f;
+		q[1].scale = baseScale;
+		q[1].radians = radians;
+		q[1].colorplus = stunEndTime >= scene->time ? 100000.f : 1.f;
+		q[1].color = xx::RGBA8_White;
+		q[1].texRect.data = f.textureRect.data;
+	}
+
 }

@@ -31,6 +31,21 @@ namespace Game {
 
 	/************************************************************/
 
+	template<typename T>
+	struct MBn : MB {
+		xx::Weak<T> shooter;
+		int32_t _n{};
+		int32_t scaleDurationNumFrames{};
+		int32_t cannonIndex{}, lifeEndTime{};
+		float tarRadius{}, radiusInc{};
+		float moveSpeedStep{};
+		XY posInc{};
+		void Init(xx::Weak<T> shooter_, int32_t cannonIndex_, float scaleDurationSeconds_, float tarRadius_, float moveSpeedStep_);
+		int32_t Update() override;
+	};
+
+	/************************************************************/
+
 	struct Test2 : Scene {
 
 		Camera camera;
@@ -70,7 +85,6 @@ namespace Game {
 		static constexpr float cShootDelaySeconds{ 27.f / 120.f };
 		static constexpr int32_t cShootDelayNumFrames{ int32_t(cShootDelaySeconds * Cfg::fps) };
 		static constexpr float cShootBigDelaySeconds{ 180.f / 120.f };
-		static constexpr int32_t cShootBigDelayNumFrames{ int32_t(cShootBigDelaySeconds * Cfg::fps) };
 		static constexpr float cRadiansStep{ -float(M_PI) * 0.5f / ((cShootDelayNumFrames + 1) * cShootNums) };
 		std::array<MC, 4> cannonInfos;
 		int32_t _n{}, _i{}, _t{};
@@ -82,29 +96,14 @@ namespace Game {
 		void Draw() override;
 	};
 
-	struct MB1 : MB {
-		static constexpr float cRadius{ 20.f };
-		static constexpr float cScaleDurationSeconds{ 27.f / 120.f };
-		static constexpr int32_t cScaleDurationNumFrames{ int32_t(cScaleDurationSeconds * Cfg::fps) };
-		static constexpr float c1_ScaleDurationNumFrames{ 1.f / cScaleDurationNumFrames };
-		static constexpr float cMoveSpeedStep{ 25.f * c1_ScaleDurationNumFrames };
-		xx::Weak<M1> shooter;
-		int32_t _n{};
-		int32_t cannonIndex{}, lifeEndTime{};
-		float tarRadius{}, radiusInc{};
-		XY posInc{};
-		void Init(xx::Weak<M1> shooter_, int32_t cannonIndex_);
-		int32_t Update() override;
-	};
-
 	/************************************************************/
 
 	struct M2 : M {
 		static constexpr float cRadius{ 70.f };
-		static constexpr int32_t cShootDelayNumFrames34{ int32_t(0.33333f * Cfg::fps) };
-		static constexpr int32_t cShootDelayNumFrames12{ int32_t(0.5f * Cfg::fps) };
-		static constexpr int32_t cShootDelayNumFrames12last{ int32_t(0.225f * Cfg::fps) };
-		static constexpr int32_t cShootBigDelayNumFrames{ int32_t(1.25f * Cfg::fps) };
+		static constexpr float cShootDelay34{ 0.33333f };
+		static constexpr float cShootDelay12{ 0.5f };
+		static constexpr float cShootDelay12last{ 0.225f };
+		static constexpr float cShootBigDelay{ 1.25f };
 		std::array<MC, 4> cannonInfos;
 		int32_t _n{}, _t{};
 		void RotateTo(float radians_);	// SetRadians + SyncCannonInfos
@@ -116,15 +115,23 @@ namespace Game {
 		void Draw() override;
 	};
 
-	struct MB2 : MB {
-		xx::Weak<M2> shooter;
-		int32_t _n{};
-		int32_t scaleDurationNumFrames{};
-		int32_t cannonIndex{}, lifeEndTime{};
-		float tarRadius{}, radiusInc{};
-		float moveSpeedStep{};
-		XY posInc{};
-		void Init(xx::Weak<M2> shooter_, int32_t cannonIndex_, float scaleDurationSeconds_, float tarRadius_, float moveSpeedStep_);
+	/************************************************************/
+
+	struct M3 : M {
+		static constexpr float cRadius{ 30.f };
+		static constexpr float cBulletScaleDurations{ 0.4f };
+		static constexpr float cBulletRadius{ 20.f };
+		static constexpr float cBulletMoveSpeed{ 600.f };
+		static constexpr float cShootDelay{ 1.25f };
+		static constexpr float cMoveSpeed{ 100.f };
+		static constexpr xx::FromTo<float> cMoveYRange{ 100.f, 900.f };
+		std::array<MC, 1> cannonInfos;
+		int32_t _n{}, nextShootTime{};
+		void SyncCannonInfos();
+		void TryShoot();	// wait cd & shoot
+		void Init(Test2* scene_);
 		int32_t Update() override;
+		void Draw() override;
 	};
+
 }
