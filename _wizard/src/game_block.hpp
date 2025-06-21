@@ -69,7 +69,7 @@ namespace Game {
 		else wayout.left = !blocks.TryAt({ cri.x - 1, cri.y });
 
 		if (cri.x + 1 == blocks.numCols) {
-			wayout.right = false;
+			wayout.right = false; atEdge = true;
 		}
 		else wayout.right = !blocks.TryAt({ cri.x + 1, cri.y });
 
