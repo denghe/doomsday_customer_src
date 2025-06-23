@@ -12,6 +12,7 @@ namespace Game {
 		static constexpr int32_t cCoyoteNumFrames{ int32_t(0.1 / Cfg::frameDelay) };
 		static constexpr int32_t cHighJumpNumFrames{ int32_t(0.2 / Cfg::frameDelay) };
 
+		XY _pos{};							// for anti-shake( std::floorf( pos )
 		XY speed{};							// movement
 		XY centerPos{};						// for monster aim
 		float radius{};						// for monster bullet check
@@ -27,7 +28,6 @@ namespace Game {
 
 		PlayerProperties pp;
 
-		XYi GetPosLT();
 		template<typename WT>
 		void Init(struct Stage* stage_, int32_t bornPosIndex = 0);
 		int32_t Update() override;

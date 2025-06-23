@@ -13,15 +13,12 @@ namespace Game {
 		pos.y = leftTopPos.y + blocks.cellSize - 1.f;
 		centerPos = pos + cCenterPosOffset;
 		radius = cSize.x * 0.5f;
+		_pos = pos.Floor();
 
 		pp.Init();
 		pp.CalcAll();
 
 		weapon.Emplace<WT>()->Init(this, { 0, -20 });
-	}
-
-	XX_INLINE XYi Player::GetPosLT() {
-		return { (int32_t)pos.x - (cSize.x >> 1), (int32_t)pos.y - cSize.y };
 	}
 
 	inline int32_t Player::Update() {
@@ -80,7 +77,7 @@ namespace Game {
 		// prepare
 		auto& blocks = stage->map->blocks;
 
-		auto iPosLT = GetPosLT();
+		XY iPosLT{ (int32_t)pos.x - (cSize.x >> 1), (int32_t)pos.y - cSize.y };
 		auto iPosRB = iPosLT + cSize;
 
 		// handle blocks
@@ -176,6 +173,7 @@ namespace Game {
 
 		// sync
 		centerPos = pos + cCenterPosOffset;
+		_pos = pos.Floor();
 
 		weapon->Update();
 
@@ -186,7 +184,7 @@ namespace Game {
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
 			.Draw(gLooper.res._texid_char_body, 2);
 		// body
-		q[0].pos = stage->camera.ToGLPos(pos);
+		q[0].pos = stage->camera.ToGLPos(_pos);
 		q[0].anchor = { 0.5f, 0 };
 		q[0].scale = stage->camera.scale;
 		q[0].radians = 0;
@@ -209,7 +207,7 @@ namespace Game {
 	inline void Player::DrawLight(float colorPlus_) {
 		// todo: color plus support
 		auto q = gLooper.ShaderBegin(gLooper.shaderRingInstance).Draw(2);
-		q[0].pos = stage->camera.ToGLPos(pos);
+		q[0].pos = stage->camera.ToGLPos(_pos);
 		q[0].radius = Cfg::height * 0.8f * stage->camera.scale;
 		q[0].colorPlus = colorPlus_;
 		q[0].color = { 180,180,180,255 };

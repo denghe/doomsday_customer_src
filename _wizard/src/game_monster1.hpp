@@ -83,7 +83,7 @@ namespace Game {
 		tarRadius = 20.f;
 		radiusInc = (tarRadius - radius) / (0.7f * Cfg::fps);
 		shootDelay = int32_t(0.1f * Cfg::fps);
-		xx::CoutN(flyTargetsIdx);
+		//xx::CoutN(flyTargetsIdx);
 	}
 
 	inline int32_t Monster1_1::Update() {

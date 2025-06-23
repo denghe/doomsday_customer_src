@@ -13,7 +13,7 @@ namespace Game {
 	}
 
 	XX_INLINE void PlayerWeapon::UpdatePosRadians() {
-		pos = owner->pos + holdOffset;
+		pos = owner->_pos + holdOffset;
 		auto mp = stage->camera.ToLogicPos(gLooper.mouse.pos);
 		auto d = mp - pos;
 		radians = std::atan2f(d.y, d.x);
