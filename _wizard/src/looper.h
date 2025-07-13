@@ -74,6 +74,7 @@ struct Looper : xx::Engine<Looper>, Cfg {
 	xx::Ref<xx::GLTexture> res_nums1;						// for effect damage number
     Game::Shader_QuadInstanceHPBar shaderHPBar;				// for hp & mp bar
 	xx::Ref<xx::GLTexture> res_hpbar;						// for hp bar
+	xx::Ref<xx::GLTexture> res_rocks;						// for bg blocks
 	ResTpFrames res;										// res/pngs.blist + png
 
 	xx::Scale9SpriteConfig btnCfg, btnCfgSmall;

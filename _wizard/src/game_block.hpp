@@ -2,9 +2,11 @@
 
 namespace Game {
 
-	inline xx::Shared<Block> Block::Init(XYi pos_, XYi size_) {
+	inline xx::Shared<Block> Block::Init(XYi pos_, XYi size_, XYi drawPos_, XYi tiledIdx_) {
 		pos = pos_;
 		size = size_;
+		drawPos = drawPos_;
+		tiledIdx = tiledIdx_;
 		return xx::SharedFromThis(this);
 	}
 
@@ -12,14 +14,15 @@ namespace Game {
 	}
 
 	inline void Block::Draw(Stage* stage) {
-		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(gLooper.res._texid_ui_block, 1);
-		q->pos = stage->camera.ToGLPos(pos);
+		auto f = gLooper.res_rocks.pointer;
+		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(f, 1);
+		q->pos = stage->camera.ToGLPos(drawPos);
 		q->anchor = { 0, 1 };
-		q->scale = XY{ size } * (1.f / gLooper.res._size_ui_block) * stage->camera.scale;
+		q->scale = size.x * (1.f / 256.f) * stage->camera.scale;
 		q->radians = 0;
 		q->colorplus = 1.f;
 		q->color = xx::RGBA8_White;
-		q->texRect.data = ResTpFrames::_uvrect_ui_block.data;
+		q->texRect = { uint16_t(tiledIdx.x*256), uint16_t(tiledIdx.y*256), 256, 256 };
 	}
 
 	template<typename T>

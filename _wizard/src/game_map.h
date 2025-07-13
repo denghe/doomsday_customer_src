@@ -22,6 +22,7 @@ namespace Game {
 
 		void Init(Stage* stage_, std::u32string_view mapText);
 		int32_t Update() override;
+		virtual void DrawBG();
 		void Draw() override;
 		void DrawLight(float colorPlus_) override;
 
@@ -46,4 +47,22 @@ namespace Game {
 		int32_t Update() override;
 	};
 
+	struct TiledMap : Map {
+		static constexpr int32_t cTiledNumCols{ 6 };
+		static constexpr int32_t cTiledNumRows{ 8 };
+		static constexpr bool cTiledHalfSizeFlagss[cTiledNumCols * cTiledNumRows] = {
+			1,1,1,1,1,1,
+			0,0,0,0,0,0,
+			0,0,0,0,0,0,
+			1,1,1,0,0,0,
+			0,0,1,1,0,0,
+			0,0,0,0,0,0,
+			0,0,1,0,0,0,
+			0,0,0,0,1,0,
+		};
+	};
+
+	struct Map_3 : TiledMap {
+		void Init(Stage* stage_);
+	};
 }

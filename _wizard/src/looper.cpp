@@ -49,6 +49,7 @@ int32_t main() {
 xx::Task<> Looper::MainTask() {
 	res_nums1 = co_await AsyncLoadTextureFromUrl("res/nums1.png");
 	res_hpbar = co_await AsyncLoadTextureFromUrl("res/hpbar.png");
+	res_rocks = co_await AsyncLoadTextureFromUrl("res/rocks.png");
 	shaderNumbers.Init();
 	shaderHPBar.Init();
 

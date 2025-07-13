@@ -35,14 +35,18 @@ namespace Game {
 
 		switch (roundId) {
 		case 1:
+			map.Emplace<Map_3>()->Init(this);
+			player.Emplace()->Init<PlayerWeapon>(this);
+			break;
+		case 2:
 			map.Emplace<Map_1>()->Init(this);
 			player.Emplace()->Init<PlayerWeapon1>(this);
 			break;
-		case 2:
+		case 3:
 			map.Emplace<Map_2>()->Init(this);
 			player.Emplace()->Init<PlayerWeapon>(this);
 			break;
-		case 3:
+		case 4:
 			map.Emplace<Map_2>()->Init(this);
 			player.Emplace()->Init<PlayerWeapon1>(this);
 			break;
@@ -310,6 +314,8 @@ namespace Game {
 		});
 		camera.SetBaseScale(scale);
 
+		// bg
+		map->DrawBG();
 
 		// combine content & light
 		gLooper.ShaderBegin(gLooper.shaderQuadInstanceLight).Draw(t, t2, xx::RGBA8_White, disableLight ? 1.f : 2.f);
@@ -319,7 +325,6 @@ namespace Game {
 			if (o.pos.x < areaMin.x || o.pos.x > areaMax.x || o.pos.y < areaMin.y || o.pos.y > areaMax.y) continue;
 			o.Draw(this);
 		}
-
 
 		// sharp display for text & ui
 		gLooper.ShaderEnd();

@@ -14,6 +14,9 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 		xx_assert(tp);
 		auto map = tp->GetMapSV();
 
+		this->bg = map["bg"sv];
+		this->_tex_bg = this->bg->tex;
+		this->_texid_bg = this->_tex_bg->GetValue();
 		this->bg_space1 = map["bg_space1"sv];
 		this->_tex_bg_space1 = this->bg_space1->tex;
 		this->_texid_bg_space1 = this->_tex_bg_space1->GetValue();

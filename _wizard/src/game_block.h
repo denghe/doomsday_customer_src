@@ -8,11 +8,12 @@ namespace Game {
 
 	struct Block {
 		XYi pos{}, size{};
+		XYi drawPos{}, tiledIdx{};	// todo: DrawSize
 		int32_t indexAtItems{ -1 }, indexAtCells{ -1 };
 		xx::Math::BlockWayout wayout{};
 		bool atEdge{};
 
-		xx::Shared<Block> Init(XYi pos_, XYi size_);
+		xx::Shared<Block> Init(XYi pos_, XYi size_, XYi drawPos_, XYi tiledIdx_);
 		void Update();
 		void Draw(struct Stage* stage);
 

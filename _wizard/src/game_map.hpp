@@ -68,8 +68,11 @@ namespace Game {
 				++y;
 				continue;
 			case U'Ｂ':
-				blocks.Add(xx::MakeShared<Block>()->Init(XY{ x, y } * Cfg::unitSize, Cfg::unitSize));
+			{
+				auto p = XY{ x, y } *Cfg::unitSize;
+				blocks.Add(xx::MakeShared<Block>()->Init(p, Cfg::unitSize, p, {4, 1}));
 				break;
+			}
 			case U'ｐ':
 				bornPlaces_Player.Emplace(x, y);
 				break;
@@ -104,6 +107,18 @@ namespace Game {
 	inline int32_t Map::Update() {
 		bgUvOffset += XY{ 0.6f, -1.f } * 10 * Cfg::frameDelay;
 		return 0;
+	}
+
+	inline void Map::DrawBG() {
+		auto& f = gLooper.res.bg.pointer;
+		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(f->tex, 1);
+		q->pos = {};
+		q->anchor = 0.5f;
+		q->scale = stage->size.y / f->spriteSize.y * stage->camera.scale;
+		q->radians = 0;
+		q->colorplus = 0.5f;
+		q->color = xx::RGBA8_White;
+		q->texRect.data = f->textureRect.data;
 	}
 
 	inline void Map::Draw() {
@@ -582,4 +597,100 @@ namespace Game {
 		return 0;
 	}
 
+	/****************************************************************************/
+	/****************************************************************************/
+
+	inline void Map_3::Init(Stage* stage_) {
+		this->stage = stage_;
+
+		// convert tiled map data
+		auto ReadCsvInts = [](xx::Listi32<int32_t>& out, std::string_view const& csv) {
+			int32_t v{};
+			for (uint8_t c : csv) {
+				if (c == '\r' || c == '\n' || c == '\t' || c == ' ')
+					continue;
+				if (c >= '0' && c <= '9') {
+					v = v * 10 + (c - '0');
+				}
+				else if (c == ',') {
+					out.Add(v);
+					v = {};
+				}
+				else {
+					assert(false);
+				}
+			}
+			out.Add(v);
+		};
+
+		xx::Listi32<int32_t> mapData;
+		static constexpr int32_t mapWidth{ 32 };
+		static constexpr int32_t mapHeight{ 18 };
+		ReadCsvInts(mapData, R"(
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,2,39,39,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,39,39,3,0,0,
+0,0,8,40,40,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,40,40,9,0,0,
+0,0,14,40,40,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,14,40,40,15,0,0,
+0,0,19,40,40,21,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,19,40,40,21,0,0,
+0,0,19,45,45,21,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,19,45,45,21,0,0,
+0,0,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6,0,0,
+0,0,10,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,12,0,0
+)");
+		assert(mapData.len == mapWidth * mapHeight);
+
+		blocks.Init(&gLooper.rdd, mapHeight, mapWidth, Cfg::unitSizei);
+
+		// scan contents
+		for (int32_t y = 0; y < mapHeight; ++y) {
+			for (int32_t x = 0; x < mapWidth; ++x) {
+				auto idx = y * mapWidth + x;
+				auto c = mapData[idx];
+
+				if (c == 0 || c == 46) continue;
+				c -= 1;
+				auto iy = c / cTiledNumCols;
+				auto ix = c - iy * cTiledNumCols;
+				auto pos = XYi{ x, y } * (int32_t)Cfg::unitSize;
+				auto isHalfSize = cTiledHalfSizeFlagss[c];
+				if (isHalfSize) {
+					blocks.Add(xx::MakeShared<Block>()->Init(
+						pos + XYi{ 0, (int32_t)Cfg::unitRadius }, { Cfg::unitSize, Cfg::unitRadius },
+						pos, { ix, iy }));
+				}
+				else {
+					blocks.Add(xx::MakeShared<Block>()->Init(pos, Cfg::unitSize, pos, {ix, iy}));
+				}
+			}
+		}
+
+		// todo: fill following data ( current is fake )
+		bornPlaces_Player.Emplace(mapWidth * 0.5f, mapHeight * 0.5f + 5);
+		bornPlaces_Monster.Emplace(mapWidth * 0.5f, mapHeight * 0.5f - 2);
+		flyTargets_Monster.Emplace(IdxToPos({ mapWidth * 0.5f, mapHeight * 0.5f + 2 }));
+
+
+		for (auto& o : blocks.items) {
+			o->FillWayout(blocks);
+		}
+
+		flowFields = std::make_unique<std::unique_ptr<uint8_t[]>[]>(blocks.cellsLen);
+		tmp = std::make_unique_for_overwrite<uint32_t[]>(blocks.cellsLen);
+		tmp2 = std::make_unique_for_overwrite<XYi[]>(blocks.cellsLen);
+
+		ShuffleFlyTargets();
+
+		auto ms = blocks.gridSize.As<float>();
+		cameraOriginal = { ms.x * 0.5f, ms.y - Cfg::height_2 };
+
+	}
 }
