@@ -35,9 +35,15 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 		this->char_head = map["char_head"sv];
 		this->_tex_char_head = this->char_head->tex;
 		this->_texid_char_head = this->_tex_char_head->GetValue();
+		this->char_staff = map["char_staff"sv];
+		this->_tex_char_staff = this->char_staff->tex;
+		this->_texid_char_staff = this->_tex_char_staff->GetValue();
 		this->char_weapon = map["char_weapon"sv];
 		this->_tex_char_weapon = this->char_weapon->tex;
 		this->_texid_char_weapon = this->_tex_char_weapon->GetValue();
+		this->char_wizard = map["char_wizard"sv];
+		this->_tex_char_wizard = this->char_wizard->tex;
+		this->_texid_char_wizard = this->_tex_char_wizard->GetValue();
 		this->dark_bullet_0 = map["dark_bullet_0"sv];
 		this->_tex_dark_bullet_0 = this->dark_bullet_0->tex;
 		this->_texid_dark_bullet_0 = this->_tex_dark_bullet_0->GetValue();

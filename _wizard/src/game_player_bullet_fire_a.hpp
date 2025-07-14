@@ -136,6 +136,10 @@ namespace Game {
 		XYi size{ int32_t(r) << 1 };
 
 		auto& blocks = stage->map->blocks;
+		if (iPosLT.x < 0 || iPosLT.y < 0
+			|| iPosRB.x >= blocks.gridSize.x
+			|| iPosRB.y >= blocks.gridSize.y) return false;
+
 		auto criFrom = blocks.PosToColRowIndex(iPosLT);
 		auto criTo = blocks.PosToColRowIndex(iPosRB - 1);
 		for (int rowIdx = criFrom.y; rowIdx <= criTo.y; ++rowIdx) {

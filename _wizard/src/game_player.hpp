@@ -25,7 +25,8 @@ namespace Game {
 
 		// left right move command check
 		int32_t moveDir;
-		if (gLooper.KeyDown(xx::KeyboardKeys::A) && gLooper.KeyDown(xx::KeyboardKeys::D)) {
+		if ((gLooper.KeyDown(xx::KeyboardKeys::A) || gLooper.KeyDown(xx::KeyboardKeys::Left))
+			&& (gLooper.KeyDown(xx::KeyboardKeys::D) || gLooper.KeyDown(xx::KeyboardKeys::Right))) {
 			if (lastXMoveDirection == -1) {
 				moveDir = 1;
 			}
@@ -36,10 +37,10 @@ namespace Game {
 				moveDir = 0;
 			}
 		}
-		else if (gLooper.KeyDown(xx::KeyboardKeys::A)) {
+		else if (gLooper.KeyDown(xx::KeyboardKeys::A) || gLooper.KeyDown(xx::KeyboardKeys::Left)) {
 			lastXMoveDirection = moveDir = -1;
 		}
-		else if (gLooper.KeyDown(xx::KeyboardKeys::D)) {
+		else if (gLooper.KeyDown(xx::KeyboardKeys::D) || gLooper.KeyDown(xx::KeyboardKeys::Right)) {
 			lastXMoveDirection = moveDir = 1;
 		}
 		else {
@@ -77,22 +78,28 @@ namespace Game {
 		// prepare
 		auto& blocks = stage->map->blocks;
 
-		XY iPosLT{ (int32_t)pos.x - (cSize.x >> 1), (int32_t)pos.y - cSize.y };
-		auto iPosRB = iPosLT + cSize;
+		XY posLT{ (int32_t)pos.x - (cSize.x >> 1), (int32_t)pos.y - cSize.y };
+		auto posRB = posLT + cSize;
+
+		// out of map check
+		if (posLT.x < 0 || posLT.y < 0)
+			return 1;
+		if (posRB.x >= blocks.gridSize.x || posRB.y >= blocks.gridSize.y)
+			return 1;
 
 		// handle blocks
 		PushOutWays pushOutWays{};
-		auto criFrom = blocks.PosToColRowIndex(iPosLT);
-		auto criTo = blocks.PosToColRowIndex(iPosRB - 1);
+		auto criFrom = blocks.PosToColRowIndex(posLT);
+		auto criTo = blocks.PosToColRowIndex(posRB - 1);
 		// check cross & pushout
 		for (int rowIdx = criFrom.y; rowIdx <= criTo.y; ++rowIdx) {
 			for (int colIdx = criFrom.x; colIdx <= criTo.x; ++colIdx) {
 				if (auto bc = blocks.At({ colIdx, rowIdx }); bc) {
-					if (bc->IsCrossBox(iPosLT, cSize)) {
-						auto [newPos, pushOutWay] = bc->PushOutBox(iPosLT, cSize);
+					if (bc->IsCrossBox(posLT, cSize)) {
+						auto [newPos, pushOutWay] = bc->PushOutBox(posLT, cSize);
 						if (pushOutWay != PushOutWays::Unknown) {
-							iPosLT = newPos;
-							iPosRB = iPosLT + cSize;
+							posLT = newPos;
+							posRB = posLT + cSize;
 							(uint32_t&)pushOutWays |= (uint32_t&)pushOutWay;
 						}
 					}
@@ -100,8 +107,8 @@ namespace Game {
 			}
 		}
 		if ((uint32_t)pushOutWays) {
-			pos.x = float(iPosLT.x + (cSize.x >> 1));
-			pos.y = float(iPosLT.y + cSize.y);
+			pos.x = float(posLT.x + (cSize.x >> 1));
+			pos.y = float(posLT.y + cSize.y);
 			if (fallingFrameCount && ((uint32_t&)pushOutWays & (uint32_t)PushOutWays::Up) > 0) {
 				lastJumpPressed = highJumpStoped = jumping = false;
 				multiJumpedCount = fallingFrameCount = highJumpFrameCount = 0;
@@ -116,9 +123,9 @@ namespace Game {
 		}
 
 		// out of map check
-		if (iPosLT.x < 0 || iPosLT.y < 0)
+		if (posLT.x < 0 || posLT.y < 0)
 			return 1;
-		if (iPosRB.x >= blocks.gridSize.x || iPosRB.y >= blocks.gridSize.y)
+		if (posRB.x >= blocks.gridSize.x || posRB.y >= blocks.gridSize.y)
 			return 1;
 
 		// falling count
@@ -181,6 +188,7 @@ namespace Game {
 	}
 
 	inline void Player::Draw() {
+#if 0
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
 			.Draw(gLooper.res._texid_char_body, 2);
 		// body
@@ -199,7 +207,18 @@ namespace Game {
 		q[1].colorplus = 1.f;
 		q[1].color = xx::RGBA8_White;
 		q[1].texRect.data = ResTpFrames::_uvrect_char_head.data;
-
+#else
+		// body + head
+		auto f = gLooper.res.char_wizard.pointer;
+		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(f->tex, 1);
+		q->pos = stage->camera.ToGLPos(_pos);
+		q->anchor = { 0.5f, 0 };
+		q->scale = radius * 2.f / f->spriteSize.x * stage->camera.scale;
+		q->radians = 0;
+		q->colorplus = 1.f;
+		q->color = xx::RGBA8_White;
+		q->texRect.data = f->textureRect.data;
+#endif
 		// weapon
 		weapon->Draw();
 	}

@@ -52,6 +52,7 @@ namespace Game {
 	}
 
 	inline void PlayerWeapon::Draw() {
+#if 0
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance)
 			.Draw(gLooper.res._texid_char_weapon, 1);
 		q->pos = stage->camera.ToGLPos(pos);
@@ -61,6 +62,17 @@ namespace Game {
 		q->colorplus = 1.f;
 		q->color = xx::RGBA8_White;
 		q->texRect.data = ResTpFrames::_uvrect_char_weapon.data;
+#else
+		auto f = gLooper.res.char_staff.pointer;
+		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(f->tex, 1);
+		q->pos = stage->camera.ToGLPos(pos);
+		q->anchor = { cAnchorX, 0.5f };
+		q->scale = 64.f / f->spriteSize.x * stage->camera.scale;
+		q->radians = radians;
+		q->colorplus = 1.f;
+		q->color = xx::RGBA8_White;
+		q->texRect.data = f->textureRect.data;
+#endif
 	}
 
 	inline void PlayerWeapon::DrawLight(float colorPlus_) {

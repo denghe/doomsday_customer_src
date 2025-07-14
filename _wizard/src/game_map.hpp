@@ -683,6 +683,7 @@ namespace Game {
 			o->FillWayout(blocks);
 		}
 
+		// todo: known issue: flowFields need * 2 len for half size
 		flowFields = std::make_unique<std::unique_ptr<uint8_t[]>[]>(blocks.cellsLen);
 		tmp = std::make_unique_for_overwrite<uint32_t[]>(blocks.cellsLen);
 		tmp2 = std::make_unique_for_overwrite<XYi[]>(blocks.cellsLen);

@@ -3,7 +3,7 @@
 namespace Game {
 
 	struct Player : Drawable {
-		static constexpr auto cSize = XYi(ResTpFrames::_size_char_body);
+		static constexpr XYi cSize = { Cfg::unitRadius, Cfg::unitSize };
 		static constexpr XY cGravity{ 0.2, 0.4 };
 		static constexpr XY cSpeedInit{ 0, -650 / Cfg::fps };
 		static constexpr XY cSpeedMax{ 400 / Cfg::fps, 1000 / Cfg::fps };

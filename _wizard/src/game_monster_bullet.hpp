@@ -32,8 +32,8 @@ namespace Game {
 
 		// out of map check
 		auto& gs = stage->map->blocks.gridSize;
-		if (pos.x < 0 || pos.y < 0 || pos.x >= gs.x || pos.y >= gs.y)
-			return 1;
+		//if (pos.x < 0 || pos.y < 0 || pos.x >= gs.x || pos.y >= gs.y)
+		//	return 1;
 
 		// handle blocks
 		{
@@ -44,6 +44,10 @@ namespace Game {
 			XYi size{ int32_t(r) << 1 };
 
 			auto& blocks = stage->map->blocks;
+			if (iPosLT.x < 0 || iPosLT.y < 0
+				|| iPosRB.x >= blocks.gridSize.x
+				|| iPosRB.y >= blocks.gridSize.y) return 1;
+
 			auto criFrom = blocks.PosToColRowIndex(iPosLT);
 			auto criTo = blocks.PosToColRowIndex(iPosRB - 1);
 			for (int rowIdx = criFrom.y; rowIdx <= criTo.y; ++rowIdx) {
