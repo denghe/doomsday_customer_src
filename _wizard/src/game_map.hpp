@@ -167,7 +167,7 @@ namespace Game {
 		assert(cri.x >= 0 && cri.x < blocks.numCols);
 		assert(cri.y >= 0 && cri.y < blocks.numRows);
 		auto bci = blocks.ColRowIndexToCellIndex(cri);
-		assert(!blocks.cells[bci]);
+		assert(!blocks.cells[bci] || blocks.cells[bci]->size.x != blocks.cells[bci]->size.y);
 		if (!flowFields[bci]) {
 			// gen
 			auto d = std::make_unique_for_overwrite<uint8_t[]>(blocks.cellsLen);
@@ -181,12 +181,80 @@ namespace Game {
 				cri = xys[i];
 				auto ci = blocks.ColRowIndexToCellIndex(cri);
 				auto n = ns[ci] + 1;
+				auto b = blocks.cells[ci];
+				{
+					// ##[][]
+					// []()[]
+					// [][][]
+					XYi ncri{ cri.x - 1, cri.y - 1 };
+					if (ncri.x >= 0 && ncri.y >= 0) {
+						auto nci = blocks.ColRowIndexToCellIndex(ncri);
+						if (!blocks.cells[nci] && !ns[nci]) {
+							xys[len++] = ncri;
+							ns[nci] = n;
+						}
+					}
+				}
+				{
+					// []##[]
+					// []()[]
+					// [][][]
+					XYi ncri{ cri.x, cri.y - 1 };
+					if (ncri.y >= 0) {
+						auto nci = blocks.ColRowIndexToCellIndex(ncri);
+						if (!blocks.cells[nci] && !ns[nci]) {
+							xys[len++] = ncri;
+							ns[nci] = n;
+						}
+					}
+				}
+				{
+					// [][]##
+					// []()[]
+					// [][][]
+					XYi ncri{ cri.x + 1, cri.y - 1 };
+					if (ncri.x < blocks.numCols && ncri.y >= 0) {
+						auto nci = blocks.ColRowIndexToCellIndex(ncri);
+						if (!blocks.cells[nci] && !ns[nci]) {
+							xys[len++] = ncri;
+							ns[nci] = n;
+						}
+					}
+				}
+				{
+					// [][][]
+					// ##()[]
+					// [][][]
+					XYi ncri{ cri.x - 1, cri.y };
+					if (ncri.x >= 0) {
+						auto nci = blocks.ColRowIndexToCellIndex(ncri);
+						if ((!blocks.cells[nci] || blocks.cells[nci]->isHalfSize) && !ns[nci]) {
+							xys[len++] = ncri;
+							ns[nci] = n;
+						}
+					}
+				}
 				{
 					// [][][]
 					// []()##
 					// [][][]
 					XYi ncri{ cri.x + 1, cri.y };
 					if (ncri.x < blocks.numCols) {
+						auto nci = blocks.ColRowIndexToCellIndex(ncri);
+						if ((!blocks.cells[nci] || blocks.cells[nci]->isHalfSize) && !ns[nci]) {
+							xys[len++] = ncri;
+							ns[nci] = n;
+						}
+					}
+				}
+				if (b && b->isHalfSize) continue;
+				assert(!b);
+				{
+					// [][][]
+					// []()[]
+					// [][]##
+					XYi ncri{ cri.x + 1, cri.y + 1 };
+					if (ncri.x < blocks.numCols && ncri.y < blocks.numRows) {
 						auto nci = blocks.ColRowIndexToCellIndex(ncri);
 						if (!blocks.cells[nci] && !ns[nci]) {
 							xys[len++] = ncri;
@@ -209,45 +277,6 @@ namespace Game {
 				}
 				{
 					// [][][]
-					// ##()[]
-					// [][][]
-					XYi ncri{ cri.x - 1, cri.y };
-					if (ncri.x >= 0) {
-						auto nci = blocks.ColRowIndexToCellIndex(ncri);
-						if (!blocks.cells[nci] && !ns[nci]) {
-							xys[len++] = ncri;
-							ns[nci] = n;
-						}
-					}
-				}
-				{
-					// []##[]
-					// []()[]
-					// [][][]
-					XYi ncri{ cri.x, cri.y - 1 };
-					if (ncri.y >= 0) {
-						auto nci = blocks.ColRowIndexToCellIndex(ncri);
-						if (!blocks.cells[nci] && !ns[nci]) {
-							xys[len++] = ncri;
-							ns[nci] = n;
-						}
-					}
-				}
-				{
-					// [][][]
-					// []()[]
-					// [][]##
-					XYi ncri{ cri.x + 1, cri.y + 1 };
-					if (ncri.x < blocks.numCols && ncri.y < blocks.numRows) {
-						auto nci = blocks.ColRowIndexToCellIndex(ncri);
-						if (!blocks.cells[nci] && !ns[nci]) {
-							xys[len++] = ncri;
-							ns[nci] = n;
-						}
-					}
-				}
-				{
-					// [][][]
 					// []()[]
 					// ##[][]
 					XYi ncri{ cri.x - 1, cri.y + 1 };
@@ -259,37 +288,12 @@ namespace Game {
 						}
 					}
 				}
-				{
-					// ##[][]
-					// []()[]
-					// [][][]
-					XYi ncri{ cri.x - 1, cri.y - 1 };
-					if (ncri.x >= 0 && ncri.y >= 0) {
-						auto nci = blocks.ColRowIndexToCellIndex(ncri);
-						if (!blocks.cells[nci] && !ns[nci]) {
-							xys[len++] = ncri;
-							ns[nci] = n;
-						}
-					}
-				}
-				{
-					// [][]##
-					// []()[]
-					// [][][]
-					XYi ncri{ cri.x + 1, cri.y - 1 };
-					if (ncri.x < blocks.numCols && ncri.y >= 0) {
-						auto nci = blocks.ColRowIndexToCellIndex(ncri);
-						if (!blocks.cells[nci] && !ns[nci]) {
-							xys[len++] = ncri;
-							ns[nci] = n;
-						}
-					}
-				}
 			}
 			for (cri.y = 0; cri.y < blocks.numRows; ++cri.y) {
 				for (cri.x = 0; cri.x < blocks.numCols; ++cri.x) {
 					auto ci = blocks.ColRowIndexToCellIndex(cri);
-					if (blocks.cells[ci]) {
+					auto b = blocks.cells[ci];
+					if (b && !b->isHalfSize) {
 						//xx::Cout(d[ci], " ");
 						continue;
 					}
@@ -641,8 +645,8 @@ namespace Game {
 0,0,2,39,39,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,39,39,3,0,0,
 0,0,8,40,40,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,40,40,9,0,0,
 0,0,14,40,40,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,14,40,40,15,0,0,
-0,0,19,40,40,21,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,19,40,40,21,0,0,
-0,0,19,45,45,21,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,19,45,45,21,0,0,
+0,46,46,46,46,46,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,46,46,46,46,0,0,
+0,0,46,46,46,46,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,46,46,46,46,0,0,
 0,0,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6,0,0,
 0,0,10,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,12,0,0
 )");
@@ -683,7 +687,6 @@ namespace Game {
 			o->FillWayout(blocks);
 		}
 
-		// todo: known issue: flowFields need * 2 len for half size
 		flowFields = std::make_unique<std::unique_ptr<uint8_t[]>[]>(blocks.cellsLen);
 		tmp = std::make_unique_for_overwrite<uint32_t[]>(blocks.cellsLen);
 		tmp2 = std::make_unique_for_overwrite<XYi[]>(blocks.cellsLen);

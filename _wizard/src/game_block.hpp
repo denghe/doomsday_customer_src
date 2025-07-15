@@ -7,6 +7,7 @@ namespace Game {
 		size = size_;
 		drawPos = drawPos_;
 		tiledIdx = tiledIdx_;
+		isHalfSize = size.x != size.y;
 		return xx::SharedFromThis(this);
 	}
 

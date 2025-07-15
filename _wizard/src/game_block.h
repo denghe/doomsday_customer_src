@@ -11,7 +11,7 @@ namespace Game {
 		XYi drawPos{}, tiledIdx{};	// todo: DrawSize
 		int32_t indexAtItems{ -1 }, indexAtCells{ -1 };
 		xx::Math::BlockWayout wayout{};
-		bool atEdge{};
+		bool atEdge{}, isHalfSize{};
 
 		xx::Shared<Block> Init(XYi pos_, XYi size_, XYi drawPos_, XYi tiledIdx_);
 		void Update();
