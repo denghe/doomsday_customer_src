@@ -1063,6 +1063,20 @@ struct ResTpFrames {
 	static constexpr xx::XY _anchor_ui_button{ 0.5, 0.5 };
 	static constexpr xx::UVRect _uvrect_ui_button{ 2037, 651, 6, 6 };
 
+	xx::Ref<xx::Frame> ui_button_h;
+	xx::Ref<xx::GLTexture> _tex_ui_button_h;
+	GLuint _texid_ui_button_h{};	// unsafe
+	static constexpr xx::XY _size_ui_button_h{ 6, 6 };
+	static constexpr xx::XY _anchor_ui_button_h{ 0.5, 0.5 };
+	static constexpr xx::UVRect _uvrect_ui_button_h{ 2037, 663, 6, 6 };
+
+	xx::Ref<xx::Frame> ui_button_n;
+	xx::Ref<xx::GLTexture> _tex_ui_button_n;
+	GLuint _texid_ui_button_n{};	// unsafe
+	static constexpr xx::XY _size_ui_button_n{ 6, 6 };
+	static constexpr xx::XY _anchor_ui_button_n{ 0.5, 0.5 };
+	static constexpr xx::UVRect _uvrect_ui_button_n{ 2037, 675, 6, 6 };
+
 	xx::Ref<xx::Frame> ui_cannon1;
 	xx::Ref<xx::GLTexture> _tex_ui_cannon1;
 	GLuint _texid_ui_cannon1{};	// unsafe
@@ -1110,7 +1124,7 @@ struct ResTpFrames {
 	GLuint _texid_ui_dot{};	// unsafe
 	static constexpr xx::XY _size_ui_dot{ 1, 1 };
 	static constexpr xx::XY _anchor_ui_dot{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_ui_dot{ 2037, 663, 1, 1 };
+	static constexpr xx::UVRect _uvrect_ui_dot{ 2037, 711, 1, 1 };
 
 	xx::Ref<xx::Frame> ui_gear;
 	xx::Ref<xx::GLTexture> _tex_ui_gear;
@@ -1188,6 +1202,20 @@ struct ResTpFrames {
 	static constexpr xx::XY _size_ui_run3{ 32, 32 };
 	static constexpr xx::XY _anchor_ui_run3{ 0.5, 0.5 };
 	static constexpr xx::UVRect _uvrect_ui_run3{ 305, 1025, 32, 32 };
+
+	xx::Ref<xx::Frame> ui_slider_bar;
+	xx::Ref<xx::GLTexture> _tex_ui_slider_bar;
+	GLuint _texid_ui_slider_bar{};	// unsafe
+	static constexpr xx::XY _size_ui_slider_bar{ 6, 6 };
+	static constexpr xx::XY _anchor_ui_slider_bar{ 0.5, 0.5 };
+	static constexpr xx::UVRect _uvrect_ui_slider_bar{ 2037, 687, 6, 6 };
+
+	xx::Ref<xx::Frame> ui_slider_block;
+	xx::Ref<xx::GLTexture> _tex_ui_slider_block;
+	GLuint _texid_ui_slider_block{};	// unsafe
+	static constexpr xx::XY _size_ui_slider_block{ 6, 6 };
+	static constexpr xx::XY _anchor_ui_slider_block{ 0.5, 0.5 };
+	static constexpr xx::UVRect _uvrect_ui_slider_block{ 2037, 699, 6, 6 };
 
 	xx::Ref<xx::Frame> ui_star;
 	xx::Ref<xx::GLTexture> _tex_ui_star;

@@ -20,7 +20,7 @@
 #include "game_monster.hpp"
 #include "game_monster1.hpp"
 #include "game_stage.hpp"
-#include "game_main_menu.hpp"
+#include "_game_main_menu.hpp"
 // more include here ...
 #include "_test1.hpp"
 #include "_test2.hpp"
@@ -55,6 +55,7 @@ xx::Task<> Looper::MainTask() {
 
 	co_await res.AsyncLoad("res/");
 
+	res_sound_button_1 = sound.Load(co_await AsyncDownloadFromUrl("res/button_1.ogg"));
 	res_sound_shoot_1 = sound.Load(co_await AsyncDownloadFromUrl("res/shoot_1.ogg"));
 	res_sound_shoot_2 = sound.Load(co_await AsyncDownloadFromUrl("res/shoot_2.ogg"));
 	res_sound_hit_1 = sound.Load(co_await AsyncDownloadFromUrl("res/hit_1.ogg"));
@@ -104,6 +105,33 @@ xx::Task<> Looper::MainTask() {
 	btnCfgSmall.txtPaddingRightBottom = { 10, 5 };
 	btnCfgSmall.txtScale = { 1 };
 	btnCfgSmall.iconPadding = { 3 };
+
+
+
+	btnCfgNormal.Emplace();
+	btnCfgNormal->frame = res.ui_button_n;
+	btnCfgNormal->texScale = { 1, 1 };
+	btnCfgNormal->center = { 2, 2, 2, 2 };
+	btnCfgNormal->color = { 255, 255, 255, 255 };
+	btnCfgNormal->borderScale = { 4.f };
+	btnCfgNormal->txtColor = { xx::RGBA8_White };
+	btnCfgNormal->txtPadding = { 20, 5 };
+	btnCfgNormal->txtPaddingRightBottom = { 20, 10 };
+	btnCfgNormal->txtScale = { 2 };
+	btnCfgNormal->iconPadding = { 5 };
+
+	btnCfgHighlight.Emplace();
+	*btnCfgHighlight = *btnCfgNormal;
+	btnCfgHighlight->frame = res.ui_button_h;
+
+	sliderBarCfg.Emplace();
+	*sliderBarCfg = *btnCfgNormal;
+	sliderBarCfg->frame = res.ui_slider_bar;
+
+	sliderBlockCfg.Emplace();
+	*sliderBlockCfg = *btnCfgNormal;
+	sliderBlockCfg->frame = res.ui_slider_block;
+
 
 	scene.Emplace<Game::MainMenu>()->Init();
 }

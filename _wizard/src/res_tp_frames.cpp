@@ -467,6 +467,12 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 		this->ui_button = map["ui_button"sv];
 		this->_tex_ui_button = this->ui_button->tex;
 		this->_texid_ui_button = this->_tex_ui_button->GetValue();
+		this->ui_button_h = map["ui_button_h"sv];
+		this->_tex_ui_button_h = this->ui_button_h->tex;
+		this->_texid_ui_button_h = this->_tex_ui_button_h->GetValue();
+		this->ui_button_n = map["ui_button_n"sv];
+		this->_tex_ui_button_n = this->ui_button_n->tex;
+		this->_texid_ui_button_n = this->_tex_ui_button_n->GetValue();
 		this->ui_cannon1 = map["ui_cannon1"sv];
 		this->_tex_ui_cannon1 = this->ui_cannon1->tex;
 		this->_texid_ui_cannon1 = this->_tex_ui_cannon1->GetValue();
@@ -521,6 +527,12 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 		this->ui_run3 = map["ui_run3"sv];
 		this->_tex_ui_run3 = this->ui_run3->tex;
 		this->_texid_ui_run3 = this->_tex_ui_run3->GetValue();
+		this->ui_slider_bar = map["ui_slider_bar"sv];
+		this->_tex_ui_slider_bar = this->ui_slider_bar->tex;
+		this->_texid_ui_slider_bar = this->_tex_ui_slider_bar->GetValue();
+		this->ui_slider_block = map["ui_slider_block"sv];
+		this->_tex_ui_slider_block = this->ui_slider_block->tex;
+		this->_texid_ui_slider_block = this->_tex_ui_slider_block->GetValue();
 		this->ui_star = map["ui_star"sv];
 		this->_tex_ui_star = this->ui_star->tex;
 		this->_texid_ui_star = this->_tex_ui_star->GetValue();

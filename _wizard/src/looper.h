@@ -34,7 +34,7 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 #include "game_monster.h"
 #include "game_monster1.h"
 #include "game_stage.h"
-#include "game_main_menu.h"
+#include "_game_main_menu.h"
 // more include here ...
 #include "_test1.h"
 #include "_test2.h"
@@ -62,6 +62,7 @@ struct Looper : xx::Engine<Looper>, Cfg {
 	spine::Animation* res_Dragon_flying{};
 
 	xx::Sound sound;
+	xx::Shared<xx::SoundSource> res_sound_button_1;
 	xx::Shared<xx::SoundSource> res_sound_shoot_1;
 	xx::Shared<xx::SoundSource> res_sound_shoot_2;
 	xx::Shared<xx::SoundSource> res_sound_hit_1;
@@ -78,6 +79,8 @@ struct Looper : xx::Engine<Looper>, Cfg {
 	ResTpFrames res;										// res/pngs.blist + png
 
 	xx::Scale9SpriteConfig btnCfg, btnCfgSmall;
+	xx::Ref<xx::Scale9SpriteConfig> btnCfgNormal, btnCfgHighlight;	// todo: disabled?
+	xx::Ref<xx::Scale9SpriteConfig> sliderBarCfg, sliderBlockCfg;
 	xx::SpaceGridRingDiffuseData rdd;
 	xx::Listi32<std::pair<float, Game::Drawable*>> yDraws;
 };
