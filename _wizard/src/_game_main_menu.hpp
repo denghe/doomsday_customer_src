@@ -65,7 +65,7 @@ namespace Game {
 	}
 
 	inline void MainMenu::Draw() {
-		xx::Quad{}.SetFrame(gLooper.res_bg_main).SetScale(lastWindowSize.y / 1080).Draw();
+		xx::Quad{}.SetFrame(gLooper.res_bg_main).SetScale(lastWindowSize.y / 1080).SetColorplus(0.6f).Draw();
 		gLooper.DrawNode(ui);
 	}
 
