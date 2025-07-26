@@ -110,6 +110,12 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 		this->fire_explosion_5 = map["fire_explosion_5"sv];
 		this->_tex_fire_explosion_5 = this->fire_explosion_5->tex;
 		this->_texid_fire_explosion_5 = this->_tex_fire_explosion_5->GetValue();
+		this->flags_cn = map["flags_cn"sv];
+		this->_tex_flags_cn = this->flags_cn->tex;
+		this->_texid_flags_cn = this->_tex_flags_cn->GetValue();
+		this->flags_en = map["flags_en"sv];
+		this->_tex_flags_en = this->flags_en->tex;
+		this->_texid_flags_en = this->_tex_flags_en->GetValue();
 		this->font_outline_32 = map["font_outline_32"sv];
 		this->_tex_font_outline_32 = this->font_outline_32->tex;
 		this->_texid_font_outline_32 = this->_tex_font_outline_32->GetValue();
@@ -500,6 +506,12 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 		this->ui_heart = map["ui_heart"sv];
 		this->_tex_ui_heart = this->ui_heart->tex;
 		this->_texid_ui_heart = this->_tex_ui_heart->GetValue();
+		this->ui_imgbtn_h = map["ui_imgbtn_h"sv];
+		this->_tex_ui_imgbtn_h = this->ui_imgbtn_h->tex;
+		this->_texid_ui_imgbtn_h = this->_tex_ui_imgbtn_h->GetValue();
+		this->ui_imgbtn_n = map["ui_imgbtn_n"sv];
+		this->_tex_ui_imgbtn_n = this->ui_imgbtn_n->tex;
+		this->_texid_ui_imgbtn_n = this->_tex_ui_imgbtn_n->GetValue();
 		this->ui_mask = map["ui_mask"sv];
 		this->_tex_ui_mask = this->ui_mask->tex;
 		this->_texid_ui_mask = this->_tex_ui_mask->GetValue();

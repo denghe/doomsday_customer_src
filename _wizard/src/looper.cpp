@@ -126,6 +126,14 @@ xx::Task<> Looper::MainTask() {
 	*btnCfgHighlight = *btnCfgNormal;
 	btnCfgHighlight->frame = res.ui_button_h;
 
+	imgBtnCfgNormal.Emplace();
+	*imgBtnCfgNormal = *btnCfgNormal;
+	imgBtnCfgNormal->frame = res.ui_imgbtn_n;
+
+	imgBtnCfgHighlight.Emplace();
+	*imgBtnCfgHighlight = *btnCfgNormal;
+	imgBtnCfgHighlight->frame = res.ui_imgbtn_h;
+
 	sliderBarCfg.Emplace();
 	*sliderBarCfg = *btnCfgNormal;
 	sliderBarCfg->frame = res.ui_slider_bar;

@@ -9,25 +9,32 @@ namespace Game {
 		auto& ch = gLooper.btnCfgHighlight;
 		{
 			auto& b = ui->MakeChildren<xx::FocusButton>()->Init(2, pos1 + XY{ 30, 230 }, anchor1
-				, cn, ch, U"start");
+				, gLooper.btnCfgNormal, gLooper.btnCfgHighlight, U"start");
 			b.onFocus = [] { gLooper.sound.Play(gLooper.res_sound_button_1); };
 			b.onClicked = [] { gLooper.DelaySwitchTo<Stage>(); };
 		}
 		{
 			auto& b = ui->MakeChildren<xx::FocusButton>()->Init(2, pos1 + XY{ 30, 130 }, anchor1
-				, cn, ch, U"setting");
+				, gLooper.btnCfgNormal, gLooper.btnCfgHighlight, U"options");
 			b.onFocus = [] { gLooper.sound.Play(gLooper.res_sound_button_1); };
 			b.onClicked = [] { gLooper.DelaySwitchTo<Test2>(); };
 		}
 
 		{
 			auto& b = ui->MakeChildren<xx::FocusButton>()->Init(2, pos1 + XY{ 30, 30 }, anchor1
-				, cn, ch, U"quit");
+				, gLooper.btnCfgNormal, gLooper.btnCfgHighlight, U"quit");
 			b.onFocus = [] { gLooper.sound.Play(gLooper.res_sound_button_1); };
-			b.onClicked = [] { gLooper.DelaySwitchTo<Test2>(); };
+			b.onClicked = [] {  };	// todo
 		}
 
 		// todo: right bottom icons ( language, qq? discord? )
+
+		{
+			auto& b = ui->MakeChildren<xx::FocusImageButton>()->Init(2, pos3 + XY{ -30, 30 }, 64, 5, anchor3
+				, gLooper.imgBtnCfgNormal, gLooper.imgBtnCfgHighlight, gLooper.res.flags_cn);
+			b.onFocus = [] { gLooper.sound.Play(gLooper.res_sound_button_1); };
+			b.onClicked = [] { };	// todo
+		}
 
 #if 0
 		{
@@ -65,6 +72,8 @@ namespace Game {
 	}
 
 	inline void MainMenu::Draw() {
+		gLooper.ShaderEnd();
+		gLooper.res.flags_cn->tex->SetGLTexParm<GL_NEAREST>();
 		xx::Quad{}.SetFrame(gLooper.res_bg_main).SetScale(lastWindowSize.y / 1080).SetColorplus(0.6f).Draw();
 		gLooper.DrawNode(ui);
 	}
