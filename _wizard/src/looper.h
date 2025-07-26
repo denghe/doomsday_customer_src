@@ -81,9 +81,9 @@ struct Looper : xx::Engine<Looper>, Cfg {
 	ResTpFrames res;										// res/pngs.blist + png
 
 	xx::Scale9SpriteConfig btnCfg, btnCfgSmall;
-	xx::Ref<xx::Scale9SpriteConfig> btnCfgNormal, btnCfgHighlight;
-	xx::Ref<xx::Scale9SpriteConfig> imgBtnCfgNormal, imgBtnCfgHighlight;
-	xx::Ref<xx::Scale9SpriteConfig> sliderBarCfg, sliderBlockCfg;
+	xx::Ref<xx::Scale9SpriteConfig> cfg_btnNormal, cfg_btnHighlight;
+	xx::Ref<xx::Scale9SpriteConfig> cfg_imgBtnNormal, cfg_imgBtnHighlight;
+	xx::Ref<xx::Scale9SpriteConfig> cfg_sliderBar, cfg_sliderBlock;
 	xx::SpaceGridRingDiffuseData rdd;
 	xx::Listi32<std::pair<float, Game::Drawable*>> yDraws;
 };

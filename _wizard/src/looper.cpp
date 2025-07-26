@@ -110,37 +110,37 @@ xx::Task<> Looper::MainTask() {
 
 
 
-	btnCfgNormal.Emplace();
-	btnCfgNormal->frame = res.ui_button_n;
-	btnCfgNormal->texScale = { 1, 1 };
-	btnCfgNormal->center = { 2, 2, 2, 2 };
-	btnCfgNormal->color = { 255, 255, 255, 255 };
-	btnCfgNormal->borderScale = { 4.f };
-	btnCfgNormal->txtColor = { xx::RGBA8_White };
-	btnCfgNormal->txtPadding = { 20, 5 };
-	btnCfgNormal->txtPaddingRightBottom = { 20, 10 };
-	btnCfgNormal->txtScale = { 2 };
-	btnCfgNormal->iconPadding = { 5 };
+	cfg_btnNormal.Emplace();
+	cfg_btnNormal->frame = res.ui_button_n;
+	cfg_btnNormal->texScale = { 1, 1 };
+	cfg_btnNormal->center = { 2, 2, 2, 2 };
+	cfg_btnNormal->color = { 255, 255, 255, 255 };
+	cfg_btnNormal->borderScale = { 4.f };
+	cfg_btnNormal->txtColor = { xx::RGBA8_White };
+	cfg_btnNormal->txtPadding = { 20, 5 };
+	cfg_btnNormal->txtPaddingRightBottom = { 20, 10 };
+	cfg_btnNormal->txtScale = { 2 };
+	cfg_btnNormal->iconPadding = { 5 };
 
-	btnCfgHighlight.Emplace();
-	*btnCfgHighlight = *btnCfgNormal;
-	btnCfgHighlight->frame = res.ui_button_h;
+	cfg_btnHighlight.Emplace();
+	*cfg_btnHighlight = *cfg_btnNormal;
+	cfg_btnHighlight->frame = res.ui_button_h;
 
-	imgBtnCfgNormal.Emplace();
-	*imgBtnCfgNormal = *btnCfgNormal;
-	imgBtnCfgNormal->frame = res.ui_imgbtn_n;
+	cfg_imgBtnNormal.Emplace();
+	*cfg_imgBtnNormal = *cfg_btnNormal;
+	cfg_imgBtnNormal->frame = res.ui_imgbtn_n;
 
-	imgBtnCfgHighlight.Emplace();
-	*imgBtnCfgHighlight = *btnCfgNormal;
-	imgBtnCfgHighlight->frame = res.ui_imgbtn_h;
+	cfg_imgBtnHighlight.Emplace();
+	*cfg_imgBtnHighlight = *cfg_btnNormal;
+	cfg_imgBtnHighlight->frame = res.ui_imgbtn_h;
 
-	sliderBarCfg.Emplace();
-	*sliderBarCfg = *btnCfgNormal;
-	sliderBarCfg->frame = res.ui_slider_bar;
+	cfg_sliderBar.Emplace();
+	*cfg_sliderBar = *cfg_btnNormal;
+	cfg_sliderBar->frame = res.ui_slider_bar;
 
-	sliderBlockCfg.Emplace();
-	*sliderBlockCfg = *btnCfgNormal;
-	sliderBlockCfg->frame = res.ui_slider_block;
+	cfg_sliderBlock.Emplace();
+	*cfg_sliderBlock = *cfg_btnNormal;
+	cfg_sliderBlock->frame = res.ui_slider_block;
 
 
 	scene.Emplace<Game::MainMenu>()->Init();
