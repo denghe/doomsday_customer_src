@@ -5,35 +5,22 @@ namespace Game {
 	inline void MainMenu::MakeUI() {
 		ui.Emplace()->Init(0, {}, scale);
 
-		ui->MakeChildren<xx::Button>()->Init(2, pos5 + XY{ 0, 0 }, anchor5, gLooper.btnCfg, U"new game").onClicked = [&]() {
-			gLooper.DelaySwitchTo<Stage>(); 
-			};
-		ui->MakeChildren<xx::Button>()->Init(2, pos5 + XY{ 0, -100 }, anchor5, gLooper.btnCfgSmall, U"test2").onClicked = [&]() {
-			gLooper.DelaySwitchTo<Test2>(); 
-			};
-
 		auto& cn = gLooper.btnCfgNormal;
 		auto& ch = gLooper.btnCfgHighlight;
-		auto& csbar = gLooper.sliderBarCfg;
-		auto& csblock = gLooper.sliderBlockCfg;
 		{
-			auto& b = ui->MakeChildren<xx::FocusButton>()->Init(2, pos5 + XY{ -100, 300 }, 0.5f
-				, cn, ch, U"btn1");
+			auto& b = ui->MakeChildren<xx::FocusButton>()->Init(2, pos5 + XY{ 0, 0 }, 0.5f
+				, cn, ch, U"new game");
 			b.onFocus = [] { gLooper.sound.Play(gLooper.res_sound_button_1); };
-			b.onClicked = [] {};
+			b.onClicked = [] { gLooper.DelaySwitchTo<Stage>(); };
 		}
 		{
-			auto& b = ui->MakeChildren<xx::FocusButton>()->Init(2, pos5 + XY{ 100, 300 }, 0.5f
-				, cn, ch, U"btn2");
+			auto& b = ui->MakeChildren<xx::FocusButton>()->Init(2, pos5 + XY{ 0, -100 }, 0.5f
+				, cn, ch, U"test2");
 			b.onFocus = [] { gLooper.sound.Play(gLooper.res_sound_button_1); };
-			b.onClicked = [] {};
+			b.onClicked = [] { gLooper.DelaySwitchTo<Test2>(); };
 		}
-		{
-			auto& b = ui->MakeChildren<xx::FocusButton>()->Init(2, pos5 + XY{ 300, 300 }, 0.5f
-				, cn, ch, U"btn3");
-			b.onFocus = [] { gLooper.sound.Play(gLooper.res_sound_button_1); };
-			b.onClicked = [] {};
-		}
+
+#if 0
 		{
 			static bool v{};
 			auto& b = ui->MakeChildren<xx::FocusButton>()->Init(2, pos5 + XY{ 0, 200 }, 0.5f
@@ -44,16 +31,16 @@ namespace Game {
 				b.LabelRight().SetText(v ? U"ON" : U"OFF");
 			};
 		}
+
+		auto& csbar = gLooper.sliderBarCfg;
+		auto& csblock = gLooper.sliderBlockCfg;
 		{
-			auto& b = ui->MakeChildren<xx::FocusSlider>()->InitBegin(2, pos5 + XY{ 0, 100 }, 0.5f
-				, cn, ch, csbar, csblock, 79, 250, 450, 150, U"slider");
-			//b.valueToString = [](int32_t v)->std::u32string {
-			//	// todo
-			//};
-			b.value = 0.5f;
-			b.InitEnd();
+			auto& b = ui->MakeChildren<xx::FocusSlider>()->Init(2, pos5 + XY{ 0, 100 }, 0.5f
+				, cn, ch, csbar, csblock, 79, 250, 450, 150, U"slider", 0.5);
 			b.onFocus = [] { gLooper.sound.Play(gLooper.res_sound_button_1); };
+			//b.onChanged = [](double v) {};
 		}
+#endif
 	}
 
 	inline void MainMenu::OnWindowSizeChanged() {
