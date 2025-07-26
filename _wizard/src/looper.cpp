@@ -50,6 +50,8 @@ xx::Task<> Looper::MainTask() {
 	res_nums1 = co_await AsyncLoadTextureFromUrl("res/nums1.png");
 	res_hpbar = co_await AsyncLoadTextureFromUrl("res/hpbar.png");
 	res_rocks = co_await AsyncLoadTextureFromUrl("res/rocks.png");
+	res_bg_main = co_await AsyncLoadTextureFromUrl("res/bg_main.jpg");
+	res_bg_fight_1 = co_await AsyncLoadTextureFromUrl("res/bg_fight_1.jpg");
 	shaderNumbers.Init();
 	shaderHPBar.Init();
 

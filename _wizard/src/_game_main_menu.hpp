@@ -8,17 +8,26 @@ namespace Game {
 		auto& cn = gLooper.btnCfgNormal;
 		auto& ch = gLooper.btnCfgHighlight;
 		{
-			auto& b = ui->MakeChildren<xx::FocusButton>()->Init(2, pos5 + XY{ 0, 0 }, 0.5f
-				, cn, ch, U"new game");
+			auto& b = ui->MakeChildren<xx::FocusButton>()->Init(2, pos1 + XY{ 30, 230 }, anchor1
+				, cn, ch, U"start");
 			b.onFocus = [] { gLooper.sound.Play(gLooper.res_sound_button_1); };
 			b.onClicked = [] { gLooper.DelaySwitchTo<Stage>(); };
 		}
 		{
-			auto& b = ui->MakeChildren<xx::FocusButton>()->Init(2, pos5 + XY{ 0, -100 }, 0.5f
-				, cn, ch, U"test2");
+			auto& b = ui->MakeChildren<xx::FocusButton>()->Init(2, pos1 + XY{ 30, 130 }, anchor1
+				, cn, ch, U"setting");
 			b.onFocus = [] { gLooper.sound.Play(gLooper.res_sound_button_1); };
 			b.onClicked = [] { gLooper.DelaySwitchTo<Test2>(); };
 		}
+
+		{
+			auto& b = ui->MakeChildren<xx::FocusButton>()->Init(2, pos1 + XY{ 30, 30 }, anchor1
+				, cn, ch, U"quit");
+			b.onFocus = [] { gLooper.sound.Play(gLooper.res_sound_button_1); };
+			b.onClicked = [] { gLooper.DelaySwitchTo<Test2>(); };
+		}
+
+		// todo: right bottom icons ( language, qq? discord? )
 
 #if 0
 		{
@@ -56,6 +65,7 @@ namespace Game {
 	}
 
 	inline void MainMenu::Draw() {
+		xx::Quad{}.SetFrame(gLooper.res_bg_main).SetScale(lastWindowSize.y / 1080).Draw();
 		gLooper.DrawNode(ui);
 	}
 

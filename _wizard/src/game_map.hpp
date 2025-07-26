@@ -110,15 +110,15 @@ namespace Game {
 	}
 
 	inline void Map::DrawBG() {
-		auto& f = gLooper.res.bg.pointer;
-		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(f->tex, 1);
+		auto& t = gLooper.res_bg_fight_1;
+		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(t, 1);
 		q->pos = {};
 		q->anchor = 0.5f;
-		q->scale = stage->size.y / f->spriteSize.y * stage->camera.scale;
+		q->scale = stage->size.y / t->Height() * stage->camera.scale;
 		q->radians = 0;
 		q->colorplus = 0.5f;
 		q->color = xx::RGBA8_White;
-		q->texRect.data = f->textureRect.data;
+		q->texRect = { 0, 0, (uint16_t)t->Width(), (uint16_t)t->Height() };
 	}
 
 	inline void Map::Draw() {
