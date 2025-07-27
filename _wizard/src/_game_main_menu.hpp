@@ -41,7 +41,7 @@ namespace Game {
 				};
 		}
 
-#if 1
+#if 0
 		auto& cn = gLooper.cfg_btnNormal;
 		auto& ch = gLooper.cfg_btnHighlight;
 		{

@@ -63,14 +63,14 @@ namespace Game {
 		q->color = xx::RGBA8_White;
 		q->texRect.data = ResTpFrames::_uvrect_char_weapon.data;
 #else
-		auto f = gLooper.res.char_staff.pointer;
+		auto f = gLooper.res.weapon_2.pointer;
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(f->tex, 1);
 		q->pos = stage->camera.ToGLPos(pos);
 		q->anchor = { cAnchorX, 0.5f };
 		q->scale = 64.f / f->spriteSize.x * stage->camera.scale;
 		q->radians = radians;
-		q->colorplus = 1.f;
-		q->color = xx::RGBA8_White;
+		q->colorplus = 0.7f;
+		q->color = {255,155,155,255};
 		q->texRect.data = f->textureRect.data;
 #endif
 	}

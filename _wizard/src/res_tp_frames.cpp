@@ -26,21 +26,24 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 		this->bullet1_2 = map["bullet1_2"sv];
 		this->_tex_bullet1_2 = this->bullet1_2->tex;
 		this->_texid_bullet1_2 = this->_tex_bullet1_2->GetValue();
+		this->char_1 = map["char_1"sv];
+		this->_tex_char_1 = this->char_1->tex;
+		this->_texid_char_1 = this->_tex_char_1->GetValue();
+		this->char_2 = map["char_2"sv];
+		this->_tex_char_2 = this->char_2->tex;
+		this->_texid_char_2 = this->_tex_char_2->GetValue();
+		this->char_3 = map["char_3"sv];
+		this->_tex_char_3 = this->char_3->tex;
+		this->_texid_char_3 = this->_tex_char_3->GetValue();
 		this->char_body = map["char_body"sv];
 		this->_tex_char_body = this->char_body->tex;
 		this->_texid_char_body = this->_tex_char_body->GetValue();
 		this->char_head = map["char_head"sv];
 		this->_tex_char_head = this->char_head->tex;
 		this->_texid_char_head = this->_tex_char_head->GetValue();
-		this->char_staff = map["char_staff"sv];
-		this->_tex_char_staff = this->char_staff->tex;
-		this->_texid_char_staff = this->_tex_char_staff->GetValue();
 		this->char_weapon = map["char_weapon"sv];
 		this->_tex_char_weapon = this->char_weapon->tex;
 		this->_texid_char_weapon = this->_tex_char_weapon->GetValue();
-		this->char_wizard = map["char_wizard"sv];
-		this->_tex_char_wizard = this->char_wizard->tex;
-		this->_texid_char_wizard = this->_tex_char_wizard->GetValue();
 		this->dark_bullet_0 = map["dark_bullet_0"sv];
 		this->_tex_dark_bullet_0 = this->dark_bullet_0->tex;
 		this->_texid_dark_bullet_0 = this->_tex_dark_bullet_0->GetValue();
@@ -554,6 +557,12 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 		this->ui_trangle = map["ui_trangle"sv];
 		this->_tex_ui_trangle = this->ui_trangle->tex;
 		this->_texid_ui_trangle = this->_tex_ui_trangle->GetValue();
+		this->weapon_1 = map["weapon_1"sv];
+		this->_tex_weapon_1 = this->weapon_1->tex;
+		this->_texid_weapon_1 = this->_tex_weapon_1->GetValue();
+		this->weapon_2 = map["weapon_2"sv];
+		this->_tex_weapon_2 = this->weapon_2->tex;
+		this->_texid_weapon_2 = this->_tex_weapon_2->GetValue();
 	}
 
 	// fill groups
@@ -561,6 +570,9 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 	bullet1_.Add(bullet1_0);
 	bullet1_.Add(bullet1_1);
 	bullet1_.Add(bullet1_2);
+	char_.Add(char_1);
+	char_.Add(char_2);
+	char_.Add(char_3);
 	dark_bullet_.Add(dark_bullet_0);
 	dark_bullet_.Add(dark_bullet_1);
 	dark_bullet_.Add(dark_bullet_2);
@@ -693,5 +705,7 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 	monster_.Add(monster_1);
 	ui_flags_.Add(ui_flags_0);
 	ui_flags_.Add(ui_flags_1);
+	weapon_.Add(weapon_1);
+	weapon_.Add(weapon_2);
 	co_return;
 }

@@ -209,13 +209,13 @@ namespace Game {
 		q[1].texRect.data = ResTpFrames::_uvrect_char_head.data;
 #else
 		// body + head
-		auto f = gLooper.res.char_wizard.pointer;
+		auto f = gLooper.res.char_3.pointer;
 		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(f->tex, 1);
 		q->pos = stage->camera.ToGLPos(_pos);
 		q->anchor = { 0.5f, 0 };
-		q->scale = radius * 2.f / f->spriteSize.x * stage->camera.scale;
+		q->scale = radius * (1.f / 128.f) * stage->camera.scale;
 		q->radians = 0;
-		q->colorplus = 1.f;
+		q->colorplus = 0.5f;
 		q->color = xx::RGBA8_White;
 		q->texRect.data = f->textureRect.data;
 #endif
