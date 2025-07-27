@@ -7,8 +7,8 @@
 #include <xx2d_ui_focus.h>
 #include <xx2d_spine.h>
 #include <xx_sound.h>
-#ifndef __EMSCRIPTEN__
-#include "BS_thread_pool.hpp"
-#endif
+//#ifndef __EMSCRIPTEN__
+//#include "BS_thread_pool.hpp"
+//#endif
 
 #endif

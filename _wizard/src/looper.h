@@ -10,6 +10,7 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 
 #include "shader_hpbar.h"
 #include "shader_numbers.h"
+#include "ui_lang.h"
 #include "ui_stage.h"
 #include "game_space_index_box.h"
 #include "game_space_index_circle.h"
@@ -86,6 +87,9 @@ struct Looper : xx::Engine<Looper>, Cfg {
 	xx::Ref<xx::Scale9SpriteConfig> cfg_sliderBar, cfg_sliderBlock;
 	xx::SpaceGridRingDiffuseData rdd;
 	xx::Listi32<std::pair<float, Game::Drawable*>> yDraws;
+
+	// multi language support
+
 };
 
 extern Looper gLooper;

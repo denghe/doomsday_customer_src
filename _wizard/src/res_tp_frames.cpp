@@ -110,12 +110,6 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 		this->fire_explosion_5 = map["fire_explosion_5"sv];
 		this->_tex_fire_explosion_5 = this->fire_explosion_5->tex;
 		this->_texid_fire_explosion_5 = this->_tex_fire_explosion_5->GetValue();
-		this->flags_cn = map["flags_cn"sv];
-		this->_tex_flags_cn = this->flags_cn->tex;
-		this->_texid_flags_cn = this->_tex_flags_cn->GetValue();
-		this->flags_en = map["flags_en"sv];
-		this->_tex_flags_en = this->flags_en->tex;
-		this->_texid_flags_en = this->_tex_flags_en->GetValue();
 		this->font_outline_32 = map["font_outline_32"sv];
 		this->_tex_font_outline_32 = this->font_outline_32->tex;
 		this->_texid_font_outline_32 = this->_tex_font_outline_32->GetValue();
@@ -497,6 +491,12 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 		this->ui_dot = map["ui_dot"sv];
 		this->_tex_ui_dot = this->ui_dot->tex;
 		this->_texid_ui_dot = this->_tex_ui_dot->GetValue();
+		this->ui_flags_0 = map["ui_flags_0"sv];
+		this->_tex_ui_flags_0 = this->ui_flags_0->tex;
+		this->_texid_ui_flags_0 = this->_tex_ui_flags_0->GetValue();
+		this->ui_flags_1 = map["ui_flags_1"sv];
+		this->_tex_ui_flags_1 = this->ui_flags_1->tex;
+		this->_texid_ui_flags_1 = this->_tex_ui_flags_1->GetValue();
 		this->ui_gear = map["ui_gear"sv];
 		this->_tex_ui_gear = this->ui_gear->tex;
 		this->_texid_ui_gear = this->_tex_ui_gear->GetValue();
@@ -691,5 +691,7 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 	light_bullet1_.Add(light_bullet1_2);
 	light_monster_.Add(light_monster_1);
 	monster_.Add(monster_1);
+	ui_flags_.Add(ui_flags_0);
+	ui_flags_.Add(ui_flags_1);
 	co_return;
 }

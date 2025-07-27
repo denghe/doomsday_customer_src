@@ -230,20 +230,6 @@ struct ResTpFrames {
 	static constexpr xx::XY _anchor_fire_explosion_5{ 0.5, 0.5 };
 	static constexpr xx::UVRect _uvrect_fire_explosion_5{ 983, 373, 32, 32 };
 
-	xx::Ref<xx::Frame> flags_cn;
-	xx::Ref<xx::GLTexture> _tex_flags_cn;
-	GLuint _texid_flags_cn{};	// unsafe
-	static constexpr xx::XY _size_flags_cn{ 16, 16 };
-	static constexpr xx::XY _anchor_flags_cn{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_flags_cn{ 151, 111, 16, 16 };
-
-	xx::Ref<xx::Frame> flags_en;
-	xx::Ref<xx::GLTexture> _tex_flags_en;
-	GLuint _texid_flags_en{};	// unsafe
-	static constexpr xx::XY _size_flags_en{ 16, 16 };
-	static constexpr xx::XY _anchor_flags_en{ 0.5, 0.5 };
-	static constexpr xx::UVRect _uvrect_flags_en{ 151, 133, 16, 16 };
-
 	xx::Ref<xx::Frame> font_outline_100;
 	xx::Ref<xx::GLTexture> _tex_font_outline_100;
 	GLuint _texid_font_outline_100{};	// unsafe
@@ -1133,6 +1119,20 @@ struct ResTpFrames {
 	static constexpr xx::XY _anchor_ui_dot{ 0.5, 0.5 };
 	static constexpr xx::UVRect _uvrect_ui_dot{ 165, 174, 1, 1 };
 
+	xx::Ref<xx::Frame> ui_flags_0;
+	xx::Ref<xx::GLTexture> _tex_ui_flags_0;
+	GLuint _texid_ui_flags_0{};	// unsafe
+	static constexpr xx::XY _size_ui_flags_0{ 16, 16 };
+	static constexpr xx::XY _anchor_ui_flags_0{ 0.5, 0.5 };
+	static constexpr xx::UVRect _uvrect_ui_flags_0{ 151, 111, 16, 16 };
+
+	xx::Ref<xx::Frame> ui_flags_1;
+	xx::Ref<xx::GLTexture> _tex_ui_flags_1;
+	GLuint _texid_ui_flags_1{};	// unsafe
+	static constexpr xx::XY _size_ui_flags_1{ 16, 16 };
+	static constexpr xx::XY _anchor_ui_flags_1{ 0.5, 0.5 };
+	static constexpr xx::UVRect _uvrect_ui_flags_1{ 151, 133, 16, 16 };
+
 	xx::Ref<xx::Frame> ui_gear;
 	xx::Ref<xx::GLTexture> _tex_ui_gear;
 	GLuint _texid_ui_gear{};	// unsafe
@@ -1287,4 +1287,6 @@ struct ResTpFrames {
 	static constexpr int32_t _countof_light_monster_{ 1 };
 	xx::Listi32<xx::Ref<xx::Frame>> monster_;
 	static constexpr int32_t _countof_monster_{ 1 };
+	xx::Listi32<xx::Ref<xx::Frame>> ui_flags_;
+	static constexpr int32_t _countof_ui_flags_{ 2 };
 };
