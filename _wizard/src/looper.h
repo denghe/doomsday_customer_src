@@ -36,6 +36,7 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 #include "game_monster1.h"
 #include "game_stage.h"
 #include "_game_main_menu.h"
+#include "_game_choose_char.h"
 // more include here ...
 #include "_test1.h"
 #include "_test2.h"

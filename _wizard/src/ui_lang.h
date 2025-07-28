@@ -11,12 +11,13 @@ namespace UI {
 	};
 
 	enum class StringKeys {
-		title,
+		title_Main,
+		title_ChooseHero,
 		generic_On,
 		generic_Off,
-		options_blahblah,
-		options_volume_music,
-		options_volume_sound,
+		options_Blahblah,
+		options_VolumeMusic,
+		options_VolumeSound,
 		mainMenu_Start,
 		mainMenu_Options,
 		mainMenu_Quit,
@@ -26,9 +27,10 @@ namespace UI {
 	
 	// en
 	static constexpr std::u32string_view TextsEN[(int32_t)StringKeys::__MAX__] {
-		U"Pest Terminator",
-		U"ON",
-		U"OFF",
+		U"pest terminator",
+		U"choose character",
+		U"on",
+		U"off",
 		U"blahblah",
 		U"music volume",
 		U"sound volume",
@@ -40,7 +42,8 @@ namespace UI {
 
 	// cn
 	static constexpr std::u32string_view TextsCN[(int32_t)StringKeys::__MAX__]{
-		U"害虫终结者",
+		U"异虫终结者",
+		U"选择角色",
 		U"开",
 		U"关",
 		U"那啥那啥",
@@ -84,12 +87,13 @@ namespace UI {
 	
 #define CODE_TEXTOF(k) XX_INLINE std::u32string_view const& TextOf_##k() { return GetText(StringKeys::k); }
 
-	CODE_TEXTOF(title);
+	CODE_TEXTOF(title_Main);
+	CODE_TEXTOF(title_ChooseHero);
 	CODE_TEXTOF(generic_On);
 	CODE_TEXTOF(generic_Off);
-	CODE_TEXTOF(options_blahblah);
-	CODE_TEXTOF(options_volume_music);
-	CODE_TEXTOF(options_volume_sound);
+	CODE_TEXTOF(options_Blahblah);
+	CODE_TEXTOF(options_VolumeMusic);
+	CODE_TEXTOF(options_VolumeSound);
 	CODE_TEXTOF(mainMenu_Start);
 	CODE_TEXTOF(mainMenu_Options);
 	CODE_TEXTOF(mainMenu_Quit);
