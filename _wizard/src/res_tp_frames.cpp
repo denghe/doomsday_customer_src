@@ -563,6 +563,9 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 		this->weapon_2 = map["weapon_2"sv];
 		this->_tex_weapon_2 = this->weapon_2->tex;
 		this->_texid_weapon_2 = this->_tex_weapon_2->GetValue();
+		this->weapon_3 = map["weapon_3"sv];
+		this->_tex_weapon_3 = this->weapon_3->tex;
+		this->_texid_weapon_3 = this->_tex_weapon_3->GetValue();
 	}
 
 	// fill groups
@@ -707,5 +710,6 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 	ui_flags_.Add(ui_flags_1);
 	weapon_.Add(weapon_1);
 	weapon_.Add(weapon_2);
+	weapon_.Add(weapon_3);
 	co_return;
 }

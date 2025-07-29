@@ -50,7 +50,7 @@ margin spacing [char icon] spacing margin [ char anim ] margin [ desc ] margin
 		xx::Shared<xx::Node> ui;
 		xx::Node* charShowcaseContainer{};
 		xx::Listi32<xx::FocusButton*> charIcons;
-		int32_t charSelectedIndex{ -1 };
+		int32_t charSelectedIndex{};
 		void SelectChar(int32_t index);
 
 		void MakeUI();

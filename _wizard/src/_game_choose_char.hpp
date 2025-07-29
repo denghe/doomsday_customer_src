@@ -20,24 +20,25 @@ namespace Game {
 	};
 
 	inline void ChooseChar::SelectChar(int32_t idx) {
-		if (idx < 0) idx = 0;
-		if (charSelectedIndex != idx) {
-			if (charSelectedIndex >= 0) {
-				auto& o = charIcons[charSelectedIndex];
-				o->alwaysHighlight = false;
-				o->ApplyCfg();
-			}
-			auto& o = charIcons[idx];
-			o->alwaysHighlight = true;
+		{
+			auto& o = charIcons[charSelectedIndex];
+			o->alwaysHighlight = false;
 			o->ApplyCfg();
-			charSelectedIndex = idx;
-			auto cn = (CharNode*)o->children[1].pointer;
-			charShowcaseContainer->Clear();
-			charShowcaseContainer->MakeChildren<CharNode>()->Init(1, {}, charShowcaseAnchor, charShowcaseSize, cn->fChar, cn->fWeapon);
 		}
+		auto& o = charIcons[idx];
+		o->alwaysHighlight = true;
+		o->ApplyCfg();
+		charSelectedIndex = idx;
+		auto cn = (CharNode*)o->children[1].pointer;
+		charShowcaseContainer->Clear();
+		charShowcaseContainer->MakeChildren<CharNode>()->Init(1, {}, charShowcaseAnchor, charShowcaseSize, cn->fChar, cn->fWeapon);
 	}
 
 	inline void ChooseChar::MakeUI() {
+		// cleanup
+		charIcons.Clear();
+
+		// make || remake
 		ui.Emplace()->Init(0, {}, scale);
 
 		// title
@@ -51,7 +52,7 @@ namespace Game {
 			XY p{ charIcon1Pos.x, charIcon1Pos.y - (charIconSize + margin) * i };
 			auto& b = ui->MakeChildren<xx::FocusButton>()->Init(1, p, charIconAnchor, charIconSize
 				, gLooper.cfg_imgBtnNormal, gLooper.cfg_imgBtnHighlight);
-			b.MakeChildren<CharNode>()->Init(2, spacing, 0, charIconCoreSize, gLooper.res.char_[i], gLooper.res.weapon_2);
+			b.MakeChildren<CharNode>()->Init(2, spacing, 0, charIconCoreSize, gLooper.res.char_[i], gLooper.res.weapon_[i]);
 			b.onFocus = [i = i, this] { gLooper.sound.Play(gLooper.res_sound_button_1); SelectChar(i); };
 			b.onClicked = [] {  };	// todo
 			charIcons.Emplace(&b);
@@ -60,10 +61,11 @@ namespace Game {
 		// char showcase
 		charShowcaseContainer = &ui->MakeChildren<xx::Node>()->Init(1, charShowcasePos);
 
-		SelectChar(charSelectedIndex);	// select default
+		// select default or last
+		SelectChar(charSelectedIndex);
 
 		// char detail	// todo: rich text
-		ui->MakeChildren<xx::FocusButton>()->Init(1, charDetailPos, charDetailAnchor, charDetailSize, gLooper.cfg_imgBtnNormal, gLooper.cfg_imgBtnHighlight);
+		ui->MakeChildren<xx::Scale9Sprite>()->Init(1, charDetailPos, charDetailAnchor, charDetailSize, *gLooper.cfg_imgBtnNormal);
 
 		// select button
 		{
