@@ -89,7 +89,8 @@ struct Looper : xx::Engine<Looper>, Cfg {
 	xx::SpaceGridRingDiffuseData rdd;
 	xx::Listi32<std::pair<float, Game::Drawable*>> yDraws;
 
-	// multi language support
+
+	// todo: global context?
 
 };
 

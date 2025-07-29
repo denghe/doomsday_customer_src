@@ -78,6 +78,9 @@ namespace Game {
 		// version
 		ui->MakeChildren<xx::Label>()->Init(1, pos1 + XY{ 30, 30 }, 1, anchor1, xx::RGBA8_Gray, U"ver 0.1 beta");
 
+		// esc back
+		ui->MakeChildren<xx::Label>()->Init(1, pos3 + XY{ -30, 30 }, 1, anchor3, xx::RGBA8_White, UI::TextOf_generic_EscBack());
+
 		// todo
 	}
 
@@ -91,6 +94,9 @@ namespace Game {
 	}
 
 	void ChooseChar::Update() {
+		if (gLooper.KeyDown(xx::KeyboardKeys::Escape)) {
+			gLooper.DelaySwitchTo<MainMenu>();
+		}
 	}
 
 	inline void ChooseChar::Draw() {
