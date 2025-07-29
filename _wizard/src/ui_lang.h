@@ -15,6 +15,7 @@ namespace UI {
 		title_ChooseHero,
 		generic_On,
 		generic_Off,
+		generic_Select,
 		options_Blahblah,
 		options_VolumeMusic,
 		options_VolumeSound,
@@ -31,6 +32,7 @@ namespace UI {
 		U"choose character",
 		U"on",
 		U"off",
+		U"select",
 		U"blahblah",
 		U"music volume",
 		U"sound volume",
@@ -46,6 +48,7 @@ namespace UI {
 		U"选择角色",
 		U"开",
 		U"关",
+		U"选择",
 		U"那啥那啥",
 		U"音乐音量",
 		U"声效音量",
@@ -91,6 +94,7 @@ namespace UI {
 	CODE_TEXTOF(title_ChooseHero);
 	CODE_TEXTOF(generic_On);
 	CODE_TEXTOF(generic_Off);
+	CODE_TEXTOF(generic_Select);
 	CODE_TEXTOF(options_Blahblah);
 	CODE_TEXTOF(options_VolumeMusic);
 	CODE_TEXTOF(options_VolumeSound);
