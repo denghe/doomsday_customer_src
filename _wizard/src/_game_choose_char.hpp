@@ -48,7 +48,7 @@ namespace Game {
 		ui->MakeChildren<xx::Image2>()->Init(1, linePos, lineAnchor, lineSize, false, gLooper.res.ui_circle);
 
 		// char icons
-		for(int i = 0; i < 3; ++i) {
+		for(int i = 0; i < 4; ++i) {
 			XY p{ charIcon1Pos.x, charIcon1Pos.y - (charIconSize + margin) * i };
 			auto& b = ui->MakeChildren<xx::FocusButton>()->Init(1, p, charIconAnchor, charIconSize
 				, gLooper.cfg_imgBtnNormal, gLooper.cfg_imgBtnHighlight);
@@ -94,6 +94,8 @@ namespace Game {
 	}
 
 	void ChooseChar::Update() {
+		// todo: W S up down   space choose
+
 		if (gLooper.KeyDown(xx::KeyboardKeys::Escape)) {
 			gLooper.DelaySwitchTo<MainMenu>();
 		}

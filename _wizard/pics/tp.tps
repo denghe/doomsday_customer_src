@@ -271,6 +271,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">pngs/char_4.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>61,128,123,256</rect>
+                <key>scale9Paddings</key>
+                <rect>61,128,123,256</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">pngs/char_body.png</key>
             <key type="filename">pngs/char_head.png</key>
             <struct type="IndividualSpriteSettings">
@@ -615,6 +630,7 @@
                 <false/>
             </struct>
             <key type="filename">pngs/weapon_3.png</key>
+            <key type="filename">pngs/weapon_4.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
