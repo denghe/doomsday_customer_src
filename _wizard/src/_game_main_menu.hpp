@@ -13,6 +13,9 @@ namespace Game {
 [version]			[language][qq][discord]
 		*/
 
+		//selectedButtonIndex = {};
+		buttons.Clear();
+
 		ui.Emplace()->Init(0, {}, scale);
 
 		// big title
@@ -24,12 +27,14 @@ namespace Game {
 				, gLooper.cfg_btnNormal, gLooper.cfg_btnHighlight, UI::TextOf_mainMenu_Start());
 			b.onFocus = [] { gLooper.sound.Play(gLooper.res_sound_button_1); };
 			b.onClicked = [] { gLooper.DelaySwitchTo<Stage>(); };
+			buttons.Add(&b);
 		}
 		{
 			auto& b = ui->MakeChildren<xx::FocusLabelButton>()->Init(2, pos1 + XY{ 30, 180 }, anchor1
 				, gLooper.cfg_btnNormal, gLooper.cfg_btnHighlight, UI::TextOf_mainMenu_Options());
 			b.onFocus = [] { gLooper.sound.Play(gLooper.res_sound_button_1); };
 			b.onClicked = [] { gLooper.DelaySwitchTo<ChooseChar>(); };
+			buttons.Add(&b);
 		}
 
 		{
@@ -37,6 +42,7 @@ namespace Game {
 				, gLooper.cfg_btnNormal, gLooper.cfg_btnHighlight, UI::TextOf_mainMenu_Quit());
 			b.onFocus = [] { gLooper.sound.Play(gLooper.res_sound_button_1); };
 			b.onClicked = [] { gLooper.DelaySwitchTo<Test2>(); };
+			buttons.Add(&b);
 		}
 
 		//  version
@@ -52,7 +58,10 @@ namespace Game {
 				UI::SetNextLanguage();
 				MakeUI();
 				};
+			buttons.Add(&b);
 		}
+
+		SelectMenu(selectedButtonIndex);
 
 #if 0
 		auto& cn = gLooper.cfg_btnNormal;
@@ -61,12 +70,12 @@ namespace Game {
 			static bool v{};
 			auto txt = v ? UI::TextOf_generic_On() : UI::TextOf_generic_Off();
 			auto& b = ui->MakeChildren<xx::FocusLabelButton>()->Init(2, pos5 + XY{ 0, -200 }, 0.5f
-				, cn, ch, UI::TextOf_options_blahblah(), txt, {500, 79});
+				, cn, ch, UI::TextOf_options_blahblah(), txt, { 500, 79 });
 			b.onFocus = [] { gLooper.sound.Play(gLooper.res_sound_button_1); };
 			b.onClicked = [&] {
 				v = !v;
 				b.LabelRight().SetText(v ? UI::TextOf_generic_On() : UI::TextOf_generic_Off());
-			};
+				};
 		}
 
 		auto& csbar = gLooper.cfg_sliderBar;
@@ -81,6 +90,19 @@ namespace Game {
 #endif
 	}
 
+	void MainMenu::SelectMenu(int32_t idx) {
+		xx::CoutN(idx);
+		{
+			auto& o = buttons[selectedButtonIndex];
+			o->alwaysHighlight = false;
+			o->ApplyCfg();
+		}
+		selectedButtonIndex = idx;
+		auto& o = buttons[idx];
+		o->alwaysHighlight = true;
+		o->ApplyCfg();
+	}
+
 	inline void MainMenu::OnWindowSizeChanged() {
 		MakeUI();
 	}
@@ -91,6 +113,22 @@ namespace Game {
 	}
 
 	void MainMenu::Update() {
+		if (gLooper.KeyDownDelay(xx::KeyboardKeys::Space, 0.15)) {
+			buttons[selectedButtonIndex]->onClicked();
+		}
+		else if (gLooper.KeyDownDelay(xx::KeyboardKeys::S, 0.15)) {
+			auto idx = selectedButtonIndex + 1;
+			if (idx >= 4) idx = 0;
+			SelectMenu(idx);
+		}
+		else if (gLooper.KeyDownDelay(xx::KeyboardKeys::W, 0.15)) {
+			auto idx = selectedButtonIndex - 1;
+			if (idx < 0) idx = 4 - 1;
+			SelectMenu(idx);
+		}
+		if (gLooper.KeyDownDelay(xx::KeyboardKeys::Escape, 0.5f)) {
+			gLooper.running = false;
+		}
 	}
 
 	inline void MainMenu::Draw() {

@@ -46,12 +46,13 @@ margin spacing [char icon] spacing margin [ char anim ] margin [ desc ] margin
 		static constexpr XY selectBtnAnchor{ 0.5f, 0 };
 		static constexpr XY selectBtnPos{ 0, -1080 / 2 + margin };
 
+		static constexpr int32_t charCount{ 4 };
 
 		xx::Shared<xx::Node> ui;
 		xx::Node* charShowcaseContainer{};
 		xx::Listi32<xx::FocusButton*> charIcons;
-		int32_t charSelectedIndex{};
 		void SelectChar(int32_t index);
+		void Choose();
 
 		void MakeUI();
 

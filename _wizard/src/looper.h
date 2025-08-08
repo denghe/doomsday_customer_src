@@ -91,7 +91,7 @@ struct Looper : xx::Engine<Looper>, Cfg {
 
 
 	// todo: global context?
-
+	int32_t charSelectedIndex{};
 };
 
 extern Looper gLooper;

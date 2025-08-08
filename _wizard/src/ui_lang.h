@@ -15,8 +15,9 @@ namespace UI {
 		title_ChooseHero,
 		generic_On,
 		generic_Off,
-		generic_Select,
+		generic_Choose,
 		generic_EscBack,
+		generic_SpaceChoose,
 		options_Blahblah,
 		options_VolumeMusic,
 		options_VolumeSound,
@@ -33,8 +34,9 @@ namespace UI {
 		U"choose character",
 		U"on",
 		U"off",
-		U"select",
+		U"choose",
 		U"press [ESC] back",
+		U"press [SPACE] confirm",
 		U"blahblah",
 		U"music volume",
 		U"sound volume",
@@ -52,6 +54,7 @@ namespace UI {
 		U"关",
 		U"选择",
 		U"按 [ESC] 返回",
+		U"按 [SPACE] 确定",
 		U"那啥那啥",
 		U"音乐音量",
 		U"声效音量",
@@ -97,8 +100,9 @@ namespace UI {
 	CODE_TEXTOF(title_ChooseHero);
 	CODE_TEXTOF(generic_On);
 	CODE_TEXTOF(generic_Off);
-	CODE_TEXTOF(generic_Select);
+	CODE_TEXTOF(generic_Choose);
 	CODE_TEXTOF(generic_EscBack);
+	CODE_TEXTOF(generic_SpaceChoose);
 	CODE_TEXTOF(options_Blahblah);
 	CODE_TEXTOF(options_VolumeMusic);
 	CODE_TEXTOF(options_VolumeSound);
