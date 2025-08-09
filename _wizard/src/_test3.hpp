@@ -49,7 +49,7 @@ namespace Game {
 		xx::Quad q;
 		q.SetFrame(gLooper.res.ui_button);
 		for (auto& p : pathway.points) {
-			q.SetPosition(p.pos).Draw();
+			q.SetPosition(p.pos).SetColorplus(0.2f).Draw();
 		}
 
 		for (int32_t i = 0, e = snakes.len; i < e; ++i) {
@@ -159,11 +159,12 @@ namespace Game {
 	/***********************************************************************************/
 
 	inline void SnakeHead::Init() {
-		SnakeElement::Init(32.f);
+		SnakeElement::Init(16.f);
 	}
 
 	inline int32_t SnakeHead::Update() {
-		// todo
+		// todo: do not follow? 
+		SnakeElement::Init(radius);
 		return 0;
 	}
 
@@ -179,11 +180,12 @@ namespace Game {
 	/***********************************************************************************/
 
 	inline void SnakeBody::Init() {
-		SnakeElement::Init(32.f);
+		SnakeElement::Init(16.f);
 	}
 
 	inline int32_t SnakeBody::Update() {
-		// todo
+		// todo: do not follow?
+		SnakeElement::Init(radius);
 		return 0;
 	}
 
@@ -199,11 +201,19 @@ namespace Game {
 	/***********************************************************************************/
 
 	inline void SnakeTail::Init() {
-		SnakeElement::Init(32.f);
+		SnakeElement::Init(16.f);
 	}
 
 	inline int32_t SnakeTail::Update() {
-		// todo
+		// todo: do not move?
+		pathwayCursor += 100;
+		auto ps = (int32_t)owner->pathway->points.size();
+		while (pathwayCursor >= ps) {
+			pathwayCursor -= ps;
+		}
+		auto& p = owner->pathway->points[pathwayCursor];
+		pos = p.pos;
+		radians = -p.radians;
 		return 0;
 	}
 
