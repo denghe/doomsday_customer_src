@@ -29,6 +29,9 @@ namespace Game {
 		static constexpr float cSpeed{ 1.1f };
 		static constexpr float cStickRatio{ 10.f };
 		static constexpr float cRadiusAnimStep{ 0.1f };
+		static constexpr float cDrawScale{ 1.f };
+		static constexpr float cNodeDistanceRatio{ 0.6f };
+		static constexpr float cFaceAnimSpeed{ 10.f };
 		static constexpr xx::FromTo<float> cRadiusRange{ 16.f, 24.f };
 
 		// ********************************** fill by PreInit() **********************************
@@ -60,6 +63,7 @@ namespace Game {
 	};
 
 	struct SnakeHead : SnakeElement {
+		Shaker faceShaker;
 		void Init();
 		int32_t Update() override;
 		void Draw() override;

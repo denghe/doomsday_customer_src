@@ -55,7 +55,8 @@ namespace Game {
 	}
 
 	inline void Test3::Update() {
-		if (gLooper.KeyDownDelay(xx::KeyboardKeys::Escape, 0.5f)) {
+		if (gLooper.KeyDownDelay(xx::KeyboardKeys::Escape, 0.5f)
+			|| gLooper.KeyDownDelay(xx::KeyboardKeys::Q, 0.5f)) {
 			gLooper.DelaySwitchTo<MainMenu>();
 		}
 
@@ -83,6 +84,19 @@ namespace Game {
 	}
 
 	inline void Test3::Draw() {
+		// bg
+		{
+			auto& t = gLooper.res_bg_fight_1;
+			auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(t, 1);
+			q->pos = {};
+			q->anchor = 0.5f;
+			q->scale = lastWindowSize.y / t->Height() * camera.scale;
+			q->radians = 0;
+			q->colorplus = 0.5f;
+			q->color = xx::RGBA8_White;
+			q->texRect = { 0, 0, (uint16_t)t->Width(), (uint16_t)t->Height() };
+		}
+
 		gLooper.DrawNode(ui);
 
 		// draw pathway
@@ -112,7 +126,7 @@ namespace Game {
 		if (index > 0) {
 			auto prev = GetPrev();
 			assert(prev);
-			auto cursorOffset = (int32_t)((prev->radius + radius) / owner->pathway->stepDistance);
+			auto cursorOffset = (int32_t)((prev->radius + radius) * cNodeDistanceRatio / owner->pathway->stepDistance);
 			assert(cursorOffset > 0);
 			pathwayCursor = prev->pathwayCursor + cursorOffset;
 			auto ps = (int32_t)owner->pathway->points.size();
@@ -161,7 +175,7 @@ namespace Game {
 	inline int32_t SnakeElement::BaseUpdate() {
 		auto prev = GetPrev();
 		assert(prev);
-		auto cursorOffset = (int32_t)((prev->radius + radius) / owner->pathway->stepDistance);
+		auto cursorOffset = (int32_t)((prev->radius + radius) * cNodeDistanceRatio / owner->pathway->stepDistance);
 		assert(cursorOffset > 0);
 		auto cursor = pathwayCursor;
 		if (prev->pathwayCursor > pathwayCursor) {
@@ -185,7 +199,7 @@ namespace Game {
 		}
 		auto& p = owner->pathway->points[pathwayCursor];
 		pos = p.pos;
-		radians = -p.radians;
+		radians = p.radians;
 		return 0;
 	}
 
@@ -237,22 +251,41 @@ namespace Game {
 	/***********************************************************************************/
 
 	inline void SnakeHead::Init() {
+		faceShaker.Shake(5, 300.f * Cfg::frameDelay, int32_t(0.5f * Cfg::fps), 99999999);
 		SnakeElement::Init(16.f);
 	}
 
 	inline int32_t SnakeHead::Update() {
+		faceShaker.Update(gLooper.rnd, gLooper.frameNumber);
 		return BaseUpdate();
 	}
 
 	inline void SnakeHead::Draw() {
-		auto& f = gLooper.res.ui_circle;
+		auto& f1 = gLooper.res.snake_body;
+		auto& f2 = gLooper.res.snake_face;
+		assert(f1->tex == f2->tex);
+		assert(f1->spriteSize.x == f2->spriteSize.x);
+
 		auto& c = owner->scene->camera;
-		xx::Quad{}.SetFrame(f)
-			.SetColorplus(1.f)
-			.SetPosition(c.ToGLPos(pos))
-			.SetRotate(radians)
-			.SetScale(radius * 2.f / f->spriteSize.x * c.scale)
-			.Draw();
+		auto p = c.ToGLPos(pos);
+		auto s = radius * (2.f * cDrawScale) / f1->spriteSize.x * c.scale;
+		auto q = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(f1->tex, 2);
+
+		q[0].pos = p;
+		q[0].anchor = 0.5f;
+		q[0].scale = s;
+		q[0].radians = radians;
+		q[0].colorplus = 1.f;
+		q[0].color = xx::RGBA8_White;
+		q[0].texRect.data = f1->textureRect.data;
+
+		q[1].pos = p + faceShaker.offset;
+		q[1].anchor = 0.5f;
+		q[1].scale = s;
+		q[1].radians = radians;
+		q[1].colorplus = 1.f;
+		q[1].color = xx::RGBA8_White;
+		q[1].texRect.data = f2->textureRect.data;
 	}
 
 	inline void SnakeHead::DrawLight(float colorPlus_) {
@@ -289,13 +322,12 @@ namespace Game {
 	}
 
 	inline void SnakeBody::Draw() {
-		auto& f = gLooper.res.ui_circle;
+		auto& f = gLooper.res.snake_body;
 		auto& c = owner->scene->camera;
 		xx::Quad{}.SetFrame(f)
-			.SetColorplus(0.5f)
 			.SetPosition(c.ToGLPos(pos))
 			.SetRotate(radians)
-			.SetScale(radius * 2.f / f->spriteSize.x * c.scale)
+			.SetScale(radius * (2.f * cDrawScale) / f->spriteSize.x * c.scale)
 			.Draw();
 	}
 
@@ -318,18 +350,17 @@ namespace Game {
 		}
 		auto& p = owner->pathway->points[pathwayCursor];
 		pos = p.pos;
-		radians = -p.radians;
+		radians = p.radians;
 		return 0;
 	}
 
 	inline void SnakeTail::Draw() {
-		auto& f = gLooper.res.ui_circle;
+		auto& f = gLooper.res.snake_tail;
 		auto& c = owner->scene->camera;
 		xx::Quad{}.SetFrame(f)
-			.SetColorplus(0.2f)
 			.SetPosition(c.ToGLPos(pos))
 			.SetRotate(radians)
-			.SetScale(radius * 2.f / f->spriteSize.x * c.scale)
+			.SetScale(radius * (2.f * cDrawScale) / f->spriteSize.x * c.scale)
 			.Draw();
 	}
 

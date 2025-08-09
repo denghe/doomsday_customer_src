@@ -119,7 +119,8 @@ namespace Game {
 			if (idx < 0) idx = charCount - 1;
 			SelectChar(idx);
 		}
-		if (gLooper.KeyDownDelay(xx::KeyboardKeys::Escape, 0.5f)) {
+		if (gLooper.KeyDownDelay(xx::KeyboardKeys::Escape, 0.5f)
+			|| gLooper.KeyDownDelay(xx::KeyboardKeys::Q, 0.5f)) {
 			gLooper.DelaySwitchTo<MainMenu>();
 		}
 	}

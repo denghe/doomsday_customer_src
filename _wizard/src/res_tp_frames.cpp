@@ -452,6 +452,15 @@ xx::Task<> ResTpFrames::AsyncLoad(std::string picRoot) {
 		this->monster_1 = map["monster_1"sv];
 		this->_tex_monster_1 = this->monster_1->tex;
 		this->_texid_monster_1 = this->_tex_monster_1->GetValue();
+		this->snake_body = map["snake_body"sv];
+		this->_tex_snake_body = this->snake_body->tex;
+		this->_texid_snake_body = this->_tex_snake_body->GetValue();
+		this->snake_face = map["snake_face"sv];
+		this->_tex_snake_face = this->snake_face->tex;
+		this->_texid_snake_face = this->_tex_snake_face->GetValue();
+		this->snake_tail = map["snake_tail"sv];
+		this->_tex_snake_tail = this->snake_tail->tex;
+		this->_texid_snake_tail = this->_tex_snake_tail->GetValue();
 		this->ui_aim = map["ui_aim"sv];
 		this->_tex_ui_aim = this->ui_aim->tex;
 		this->_texid_ui_aim = this->_tex_ui_aim->GetValue();
