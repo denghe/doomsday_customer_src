@@ -19,7 +19,7 @@ namespace Game {
 		XY basePos{400, 300};
 
 		camera.SetBaseScale(scale);
-		camera.SetScale(2.f);
+		camera.SetScale(1.f);
 		camera.SetOriginal(basePos);
 
 		// init pathways
@@ -37,21 +37,32 @@ namespace Game {
 	*4       200
 		*/
 
-		std::vector<xx::CurvePoint> cps{ xx::CurvePoint
-			{ basePos + XY{ 0, -200} },
-			{ basePos + XY{ 300, -100} },
-			{ basePos + XY{ -300, 100} },
-			{ basePos + XY{ 0, 200} },
-			{ basePos + XY{ 300, 100} },
-			{ basePos + XY{ -300, -100} },
-		};
-		xx::MovePath mp;
-		mp.FillCurve(true, cps);
-		pathway.Init(mp, 0.1f);
+		for (int32_t x = -600; x < 600; x += 50) {
+			for (int32_t y = -300; y < 300; y += 50) {
+				auto bp = basePos + XY{ x, y };
+				std::vector<xx::CurvePoint> cps{ xx::CurvePoint
+					{ bp + XY{ 0, -200} },
+					{ bp + XY{ 300, -100} },
+					{ bp + XY{ -300, 100} },
+					{ bp + XY{ 0, 200} },
+					{ bp + XY{ 300, 100} },
+					{ bp + XY{ -300, -100} },
+				};
+				xx::MovePath mp;
+				mp.FillCurve(true, cps);
+				pathways.Emplace().Emplace()->Init(mp, 0.1f);
+			}
+		}
 
 		// init snakes
+		for (auto& pw : pathways) {
 		snakes.Emplace().Emplace<Snake>()
-			->Init<SnakeHead, SnakeBody, SnakeTail>(this, &pathway, 10);
+			->Init<SnakeHead, SnakeBody, SnakeTail>(this, pw.pointer, 100);
+		}
+
+#if 0
+		xx::CoutN(pathways.len);
+#endif
 	}
 
 	inline void Test3::Update() {
@@ -68,12 +79,12 @@ namespace Game {
 				for (int32_t j = 0; j < es.len; ++j) {
 					if (es[j]->HitCheck(mp)) {
 						es[j]->Remove();
-						goto LabEnd;
+						//goto LabEnd;
 					}
 				}
 			}
 		}
-		LabEnd:
+		//LabEnd:
 
 		for (auto i = snakes.len - 1; i >= 0; --i) {
 			if (snakes[i]->Update()) {
@@ -97,15 +108,21 @@ namespace Game {
 			q->texRect = { 0, 0, (uint16_t)t->Width(), (uint16_t)t->Height() };
 		}
 
+		// ui
 		gLooper.DrawNode(ui);
 
-		// draw pathway
+#if 0
+		// pathway
 		xx::Quad q;
 		q.SetFrame(gLooper.res.ui_button).SetColorplus(0.2f).SetScale(camera.scale);
-		for (int32_t s = (int32_t)pathway.points.size(), i = 0; i < s; /*++i*/i += 100) {
-			q.SetPosition(camera.ToGLPos(pathway.points[i].pos)).Draw();
+		for (auto& pathway : pathways) {
+			for (int32_t s = (int32_t)pathway->points.size(), i = 0; i < s; /*++i*/i += 100) {
+				q.SetPosition(camera.ToGLPos(pathway->points[i].pos)).Draw();
+			}
 		}
+#endif
 
+		// snakes
 		for (int32_t i = 0, e = snakes.len; i < e; ++i) {
 			snakes[i]->Draw();
 		}
