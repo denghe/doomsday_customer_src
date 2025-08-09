@@ -28,7 +28,7 @@ namespace Game {
 		pathway.Init(mp, 0.1f);
 
 		// init snakes
-		snakes.Emplace().Emplace<Snake>()->Init<SnakeHead, SnakeBody, SnakeTail>(this, &pathway, 3);
+		snakes.Emplace().Emplace<Snake>()->Init<SnakeHead, SnakeBody, SnakeTail>(this, &pathway, 30);
 	}
 
 	inline void Test3::Update() {
@@ -36,11 +36,27 @@ namespace Game {
 			gLooper.DelaySwitchTo<MainMenu>();
 		}
 
+		// hit check
+		if (gLooper.mouse.PressedMBLeft()) {
+			auto mp = gLooper.mouse.pos;
+			for (auto e = snakes.len, i = 0; i < e; ++i) {
+				auto& es = snakes[i]->elements;
+				for (int32_t j = 0; j < es.len; ++j) {
+					if (es[j]->HitCheck(mp)) {
+						es[j]->Remove();
+						goto LabEnd;
+					}
+				}
+			}
+		}
+		LabEnd:
+
 		for (auto i = snakes.len - 1; i >= 0; --i) {
 			if (snakes[i]->Update()) {
 				snakes.SwapRemoveAt(i);
 			}
 		}
+
 	}
 
 	inline void Test3::Draw() {
@@ -48,8 +64,8 @@ namespace Game {
 
 		xx::Quad q;
 		q.SetFrame(gLooper.res.ui_button);
-		for (auto& p : pathway.points) {
-			q.SetPosition(p.pos).SetColorplus(0.2f).Draw();
+		for (int32_t s = (int32_t)pathway.points.size(), i = 0; i < s; /*++i*/i+=100) {
+			q.SetPosition(pathway.points[i].pos).SetColorplus(0.2f).Draw();
 		}
 
 		for (int32_t i = 0, e = snakes.len; i < e; ++i) {
@@ -92,11 +108,18 @@ namespace Game {
 		assert(owner->elements[index].pointer == this);
 		auto& es = owner->elements;
 		for (auto i = index + 1; i < es.len; ++i) {
-			es[i]->index = i + 1;
+			es[i]->index = i - 1;
 		}
 		auto idx = index;
 		index = -1;
 		es.RemoveAt(idx);	// unsafe
+	}
+
+	inline bool SnakeElement::HitCheck(XY p) {
+		if (elementType == SnakeElementTypes::Head || elementType == SnakeElementTypes::Tail)
+			return false;
+		auto d = p - pos;
+		return (d.x * d.x + d.y * d.y < radius * radius);
 	}
 
 	inline SnakeElement* SnakeElement::GetPrev() {
@@ -109,6 +132,37 @@ namespace Game {
 		assert(owner->elements[index].pointer == this);
 		if (index == owner->elements.len - 1) return {};
 		return owner->elements[index + 1].pointer;
+	}
+
+	inline int32_t SnakeElement::BaseUpdate() {
+		auto prev = GetPrev();
+		assert(prev);
+		auto cursorOffset = (int32_t)((prev->radius + radius) / owner->pathway->stepDistance);
+		assert(cursorOffset > 0);
+		auto cursor = pathwayCursor;
+		if (prev->pathwayCursor > pathwayCursor) {
+			cursor += (int32_t)owner->pathway->points.size();
+		}
+		if (std::abs(cursorOffset - (cursor - prev->pathwayCursor))
+			< int32_t((cSpeed * 2.f) / owner->pathway->stepDistance)) {
+			// follow
+			pathwayCursor = prev->pathwayCursor + cursorOffset;
+		}
+		else {
+			// backward
+			pathwayCursor -= int32_t(cSpeed / owner->pathway->stepDistance);
+			while (pathwayCursor < 0) {
+				pathwayCursor += (int32_t)owner->pathway->points.size();
+			}
+		}
+		auto ps = (int32_t)owner->pathway->points.size();
+		while (pathwayCursor >= ps) {
+			pathwayCursor -= ps;
+		}
+		auto& p = owner->pathway->points[pathwayCursor];
+		pos = p.pos;
+		radians = -p.radians;
+		return 0;
 	}
 
 	/***********************************************************************************/
@@ -163,9 +217,7 @@ namespace Game {
 	}
 
 	inline int32_t SnakeHead::Update() {
-		// todo: do not follow? 
-		SnakeElement::Init(radius);
-		return 0;
+		return BaseUpdate();
 	}
 
 	inline void SnakeHead::Draw() {
@@ -184,9 +236,7 @@ namespace Game {
 	}
 
 	inline int32_t SnakeBody::Update() {
-		// todo: do not follow?
-		SnakeElement::Init(radius);
-		return 0;
+		return BaseUpdate();
 	}
 
 	inline void SnakeBody::Draw() {
@@ -206,7 +256,7 @@ namespace Game {
 
 	inline int32_t SnakeTail::Update() {
 		// todo: do not move?
-		pathwayCursor += 100;
+		pathwayCursor += int32_t(cSpeed / owner->pathway->stepDistance);
 		auto ps = (int32_t)owner->pathway->points.size();
 		while (pathwayCursor >= ps) {
 			pathwayCursor -= ps;

@@ -26,6 +26,8 @@ namespace Game {
 
 	struct Snake;
 	struct SnakeElement : Test3Item {
+		static constexpr float cSpeed{ 0.5 };
+
 		// ********************************** fill by PreInit() **********************************
 		Snake* owner{};
 		SnakeElementTypes elementType{};
@@ -37,8 +39,10 @@ namespace Game {
 		void PreInit(Snake* owner_, SnakeElementTypes elementType_);
 		void Init(float radius_);
 		void Remove();				// remove from owner and sync all index
+		bool HitCheck(XY p);
 		SnakeElement* GetPrev();	// -> tail
 		SnakeElement* GetNext();	// -> head
+		int32_t BaseUpdate();
 	};
 
 	struct Snake : Test3Item {
