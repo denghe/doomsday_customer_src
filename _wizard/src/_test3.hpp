@@ -28,7 +28,8 @@ namespace Game {
 		pathway.Init(mp, 0.1f);
 
 		// init snakes
-		snakes.Emplace().Emplace<Snake>()->Init<SnakeHead, SnakeBody, SnakeTail>(this, &pathway, 30);
+		snakes.Emplace().Emplace<Snake>()
+			->Init<SnakeHead, SnakeBody, SnakeTail>(this, &pathway, 10);
 	}
 
 	inline void Test3::Update() {
@@ -36,7 +37,7 @@ namespace Game {
 			gLooper.DelaySwitchTo<MainMenu>();
 		}
 
-		// hit check
+		// hit check	// todo: use space idnex
 		if (gLooper.mouse.PressedMBLeft()) {
 			auto mp = gLooper.mouse.pos;
 			for (auto e = snakes.len, i = 0; i < e; ++i) {
@@ -144,7 +145,7 @@ namespace Game {
 			cursor += (int32_t)owner->pathway->points.size();
 		}
 		if (std::abs(cursorOffset - (cursor - prev->pathwayCursor))
-			< int32_t((cSpeed * 2.f) / owner->pathway->stepDistance)) {
+			< int32_t((cSpeed * cStickRatio) / owner->pathway->stepDistance)) {
 			// follow
 			pathwayCursor = prev->pathwayCursor + cursorOffset;
 		}
@@ -221,7 +222,10 @@ namespace Game {
 	}
 
 	inline void SnakeHead::Draw() {
-		xx::Quad{}.SetFrame(gLooper.res.ui_run3).SetPosition(pos).SetRotate(radians)
+		xx::Quad{}.SetFrame(gLooper.res.ui_circle)
+			.SetColorplus(1.f)
+			.SetPosition(pos)
+			.SetRotate(radians)
 			.SetScale(radius * (1.f / 16.f)).Draw();
 	}
 
@@ -232,15 +236,37 @@ namespace Game {
 	/***********************************************************************************/
 
 	inline void SnakeBody::Init() {
-		SnakeElement::Init(16.f);
+		auto d = cRadius.to - cRadius.from;
+		auto len = owner->elements.len - 2;
+		auto step = d / len;
+		auto r = cRadius.from + step * (index - 1);
+		// auto r = gLooper.rnd.Next<float>(cRadius.from, cRadius.to);
+		SnakeElement::Init(r);
+	}
+
+	inline void SnakeBody::U1_RadiusAnim() {
+		XX_BEGIN(U1_n);
+	LabBig:
+		for (; radius < cRadius.to; radius += cRadiusAnimStep) {
+			XX_YIELD(U1_n);
+		}
+		for (; radius > cRadius.from; radius -= cRadiusAnimStep) {
+			XX_YIELD(U1_n);
+		}
+		goto LabBig;
+		XX_END(U1_n);
 	}
 
 	inline int32_t SnakeBody::Update() {
+		U1_RadiusAnim();
 		return BaseUpdate();
 	}
 
 	inline void SnakeBody::Draw() {
-		xx::Quad{}.SetFrame(gLooper.res.ui_run2).SetPosition(pos).SetRotate(radians)
+		xx::Quad{}.SetFrame(gLooper.res.ui_circle)
+			.SetColorplus(0.5f)
+			.SetPosition(pos)
+			.SetRotate(radians)
 			.SetScale(radius * (1.f / 16.f)).Draw();
 	}
 
@@ -268,7 +294,10 @@ namespace Game {
 	}
 
 	inline void SnakeTail::Draw() {
-		xx::Quad{}.SetFrame(gLooper.res.ui_run1).SetPosition(pos).SetRotate(radians)
+		xx::Quad{}.SetFrame(gLooper.res.ui_circle)
+			.SetColorplus(0.2f)
+			.SetPosition(pos)
+			.SetRotate(radians)
 			.SetScale(radius * (1.f / 16.f)).Draw();
 	}
 

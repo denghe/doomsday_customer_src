@@ -26,7 +26,10 @@ namespace Game {
 
 	struct Snake;
 	struct SnakeElement : Test3Item {
-		static constexpr float cSpeed{ 0.5 };
+		static constexpr float cSpeed{ 1.1f };
+		static constexpr float cStickRatio{ 20.f };
+		static constexpr float cRadiusAnimStep{ 0.1f };
+		static constexpr xx::FromTo<float> cRadius{ 16.f, 32.f };
 
 		// ********************************** fill by PreInit() **********************************
 		Snake* owner{};
@@ -71,6 +74,9 @@ namespace Game {
 	};
 
 	struct SnakeBody : SnakeElement {
+		int32_t U1_n{};
+		void U1_RadiusAnim();
+
 		void Init();
 		int32_t Update() override;
 		void Draw() override;

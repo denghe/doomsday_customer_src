@@ -91,7 +91,6 @@ namespace Game {
 	}
 
 	void MainMenu::SelectMenu(int32_t idx) {
-		xx::CoutN(idx);
 		{
 			auto& o = buttons[selectedButtonIndex];
 			o->alwaysHighlight = false;
