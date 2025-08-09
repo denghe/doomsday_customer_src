@@ -27,9 +27,9 @@ namespace Game {
 	struct Snake;
 	struct SnakeElement : Test3Item {
 		static constexpr float cSpeed{ 1.1f };
-		static constexpr float cStickRatio{ 20.f };
+		static constexpr float cStickRatio{ 10.f };
 		static constexpr float cRadiusAnimStep{ 0.1f };
-		static constexpr xx::FromTo<float> cRadius{ 16.f, 32.f };
+		static constexpr xx::FromTo<float> cRadiusRange{ 16.f, 24.f };
 
 		// ********************************** fill by PreInit() **********************************
 		Snake* owner{};
@@ -85,6 +85,8 @@ namespace Game {
 
 	struct Test3 : Scene {
 		xx::Shared<xx::Node> ui;
+
+		Camera camera;
 		Pathway pathway;	// todo: list
 		xx::Listi32<xx::Shared<Snake>> snakes;
 

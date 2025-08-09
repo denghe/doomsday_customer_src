@@ -8,6 +8,7 @@ namespace Game {
 	}
 
 	inline void Test3::OnWindowSizeChanged() {
+		camera.SetBaseScale(scale);
 		MakeUI();
 	}
 
@@ -15,13 +16,34 @@ namespace Game {
 		UpdateScale();
 		MakeUI();
 
+		XY basePos{400, 300};
+
+		camera.SetBaseScale(scale);
+		camera.SetScale(2.f);
+		camera.SetOriginal(basePos);
+
 		// init pathways
-		auto basePos = pos5;
+		/*
+-300  0 300
+	*1       -200
+  /   \
+*6     *2    -100
+  \    /
+	\/
+    /\       0
+  /    \
+*3      *5   100
+  \   /
+	*4       200
+		*/
+
 		std::vector<xx::CurvePoint> cps{ xx::CurvePoint
-			{ basePos + XY{ -300, -180} },
-			{ basePos + XY{ 300, -180} },
-			{ basePos + XY{ 300, 180} },
-			{ basePos + XY{ -300, 180} }
+			{ basePos + XY{ 0, -200} },
+			{ basePos + XY{ 300, -100} },
+			{ basePos + XY{ -300, 100} },
+			{ basePos + XY{ 0, 200} },
+			{ basePos + XY{ 300, 100} },
+			{ basePos + XY{ -300, -100} },
 		};
 		xx::MovePath mp;
 		mp.FillCurve(true, cps);
@@ -39,7 +61,7 @@ namespace Game {
 
 		// hit check	// todo: use space idnex
 		if (gLooper.mouse.PressedMBLeft()) {
-			auto mp = gLooper.mouse.pos;
+			auto mp = camera.ToLogicPos(gLooper.mouse.pos);
 			for (auto e = snakes.len, i = 0; i < e; ++i) {
 				auto& es = snakes[i]->elements;
 				for (int32_t j = 0; j < es.len; ++j) {
@@ -63,10 +85,11 @@ namespace Game {
 	inline void Test3::Draw() {
 		gLooper.DrawNode(ui);
 
+		// draw pathway
 		xx::Quad q;
-		q.SetFrame(gLooper.res.ui_button);
-		for (int32_t s = (int32_t)pathway.points.size(), i = 0; i < s; /*++i*/i+=100) {
-			q.SetPosition(pathway.points[i].pos).SetColorplus(0.2f).Draw();
+		q.SetFrame(gLooper.res.ui_button).SetColorplus(0.2f).SetScale(camera.scale);
+		for (int32_t s = (int32_t)pathway.points.size(), i = 0; i < s; /*++i*/i += 100) {
+			q.SetPosition(camera.ToGLPos(pathway.points[i].pos)).Draw();
 		}
 
 		for (int32_t i = 0, e = snakes.len; i < e; ++i) {
@@ -222,11 +245,14 @@ namespace Game {
 	}
 
 	inline void SnakeHead::Draw() {
-		xx::Quad{}.SetFrame(gLooper.res.ui_circle)
+		auto& f = gLooper.res.ui_circle;
+		auto& c = owner->scene->camera;
+		xx::Quad{}.SetFrame(f)
 			.SetColorplus(1.f)
-			.SetPosition(pos)
+			.SetPosition(c.ToGLPos(pos))
 			.SetRotate(radians)
-			.SetScale(radius * (1.f / 16.f)).Draw();
+			.SetScale(radius * 2.f / f->spriteSize.x * c.scale)
+			.Draw();
 	}
 
 	inline void SnakeHead::DrawLight(float colorPlus_) {
@@ -236,10 +262,10 @@ namespace Game {
 	/***********************************************************************************/
 
 	inline void SnakeBody::Init() {
-		auto d = cRadius.to - cRadius.from;
+		auto d = cRadiusRange.to - cRadiusRange.from;
 		auto len = owner->elements.len - 2;
 		auto step = d / len;
-		auto r = cRadius.from + step * (index - 1);
+		auto r = cRadiusRange.from + step * (index - 1);
 		// auto r = gLooper.rnd.Next<float>(cRadius.from, cRadius.to);
 		SnakeElement::Init(r);
 	}
@@ -247,10 +273,10 @@ namespace Game {
 	inline void SnakeBody::U1_RadiusAnim() {
 		XX_BEGIN(U1_n);
 	LabBig:
-		for (; radius < cRadius.to; radius += cRadiusAnimStep) {
+		for (; radius < cRadiusRange.to; radius += cRadiusAnimStep) {
 			XX_YIELD(U1_n);
 		}
-		for (; radius > cRadius.from; radius -= cRadiusAnimStep) {
+		for (; radius > cRadiusRange.from; radius -= cRadiusAnimStep) {
 			XX_YIELD(U1_n);
 		}
 		goto LabBig;
@@ -263,11 +289,14 @@ namespace Game {
 	}
 
 	inline void SnakeBody::Draw() {
-		xx::Quad{}.SetFrame(gLooper.res.ui_circle)
+		auto& f = gLooper.res.ui_circle;
+		auto& c = owner->scene->camera;
+		xx::Quad{}.SetFrame(f)
 			.SetColorplus(0.5f)
-			.SetPosition(pos)
+			.SetPosition(c.ToGLPos(pos))
 			.SetRotate(radians)
-			.SetScale(radius * (1.f / 16.f)).Draw();
+			.SetScale(radius * 2.f / f->spriteSize.x * c.scale)
+			.Draw();
 	}
 
 	inline void SnakeBody::DrawLight(float colorPlus_) {
@@ -294,11 +323,14 @@ namespace Game {
 	}
 
 	inline void SnakeTail::Draw() {
-		xx::Quad{}.SetFrame(gLooper.res.ui_circle)
+		auto& f = gLooper.res.ui_circle;
+		auto& c = owner->scene->camera;
+		xx::Quad{}.SetFrame(f)
 			.SetColorplus(0.2f)
-			.SetPosition(pos)
+			.SetPosition(c.ToGLPos(pos))
 			.SetRotate(radians)
-			.SetScale(radius * (1.f / 16.f)).Draw();
+			.SetScale(radius * 2.f / f->spriteSize.x * c.scale)
+			.Draw();
 	}
 
 	inline void SnakeTail::DrawLight(float colorPlus_) {
