@@ -26,14 +26,14 @@ namespace Game {
 			auto& b = ui->MakeChildren<xx::FocusLabelButton>()->Init(2, pos1 + XY{ 30, 280 }, anchor1
 				, gLooper.cfg_btnNormal, gLooper.cfg_btnHighlight, UI::TextOf_mainMenu_Start());
 			b.onFocus = [] { gLooper.sound.Play(gLooper.res_sound_button_1); };
-			b.onClicked = [] { gLooper.DelaySwitchTo<Stage>(); };
+			b.onClicked = [] { gLooper.DelaySwitchTo<ChooseChar>(); };
 			buttons.Add(&b);
 		}
 		{
 			auto& b = ui->MakeChildren<xx::FocusLabelButton>()->Init(2, pos1 + XY{ 30, 180 }, anchor1
 				, gLooper.cfg_btnNormal, gLooper.cfg_btnHighlight, UI::TextOf_mainMenu_Options());
 			b.onFocus = [] { gLooper.sound.Play(gLooper.res_sound_button_1); };
-			b.onClicked = [] { gLooper.DelaySwitchTo<ChooseChar>(); };
+			b.onClicked = [] { gLooper.DelaySwitchTo<Test3>(); };
 			buttons.Add(&b);
 		}
 

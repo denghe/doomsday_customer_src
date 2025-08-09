@@ -25,6 +25,7 @@
 // more include here ...
 #include "_test1.hpp"
 #include "_test2.hpp"
+#include "_test3.hpp"
 
 Looper gLooper;
 
@@ -43,7 +44,8 @@ int32_t main() {
 	gLooper.showFps = true;
 	gLooper.title = "doomsday_customer_wizard";
 	gLooper.Init();
-	gLooper.Run<3>();
+	//gLooper.Run<3>();
+	gLooper.Run();
 }
 #endif
 

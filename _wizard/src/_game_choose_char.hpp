@@ -36,6 +36,7 @@ namespace Game {
 
 	inline void ChooseChar::Choose() {
 		// todo
+		gLooper.DelaySwitchTo<Stage>();
 	}
 
 	inline void ChooseChar::MakeUI() {
