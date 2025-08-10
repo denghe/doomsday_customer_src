@@ -16,7 +16,9 @@ namespace Game {
 		UpdateScale();
 		MakeUI();
 
-		XY basePos{400, 300};
+		grid.Init({ 64, 64 }, 50, 50);
+
+		XY basePos{64*50 /2, 64*50 /2};
 
 		camera.SetBaseScale(scale);
 		camera.SetScale(1.f);
@@ -74,17 +76,34 @@ namespace Game {
 		// hit check	// todo: use space idnex
 		if (gLooper.mouse.PressedMBLeft()) {
 			auto mp = camera.ToLogicPos(gLooper.mouse.pos);
+#if 0
 			for (auto e = snakes.len, i = 0; i < e; ++i) {
 				auto& es = snakes[i]->elements;
 				for (int32_t j = 0; j < es.len; ++j) {
 					if (es[j]->HitCheck(mp)) {
-						es[j]->Remove();
-						//goto LabEnd;
+						es[j]->Remove();	// unsafe
 					}
 				}
 			}
+#else
+			auto bi = grid.ToBucketsIndex(mp);
+			auto ni = grid.buckets[bi];
+			while (ni != -1) {
+				auto& n = grid.nodes[ni];
+				auto bak = n.next;
+				if (n.value->HitCheck(mp)) {		// todo: hitcheck optimize?
+					n.value->Remove();	// unsafe
+				}
+				ni = bak;
+			}
+#endif
 		}
-		//LabEnd:
+
+
+		if (gLooper.mouse.PressedMBRight()) {
+			// todo: range damage
+		}
+
 
 		for (auto i = snakes.len - 1; i >= 0; --i) {
 			if (snakes[i]->Update()) {
@@ -157,10 +176,12 @@ namespace Game {
 		auto& p = owner->pathway->points[pathwayCursor];
 		pos = p.pos;
 		radians = -p.radians;
+		owner->scene->grid.Add(this);
 	}
 
 	inline void SnakeElement::Remove() {
 		assert(owner->elements[index].pointer == this);
+		owner->scene->grid.Remove(this);
 		auto& es = owner->elements;
 		for (auto i = index + 1; i < es.len; ++i) {
 			es[i]->index = i - 1;
@@ -217,6 +238,8 @@ namespace Game {
 		auto& p = owner->pathway->points[pathwayCursor];
 		pos = p.pos;
 		radians = p.radians;
+
+		owner->scene->grid.Update(this);
 		return 0;
 	}
 
@@ -368,6 +391,7 @@ namespace Game {
 		auto& p = owner->pathway->points[pathwayCursor];
 		pos = p.pos;
 		radians = p.radians;
+		owner->scene->grid.Update(this);
 		return 0;
 	}
 
