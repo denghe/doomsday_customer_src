@@ -41,12 +41,12 @@ namespace Game {
 		// ********************************** fill by PreInit() **********************************
 
 		int32_t pathwayCursor{ -1 };
-		int32_t snakeElementsIndex{ -1 };
+		int32_t gridIndex{ -1 };
 
 		void PreInit(Snake* owner_, SnakeElementTypes elementType_);
 		void Init(float radius_);
 		void Remove();				// remove from owner and sync all index
-		bool HitCheck(XY p);
+		bool HitCheck(XY p_, float hitRadius_);
 		SnakeElement* GetPrev();	// -> tail
 		SnakeElement* GetNext();	// -> head
 		int32_t BaseUpdate();

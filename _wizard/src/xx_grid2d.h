@@ -210,10 +210,10 @@ namespace xx {
 
 
 		// foreach target cell + round 8 = 9 buckets
-		// .Foreach9All([](T& o)->void {  all  });
-		// .Foreach9All([](T& o)->bool {  return false == break  });
+		// .Foreach9All([](decltype(grid)::Node& o)->void {  all  });
+		// .Foreach9All([](decltype(grid)::Node& o)->bool {  return false == break  });
 		template <bool enableExcept = false, typename F, typename R = std::invoke_result_t<F, Node&>>
-		void Foreach9All(int32_t rowNumber_, int32_t columnNumber_, F&& func, T except = {}) {
+		void Foreach9All(int32_t rowNumber_, int32_t columnNumber_, F&& func, T const& except = {}) {
 			if (columnNumber_ < 0 || columnNumber_ >= numCols) return;
 			if (rowNumber_ < 0 || rowNumber_ >= numRows) return;
 
@@ -367,6 +367,46 @@ namespace xx {
 			}
 		}
 
+		// ring diffuse foreach ( usually for update logic or range search )
+		// .ForeachByRange([](decltype(grid)::Node& o)->void {  all  });
+		// .ForeachByRange([](decltype(grid)::Node& o)->bool {  return false == break  });
+		template <typename F, typename R = std::invoke_result_t<F, Node&>>
+		void ForeachByRange(xx::SpaceGridRingDiffuseData const& rdd, int32_t rowNumber_, int32_t columnNumber_, int32_t searchRange, F&& func) {
+			if (columnNumber_ < 0 || columnNumber_ >= numCols) return;
+			if (rowNumber_ < 0 || rowNumber_ >= numRows) return;
+
+			// todo: func add bool parameter: current range( max )
+
+			auto& lens = rdd.lens;
+			auto& idxs = rdd.idxs;
+			for (int32_t i = 1, e = lens.len; i < e; i++) {
+				auto offsets = lens[i - 1].count;
+				auto size = lens[i].count - lens[i - 1].count;
+				for (int32_t j = 0; j < size; ++j) {
+					auto& tmp = idxs[offsets + j];
+					auto cIdx = columnNumber_ + tmp.x;
+					if (cIdx < 0 || cIdx >= numCols) continue;
+					auto rIdx = rowNumber_ + tmp.y;
+					if (rIdx < 0 || rIdx >= numRows) continue;
+					auto bucketsIndex = rIdx * numCols + cIdx;
+
+					auto ni = buckets[bucketsIndex];
+					while (ni != -1) {
+						auto& n = nodes[ni];
+						auto nex = n.next;
+						if constexpr (std::is_void_v<R>) {
+							func(n);
+						}
+						else {
+							if (func(n)) return;
+						}
+						ni = nex;
+					}
+				}
+				if (lens[i].radius > searchRange) break;
+			}
+		}
+
 		// todo: more search
 
 	};
@@ -393,33 +433,33 @@ namespace xx {
 			_1_cellSize.y = 1.f / cellSize_.y;
 		}
 
-		void Add(T e) {
-			assert(e->snakeElementsIndex == -1);
-			auto nodeIndex = Base::Add(int32_t(e->pos.y * _1_cellSize.y)
-				, int32_t(e->pos.x * _1_cellSize.x), e);
-			auto& o = this->nodes[nodeIndex];
+		template<typename V>
+		void Add(int32_t& nodeIndex_, V&& e) {
+			assert(nodeIndex_ == -1);
+			auto cri = PosToCRIndex(e->pos);
+			nodeIndex_ = Base::Add(cri.y, cri.x, std::forward<V>(e));
+			auto& o = this->nodes[nodeIndex_];
 			if constexpr (enableCache) {
 				o.cache.pos = e->pos;
 				o.cache.radius = e->radius;
 			}
-			e->snakeElementsIndex = nodeIndex;
 		}
 
-		void Update(T e) {
-			assert(Base::nodes[e->snakeElementsIndex].value == e);
-			auto& o = Base::nodes[e->snakeElementsIndex];
+		void Update(int32_t nodeIndex_, T const& e) {
+			assert(Base::nodes[nodeIndex_].value == e);
+			auto& o = Base::nodes[nodeIndex_];
 			if constexpr (enableCache) {
 				o.cache.pos = e->pos;
 				o.cache.radius = e->radius;
 			}
-			Base::Update(e->snakeElementsIndex
-				, int32_t(e->pos.y * _1_cellSize.y), int32_t(e->pos.x * _1_cellSize.x));
+			auto cri = PosToCRIndex(e->pos);
+			Base::Update(nodeIndex_, cri.y, cri.x);
 		}
 
-		void Remove(T e) {
-			assert(Base::nodes[e->snakeElementsIndex].value == e);
-			Base::Remove(e->snakeElementsIndex);
-			e->snakeElementsIndex = -1;
+		void Remove(int32_t nodeIndex_, T const& e) {
+			assert(Base::nodes[nodeIndex_].value == e);
+			Base::Remove(nodeIndex_);
+			nodeIndex_ = -1;
 		}
 
 		XX_INLINE XYi PosToCRIndex(XY p) const {

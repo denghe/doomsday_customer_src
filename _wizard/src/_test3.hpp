@@ -73,7 +73,7 @@ namespace Game {
 			gLooper.DelaySwitchTo<MainMenu>();
 		}
 
-		// hit check	// todo: use space idnex
+		// hit check
 		if (gLooper.mouse.PressedMBLeft()) {
 			auto mp = camera.ToLogicPos(gLooper.mouse.pos);
 #if 0
@@ -88,7 +88,7 @@ namespace Game {
 #else
 			auto cri = grid.PosToCRIndex(mp);
 			grid.Foreach9All(cri.y, cri.x, [mp](decltype(grid)::Node& o) {
-				if (o.value->HitCheck(mp)) {
+				if (o.value->HitCheck(mp, 16)) {
 					o.value->Remove();	// unsafe
 				}
 			});
@@ -96,8 +96,16 @@ namespace Game {
 		}
 
 
-		if (gLooper.mouse.PressedMBRight()) {
-			// todo: range damage
+		// range hit
+		if (gLooper.KeyDownDelay(xx::KeyboardKeys::Space, 0.5f) || gLooper.mouse.PressedMBRight()) {
+			auto mp = camera.ToLogicPos(gLooper.mouse.pos);
+			auto cri = grid.PosToCRIndex(mp);
+			grid.ForeachByRange(gLooper.rdd, cri.y, cri.x, 256, [mp](decltype(grid)::Node& o) {
+				if (o.value->elementType != SnakeElementTypes::Head
+					&& o.value->elementType != SnakeElementTypes::Tail) {
+					o.value->Remove();	// unsafe
+				}
+			});
 		}
 
 
@@ -172,12 +180,12 @@ namespace Game {
 		auto& p = owner->pathway->points[pathwayCursor];
 		pos = p.pos;
 		radians = -p.radians;
-		owner->scene->grid.Add(this);
+		owner->scene->grid.Add(gridIndex, this);
 	}
 
 	inline void SnakeElement::Remove() {
 		assert(owner->elements[index].pointer == this);
-		owner->scene->grid.Remove(this);
+		owner->scene->grid.Remove(gridIndex, this);
 		auto& es = owner->elements;
 		for (auto i = index + 1; i < es.len; ++i) {
 			es[i]->index = i - 1;
@@ -187,11 +195,11 @@ namespace Game {
 		es.RemoveAt(idx);	// unsafe
 	}
 
-	inline bool SnakeElement::HitCheck(XY p) {
+	inline bool SnakeElement::HitCheck(XY p_, float hitRadius_) {
 		if (elementType == SnakeElementTypes::Head || elementType == SnakeElementTypes::Tail)
 			return false;
-		auto d = p - pos;
-		auto r = radius + 16.f; // mouse pos radius
+		auto d = p_ - pos;
+		auto r = radius + hitRadius_;
 		return (d.x * d.x + d.y * d.y < r * r);
 	}
 
@@ -236,7 +244,7 @@ namespace Game {
 		pos = p.pos;
 		radians = p.radians;
 
-		owner->scene->grid.Update(this);
+		owner->scene->grid.Update(gridIndex, this);
 		return 0;
 	}
 
@@ -388,7 +396,7 @@ namespace Game {
 		auto& p = owner->pathway->points[pathwayCursor];
 		pos = p.pos;
 		radians = p.radians;
-		owner->scene->grid.Update(this);
+		owner->scene->grid.Update(gridIndex, this);
 		return 0;
 	}
 
