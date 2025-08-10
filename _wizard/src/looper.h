@@ -8,6 +8,7 @@ struct Cfg : xx::GDesign<1920, 1080, 120> {
 	static constexpr float unitRadius{ unitSize / 2 };
 };
 
+#include "xx_grid2d.h"
 #include "shader_hpbar.h"
 #include "shader_numbers.h"
 #include "ui_lang.h"

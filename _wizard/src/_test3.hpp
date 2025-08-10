@@ -86,16 +86,12 @@ namespace Game {
 				}
 			}
 #else
-			auto bi = grid.ToBucketsIndex(mp);
-			auto ni = grid.buckets[bi];
-			while (ni != -1) {
-				auto& n = grid.nodes[ni];
-				auto bak = n.next;
-				if (n.value->HitCheck(mp)) {		// todo: hitcheck optimize?
-					n.value->Remove();	// unsafe
+			auto cri = grid.PosToCRIndex(mp);
+			grid.Foreach9All(cri.y, cri.x, [mp](decltype(grid)::Node& o) {
+				if (o.value->HitCheck(mp)) {
+					o.value->Remove();	// unsafe
 				}
-				ni = bak;
-			}
+			});
 #endif
 		}
 
@@ -195,7 +191,8 @@ namespace Game {
 		if (elementType == SnakeElementTypes::Head || elementType == SnakeElementTypes::Tail)
 			return false;
 		auto d = p - pos;
-		return (d.x * d.x + d.y * d.y < radius * radius);
+		auto r = radius + 16.f; // mouse pos radius
+		return (d.x * d.x + d.y * d.y < r * r);
 	}
 
 	inline SnakeElement* SnakeElement::GetPrev() {
