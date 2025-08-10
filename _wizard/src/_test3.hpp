@@ -16,7 +16,7 @@ namespace Game {
 		UpdateScale();
 		MakeUI();
 
-		grid.Init({ 64, 64 }, 50, 50);
+		grid.Init(64, 50, 50);
 
 		XY basePos{64*50 /2, 64*50 /2};
 

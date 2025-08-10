@@ -14,7 +14,7 @@ namespace xx {
 	struct Grid2dNodeEx : Grid2dNode<T> {
 		int32_t next, prev;		// nodes index
 		int32_t bucketsIndex;	// used by. -1 mean not use
-		C cache;
+		C cache;				// only support pod value
 		T value;				// pointer?
 	};
 
@@ -422,15 +422,14 @@ namespace xx {
 	struct Grid2dCircle : xx::Grid2d<T, std::conditional_t<enableCache, Grid2dPosRadius, void>> {
 		using Base = xx::Grid2d<T, std::conditional_t<enableCache, Grid2dPosRadius, void>>;
 		using Base::Base;
-		XYi cellSize{};
-		XY _1_cellSize{};
+		int32_t cellSize{};
+		float _1_cellSize{};
 
-		void Init(XYi cellSize_, int32_t numRows_, int32_t numCols_, int32_t capacity_ = 0) {
-			assert(cellSize_.x > 0 && cellSize_.y > 0);
+		void Init(int32_t cellSize_, int32_t numRows_, int32_t numCols_, int32_t capacity_ = 0) {
+			assert(cellSize_ > 0);
 			Base::Init(numRows_, numCols_, capacity_);
 			cellSize = cellSize_;
-			_1_cellSize.x = 1.f / cellSize_.x;
-			_1_cellSize.y = 1.f / cellSize_.y;
+			_1_cellSize = 1.f / cellSize_;
 		}
 
 		template<typename V>
@@ -474,5 +473,7 @@ namespace xx {
 			return Base::buckets[ToBucketsIndex(p)];
 		}
 	};
+
+	// todo: Grid2dBox ( size < cellsize )
 
 }
