@@ -11,25 +11,25 @@ namespace xx {
 	};
 
 	template <typename T, typename C>
-	struct Grid2dNodeEx : Grid2dNode<T> {
+	struct Grid2dCacheNode {
 		int32_t next, prev;		// nodes index
 		int32_t bucketsIndex;	// used by. -1 mean not use
 		C cache;				// only support pod value
 		T value;				// pointer?
 	};
 
-	template <typename T, typename C = void>
-	struct Grid2d {
-		using Node = std::conditional_t<std::is_void_v<C>, Grid2dNode<T>, Grid2dNodeEx<T, C>>;
+	template <typename Derived, typename T, typename C = void>
+	struct Grid2dBase {
+		using Node = std::conditional_t<std::is_void_v<C>, Grid2dNode<T>, Grid2dCacheNode<T, C>>;
 
 		int32_t numRows{}, numCols{};
 		int32_t freeList{ -1 }, freeCount{}, count{}, itemsCapacity{};
 		Node* nodes{};
 		int32_t* buckets{};	// 2d array space. nodes index
 
-		Grid2d() = default;
-		Grid2d(Grid2d const& o) = delete;
-		Grid2d& operator=(Grid2d const& o) = delete;
+		Grid2dBase() = default;
+		Grid2dBase(Grid2dBase const& o) = delete;
+		Grid2dBase& operator=(Grid2dBase const& o) = delete;
 
 		XX_INLINE void Init(int32_t numRows_, int32_t numCols_, int32_t capacity_ = 0) {
 			assert(!nodes && !buckets && numRows_ > 0 && numCols_ > 0 && capacity_ >= 0);
@@ -46,7 +46,7 @@ namespace xx {
 			memset(buckets, -1, bucketsLen * sizeof(int32_t));
 		}
 
-		~Grid2d() {
+		~Grid2dBase() {
 			if (!buckets) return;
 			Clear();
 			delete[](MyAlignedStorage<Node>*)nodes;
@@ -209,6 +209,9 @@ namespace xx {
 		}
 
 
+		/*******************************************************************************************/
+		// derived functions
+
 		// foreach target cell + round 8 = 9 buckets
 		// .Foreach9All([](decltype(grid)::Node& o)->void {  all  });
 		// .Foreach9All([](decltype(grid)::Node& o)->bool {  return false == break  });
@@ -367,21 +370,23 @@ namespace xx {
 			}
 		}
 
+
+
 		// ring diffuse foreach ( usually for update logic or range search )
-		// .ForeachByRange([](decltype(grid)::Node& o)->void {  all  });
-		// .ForeachByRange([](decltype(grid)::Node& o)->bool {  return false == break  });
-		template <typename F, typename R = std::invoke_result_t<F, Node&>>
-		void ForeachByRange(xx::SpaceGridRingDiffuseData const& rdd, int32_t rowNumber_, int32_t columnNumber_, int32_t searchRange, F&& func) {
+		// .ForeachByRange([](decltype(grid)::Node& o, float range)->void {  all  });
+		// .ForeachByRange([](decltype(grid)::Node& o, float range)->bool {  return false == break  });
+		template <typename F, typename R = std::invoke_result_t<F, Node&, float>>
+		void ForeachByRange(int32_t rowNumber_, int32_t columnNumber_, int32_t searchRange, xx::SpaceGridRingDiffuseData const& rdd, F&& func) {
 			if (columnNumber_ < 0 || columnNumber_ >= numCols) return;
 			if (rowNumber_ < 0 || rowNumber_ >= numRows) return;
-
-			// todo: func add bool parameter: current range( max )
+			auto scale = float(((Derived*)this)->cellSize) / rdd.cellSize;
 
 			auto& lens = rdd.lens;
 			auto& idxs = rdd.idxs;
 			for (int32_t i = 1, e = lens.len; i < e; i++) {
 				auto offsets = lens[i - 1].count;
 				auto size = lens[i].count - lens[i - 1].count;
+				auto range = lens[i].radius * scale;
 				for (int32_t j = 0; j < size; ++j) {
 					auto& tmp = idxs[offsets + j];
 					auto cIdx = columnNumber_ + tmp.x;
@@ -395,15 +400,15 @@ namespace xx {
 						auto& n = nodes[ni];
 						auto nex = n.next;
 						if constexpr (std::is_void_v<R>) {
-							func(n);
+							func(n, range);
 						}
 						else {
-							if (func(n)) return;
+							if (func(n, range)) return;
 						}
 						ni = nex;
 					}
 				}
-				if (lens[i].radius > searchRange) break;
+				if (range > searchRange) break;
 			}
 		}
 
@@ -412,24 +417,20 @@ namespace xx {
 	};
 
 
-
-	struct Grid2dPosRadius {
-		XY pos{};
-		float radius{};
-	};
-
-	template<typename T, bool enableCache = false>
-	struct Grid2dCircle : xx::Grid2d<T, std::conditional_t<enableCache, Grid2dPosRadius, void>> {
-		using Base = xx::Grid2d<T, std::conditional_t<enableCache, Grid2dPosRadius, void>>;
+	template<typename T, typename C = void>
+	struct Grid2dCircle : xx::Grid2dBase<Grid2dCircle<T, C>, T, C> {
+		using Base = xx::Grid2dBase<Grid2dCircle<T, C>, T, C>;
 		using Base::Base;
 		int32_t cellSize{};
 		float _1_cellSize{};
+		XYi pixelSize{};
 
 		void Init(int32_t cellSize_, int32_t numRows_, int32_t numCols_, int32_t capacity_ = 0) {
 			assert(cellSize_ > 0);
 			Base::Init(numRows_, numCols_, capacity_);
 			cellSize = cellSize_;
 			_1_cellSize = 1.f / cellSize_;
+			pixelSize = { cellSize_ * numCols_, cellSize_ * numRows_ };
 		}
 
 		template<typename V>
@@ -438,18 +439,16 @@ namespace xx {
 			auto cri = PosToCRIndex(e->pos);
 			nodeIndex_ = Base::Add(cri.y, cri.x, std::forward<V>(e));
 			auto& o = this->nodes[nodeIndex_];
-			if constexpr (enableCache) {
-				o.cache.pos = e->pos;
-				o.cache.radius = e->radius;
+			if constexpr (!std::is_void_v<C>) {
+				o.cache = e;
 			}
 		}
 
 		void Update(int32_t nodeIndex_, T const& e) {
 			assert(Base::nodes[nodeIndex_].value == e);
 			auto& o = Base::nodes[nodeIndex_];
-			if constexpr (enableCache) {
-				o.cache.pos = e->pos;
-				o.cache.radius = e->radius;
+			if constexpr (!std::is_void_v<C>) {
+				o.cache = e;
 			}
 			auto cri = PosToCRIndex(e->pos);
 			Base::Update(nodeIndex_, cri.y, cri.x);
@@ -466,7 +465,7 @@ namespace xx {
 		}
 
 		XX_INLINE int32_t ToBucketsIndex(XY p) const {
-			return Base::ToBucketsIndex(int32_t(p.y * _1_cellSize.y), int32_t(p.x * _1_cellSize.x));
+			return Base::ToBucketsIndex(int32_t(p.y * _1_cellSize), int32_t(p.x * _1_cellSize));
 		}
 
 		XX_INLINE int32_t NodeIndexAt(XY p) const {

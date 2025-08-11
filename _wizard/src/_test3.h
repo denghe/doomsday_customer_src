@@ -43,6 +43,8 @@ namespace Game {
 		int32_t pathwayCursor{ -1 };
 		int32_t gridIndex{ -1 };
 
+		char dummy[512-56];
+
 		void PreInit(Snake* owner_, SnakeElementTypes elementType_);
 		void Init(float radius_);
 		void Remove();				// remove from owner and sync all index
@@ -88,13 +90,26 @@ namespace Game {
 		void DrawLight(float colorPlus_) override;
 	};
 
+
+	struct SnakeElementGridCache {
+		SnakeElementTypes elementType{};
+		XY pos{};
+		float radius{};
+
+		void operator=(SnakeElement const* o) {
+			elementType = o->elementType;
+			pos = o->pos;
+			radius = o->radius;
+		}
+	};
+
 	struct Test3 : Scene {
 		xx::Shared<xx::Node> ui;
 
 		Camera camera;
 		xx::Listi32<xx::Shared<Pathway>> pathways;
 		xx::Listi32<xx::Shared<Snake>> snakes;
-		xx::Grid2dCircle<SnakeElement*> grid;
+		xx::Grid2dCircle<SnakeElement*, SnakeElementGridCache> grid;
 
 		void MakeUI();
 

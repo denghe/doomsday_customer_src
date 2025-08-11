@@ -44,7 +44,7 @@ int32_t main() {
 	gLooper.showFps = true;
 	gLooper.title = "doomsday_customer_wizard";
 	gLooper.Init();
-#if 0
+#if 1
 	gLooper.Run<3>();
 #else
 	gLooper.Run();

@@ -16,12 +16,12 @@ namespace Game {
 		UpdateScale();
 		MakeUI();
 
-		grid.Init(64, 50, 50);
+		grid.Init(32, 100, 100);
 
-		XY basePos{64*50 /2, 64*50 /2};
+		XY basePos{ grid.pixelSize * 0.5f };
 
 		camera.SetBaseScale(scale);
-		camera.SetScale(1.f);
+		camera.SetScale(0.6f);
 		camera.SetOriginal(basePos);
 
 		// init pathways
@@ -39,8 +39,8 @@ namespace Game {
 	*4       200
 		*/
 
-		for (int32_t x = -600; x < 600; x += 50) {
-			for (int32_t y = -300; y < 300; y += 50) {
+		for (int32_t x = -1200; x < 1200; x += 50) {
+			for (int32_t y = -600; y < 600; y += 50) {
 				auto bp = basePos + XY{ x, y };
 				std::vector<xx::CurvePoint> cps{ xx::CurvePoint
 					{ bp + XY{ 0, -200} },
@@ -87,27 +87,31 @@ namespace Game {
 			}
 #else
 			auto cri = grid.PosToCRIndex(mp);
-			grid.Foreach9All(cri.y, cri.x, [mp](decltype(grid)::Node& o) {
-				if (o.value->HitCheck(mp, 16)) {
-					o.value->Remove();	// unsafe
-				}
-			});
+				grid.Foreach9All(cri.y, cri.x, [mp](decltype(grid)::Node& o) {
+					if (o.value->HitCheck(mp, 16)) {
+						o.value->Remove();	// unsafe
+					}
+				});
 #endif
 		}
 
-
 		// range hit
 		if (gLooper.KeyDownDelay(xx::KeyboardKeys::Space, 0.5f) || gLooper.mouse.PressedMBRight()) {
+			static constexpr int32_t cHitRange{ 256 };
+			auto cInnerRange = cHitRange - grid.cellSize * 0.5f * 1.4142f;
 			auto mp = camera.ToLogicPos(gLooper.mouse.pos);
 			auto cri = grid.PosToCRIndex(mp);
-			grid.ForeachByRange(gLooper.rdd, cri.y, cri.x, 256, [mp](decltype(grid)::Node& o) {
-				if (o.value->elementType != SnakeElementTypes::Head
-					&& o.value->elementType != SnakeElementTypes::Tail) {
+				grid.ForeachByRange(cri.y, cri.x, cHitRange, gLooper.rdd, [mp, cInnerRange](decltype(grid)::Node& o, float range) {
+					if (o.cache.elementType == SnakeElementTypes::Head
+						|| o.cache.elementType == SnakeElementTypes::Tail) return;
+					if (range > cInnerRange) {
+						auto d = mp - o.cache.pos;
+						auto r = cHitRange + o.cache.radius;
+						if (d.x * d.x + d.y * d.y > r * r) return;
+					}
 					o.value->Remove();	// unsafe
-				}
 			});
 		}
-
 
 		for (auto i = snakes.len - 1; i >= 0; --i) {
 			if (snakes[i]->Update()) {
@@ -180,12 +184,12 @@ namespace Game {
 		auto& p = owner->pathway->points[pathwayCursor];
 		pos = p.pos;
 		radians = -p.radians;
-		owner->scene->grid.Add(gridIndex, this);
+		owner->scene->grid.Add(gridIndex, this);	// grid sync
 	}
 
 	inline void SnakeElement::Remove() {
 		assert(owner->elements[index].pointer == this);
-		owner->scene->grid.Remove(gridIndex, this);
+		owner->scene->grid.Remove(gridIndex, this);	// grid sync
 		auto& es = owner->elements;
 		for (auto i = index + 1; i < es.len; ++i) {
 			es[i]->index = i - 1;
@@ -244,7 +248,7 @@ namespace Game {
 		pos = p.pos;
 		radians = p.radians;
 
-		owner->scene->grid.Update(gridIndex, this);
+		owner->scene->grid.Update(gridIndex, this);	// grid sync
 		return 0;
 	}
 
