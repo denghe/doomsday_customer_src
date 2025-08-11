@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+// todo: hit show damage number  reduce hp
+
 namespace Game {
 
 	inline void Test3::MakeUI() {
@@ -17,11 +19,13 @@ namespace Game {
 		MakeUI();
 
 		grid.Init(32, 100, 100);
+		effectTexts.Init(this, 100000);
+		delta = Cfg::frameDelay;
 
 		XY basePos{ grid.pixelSize * 0.5f };
 
-		camera.SetBaseScale(scale);
-		camera.SetScale(0.6f);
+		xx::CoutN(scale);
+		camera.SetScale(scale, 0.6f);
 		camera.SetOriginal(basePos);
 
 		// init pathways
@@ -67,11 +71,7 @@ namespace Game {
 #endif
 	}
 
-	inline void Test3::Update() {
-		if (gLooper.KeyDownDelay(xx::KeyboardKeys::Escape, 0.5f)
-			|| gLooper.KeyDownDelay(xx::KeyboardKeys::Q, 0.5f)) {
-			gLooper.DelaySwitchTo<MainMenu>();
-		}
+	XX_INLINE void Test3::Update_() {
 
 		// hit check
 		if (gLooper.mouse.PressedMBLeft()) {
@@ -87,8 +87,10 @@ namespace Game {
 			}
 #else
 			auto cri = grid.PosToCRIndex(mp);
-				grid.Foreach9All(cri.y, cri.x, [mp](decltype(grid)::Node& o) {
+				grid.Foreach9All(cri.y, cri.x, [this, mp](decltype(grid)::Node& o) {
 					if (o.value->HitCheck(mp, 16)) {
+						//effectTexts.Add(o.cache.pos + XY{ 0, -o.cache.radius }, { 0, -1 }, xx::RGBA8_Red, 2, 123);
+						effectTexts.Add(o.cache.pos, { 0, -1 }, xx::RGBA8_Red, 2.f, 123);
 						o.value->Remove();	// unsafe
 					}
 				});
@@ -101,7 +103,7 @@ namespace Game {
 			auto cInnerRange = cHitRange - grid.cellSize * 0.5f * 1.4142f;
 			auto mp = camera.ToLogicPos(gLooper.mouse.pos);
 			auto cri = grid.PosToCRIndex(mp);
-				grid.ForeachByRange(cri.y, cri.x, cHitRange, gLooper.rdd, [mp, cInnerRange](decltype(grid)::Node& o, float range) {
+				grid.ForeachByRange(cri.y, cri.x, cHitRange, gLooper.rdd, [this, mp, cInnerRange](decltype(grid)::Node& o, float range) {
 					if (o.cache.elementType == SnakeElementTypes::Head
 						|| o.cache.elementType == SnakeElementTypes::Tail) return;
 					if (range > cInnerRange) {
@@ -109,17 +111,37 @@ namespace Game {
 						auto r = cHitRange + o.cache.radius;
 						if (d.x * d.x + d.y * d.y > r * r) return;
 					}
-					o.value->Remove();	// unsafe
+					//o.value->Remove();	// unsafe
+					effectTexts.Add(o.cache.pos, { 0, -1 }, xx::RGBA8_Red, 2.f, 123);
 			});
 		}
 
+		// update snakes
 		for (auto i = snakes.len - 1; i >= 0; --i) {
 			if (snakes[i]->Update()) {
 				snakes.SwapRemoveAt(i);
 			}
 		}
 
+		// update damage numbers
+		effectTexts.Update();
 	}
+
+	XX_INLINE void Test3::Update() {
+		if (gLooper.KeyDownDelay(xx::KeyboardKeys::Escape, 0.5f)
+			|| gLooper.KeyDownDelay(xx::KeyboardKeys::Q, 0.5f)) {
+			gLooper.DelaySwitchTo<MainMenu>();
+		}
+
+		assert(delta > 0);
+		timePool += delta;
+		while (timePool >= Cfg::frameDelay) {
+			timePool -= Cfg::frameDelay;
+			Update_();
+			++time;
+		}
+	}
+
 
 	inline void Test3::Draw() {
 		// bg
@@ -155,6 +177,15 @@ namespace Game {
 		}
 
 		// todo: draw light?
+
+		// todo: cut?
+
+		// draw effect texts
+		for (int32_t i = 0, e = effectTexts.ens.Count(); i < e; ++i) {
+			auto& o = effectTexts.ens[i];
+			//if (o.pos.x < areaMin.x || o.pos.x > areaMax.x || o.pos.y < areaMin.y || o.pos.y > areaMax.y) continue;
+			o.Draw(this);
+		}
 	}
 
 	/***********************************************************************************/

@@ -20,9 +20,16 @@ namespace Game {
 			return *this;
 		}
 
-		XX_INLINE Camera& SetScale(float logicScale_, float baseScale_ = 1.f) {
+		XX_INLINE Camera& SetLogicScale(float logicScale_) {
 			logicScale = logicScale_;
+			scale = logicScale * baseScale;
+			_1_scale = 1.f / scale;
+			return *this;
+		}
+
+		XX_INLINE Camera& SetScale(float baseScale_, float logicScale_) {
 			baseScale = baseScale_;
+			logicScale = logicScale_;
 			scale = logicScale * baseScale;
 			_1_scale = 1.f / scale;
 			return *this;

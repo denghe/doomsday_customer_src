@@ -4,11 +4,14 @@ namespace Game {
 
 	// main menu, stage's base
 	struct Scene : xx::SceneBase {
-		XY lastWindowSize{};					// physics size
+		Camera camera;
+		int32_t time{};
+		float timePool{}, delta{};
 
+		XY lastWindowSize{};					// physics size
 		XY size{};								// design size
 		XY size_2{};							// design size / 2
-		float scale{};							// design size * scale = physics size
+		float scale{};							// base scale. design size * scale = physics size
 		
 		/*
 			screen design anchor point

@@ -2,7 +2,7 @@
 
 namespace Game {
 
-	struct Stage;
+	struct Scene;
 	struct EffectText {
 		constexpr static float cMoveDurationSeconds{ 0.5f };
 		constexpr static float cMoveSpeedMin{ 50 / Cfg::fps };
@@ -23,9 +23,9 @@ namespace Game {
 		// pos: original position,  dist: determine move direction
 		void Init(XY const& pos_, XY const& vec_, xx::RGBA8 color_, float scale_, int32_t value_, bool includeSignal = false);
 
-		int32_t Update(Stage *stage);
+		int32_t Update(Scene *scene);
 
-		void Draw(Stage* stage);
+		void Draw(Scene* scene);
 	};
 }
 
@@ -36,10 +36,10 @@ namespace xx {
 
 namespace Game {
 	struct EffectTextManager {
-		Stage* stage{};
+		Scene* scene{};
 		xx::Queue<EffectText> ens;
 
-		void Init(Stage* stage_, int32_t cap);
+		void Init(Scene* scene_, int32_t cap);
 		void Add(XY const& pos_, XY const& vec_, xx::RGBA8 color_, float scale_, int32_t value_, bool showSignal = false);
 		bool Update();
 		void Draw();

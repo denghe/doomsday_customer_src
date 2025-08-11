@@ -2,7 +2,7 @@
 
 namespace Game {
 
-	XX_INLINE void EffectText::Init(xx::XY const& pos_, xx::XY const& dist_, xx::RGBA8 color_, float scale_, int32_t value_, bool showSignal) {
+	void EffectText::Init(xx::XY const& pos_, xx::XY const& dist_, xx::RGBA8 color_, float scale_, int32_t value_, bool showSignal) {
 		pos = pos_;
 		// calculate move frame inc with random speed
 		auto _1_mag = 1.f / std::sqrtf(dist_.x * dist_.x + dist_.y * dist_.y);
@@ -35,11 +35,11 @@ namespace Game {
 		pos.x -= len * (13.f * 0.5f);
 	}
 
-	XX_INLINE int32_t EffectText::Update(Stage* stage) {
+	XX_INLINE int32_t EffectText::Update(Scene* scene) {
 		XX_BEGIN(lineNumber);
 		// move away
-		timeout = stage->time + int32_t(cMoveDurationSeconds * Cfg::fps);
-		while(stage->time <= timeout) {
+		timeout = scene->time + int32_t(cMoveDurationSeconds * Cfg::fps);
+		while(scene->time <= timeout) {
 			pos += inc;
 			XX_YIELD_I(lineNumber);
 		}
@@ -52,15 +52,15 @@ namespace Game {
 		return 1;
 	}
 
-	XX_INLINE void EffectText::Draw(Stage* stage) {
-		data.pos = stage->camera.ToGLPos(pos);
-		data.scale = stage->camera.scale * scale;
+	XX_INLINE void EffectText::Draw(Scene* scene) {
+		data.pos = scene->camera.ToGLPos(pos);
+		data.scale = scene->camera.scale * scale;
 		data.color = { color.r, color.g, color.b, (uint8_t)(color.a * alpha) };
 		gLooper.ShaderBegin(gLooper.shaderNumbers).Draw(data);
 	}
 
-	XX_INLINE void EffectTextManager::Init(Stage* stage_, int32_t cap) {
-		stage = stage_;
+	XX_INLINE void EffectTextManager::Init(Scene* scene_, int32_t cap) {
+		scene = scene_;
 		ens.Reserve(cap);
 	}
 
@@ -71,7 +71,7 @@ namespace Game {
 	XX_INLINE bool EffectTextManager::Update() {
 		int32_t n{};
 		for (int32_t i = 0, e = ens.Count(); i < e; ++i) {
-			if (ens[i].Update(stage)) {
+			if (ens[i].Update(scene)) {
 				++n;
 			}
 		}

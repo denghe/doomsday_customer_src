@@ -105,8 +105,8 @@ namespace Game {
 
 	struct Test3 : Scene {
 		xx::Shared<xx::Node> ui;
+		EffectTextManager effectTexts;
 
-		Camera camera;
 		xx::Listi32<xx::Shared<Pathway>> pathways;
 		xx::Listi32<xx::Shared<Snake>> snakes;
 		xx::Grid2dCircle<SnakeElement*, SnakeElementGridCache> grid;
@@ -114,6 +114,7 @@ namespace Game {
 		void MakeUI();
 
 		void Init() override;
+		void Update_();
 		void Update() override;
 		void Draw() override;
 		void OnWindowSizeChanged() override;

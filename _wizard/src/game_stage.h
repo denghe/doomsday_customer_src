@@ -4,11 +4,7 @@ namespace Game {
 
 	// stage's base
 	struct Stage : Scene {
-
-		Camera camera;
 		xx::Rnd rnd;
-		int32_t time{};
-		float timePool{}, delta{};
 		bool disableLight{};
 		XY mapSize{};					// cache: map->blocks.gridSize
 		XY mousePos{};					// logic pos
