@@ -87,7 +87,7 @@ namespace Game {
 			}
 #else
 			auto cri = grid.PosToCRIndex(mp);
-				grid.Foreach9All(cri.y, cri.x, [this, mp](decltype(grid)::Node& o) {
+				grid.ForeachBy9(cri.y, cri.x, [this, mp](decltype(grid)::Node& o, float range) {
 					if (o.value->HitCheck(mp, 16)) {
 						//effectTexts.Add(o.cache.pos + XY{ 0, -o.cache.radius }, { 0, -1 }, xx::RGBA8_Red, 2, 123);
 						effectTexts.Add(o.cache.pos, { 0, -1 }, xx::RGBA8_Red, 2.f, 123);

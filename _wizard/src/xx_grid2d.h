@@ -22,8 +22,8 @@ namespace xx {
 	struct Grid2dBase {
 		using Node = std::conditional_t<std::is_void_v<C>, Grid2dNode<T>, Grid2dCacheNode<T, C>>;
 
-		int32_t numRows{}, numCols{};
-		int32_t freeList{ -1 }, freeCount{}, count{}, itemsCapacity{};
+		int32_t numRows{}, numCols{}, numCells{};
+		int32_t freeHead{ -1 }, freeCount{}, count{}, capacity{};
 		Node* nodes{};
 		int32_t* buckets{};	// 2d array space. nodes index
 
@@ -31,19 +31,17 @@ namespace xx {
 		Grid2dBase(Grid2dBase const& o) = delete;
 		Grid2dBase& operator=(Grid2dBase const& o) = delete;
 
-		XX_INLINE void Init(int32_t numRows_, int32_t numCols_, int32_t capacity_ = 0) {
-			assert(!nodes && !buckets && numRows_ > 0 && numCols_ > 0 && capacity_ >= 0);
+		XX_INLINE void Init(int32_t numRows_, int32_t numCols_, int32_t capacity_) {
+			assert(!nodes && !buckets && numRows_ > 0 && numCols_ > 0 && capacity_ > 0);
 			numRows = numRows_;
 			numCols = numCols_;
-			itemsCapacity = capacity_;
-			freeList = -1;
+			numCells = numRows_ * numCols_;
+			capacity = capacity_;
+			freeHead = -1;
 			freeCount = count = 0;
-			if (capacity_ > 0) {
-				nodes = (Node*)new MyAlignedStorage<Node>[capacity_];
-			}
-			auto bucketsLen = numRows_ * numCols_;
-			buckets = new int32_t[bucketsLen];
-			memset(buckets, -1, bucketsLen * sizeof(int32_t));
+			nodes = (Node*)new MyAlignedStorage<Node>[capacity_];
+			buckets = new int32_t[numCells];
+			memset(buckets, -1, numCells * sizeof(int32_t));
 		}
 
 		~Grid2dBase() {
@@ -66,27 +64,27 @@ namespace xx {
 					o.value.~T();
 				}
 			}
-			freeList = -1;
+			freeHead = -1;
 			freeCount = 0;
 			count = 0;
 		}
 
 		void Reserve(int32_t capacity_) {
 			assert(buckets && capacity_ > 0);
-			if (capacity_ <= itemsCapacity) return;
-			auto newItems = (Node*)new MyAlignedStorage<Node>[capacity_];
+			if (capacity_ <= capacity) return;
+			auto newNodes = (Node*)new MyAlignedStorage<Node>[capacity_];
 			if constexpr (IsPod_v<T>) {
-				::memcpy((void*)newItems, (void*)nodes, count * sizeof(Node));
+				::memcpy((void*)newNodes, (void*)nodes, count * sizeof(Node));
 			}
 			else {
 				for (int32_t i = 0; i < count; ++i) {
-					new (&newItems[i].value) T((T&&)nodes[i].value);
+					new (&newNodes[i].value) T((T&&)nodes[i].value);
 					nodes[i].value.T::~T();
 				}
 			}
 			delete[](MyAlignedStorage<Node>*)nodes;
-			nodes = newItems;
-			itemsCapacity = capacity_;
+			nodes = newNodes;
+			capacity = capacity_;
 		}
 
 		template<typename V>
@@ -98,12 +96,12 @@ namespace xx {
 			// alloc
 			int32_t nodeIndex;
 			if (freeCount > 0) {
-				nodeIndex = freeList;
-				freeList = nodes[nodeIndex].next;
+				nodeIndex = freeHead;
+				freeHead = nodes[nodeIndex].next;
 				freeCount--;
 			}
 			else {
-				if (count == itemsCapacity) {
+				if (count == capacity) {
 					Reserve(count ? count * 2 : 16);
 				}
 				nodeIndex = count;
@@ -145,10 +143,10 @@ namespace xx {
 			}
 
 			// free
-			o.next = freeList;
+			o.next = freeHead;
 			o.prev = -1;
 			o.bucketsIndex = -1;
-			freeList = nodeIndex_;
+			freeHead = nodeIndex_;
 			freeCount++;
 
 			// cleanup
@@ -212,204 +210,55 @@ namespace xx {
 		/*******************************************************************************************/
 		// derived functions
 
-		// foreach target cell + round 8 = 9 buckets
-		// .Foreach9All([](decltype(grid)::Node& o)->void {  all  });
-		// .Foreach9All([](decltype(grid)::Node& o)->bool {  return false == break  });
-		template <bool enableExcept = false, typename F, typename R = std::invoke_result_t<F, Node&>>
-		void Foreach9All(int32_t rowNumber_, int32_t columnNumber_, F&& func, T const& except = {}) {
-			if (columnNumber_ < 0 || columnNumber_ >= numCols) return;
-			if (rowNumber_ < 0 || rowNumber_ >= numRows) return;
-
-			// 5
-			auto bi = rowNumber_ * numCols + columnNumber_;
-			auto ni = buckets[bi];
-			while (ni != -1) {
-				auto& n = nodes[ni];
-				auto nex = n.next;
-				if constexpr (enableExcept) {
-					if (n.value == except) {
-						ni = nex;
-						continue;
-					}
-				}
-				if constexpr (std::is_void_v<R>) {
-					func(n);
-				}
-				else {
-					if (func(n)) return;
-				}
-				ni = nex;
-			}
-
-			// 6
-			++columnNumber_;
-			if (columnNumber_ >= numCols) return;
-			++bi;
-			ni = buckets[bi];
+		// call by other ForeachXxxxxxxx func
+		// .Foreach??????????([](decltype(grid)::Node& o, float range)->void {  all  });
+		// .Foreach??????????([](decltype(grid)::Node& o, float range)->bool {  return false == break  });
+		template <typename F, typename R = std::invoke_result_t<F, Node&, float>>
+		XX_INLINE void ForeachCore(int32_t rowNumber_, int32_t columnNumber_, float range_, F& func) {
+			if (rowNumber_ < 0 || rowNumber_ >= numRows || columnNumber_ < 0 || columnNumber_ >= numCols) return;
+			auto ni = buckets[rowNumber_ * numCols + columnNumber_];
 			while (ni != -1) {
 				auto& n = nodes[ni];
 				auto nex = n.next;
 				if constexpr (std::is_void_v<R>) {
-					func(n);
+					func(n, range_);
 				}
 				else {
-					if (func(n)) return;
-				}
-				ni = nex;
-			}
-
-			// 3
-			++rowNumber_;
-			if (rowNumber_ >= numRows) return;
-			bi += numCols;
-			ni = buckets[bi];
-			while (ni != -1) {
-				auto& n = nodes[ni];
-				auto nex = n.next;
-				if constexpr (std::is_void_v<R>) {
-					func(n);
-				}
-				else {
-					if (func(n)) return;
-				}
-				ni = nex;
-			}
-
-			// 2
-			--bi;
-			ni = buckets[bi];
-			while (ni != -1) {
-				auto& n = nodes[ni];
-				auto nex = n.next;
-				if constexpr (std::is_void_v<R>) {
-					func(n);
-				}
-				else {
-					if (func(n)) return;
-				}
-				ni = nex;
-			}
-
-			// 1
-			columnNumber_ -= 2;
-			if (columnNumber_ < 0) return;
-			--bi;
-			ni = buckets[bi];
-			while (ni != -1) {
-				auto& n = nodes[ni];
-				auto nex = n.next;
-				if constexpr (std::is_void_v<R>) {
-					func(n);
-				}
-				else {
-					if (func(n)) return;
-				}
-				ni = nex;
-			}
-
-			// 4
-			bi -= numCols;
-			ni = buckets[bi];
-			while (ni != -1) {
-				auto& n = nodes[ni];
-				auto nex = n.next;
-				if constexpr (std::is_void_v<R>) {
-					func(n);
-				}
-				else {
-					if (func(n)) return;
-				}
-				ni = nex;
-			}
-
-			// 7
-			rowNumber_ -= 2;
-			if (rowNumber_ < 0) return;
-			bi -= numCols;
-			ni = buckets[bi];
-			while (ni != -1) {
-				auto& n = nodes[ni];
-				auto nex = n.next;
-				if constexpr (std::is_void_v<R>) {
-					func(n);
-				}
-				else {
-					if (func(n)) return;
-				}
-				ni = nex;
-			}
-
-			// 8
-			++bi;
-			ni = buckets[bi];
-			while (ni != -1) {
-				auto& n = nodes[ni];
-				auto nex = n.next;
-				if constexpr (std::is_void_v<R>) {
-					func(n);
-				}
-				else {
-					if (func(n)) return;
-				}
-				ni = nex;
-			}
-
-			// 9
-			++bi;
-			ni = buckets[bi];
-			while (ni != -1) {
-				auto& n = nodes[ni];
-				auto nex = n.next;
-				if constexpr (std::is_void_v<R>) {
-					func(n);
-				}
-				else {
-					if (func(n)) return;
+					if (func(n, range_)) return;
 				}
 				ni = nex;
 			}
 		}
 
-
+		// foreach target + neighbors: 9 cells( range always == 0 )
+		template <typename F, typename R = std::invoke_result_t<F, Node&, float>>
+		void ForeachBy9(int32_t rowNumber_, int32_t columnNumber_, F&& func) {
+			/* 4 */ForeachCore(rowNumber_, columnNumber_ - 1, 0, func);
+			/* 5 */ForeachCore(rowNumber_, columnNumber_, 0, func);
+			/* 6 */ForeachCore(rowNumber_, columnNumber_ + 1, 0, func);
+			/* 1 */ForeachCore(rowNumber_ + 1, columnNumber_ - 1, 0, func);
+			/* 2 */ForeachCore(rowNumber_ + 1, columnNumber_, 0, func);
+			/* 3 */ForeachCore(rowNumber_ + 1, columnNumber_ + 1, 0, func);
+			/* 7 */ForeachCore(rowNumber_ - 1, columnNumber_ - 1, 0, func);
+			/* 8 */ForeachCore(rowNumber_ - 1, columnNumber_, 0, func);
+			/* 9 */ForeachCore(rowNumber_ - 1, columnNumber_ + 1, 0, func);
+		}
 
 		// ring diffuse foreach ( usually for update logic or range search )
-		// .ForeachByRange([](decltype(grid)::Node& o, float range)->void {  all  });
-		// .ForeachByRange([](decltype(grid)::Node& o, float range)->bool {  return false == break  });
 		template <typename F, typename R = std::invoke_result_t<F, Node&, float>>
 		void ForeachByRange(int32_t rowNumber_, int32_t columnNumber_, int32_t searchRange, xx::SpaceGridRingDiffuseData const& rdd, F&& func) {
-			if (columnNumber_ < 0 || columnNumber_ >= numCols) return;
-			if (rowNumber_ < 0 || rowNumber_ >= numRows) return;
 			auto scale = float(((Derived*)this)->cellSize) / rdd.cellSize;
-
-			auto& lens = rdd.lens;
-			auto& idxs = rdd.idxs;
-			for (int32_t i = 1, e = lens.len; i < e; i++) {
-				auto offsets = lens[i - 1].count;
-				auto size = lens[i].count - lens[i - 1].count;
-				auto range = lens[i].radius * scale;
+			for (int32_t i = 1, e = rdd.lens.len; i < e; i++) {
+				auto offsets = rdd.lens[i - 1].count;
+				auto size = rdd.lens[i].count - rdd.lens[i - 1].count;
+				auto range = rdd.lens[i].radius * scale;
 				for (int32_t j = 0; j < size; ++j) {
-					auto& tmp = idxs[offsets + j];
-					auto cIdx = columnNumber_ + tmp.x;
-					if (cIdx < 0 || cIdx >= numCols) continue;
-					auto rIdx = rowNumber_ + tmp.y;
-					if (rIdx < 0 || rIdx >= numRows) continue;
-					auto bucketsIndex = rIdx * numCols + cIdx;
-
-					auto ni = buckets[bucketsIndex];
-					while (ni != -1) {
-						auto& n = nodes[ni];
-						auto nex = n.next;
-						if constexpr (std::is_void_v<R>) {
-							func(n, range);
-						}
-						else {
-							if (func(n, range)) return;
-						}
-						ni = nex;
-					}
+					auto& tmp = rdd.idxs[offsets + j];
+					ForeachCore(rowNumber_ + tmp.y, columnNumber_ + tmp.x, range, func);
 				}
 				if (range > searchRange) break;
 			}
+			assert(false);	// not enough rdd data?
 		}
 
 		// todo: more search
