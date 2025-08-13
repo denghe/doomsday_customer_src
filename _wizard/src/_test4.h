@@ -11,7 +11,7 @@ namespace xx {
 		static constexpr int32_t cSubSteps{ 1 };
 		static constexpr float cSubDelta{ Cfg::frameDelay / 4 / cSubSteps };
 		static constexpr float cResponseCoef{ 0.5f };
-		static constexpr float cMaxInc{ 0.05f };
+		static constexpr float cMaxSpeed{ 0.05f };
 
 		struct Node {
 			int32_t next;
@@ -173,13 +173,13 @@ namespace xx {
 			if (m2 >= 1.f || m2 <= eps) return;
 			auto m = std::sqrtf(m2);
 			auto a = cResponseCoef * (1.f - m);
-			auto inc = v / m * a;
-			if (inc.x > cMaxInc) inc.x = cMaxInc;
-			else if (inc.x < -cMaxInc) inc.x = -cMaxInc;
-			if (inc.y > cMaxInc) inc.y = cMaxInc;
-			else if (inc.y < -cMaxInc) inc.y = -cMaxInc;
-			d1_.pos += inc;
-			d2_.pos -= inc;
+			auto spd = v / m * a;
+			if (spd.x > cMaxSpeed) spd.x = cMaxSpeed;
+			else if (spd.x < -cMaxSpeed) spd.x = -cMaxSpeed;
+			if (spd.y > cMaxSpeed) spd.y = cMaxSpeed;
+			else if (spd.y < -cMaxSpeed) spd.y = -cMaxSpeed;
+			d1_.pos += spd;
+			d2_.pos -= spd;
 		}
 
 		XX_INLINE void UpdateDatas() {
@@ -187,9 +187,9 @@ namespace xx {
 				auto& d = datas[i];
 				d.acc += XY{ 0, cGravity };
 
-				auto inc = d.pos - d.lpos;
+				auto spd = d.pos - d.lpos;
 				d.lpos = d.pos;
-				d.pos = d.pos + inc + (d.acc - inc * cVelocityDamping) * (cSubDelta * cSubDelta);
+				d.pos = d.pos + spd + (d.acc - spd * cVelocityDamping) * (cSubDelta * cSubDelta);
 				d.acc = {};
 
 				if (d.pos.x > pixelSize.x - cMargin) {
