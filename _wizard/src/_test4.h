@@ -5,12 +5,13 @@ namespace xx {
 
 	//template <typename T>
 	struct Phys2dFixedCircle {
-		static constexpr float cVelocityDamping{ 200.f };
-		static constexpr float cGravity{ 20.f };
+		static constexpr float cVelocityDamping{ 100.f };
+		static constexpr float cGravity{ 100.f };
 		static constexpr float cMargin{ 2.f };
-		static constexpr int32_t cSubSteps{ 2 };
-		static constexpr float cSubDelta{ Cfg::frameDelay / cSubSteps };
+		static constexpr int32_t cSubSteps{ 1 };
+		static constexpr float cSubDelta{ Cfg::frameDelay / 4 / cSubSteps };
 		static constexpr float cResponseCoef{ 0.5f };
+		static constexpr float cMaxInc{ 0.05f };
 
 		struct Node {
 			int32_t next;
@@ -25,7 +26,7 @@ namespace xx {
 
 		struct Bucket {
 			int32_t len;
-			std::array<int32_t, 10> indexAtDatass;
+			std::array<int32_t, 3> indexAtDatass;
 		};
 
 		int32_t rowsLen{}, colsLen{}, bucketsLen{};					// for buckets
@@ -69,7 +70,7 @@ namespace xx {
 			datas = std::move(newDatas);
 		}
 
-		XX_INLINE int32_t Add(void* ud_, XY pos_, XY lpos_, XY acc_) {
+		int32_t Add(void* ud_, XY pos_, XY lpos_, XY acc_) {
 			assert(buckets);
 			assert((int32_t)pos_.y >= 0 && (int32_t)pos_.y < rowsLen);
 			assert((int32_t)pos_.x >= 0 && (int32_t)pos_.x < colsLen);
@@ -102,7 +103,7 @@ namespace xx {
 			return ni;
 		}
 
-		XX_INLINE void Remove(int32_t indexAtNodes_) {
+		void Remove(int32_t indexAtNodes_) {
 			assert(buckets);
 			assert(indexAtNodes_ >= 0 && indexAtNodes_ < count);
 			assert(nodes[indexAtNodes_].ud);
@@ -133,7 +134,9 @@ namespace xx {
 				auto p = datas[di].pos.As<int32_t>();
 				assert(p.x >= 0 && p.x < colsLen && p.y >= 0 && p.y < rowsLen);
 				auto& b = buckets[p.x * rowsLen + p.y];
-				b.indexAtDatass[b.len++] = di;
+				if (b.len < b.indexAtDatass.size()) {	// ignore
+					b.indexAtDatass[b.len++] = di;
+				}
 			}
 		}
 
@@ -169,6 +172,10 @@ namespace xx {
 			auto m = std::sqrtf(m2);
 			auto a = cResponseCoef * (1.f - m);
 			auto inc = v / m * a;
+			if (inc.x > cMaxInc) inc.x = cMaxInc;
+			else if (inc.x < -cMaxInc) inc.x = -cMaxInc;
+			if (inc.y > cMaxInc) inc.y = cMaxInc;
+			else if (inc.y < -cMaxInc) inc.y = -cMaxInc;
 			d1_.pos += inc;
 			d2_.pos -= inc;
 		}

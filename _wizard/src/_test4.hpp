@@ -6,6 +6,10 @@ namespace Game {
 
 	inline void Test4::MakeUI() {
 		ui.Emplace()->Init(0, {}, scale);
+		ui->MakeChildren<xx::Button>()->Init(1, pos9 + XY{ -10, -10 }, anchor9
+			, gLooper.btnCfg, U"exit", [&]() {
+				gLooper.DelaySwitchTo<Game::MainMenu>();
+			});
 		// todo
 	}
 
@@ -18,19 +22,19 @@ namespace Game {
 		UpdateScale();
 		MakeUI();
 
-		pfc.Init(200, 300, 100000);
+		pfc.Init(int32_t(100 * 1.5), int32_t(150 * 1.5), 100000);
 		delta = Cfg::frameDelay;
 
 		XY basePos{ pfc.pixelSize * 0.5f };
 
-		camera.SetScale(scale, 5.f);
+		camera.SetScale(scale, 10.f / 1.5);
 		camera.SetOriginal(basePos);
 
 		// fill pfc
-		for (int32_t i = 0; i < 50000; ++i) {
+		for (int32_t i = 0; i < 35000; ++i) {
 			XY pos{ 
 				gLooper.rnd.Next<float>(5, float(pfc.colsLen - 5)),
-				gLooper.rnd.Next<float>(5, float(pfc.rowsLen - 5))
+				gLooper.rnd.Next<float>(5, float(pfc.rowsLen - 15))
 			};
 			pfc.Add({}, pos, pos, {});
 		}
@@ -71,6 +75,18 @@ namespace Game {
 
 		// pfc
 		{
+#if 1
+			auto len = pfc.datasLen;
+			auto qs = gLooper.ShaderBegin(gLooper.shaderRingInstance).Draw(len);
+			for (int32_t i = 0; i < len; ++i) {
+				auto& d = pfc.datas[i];
+				auto& q = qs[i];
+				q.pos = camera.ToGLPos(d.pos);
+				q.radius = 0.5f * camera.scale;
+				q.colorPlus = 3.f;
+				q.color = xx::RGBA8_White;
+			}
+#else
 			auto len = pfc.datasLen;
 			auto& f = gLooper.res.ui_circle;
 			auto qs = gLooper.ShaderBegin(gLooper.shaderQuadInstance).Draw(f->tex, len);
@@ -85,6 +101,7 @@ namespace Game {
 				q.color = xx::RGBA8_White;
 				q.texRect.data = f->textureRect.data;
 			}
+#endif
 		}
 
 		// todo: pfc border ?

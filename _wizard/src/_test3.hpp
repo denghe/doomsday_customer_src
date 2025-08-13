@@ -6,6 +6,10 @@ namespace Game {
 
 	inline void Test3::MakeUI() {
 		ui.Emplace()->Init(0, {}, scale);
+		ui->MakeChildren<xx::Button>()->Init(1, pos9 + XY{ -10, -10 }, anchor9
+			, gLooper.btnCfg, U"exit", [&]() {
+				gLooper.DelaySwitchTo<Game::MainMenu>();
+			});
 		// todo
 	}
 
