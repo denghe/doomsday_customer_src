@@ -5,207 +5,206 @@ namespace xx {
 
 	//template <typename T>
 	struct Phys2dFixedCircle {
+		static constexpr float cVelocityDamping{ 200.f };
+		static constexpr float cGravity{ 20.f };
+		static constexpr float cMargin{ 2.f };
+		static constexpr int32_t cSubSteps{ 2 };
+		static constexpr float cSubDelta{ Cfg::frameDelay / cSubSteps };
+		static constexpr float cResponseCoef{ 0.5f };
 
 		struct Node {
-			void* ud;				// ref to user struct
-			int32_t next;			// for memory manage
-			float radius;			//
-			XY pos, inc, acc;		// for phys
+			int32_t next;
+			int32_t indexAtDatas;
+			void* ud;
+		};
+
+		struct Data {
+			int32_t indexAtNodes;
+			XY pos, lpos, acc;
 		};
 
 		struct Bucket {
 			int32_t len;
-			std::array<int32_t, 4> nodeIndexs;
+			std::array<int32_t, 10> indexAtDatass;
 		};
 
-		int32_t numRows{}, numCols{}, numCells{};
-		int32_t freeHead{ -1 }, freeCount{}, count{}, capacity{};
-		float cellDiamiter{};
+		int32_t rowsLen{}, colsLen{}, bucketsLen{};					// for buckets
+		int32_t freeHead{ -1 }, freeCount{}, count{}, capacity{};	// for nodes
+		int32_t datasLen{};											// for datas
+
+		XY pixelSize{};
+
 		std::unique_ptr<Node[]> nodes;
+		std::unique_ptr<Data[]> datas;
 		std::unique_ptr<Bucket[]> buckets;
 
-		void Init(int32_t numRows_, int32_t numCols_, float cellDiamiter_, int32_t capacity_ = 0) {
-			assert(!nodes && !buckets && numRows_ > 0 && numCols_ > 0 && capacity_ >= 0);
-			numRows = numRows_;
-			numCols = numCols_;
-			numCells = numRows_ * numCols_;
+		void Init(int32_t rowsLen_, int32_t colsLen_, int32_t capacity_ = 0) {
+			assert(!nodes && !buckets && rowsLen_ > 0 && colsLen_ > 0 && capacity_ >= 0);
+			rowsLen = rowsLen_;
+			colsLen = colsLen_;
+			bucketsLen = rowsLen_ * colsLen_;
 			capacity = capacity_;
 			freeHead = -1;
 			freeCount = count = 0;
-			cellDiamiter = cellDiamiter_;
+			pixelSize = { colsLen_, rowsLen_ };
 			if (capacity_) {
 				nodes = std::make_unique_for_overwrite<Node[]>(capacity_);
+				datas = std::make_unique_for_overwrite<Data[]>(capacity_);
 			}
-			buckets = std::make_unique_for_overwrite<Bucket[]>(numCells);
+			buckets = std::make_unique_for_overwrite<Bucket[]>(bucketsLen);
 			ClearBuckets();
 		}
 
 		void Reserve(int32_t capacity_) {
 			assert(buckets && capacity_ > 0);
 			if (capacity_ <= capacity) return;
+			capacity = capacity_;
+
 			auto newNodes = std::make_unique_for_overwrite<Node[]>(capacity_);
 			::memcpy((void*)newNodes.get(), (void*)nodes.get(), count * sizeof(Node));
 			nodes = std::move(newNodes);
-			capacity = capacity_;
+
+			auto newDatas = std::make_unique_for_overwrite<Data[]>(capacity_);
+			::memcpy((void*)newDatas.get(), (void*)datas.get(), datasLen * sizeof(Data));
+			datas = std::move(newDatas);
 		}
 
-		XX_INLINE Node& Alloc() {
-			int32_t nodeIndex;
+		XX_INLINE int32_t Add(void* ud_, XY pos_, XY lpos_, XY acc_) {
+			assert(buckets);
+			assert((int32_t)pos_.y >= 0 && (int32_t)pos_.y < rowsLen);
+			assert((int32_t)pos_.x >= 0 && (int32_t)pos_.x < colsLen);
+
+			int32_t ni;
 			if (freeCount > 0) {
-				nodeIndex = freeHead;
-				freeHead = nodes[nodeIndex].next;
+				ni = freeHead;
+				freeHead = nodes[ni].next;
 				freeCount--;
 			}
 			else {
 				if (count == capacity) {
 					Reserve(count ? count * 2 : 16);
 				}
-				nodeIndex = count;
+				ni = count;
 				count++;
 			}
-			return nodes[nodeIndex];
-		}
-		// todo: Free
 
-		XX_INLINE int32_t Add(void* ud_, float radius_, XY pos_, XY inc_, XY acc_) {
+			auto& n = nodes[ni];
+			n.next = -1;
+			n.indexAtDatas = datasLen;
+			n.ud = ud_;
+
+			auto& d = datas[datasLen++];
+			d.indexAtNodes = ni;
+			d.pos = pos_;
+			d.lpos = lpos_;
+			d.acc = acc_;
+
+			return ni;
+		}
+
+		XX_INLINE void Remove(int32_t indexAtNodes_) {
 			assert(buckets);
-			assert((int32_t)pos_.y >= 0 && (int32_t)pos_.y < numRows);
-			assert((int32_t)pos_.x >= 0 && (int32_t)pos_.x < numCols);
-			auto& o = Alloc();
-			o.ud = ud_;
-			o.next = -1;
-			o.radius = radius_;
-			o.pos = pos_;
-			o.inc = inc_;
-			o.acc = acc_;
+			assert(indexAtNodes_ >= 0 && indexAtNodes_ < count);
+			assert(nodes[indexAtNodes_].ud);
+
+			auto& n = nodes[indexAtNodes_];
+			auto& ld = datas[datasLen - 1];
+
+			nodes[ld.indexAtNodes].indexAtDatas = n.indexAtDatas;	// redirect
+			::memcpy((void*)&datas[n.indexAtDatas], (void*)&ld, sizeof(Data));
+			datasLen--;
+
+			n.next = freeHead;
+			n.indexAtDatas = -1;
+			n.ud = {};
+			freeHead = indexAtNodes_;
+			freeCount++;
 		}
 
 		XX_INLINE void ClearBuckets() {
 			assert(buckets);
-			for (int32_t i = 0; i < numCells; ++i) {
+			for (int32_t i = 0; i < bucketsLen; ++i) {
 				buckets[i].len = 0;
 			}
 		}
 
 		XX_INLINE void FillBuckets() {
-			for (int32_t i = 0; i < count; ++i) {
-				if (auto& o = nodes[i]; o.ud) {
-					auto p = o.pos.As<int32_t>();
-					assert(p.x >= 0 && p.x < numCols && p.y >= 0 && p.y < numRows);
-					auto bi = p.x * numRows + p.y;
-					auto& b = buckets[bi];
-					b.nodeIndexs[b.len++] = i;
-					assert(b.len <= 4);
-				}
+			for (int32_t di = 0; di < datasLen; ++di) {
+				auto p = datas[di].pos.As<int32_t>();
+				assert(p.x >= 0 && p.x < colsLen && p.y >= 0 && p.y < rowsLen);
+				auto& b = buckets[p.x * rowsLen + p.y];
+				b.indexAtDatass[b.len++] = di;
 			}
 		}
 
-		XX_INLINE void Calc(Node& n1, Node& n2) {
-			static constexpr float response_coef{ 1.0f };
-			static constexpr float eps{ 0.0001f };
-			auto d = n1.pos - n2.pos;
-			auto m2 = d.x * d.x + d.y * d.y;
-			if (m2 > 1.f || m2 < eps) return;	// todo: use radius
-			auto m = std::sqrtf(m2);
-			auto a = response_coef * 0.5f * (1.0f - m);
-			auto v = d / m * a;
-			n1.pos += v;
-			n2.pos -= v;
-		}
-
-#if 0
-		XX_INLINE void Calc(int32_t ni1, Bucket& b) {
-			for (int32_t j = 0; j < b.len; ++j) {
-				auto ni2 = b.nodeIndexs[j];
-				Calc(nodes[ni1], nodes[ni2]);
-			}
-		}
-
-		XX_INLINE void Calc() {
-			for (int32_t bi = 0; bi < numCells; ++bi) {
-				auto& b = buckets[bi];
-				for (int32_t j = 0; j < b.len; ++j) {
-					auto ni = b.nodeIndexs[j];
-					Calc(ni, buckets[bi - 1]);
-					Calc(ni, buckets[bi]);
-					Calc(ni, buckets[bi + 1]);
-					Calc(ni, buckets[bi + numRows - 1]);
-					Calc(ni, buckets[bi + numRows]);
-					Calc(ni, buckets[bi + numRows + 1]);
-					Calc(ni, buckets[bi - numRows - 1]);
-					Calc(ni, buckets[bi - numRows]);
-					Calc(ni, buckets[bi - numRows + 1]);
-				}
-			}
-		}
-#else
-		XX_INLINE void Calc(Bucket& b1, Bucket& b2) {
-			for (int32_t ni1 = 0; ni1 < b1.len; ++ni1) {
-				for (int32_t ni2 = 0; ni2 < b2.len; ++ni2) {
-					Calc(nodes[b1.nodeIndexs[ni1]], nodes[b2.nodeIndexs[ni2]]);
-				}
-			}
-		}
-
-		XX_INLINE void Calc() {
-			for (int32_t bi = 0; bi < numCells; ++bi) {
+		XX_INLINE void CalcDatas() {
+			for (int32_t bi = 0; bi < bucketsLen; ++bi) {
 				auto& b = buckets[bi];
 				if (!b.len) continue;
 				Calc(b, buckets[bi - 1]);
 				Calc(b, buckets[bi]);
 				Calc(b, buckets[bi + 1]);
-				Calc(b, buckets[bi + numRows - 1]);
-				Calc(b, buckets[bi + numRows]);
-				Calc(b, buckets[bi + numRows + 1]);
-				Calc(b, buckets[bi - numRows - 1]);
-				Calc(b, buckets[bi - numRows]);
-				Calc(b, buckets[bi - numRows + 1]);
+				Calc(b, buckets[bi + rowsLen - 1]);
+				Calc(b, buckets[bi + rowsLen]);
+				Calc(b, buckets[bi + rowsLen + 1]);
+				Calc(b, buckets[bi - rowsLen - 1]);
+				Calc(b, buckets[bi - rowsLen]);
+				Calc(b, buckets[bi - rowsLen + 1]);
 			}
 		}
 
-		XX_INLINE void UpdateCore() {
-			// todo
-
-			//for (uint32_t i{ start }; i < end; ++i) {
-			//	PhysicObject& obj = objects.data[i];
-			//	// Add gravity
-			//	obj.acceleration += gravity;
-			//	// Apply Verlet integration
-			// 
-			/*
-			const Vec2 last_update_move = position - last_position;
-
-			const float VELOCITY_DAMPING = 40.0f; // arbitrary, approximating air friction
-
-			const Vec2 new_position = position + last_update_move + (acceleration - last_update_move * VELOCITY_DAMPING) * (dt * dt);
-			last_position = position;
-			position = new_position;
-			acceleration = { 0.0f, 0.0f };
-			*/
-			// 
-			//	// Apply map borders collisions
-			//	const float margin = 2.0f;
-			//	if (obj.position.x > world_size.x - margin) {
-			//		obj.position.x = world_size.x - margin;
-			//	}
-			//	else if (obj.position.x < margin) {
-			//		obj.position.x = margin;
-			//	}
-			//	if (obj.position.y > world_size.y - margin) {
-			//		obj.position.y = world_size.y - margin;
-			//	}
-			//	else if (obj.position.y < margin) {
-			//		obj.position.y = margin;
-			//	}
-			//}
+		XX_INLINE void Calc(Bucket& b1_, Bucket& b2_) {
+			for (int32_t di1 = 0; di1 < b1_.len; ++di1) {
+				for (int32_t di2 = 0; di2 < b2_.len; ++di2) {
+					Calc(datas[b1_.indexAtDatass[di1]], datas[b2_.indexAtDatass[di2]]);
+				}
+			}
 		}
-#endif
+
+		XX_INLINE void Calc(Data& d1_, Data& d2_) {
+			static constexpr float eps{ 0.0001f };
+			auto v = d1_.pos - d2_.pos;
+			auto m2 = v.x * v.x + v.y * v.y;
+			if (m2 >= 1.f || m2 <= eps) return;
+			auto m = std::sqrtf(m2);
+			auto a = cResponseCoef * (1.f - m);
+			auto inc = v / m * a;
+			d1_.pos += inc;
+			d2_.pos -= inc;
+		}
+
+		XX_INLINE void UpdateDatas() {
+			for (int32_t i = 0; i < datasLen; ++i) {
+				auto& d = datas[i];
+				d.acc += XY{ 0, cGravity };
+
+				auto inc = d.pos - d.lpos;
+				d.lpos = d.pos;
+				d.pos = d.pos + inc + (d.acc - inc * cVelocityDamping) * (cSubDelta * cSubDelta);
+				d.acc = {};
+
+				if (d.pos.x > pixelSize.x - cMargin) {
+					d.pos.x = pixelSize.x - cMargin;
+				}
+				else if (d.pos.x < cMargin) {
+					d.pos.x = cMargin;
+				}
+				if (d.pos.y > pixelSize.y - cMargin) {
+					d.pos.y = pixelSize.y - cMargin;
+				}
+				else if (d.pos.y < cMargin) {
+					d.pos.y = cMargin;
+				}
+			}
+		}
 
 		void Update() {
-			ClearBuckets();
-			FillBuckets();
-			Calc();
-			UpdateCore();
+			for (int32_t i = 0; i < cSubSteps; ++i) {
+				ClearBuckets();
+				FillBuckets();
+				CalcDatas();
+				UpdateDatas();
+			}
 		}
 
 	};
@@ -232,7 +231,7 @@ namespace Game {
 
 	struct Test4 : Scene {
 		xx::Shared<xx::Node> ui;
-
+		xx::Phys2dFixedCircle pfc;
 
 		void MakeUI();
 
