@@ -31,7 +31,7 @@ namespace Game {
 		camera.SetOriginal(basePos);
 
 		// fill pfc
-		for (int32_t i = 0; i < 35000; ++i) {
+		for (int32_t i = 0; i < 5000; ++i) {
 			XY pos{ 
 				gLooper.rnd.Next<float>(5, float(pfc.colsLen - 5)),
 				gLooper.rnd.Next<float>(5, float(pfc.rowsLen - 15))
@@ -44,10 +44,32 @@ namespace Game {
 		pfc.Update();
 	}
 
+	inline xx::RGBA8 Test4::GetRainbow() {
+		auto t = colorIndex += 0.001f;
+		const float r = sin(t);
+		const float g = sin(t + 0.33f * 2.0f * (float)M_PI);
+		const float b = sin(t + 0.66f * 2.0f * (float)M_PI);
+		return { uint8_t(255 * r * r), uint8_t(255 * g * g), uint8_t(255 * b * b), 255 };
+	}
+
 	XX_INLINE void Test4::Update() {
 		if (gLooper.KeyDownDelay(xx::KeyboardKeys::Escape, 0.5f)
 			|| gLooper.KeyDownDelay(xx::KeyboardKeys::Q, 0.5f)) {
 			gLooper.DelaySwitchTo<MainMenu>();
+		}
+
+		if (gLooper.mouse.PressedMBLeft() && pfc.datasLen < 35000) {
+			static constexpr float mpRadius{ 4 };
+			auto mp = camera.ToLogicPos(gLooper.mouse.pos);
+			if (mp.x < mpRadius || mp.x > pfc.pixelSize.x - mpRadius
+				|| mp.y < mpRadius || mp.y > pfc.pixelSize.y - mpRadius) {
+			}
+			else {
+				for (int32_t i = 0; i < 10; ++i) {
+					auto pos = mp + Shaker::GetRndPosDoughnut(gLooper.rnd, mpRadius - 1, 0);
+					pfc.Add({}, pos, pos, {}, GetRainbow());
+				}
+			}
 		}
 
 		assert(delta > 0);
@@ -84,7 +106,7 @@ namespace Game {
 				q.pos = camera.ToGLPos(d.pos);
 				q.radius = 0.5f * camera.scale;
 				q.colorPlus = 3.f;
-				q.color = xx::RGBA8_White;
+				q.color = d.color;
 			}
 #else
 			auto len = pfc.datasLen;

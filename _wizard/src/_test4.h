@@ -21,6 +21,7 @@ namespace xx {
 
 		struct Data {
 			int32_t indexAtNodes;
+			xx::RGBA8 color;
 			XY pos, lpos, acc;
 		};
 
@@ -70,7 +71,7 @@ namespace xx {
 			datas = std::move(newDatas);
 		}
 
-		int32_t Add(void* ud_, XY pos_, XY lpos_, XY acc_) {
+		int32_t Add(void* ud_, XY pos_, XY lpos_, XY acc_, xx::RGBA8 color_ = xx::RGBA8_White) {
 			assert(buckets);
 			assert((int32_t)pos_.y >= 0 && (int32_t)pos_.y < rowsLen);
 			assert((int32_t)pos_.x >= 0 && (int32_t)pos_.x < colsLen);
@@ -96,6 +97,7 @@ namespace xx {
 
 			auto& d = datas[datasLen++];
 			d.indexAtNodes = ni;
+			d.color = color_;
 			d.pos = pos_;
 			d.lpos = lpos_;
 			d.acc = acc_;
@@ -239,6 +241,9 @@ namespace Game {
 	struct Test4 : Scene {
 		xx::Shared<xx::Node> ui;
 		xx::Phys2dFixedCircle pfc;
+
+		float colorIndex{};
+		xx::RGBA8 GetRainbow();
 
 		void MakeUI();
 
