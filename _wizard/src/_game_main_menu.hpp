@@ -92,10 +92,17 @@ namespace Game {
 		// more tests
 
 		{
-			auto& b = ui->MakeChildren<xx::FocusLabelButton>()->Init(2, pos2 + XY{ 0, 30 }, anchor2
+			auto& b = ui->MakeChildren<xx::FocusLabelButton>()->Init(2, pos2 + XY{ 0, 130 }, anchor2
 				, gLooper.cfg_btnNormal, gLooper.cfg_btnHighlight, "phys test");
 			b.onFocus = [] { gLooper.sound.Play(gLooper.res_sound_button_1); };
 			b.onClicked = [] { gLooper.DelaySwitchTo<Test4>(); };
+		}
+
+		{
+			auto& b = ui->MakeChildren<xx::FocusLabelButton>()->Init(2, pos2 + XY{ 0, 30 }, anchor2
+				, gLooper.cfg_btnNormal, gLooper.cfg_btnHighlight, "boids test");
+			b.onFocus = [] { gLooper.sound.Play(gLooper.res_sound_button_1); };
+			b.onClicked = [] { gLooper.DelaySwitchTo<Test5>(); };
 		}
 
 	}

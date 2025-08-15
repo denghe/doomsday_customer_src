@@ -30,7 +30,7 @@ namespace xx {
 			std::array<int32_t, 3> indexAtDatass;
 		};
 
-		int32_t rowsLen{}, colsLen{}, bucketsLen{};					// for buckets
+		int32_t numRows{}, numCols{}, bucketsLen{};					// for buckets
 		int32_t freeHead{ -1 }, freeCount{}, count{}, capacity{};	// for nodes
 		int32_t datasLen{};											// for datas
 
@@ -40,15 +40,15 @@ namespace xx {
 		std::unique_ptr<Data[]> datas;
 		std::unique_ptr<Bucket[]> buckets;
 
-		void Init(int32_t rowsLen_, int32_t colsLen_, int32_t capacity_ = 0) {
-			assert(!nodes && !buckets && rowsLen_ > 0 && colsLen_ > 0 && capacity_ >= 0);
-			rowsLen = rowsLen_;
-			colsLen = colsLen_;
-			bucketsLen = rowsLen_ * colsLen_;
+		void Init(int32_t numRows_, int32_t numCols_, int32_t capacity_ = 0) {
+			assert(!nodes && !buckets && numRows_ > 0 && numCols_ > 0 && capacity_ >= 0);
+			numRows = numRows_;
+			numCols = numCols_;
+			bucketsLen = numRows_ * numCols_;
 			capacity = capacity_;
 			freeHead = -1;
 			freeCount = count = 0;
-			pixelSize = { colsLen_, rowsLen_ };
+			pixelSize = { numCols_, numRows_ };
 			if (capacity_) {
 				nodes = std::make_unique_for_overwrite<Node[]>(capacity_);
 				datas = std::make_unique_for_overwrite<Data[]>(capacity_);
@@ -73,8 +73,8 @@ namespace xx {
 
 		int32_t Add(void* ud_, XY pos_, XY lpos_, XY acc_, xx::RGBA8 color_ = xx::RGBA8_White) {
 			assert(buckets);
-			assert((int32_t)pos_.y >= 0 && (int32_t)pos_.y < rowsLen);
-			assert((int32_t)pos_.x >= 0 && (int32_t)pos_.x < colsLen);
+			assert((int32_t)pos_.y >= 0 && (int32_t)pos_.y < numRows);
+			assert((int32_t)pos_.x >= 0 && (int32_t)pos_.x < numCols);
 
 			int32_t ni;
 			if (freeCount > 0) {
@@ -134,8 +134,8 @@ namespace xx {
 		XX_INLINE void FillBuckets() {
 			for (int32_t di = 0; di < datasLen; ++di) {
 				auto p = datas[di].pos.As<int32_t>();
-				assert(p.x >= 0 && p.x < colsLen && p.y >= 0 && p.y < rowsLen);
-				auto& b = buckets[p.x * rowsLen + p.y];
+				assert(p.x >= 0 && p.x < numCols && p.y >= 0 && p.y < numRows);
+				auto& b = buckets[p.x * numRows + p.y];
 				if (b.len < b.indexAtDatass.size()) {	// ignore
 					b.indexAtDatass[b.len++] = di;
 				}
@@ -149,12 +149,12 @@ namespace xx {
 				Calc(b, buckets[bi - 1]);
 				Calc(b, buckets[bi]);
 				Calc(b, buckets[bi + 1]);
-				Calc(b, buckets[bi + rowsLen - 1]);
-				Calc(b, buckets[bi + rowsLen]);
-				Calc(b, buckets[bi + rowsLen + 1]);
-				Calc(b, buckets[bi - rowsLen - 1]);
-				Calc(b, buckets[bi - rowsLen]);
-				Calc(b, buckets[bi - rowsLen + 1]);
+				Calc(b, buckets[bi + numRows - 1]);
+				Calc(b, buckets[bi + numRows]);
+				Calc(b, buckets[bi + numRows + 1]);
+				Calc(b, buckets[bi - numRows - 1]);
+				Calc(b, buckets[bi - numRows]);
+				Calc(b, buckets[bi - numRows + 1]);
 			}
 		}
 
