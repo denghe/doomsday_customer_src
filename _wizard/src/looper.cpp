@@ -28,6 +28,7 @@
 #include "_test3.hpp"
 #include "_test4.hpp"
 #include "_test5.hpp"
+#include "_test6.hpp"
 
 Looper gLooper;
 
