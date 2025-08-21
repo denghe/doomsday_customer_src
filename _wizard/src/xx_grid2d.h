@@ -61,7 +61,7 @@ namespace xx {
 				if (o.bucketsIndex != -1) {
 					buckets[o.bucketsIndex] = -1;
 					o.bucketsIndex = -1;
-					o.value.~T();
+					o.~Node();
 				}
 			}
 			freeHead = -1;
@@ -78,8 +78,8 @@ namespace xx {
 			}
 			else {
 				for (int32_t i = 0; i < count; ++i) {
-					new (&newNodes[i].value) T((T&&)nodes[i].value);
-					nodes[i].value.T::~T();
+					new (&newNodes[i]) Node((Node&&)nodes[i]);
+					nodes[i].~Node();
 				}
 			}
 			delete[](MyAlignedStorage<Node>*)nodes;
