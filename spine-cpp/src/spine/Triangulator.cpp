@@ -79,7 +79,7 @@ Vector<int> &Triangulator::triangulate(Vector<float> &vertices) {
 					if (!isConcaveArray[ii]) continue;
 
 					int v = indices[ii] << 1;
-					float &vx = vertices[v], vy = vertices[v + 1];
+					float vx = vertices[v], vy = vertices[v + 1];
 					if (positiveArea(p3x, p3y, p1x, p1y, vx, vy)) {
 						if (positiveArea(p1x, p1y, p2x, p2y, vx, vy)) {
 							if (positiveArea(p2x, p2y, p3x, p3y, vx, vy)) {

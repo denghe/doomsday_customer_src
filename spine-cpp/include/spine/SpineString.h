@@ -35,7 +35,7 @@
 
 #include <string.h>
 #include <stdio.h>
-#include <string_view>
+#include <string_view>	// xx
 
 // Required for sprintf on MSVC
 #ifdef _MSC_VER
@@ -48,6 +48,7 @@ public:
 	String() : _length(0), _buffer(NULL) {
 	}
 
+	// xx
 	// for easy use
 	String(std::string_view sv, bool own = false) {
 		if (!sv.size()) {
@@ -219,7 +220,7 @@ public:
 		}
 	}
 
-//private:					// for easy use
+//private:					// xx
 	mutable size_t _length;
 	mutable char *_buffer;
 };

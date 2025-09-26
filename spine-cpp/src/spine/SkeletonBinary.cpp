@@ -128,6 +128,7 @@ SkeletonData *SkeletonBinary::readSkeletonData(const unsigned char *binary, cons
 
 	char *skeletonData_version = readString(input);
 	skeletonData->_version.own(skeletonData_version);
+	// xx
     //if ("3.8.75" == skeletonData->_version) {
     //    delete input;
     //    delete skeletonData;
@@ -362,7 +363,7 @@ SkeletonData *SkeletonBinary::readSkeletonDataFile(const String &path) {
 		return NULL;
 	}
 	skeletonData = readSkeletonData((unsigned char *) binary, length);
-	//SpineExtension::free(binary, __FILE__, __LINE__);						// can't free. because readFile from cache
+	//SpineExtension::free(binary, __FILE__, __LINE__);						// xx
 	return skeletonData;
 }
 

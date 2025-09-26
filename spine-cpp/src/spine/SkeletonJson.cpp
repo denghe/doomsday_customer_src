@@ -107,7 +107,7 @@ SkeletonData *SkeletonJson::readSkeletonDataFile(const String &path) {
 
 	skeletonData = readSkeletonData(json);
 
-	//SpineExtension::free(json, __FILE__, __LINE__);		// can't free. because readFile from cache
+	//SpineExtension::free(json, __FILE__, __LINE__);		// xx
 
 	return skeletonData;
 }
@@ -133,6 +133,7 @@ SkeletonData *SkeletonJson::readSkeletonData(const char *json) {
 	if (skeleton) {
 		skeletonData->_hash = Json::getString(skeleton, "hash", 0);
 		skeletonData->_version = Json::getString(skeleton, "spine", 0);
+		// xx
 		//if ("3.8.75" == skeletonData->_version) {
   //          delete skeletonData;
   //          setError(root, "Unsupported skeleton data, please export with a newer version of Spine.", "");
