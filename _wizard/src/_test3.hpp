@@ -22,7 +22,7 @@ namespace Game {
 		UpdateScale();
 		MakeUI();
 
-		grid.Init(32, 100, 100);
+		grid.Init(32, 100, 100, 1024);
 		effectTexts.Init(this, 100000);
 		delta = Cfg::frameDelay;
 
